@@ -1,0 +1,279 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Commerce Layer Core API — Webhooks and Events
+  description: 'Webhooks management, events, event callbacks, event stores, and notifications.'
+  tags:
+  - Commerce Layer
+  created: '2026-05-25'
+  modified: '2026-05-25'
+binds:
+- namespace: env
+  keys:
+    COMMERCE_LAYER_ACCESS_TOKEN: COMMERCE_LAYER_ACCESS_TOKEN
+    COMMERCE_LAYER_ORG_SLUG: COMMERCE_LAYER_ORG_SLUG
+capability:
+  consumes:
+  - type: http
+    namespace: core-webhooks
+    baseUri: https://{{env.COMMERCE_LAYER_ORG_SLUG}}.commercelayer.io/api
+    description: Commerce Layer Core API — Webhooks and Events business surface.
+    resources:
+    - name: webhooks
+      path: /webhooks
+      operations:
+      - name: listwebhooks
+        method: GET
+        description: List All Webhooks
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: createwebhook
+        method: POST
+        description: Create A Webhook
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          required: true
+    - name: webhooks-webhookId
+      path: /webhooks/{webhookId}
+      operations:
+      - name: retrievewebhook
+        method: GET
+        description: Retrieve A Webhook
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: updatewebhook
+        method: PATCH
+        description: Update A Webhook
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          required: true
+      - name: deletewebhook
+        method: DELETE
+        description: Delete A Webhook
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: events
+      path: /events
+      operations:
+      - name: listevents
+        method: GET
+        description: List All Events
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: event_callbacks
+      path: /event_callbacks
+      operations:
+      - name: listeventcallbacks
+        method: GET
+        description: List All Event Callbacks
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: notifications
+      path: /notifications
+      operations:
+      - name: listnotifications
+        method: GET
+        description: List All Notifications
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    authentication:
+      type: oauth2
+      flow: client_credentials
+      tokenUrl: https://auth.commercelayer.io/oauth/token
+      value: 'Bearer {{env.COMMERCE_LAYER_ACCESS_TOKEN}}'
+      placement: header
+      key: Authorization
+  exposes:
+  - type: rest
+    namespace: core-webhooks-rest
+    port: 8080
+    description: REST adapter for Commerce Layer Core API — Webhooks and Events.
+    resources:
+    - path: /api/webhooks
+      name: webhooks
+      operations:
+      - method: GET
+        name: listwebhooks
+        call: core-webhooks.listwebhooks
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: createwebhook
+        call: core-webhooks.createwebhook
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /api/webhooks/{webhookId}
+      name: webhooks-webhookId
+      operations:
+      - method: GET
+        name: retrievewebhook
+        call: core-webhooks.retrievewebhook
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: PATCH
+        name: updatewebhook
+        call: core-webhooks.updatewebhook
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: DELETE
+        name: deletewebhook
+        call: core-webhooks.deletewebhook
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /api/events
+      name: events
+      operations:
+      - method: GET
+        name: listevents
+        call: core-webhooks.listevents
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /api/event_callbacks
+      name: event-callbacks
+      operations:
+      - method: GET
+        name: listeventcallbacks
+        call: core-webhooks.listeventcallbacks
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /api/notifications
+      name: notifications
+      operations:
+      - method: GET
+        name: listnotifications
+        call: core-webhooks.listnotifications
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: core-webhooks-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Commerce Layer Core API — Webhooks and Events.
+    tools:
+    - name: commerce-layer-listwebhooks
+      description: List All Webhooks
+      hints:
+        readOnly: true
+        idempotent: true
+        destructive: false
+      call: core-webhooks.listwebhooks
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: commerce-layer-createwebhook
+      description: Create A Webhook
+      hints:
+        readOnly: false
+        idempotent: false
+        destructive: false
+      call: core-webhooks.createwebhook
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: commerce-layer-retrievewebhook
+      description: Retrieve A Webhook
+      hints:
+        readOnly: true
+        idempotent: true
+        destructive: false
+      call: core-webhooks.retrievewebhook
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: commerce-layer-updatewebhook
+      description: Update A Webhook
+      hints:
+        readOnly: false
+        idempotent: true
+        destructive: false
+      call: core-webhooks.updatewebhook
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: commerce-layer-deletewebhook
+      description: Delete A Webhook
+      hints:
+        readOnly: false
+        idempotent: true
+        destructive: true
+      call: core-webhooks.deletewebhook
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: commerce-layer-listevents
+      description: List All Events
+      hints:
+        readOnly: true
+        idempotent: true
+        destructive: false
+      call: core-webhooks.listevents
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: commerce-layer-listeventcallbacks
+      description: List All Event Callbacks
+      hints:
+        readOnly: true
+        idempotent: true
+        destructive: false
+      call: core-webhooks.listeventcallbacks
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: commerce-layer-listnotifications
+      description: List All Notifications
+      hints:
+        readOnly: true
+        idempotent: true
+        destructive: false
+      call: core-webhooks.listnotifications
+      outputParameters:
+      - type: object
+        mapping: $.

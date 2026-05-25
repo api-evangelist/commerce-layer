@@ -1,0 +1,234 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Commerce Layer Metrics API — Orders
+  description: 'Analytics queries for orders: breakdown, date_breakdown, stats, search, export.'
+  tags:
+  - Commerce Layer
+  created: '2026-05-25'
+  modified: '2026-05-25'
+binds:
+- namespace: env
+  keys:
+    COMMERCE_LAYER_ACCESS_TOKEN: COMMERCE_LAYER_ACCESS_TOKEN
+    COMMERCE_LAYER_ORG_SLUG: COMMERCE_LAYER_ORG_SLUG
+capability:
+  consumes:
+  - type: http
+    namespace: metrics-orders
+    baseUri: https://{{env.COMMERCE_LAYER_ORG_SLUG}}.commercelayer.io/metrics
+    description: Commerce Layer Metrics API — Orders business surface.
+    resources:
+    - name: orders-breakdown
+      path: /orders/breakdown
+      operations:
+      - name: ordersbreakdown
+        method: POST
+        description: Run An Orders Breakdown Query
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          required: true
+    - name: orders-date_breakdown
+      path: /orders/date_breakdown
+      operations:
+      - name: ordersdatebreakdown
+        method: POST
+        description: Run An Orders Date-Breakdown Query
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          required: true
+    - name: orders-stats
+      path: /orders/stats
+      operations:
+      - name: ordersstats
+        method: POST
+        description: Run An Orders Stats Query
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          required: true
+    - name: orders-search
+      path: /orders/search
+      operations:
+      - name: orderssearch
+        method: POST
+        description: Run An Orders Search Query
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          required: true
+    - name: orders-export
+      path: /orders/export
+      operations:
+      - name: ordersexport
+        method: POST
+        description: Run An Orders Export Query
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          required: true
+    authentication:
+      type: oauth2
+      flow: client_credentials
+      tokenUrl: https://auth.commercelayer.io/oauth/token
+      value: 'Bearer {{env.COMMERCE_LAYER_ACCESS_TOKEN}}'
+      placement: header
+      key: Authorization
+  exposes:
+  - type: rest
+    namespace: metrics-orders-rest
+    port: 8080
+    description: REST adapter for Commerce Layer Metrics API — Orders.
+    resources:
+    - path: /api/orders/breakdown
+      name: orders-breakdown
+      operations:
+      - method: POST
+        name: ordersbreakdown
+        call: metrics-orders.ordersbreakdown
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /api/orders/date_breakdown
+      name: orders-date-breakdown
+      operations:
+      - method: POST
+        name: ordersdatebreakdown
+        call: metrics-orders.ordersdatebreakdown
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /api/orders/stats
+      name: orders-stats
+      operations:
+      - method: POST
+        name: ordersstats
+        call: metrics-orders.ordersstats
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /api/orders/search
+      name: orders-search
+      operations:
+      - method: POST
+        name: orderssearch
+        call: metrics-orders.orderssearch
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /api/orders/export
+      name: orders-export
+      operations:
+      - method: POST
+        name: ordersexport
+        call: metrics-orders.ordersexport
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: metrics-orders-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Commerce Layer Metrics API — Orders.
+    tools:
+    - name: commerce-layer-ordersbreakdown
+      description: Run An Orders Breakdown Query
+      hints:
+        readOnly: false
+        idempotent: false
+        destructive: false
+      call: metrics-orders.ordersbreakdown
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: commerce-layer-ordersdatebreakdown
+      description: Run An Orders Date-Breakdown Query
+      hints:
+        readOnly: false
+        idempotent: false
+        destructive: false
+      call: metrics-orders.ordersdatebreakdown
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: commerce-layer-ordersstats
+      description: Run An Orders Stats Query
+      hints:
+        readOnly: false
+        idempotent: false
+        destructive: false
+      call: metrics-orders.ordersstats
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: commerce-layer-orderssearch
+      description: Run An Orders Search Query
+      hints:
+        readOnly: false
+        idempotent: false
+        destructive: false
+      call: metrics-orders.orderssearch
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: commerce-layer-ordersexport
+      description: Run An Orders Export Query
+      hints:
+        readOnly: false
+        idempotent: false
+        destructive: false
+      call: metrics-orders.ordersexport
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.

@@ -1,0 +1,429 @@
+aid: commerce-layer
+url: https://raw.githubusercontent.com/api-evangelist/commerce-layer/refs/heads/main/apis.yml
+apis:
+- aid: commerce-layer:commerce-layer-core-api
+  name: Commerce Layer Core API
+  tags:
+  - Commerce
+  - Headless Commerce
+  - Multi-Market
+  - JSON:API
+  - Checkout
+  - Orders
+  - Catalog
+  - Inventory
+  - Promotions
+  humanURL: https://docs.commercelayer.io/core/
+  baseURL: https://{your-organization-slug}.commercelayer.io/api
+  properties:
+  - url: https://docs.commercelayer.io/core/
+    type: Documentation
+  - url: https://docs.commercelayer.io/core-api-reference/
+    type: Documentation
+    name: Core API Reference
+  - url: https://docs.commercelayer.io/core/api-specification
+    type: Documentation
+    name: API Specification
+  - url: https://docs.commercelayer.io/core/authentication
+    type: Authentication
+  - url: https://docs.commercelayer.io/core/rate-limits
+    type: RateLimits
+  - url: https://docs.commercelayer.io/core/real-time-webhooks
+    type: Webhooks
+  - url: https://docs.commercelayer.io/core/event-stream-hub
+    type: Documentation
+    name: Event Stream Hub (SSE)
+  - url: https://data.commercelayer.app/schemas/openapi.json
+    type: OpenAPI
+    name: Public OpenAPI Schema
+  - url: openapi/commerce-layer-core-api-openapi.json
+    type: OpenAPI
+  - url: json-schema/commerce-layer-order-schema.json
+    type: JSONSchema
+  - url: json-schema/commerce-layer-sku-schema.json
+    type: JSONSchema
+  - url: json-ld/commerce-layer-context.jsonld
+    type: JSONLD
+  - type: NaftikoCapability
+    url: capabilities/core-orders.yaml
+  - type: NaftikoCapability
+    url: capabilities/core-skus.yaml
+  - type: NaftikoCapability
+    url: capabilities/core-customers.yaml
+  - type: NaftikoCapability
+    url: capabilities/core-markets.yaml
+  - type: NaftikoCapability
+    url: capabilities/core-prices.yaml
+  - type: NaftikoCapability
+    url: capabilities/core-shipments.yaml
+  - type: NaftikoCapability
+    url: capabilities/core-promotions.yaml
+  - type: NaftikoCapability
+    url: capabilities/core-webhooks.yaml
+  description: The Commerce Layer Core API is the JSON:API-compliant REST API that powers headless commerce. It
+    exposes 130+ top-level resources covering orders, line items, SKUs, bundles, prices, price lists, markets,
+    stores, inventory (stock items, locations, transfers), customers, customer groups, customer subscriptions,
+    payment gateways (Adyen, Stripe, Braintree, PayPal, Klarna, Checkout.com, Axerve, Satispay), payment methods,
+    tax calculators (Avalara, TaxJar, Vertex, Stripe Tax), shipping methods, shipping zones, carrier accounts,
+    geocoders (Google, Bing), promotions (fixed amount, percentage, free gift, free shipping, BXGY, flex),
+    gift cards, coupons, returns, parcels, packages, webhooks, imports, exports, and tags. 917 path operations
+    across the live OpenAPI 3.1 specification.
+- aid: commerce-layer:commerce-layer-provisioning-api
+  name: Commerce Layer Provisioning API
+  tags:
+  - Administration
+  - Provisioning
+  - Organizations
+  - SSO
+  - JSON:API
+  humanURL: https://docs.commercelayer.io/provisioning
+  baseURL: https://provisioning.commercelayer.io
+  properties:
+  - url: https://docs.commercelayer.io/provisioning
+    type: Documentation
+  - url: https://docs.commercelayer.io/provisioning-api-reference/
+    type: Documentation
+    name: Provisioning API Reference
+  - url: https://data.commercelayer.app/schemas/provisioning/openapi.json
+    type: OpenAPI
+    name: Public OpenAPI Schema
+  - url: openapi/commerce-layer-provisioning-api-openapi.json
+    type: OpenAPI
+  - type: NaftikoCapability
+    url: capabilities/provisioning-organizations.yaml
+  - type: NaftikoCapability
+    url: capabilities/provisioning-memberships.yaml
+  - type: NaftikoCapability
+    url: capabilities/provisioning-api-credentials.yaml
+  - type: NaftikoCapability
+    url: capabilities/provisioning-identity-providers.yaml
+  description: Programmatic provisioning surface for Commerce Layer organizations, memberships, roles, API
+    credentials, application memberships, identity providers (SSO), permissions, and user invitations. 48 path
+    operations. Required for headless onboarding flows, infrastructure-as-code organization management, and
+    enterprise identity federation. Available on Developer and Enterprise plans (Provisioning API access is an
+    enterprise feature).
+- aid: commerce-layer:commerce-layer-metrics-api
+  name: Commerce Layer Metrics API
+  tags:
+  - Analytics
+  - Metrics
+  - Reporting
+  - Commerce Analytics
+  - Data
+  humanURL: https://docs.commercelayer.io/metrics/welcome
+  baseURL: https://{your-domain}.commercelayer.io/metrics
+  properties:
+  - url: https://docs.commercelayer.io/metrics/welcome
+    type: Documentation
+  - url: https://docs.commercelayer.io/metrics/getting-started/api-specification
+    type: Documentation
+    name: Metrics API Specification
+  - url: https://data.commercelayer.app/schemas/metrics/openapi.json
+    type: OpenAPI
+    name: Public OpenAPI Schema
+  - url: openapi/commerce-layer-metrics-api-openapi.json
+    type: OpenAPI
+  - url: https://github.com/commercelayer/mcp-server-metrics
+    type: MCPServer
+    name: Local MCP Server for Metrics API
+  - type: NaftikoCapability
+    url: capabilities/metrics-orders.yaml
+  - type: NaftikoCapability
+    url: capabilities/metrics-carts.yaml
+  - type: NaftikoCapability
+    url: capabilities/metrics-returns.yaml
+  - type: NaftikoCapability
+    url: capabilities/metrics-usage.yaml
+  description: Analytics surface over Commerce Layer's ecommerce history. Five query types (breakdown,
+    date_breakdown, stats, search, export) across four domains (orders, carts, returns, usage) plus
+    frequently-bought-together (FBT) analysis helpers. Useful for KPI dashboards, cohort and funnel reporting,
+    catalog merchandising signals, and feeding downstream warehouses. Commerce Layer also publishes a local MCP
+    server that exposes the Metrics API to AI agents.
+name: Commerce Layer
+tags:
+- Headless Commerce
+- Composable Commerce
+- API-First
+- Ecommerce
+- JSON:API
+- OAuth 2.0
+- Multi-Market
+- Multi-Currency
+- B2C
+- B2B
+- Subscriptions
+- Promotions
+- Inventory
+- Order Management
+- Checkout
+kind: contract
+image: https://kinlane-productions2.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+access: 3rd-Party
+common:
+- url: https://commercelayer.io
+  type: Portal
+- url: https://commercelayer.io/product
+  type: Portal
+  name: Product Overview
+- url: https://docs.commercelayer.io
+  type: Documentation
+  name: Documentation Hub
+- url: https://docs.commercelayer.io/core-api-reference/
+  type: Documentation
+  name: Core API Reference
+- url: https://docs.commercelayer.io/provisioning-api-reference/
+  type: Documentation
+  name: Provisioning API Reference
+- url: https://docs.commercelayer.io/metrics/welcome
+  type: Documentation
+  name: Metrics API
+- url: https://docs.commercelayer.io/data-model/readme
+  type: Documentation
+  name: Data Model
+- url: https://docs.commercelayer.io/core/onboarding
+  type: GettingStarted
+- url: https://docs.commercelayer.io/core/authentication
+  type: Authentication
+- url: https://docs.commercelayer.io/core/api-credentials
+  type: Documentation
+  name: API Credentials
+- url: https://docs.commercelayer.io/core/roles-and-permissions
+  type: Documentation
+  name: Roles and Permissions
+- url: https://docs.commercelayer.io/core/rate-limits
+  type: RateLimits
+- url: https://docs.commercelayer.io/core/handling-errors
+  type: Errors
+- url: https://docs.commercelayer.io/core/real-time-webhooks
+  type: Webhooks
+- url: https://docs.commercelayer.io/core/event-stream-hub
+  type: Documentation
+  name: Event Stream Hub (SSE)
+- url: https://docs.commercelayer.io/core/callbacks-security
+  type: Security
+- url: https://docs.commercelayer.io/public-endpoints
+  type: Documentation
+  name: Public Endpoints
+- url: https://docs.commercelayer.io/changelog
+  type: ChangeLog
+- url: https://commercelayer.io/blog
+  type: Blog
+- url: https://commercelayer.io/pricing
+  type: Pricing
+- url: https://commercelayer.io/about
+  type: About
+- url: https://commercelayer.io/contact
+  type: Contact
+- url: https://commercelayer.io/legal-embed/privacy-policy
+  type: PrivacyPolicy
+- url: https://commercelayer.io/legal-embed/terms-and-conditions
+  type: TermsOfService
+- url: https://dashboard.commercelayer.io/sign_up
+  type: SignUp
+- url: https://dashboard.commercelayer.io/sign_in
+  type: Login
+- url: https://discord.com/commercelayer
+  type: Forum
+  name: Discord Community
+- url: https://github.com/commercelayer
+  type: GitHubOrganization
+- url: https://github.com/commercelayer/commercelayer-sdk
+  name: JavaScript / TypeScript SDK
+  type: SDK
+- url: https://github.com/commercelayer/commercelayer-js-auth
+  name: JavaScript Auth Library
+  type: SDK
+- url: https://github.com/commercelayer/commercelayer_ruby
+  name: Ruby SDK
+  type: SDK
+- url: https://github.com/commercelayer/commercelayer-sdk-utils
+  name: SDK Utilities
+  type: SDK
+- url: https://github.com/commercelayer/provisioning-sdk
+  name: Provisioning SDK
+  type: SDK
+- url: https://github.com/commercelayer/commercelayer-cli
+  name: Commerce Layer CLI
+  type: CLI
+- url: https://github.com/commercelayer/commercelayer-react-components
+  name: React Components
+  type: SDK
+- url: https://github.com/commercelayer/drop-in.js
+  name: drop-in.js
+  type: Tool
+- url: https://github.com/commercelayer/mfe-checkout
+  name: Hosted Checkout (mfe-checkout)
+  type: Tool
+- url: https://github.com/commercelayer/mfe-cart
+  name: Hosted Cart (mfe-cart)
+  type: Tool
+- url: https://github.com/commercelayer/mfe-my-account
+  name: Hosted My Account (mfe-my-account)
+  type: Tool
+- url: https://github.com/commercelayer/mfe-identity
+  name: Hosted Identity (mfe-identity)
+  type: Tool
+- url: https://github.com/commercelayer/mfe-microstore
+  name: Hosted Microstore (mfe-microstore)
+  type: Tool
+- url: https://github.com/commercelayer/dashboard-apps
+  name: Dashboard Apps
+  type: Tool
+- url: https://github.com/commercelayer/mcp-server-metrics
+  name: MCP Server for Metrics API
+  type: MCPServer
+- url: https://github.com/commercelayer/demo-store
+  name: Demo Store
+  type: CodeExamples
+- url: https://github.com/commercelayer/demo-store-core
+  name: Demo Store Core
+  type: CodeExamples
+- url: https://github.com/commercelayer/demo-store-minimal
+  name: Minimal Next.js Storefront Demo
+  type: CodeExamples
+- url: https://github.com/commercelayer/examples
+  name: Examples Collection
+  type: CodeExamples
+- url: https://github.com/commercelayer/commercelayer-sanity-template
+  name: Sanity Commerce Template
+  type: CodeExamples
+- url: https://github.com/commercelayer/sanity-commerce
+  name: Sanity Commerce Plugin
+  type: Plugins
+- url: https://github.com/commercelayer/contentful-commerce
+  name: Contentful Commerce Plugin
+  type: Plugins
+- url: https://github.com/commercelayer/contentstack-commerce
+  name: Contentstack Commerce Plugin
+  type: Plugins
+- url: https://github.com/commercelayer/dato-plugin
+  name: DatoCMS Plugin
+  type: Plugins
+- url: https://github.com/commercelayer/gatsby-plugin-commercelayer
+  name: Gatsby Plugin
+  type: Plugins
+- url: https://github.com/commercelayer/commercelayer-cli-plugin-resources
+  name: CLI Resources Plugin
+  type: Plugins
+- url: https://github.com/commercelayer/commercelayer-cli-plugin-webhooks
+  name: CLI Webhooks Plugin
+  type: Plugins
+- url: https://github.com/commercelayer/commercelayer-cli-plugin-imports
+  name: CLI Imports Plugin
+  type: Plugins
+- url: https://github.com/commercelayer/commercelayer-cli-plugin-exports
+  name: CLI Exports Plugin
+  type: Plugins
+- url: https://github.com/commercelayer/commercelayer-cli-plugin-metrics
+  name: CLI Metrics Plugin
+  type: Plugins
+- url: https://github.com/commercelayer/commercelayer-cli-plugin-checkout
+  name: CLI Checkout Plugin
+  type: Plugins
+- url: https://github.com/commercelayer/commercelayer-cli-plugin-orders
+  name: CLI Orders Plugin
+  type: Plugins
+- url: https://github.com/commercelayer/commercelayer-cli-plugin-provisioning
+  name: CLI Provisioning Plugin
+  type: Plugins
+- url: https://github.com/commercelayer/commercelayer-cli-plugin-microstore
+  name: CLI Microstore Plugin
+  type: Plugins
+- url: https://github.com/commercelayer/commercelayer-cli-plugin-seeder
+  name: CLI Seeder Plugin
+  type: Plugins
+- url: https://github.com/commercelayer/commercelayer-cli-plugin-cleanups
+  name: CLI Cleanups Plugin
+  type: Plugins
+- url: https://github.com/commercelayer/commercelayer-cli-plugin-triggers
+  name: CLI Triggers Plugin
+  type: Plugins
+- url: https://github.com/commercelayer/commercelayer-cli-plugin-tags
+  name: CLI Tags Plugin
+  type: Plugins
+- url: https://github.com/commercelayer/commercelayer-cli-plugin-links
+  name: CLI Links Plugin
+  type: Plugins
+- url: https://github.com/commercelayer/commercelayer-cli-plugin-token
+  name: CLI Token Plugin
+  type: Plugins
+- url: https://jsonapi.org/format/
+  type: Documentation
+  name: JSON:API Specification
+- url: plans/commerce-layer-plans-pricing.yml
+  type: Plans
+- url: rate-limits/commerce-layer-rate-limits.yml
+  type: RateLimits
+- url: finops/commerce-layer-finops.yml
+  type: FinOps
+- type: Features
+  data:
+  - 'Headless, API-first commerce platform with stateless OAuth 2.0 checkout to sell anywhere — web, mobile,
+    chatbot, AI agent, IoT, in-store kiosk'
+  - 'JSON:API (jsonapi.org/format/) compliant Core API with 917 path operations across 130+ top-level resources
+    on a single OpenAPI 3.1 spec'
+  - 'Native multi-market and multi-currency: independent markets, merchants, stores, price lists, inventory
+    models, payment methods, shipping zones, and tax calculators per market'
+  - 'Native subscriptions and recurring orders: order subscriptions, customer subscriptions, order copies,
+    in-stock subscriptions, subscription models'
+  - 'Promotion engine: BXGY, percentage discount, fixed amount, fixed price, free gift, free shipping, custom
+    promotions, flex promotions, plus gift cards, coupons, coupon recipients, and SKU lists / order-amount
+    rules'
+  - 'Built-in inventory: stock items, stock locations, inventory models, inventory return locations, stock
+    transfers, stock reservations, reserved stocks, delivery lead times'
+  - 'First-party payment integrations: Adyen, Stripe, Braintree, PayPal, Klarna, Checkout.com, Axerve,
+    Satispay, plus external/manual gateways'
+  - 'First-party tax integrations: Avalara, TaxJar, Vertex, Stripe Tax, plus manual and external calculators'
+  - 'First-party shipping integrations: 100+ carrier accounts via the carrier accounts schema; EasyPost
+    pickups; Google and Bing geocoders'
+  - 'Real-time webhooks plus an Event Stream Hub (SSE) with resource-based and time-based replay'
+  - 'Rules engine with public JSON schemas for order rules and price list rules'
+  - 'Provisioning API (48 ops): organizations, memberships, roles, API credentials, identity providers (SSO)'
+  - 'Metrics API: breakdown, date_breakdown, stats, search, export queries over orders / carts / returns /
+    usage, plus FBT analysis'
+  - 'Local MCP server for the Metrics API (commercelayer/mcp-server-metrics) for AI-agent access'
+  - 'Hosted micro frontends: checkout, cart, my-account, microstore, identity — each open-source on GitHub'
+  - 'Imports, exports, and cleanups for bulk resource management'
+  - 'Tagging across resources; sparse fieldsets; filtering, sorting, pagination, and include parameters per
+    JSON:API'
+  - 'Official SDKs: JavaScript/TypeScript (commercelayer-sdk), JS Auth, Ruby (commercelayer_ruby), Provisioning
+    SDK, plus React Components and drop-in.js'
+  - 'CLI with 15+ plugins (resources, webhooks, imports, exports, metrics, checkout, orders, provisioning,
+    microstore, seeder, cleanups, triggers, tags, links, token)'
+  - 'CMS integrations: Sanity, Contentful, Contentstack, DatoCMS, Gatsby'
+  - 'Dashboard apps: orders, customers, shipments, returns, promotions, imports, exports, webhooks, skus,
+    sku-lists, price-lists, inventory, stock-transfers, tags'
+  - 'Public unauthenticated endpoints for resources discovery, OpenAPI download, carrier schema, order/price
+    rules schemas, organization config schema, OAuth data schema'
+  - 'Free Developer plan with free live orders/month; Enterprise plan with dedicated support, custom roles,
+    custom identity provider, SLAs; optional Distributed OMS and Promotion Engine add-ons; pro-bono plans
+    for selected non-profits'
+  - 'OAuth 2.0 grants: client_credentials, password, authorization_code, refresh_token, JWT bearer'
+  - 'Multi-environment: live and test environments with separate rate limits'
+  sources:
+  - https://commercelayer.io
+  - https://docs.commercelayer.io
+  - https://docs.commercelayer.io/core-api-reference/
+  - https://docs.commercelayer.io/provisioning
+  - https://docs.commercelayer.io/metrics/welcome
+  - https://docs.commercelayer.io/core/rate-limits
+  - https://commercelayer.io/pricing
+  - https://github.com/commercelayer
+  updated: '2026-05-25'
+created: '2026-05-25'
+modified: '2026-05-25'
+position: Consuming
+description: Commerce Layer is the headless, multi-market commerce API used by global brands to sell
+  everywhere — web, mobile, in-store, chatbot, AI agent, and IoT. The company exposes a JSON:API-compliant
+  Core API with 130+ top-level resources covering orders, line items, SKUs, bundles, prices, markets,
+  stores, inventory, customers, payments (Adyen, Stripe, Braintree, PayPal, Klarna, Checkout.com),
+  tax calculation (Avalara, TaxJar, Vertex, Stripe Tax), shipping, promotions, subscriptions, returns, and
+  webhooks. The platform also ships a Provisioning API for organizations/SSO/credentials and a Metrics API
+  for analytics (with a local MCP server for AI agents), plus hosted micro-frontends, dashboard apps, a CLI,
+  CMS integrations, and SDKs for JavaScript/TypeScript, Ruby, React, and drop-in.js.
+maintainers:
+- FN: Kin Lane
+  email: info@apievangelist.com
+  X: apievangelist
+  url: https://apievangelist.com
+specificationVersion: '0.16'

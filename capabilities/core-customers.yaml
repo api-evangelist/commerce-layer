@@ -1,0 +1,354 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Commerce Layer Core API — Customers
+  description: 'Customer accounts, addresses, payment sources, customer groups, customer password resets, customer subscriptions.'
+  tags:
+  - Commerce Layer
+  created: '2026-05-25'
+  modified: '2026-05-25'
+binds:
+- namespace: env
+  keys:
+    COMMERCE_LAYER_ACCESS_TOKEN: COMMERCE_LAYER_ACCESS_TOKEN
+    COMMERCE_LAYER_ORG_SLUG: COMMERCE_LAYER_ORG_SLUG
+capability:
+  consumes:
+  - type: http
+    namespace: core-customers
+    baseUri: https://{{env.COMMERCE_LAYER_ORG_SLUG}}.commercelayer.io/api
+    description: Commerce Layer Core API — Customers business surface.
+    resources:
+    - name: customers
+      path: /customers
+      operations:
+      - name: listcustomers
+        method: GET
+        description: List All Customers
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: createcustomer
+        method: POST
+        description: Create A Customer
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          required: true
+    - name: customers-customerId
+      path: /customers/{customerId}
+      operations:
+      - name: retrievecustomer
+        method: GET
+        description: Retrieve A Customer
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: updatecustomer
+        method: PATCH
+        description: Update A Customer
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          required: true
+      - name: deletecustomer
+        method: DELETE
+        description: Delete A Customer
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: customer_addresses
+      path: /customer_addresses
+      operations:
+      - name: listcustomeraddresses
+        method: GET
+        description: List All Customer Addresses
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: createcustomeraddress
+        method: POST
+        description: Create A Customer Address
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          required: true
+    - name: customer_groups
+      path: /customer_groups
+      operations:
+      - name: listcustomergroups
+        method: GET
+        description: List All Customer Groups
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: createcustomergroup
+        method: POST
+        description: Create A Customer Group
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          required: true
+    - name: customer_password_resets
+      path: /customer_password_resets
+      operations:
+      - name: createcustomerpasswordreset
+        method: POST
+        description: Create A Customer Password Reset
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          required: true
+    authentication:
+      type: oauth2
+      flow: client_credentials
+      tokenUrl: https://auth.commercelayer.io/oauth/token
+      value: 'Bearer {{env.COMMERCE_LAYER_ACCESS_TOKEN}}'
+      placement: header
+      key: Authorization
+  exposes:
+  - type: rest
+    namespace: core-customers-rest
+    port: 8080
+    description: REST adapter for Commerce Layer Core API — Customers.
+    resources:
+    - path: /api/customers
+      name: customers
+      operations:
+      - method: GET
+        name: listcustomers
+        call: core-customers.listcustomers
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: createcustomer
+        call: core-customers.createcustomer
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /api/customers/{customerId}
+      name: customers-customerId
+      operations:
+      - method: GET
+        name: retrievecustomer
+        call: core-customers.retrievecustomer
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: PATCH
+        name: updatecustomer
+        call: core-customers.updatecustomer
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: DELETE
+        name: deletecustomer
+        call: core-customers.deletecustomer
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /api/customer_addresses
+      name: customer-addresses
+      operations:
+      - method: GET
+        name: listcustomeraddresses
+        call: core-customers.listcustomeraddresses
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: createcustomeraddress
+        call: core-customers.createcustomeraddress
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /api/customer_groups
+      name: customer-groups
+      operations:
+      - method: GET
+        name: listcustomergroups
+        call: core-customers.listcustomergroups
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: createcustomergroup
+        call: core-customers.createcustomergroup
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /api/customer_password_resets
+      name: customer-password-resets
+      operations:
+      - method: POST
+        name: createcustomerpasswordreset
+        call: core-customers.createcustomerpasswordreset
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: core-customers-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Commerce Layer Core API — Customers.
+    tools:
+    - name: commerce-layer-listcustomers
+      description: List All Customers
+      hints:
+        readOnly: true
+        idempotent: true
+        destructive: false
+      call: core-customers.listcustomers
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: commerce-layer-createcustomer
+      description: Create A Customer
+      hints:
+        readOnly: false
+        idempotent: false
+        destructive: false
+      call: core-customers.createcustomer
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: commerce-layer-retrievecustomer
+      description: Retrieve A Customer
+      hints:
+        readOnly: true
+        idempotent: true
+        destructive: false
+      call: core-customers.retrievecustomer
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: commerce-layer-updatecustomer
+      description: Update A Customer
+      hints:
+        readOnly: false
+        idempotent: true
+        destructive: false
+      call: core-customers.updatecustomer
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: commerce-layer-deletecustomer
+      description: Delete A Customer
+      hints:
+        readOnly: false
+        idempotent: true
+        destructive: true
+      call: core-customers.deletecustomer
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: commerce-layer-listcustomeraddresses
+      description: List All Customer Addresses
+      hints:
+        readOnly: true
+        idempotent: true
+        destructive: false
+      call: core-customers.listcustomeraddresses
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: commerce-layer-createcustomeraddress
+      description: Create A Customer Address
+      hints:
+        readOnly: false
+        idempotent: false
+        destructive: false
+      call: core-customers.createcustomeraddress
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: commerce-layer-listcustomergroups
+      description: List All Customer Groups
+      hints:
+        readOnly: true
+        idempotent: true
+        destructive: false
+      call: core-customers.listcustomergroups
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: commerce-layer-createcustomergroup
+      description: Create A Customer Group
+      hints:
+        readOnly: false
+        idempotent: false
+        destructive: false
+      call: core-customers.createcustomergroup
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: commerce-layer-createcustomerpasswordreset
+      description: Create A Customer Password Reset
+      hints:
+        readOnly: false
+        idempotent: false
+        destructive: false
+      call: core-customers.createcustomerpasswordreset
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.

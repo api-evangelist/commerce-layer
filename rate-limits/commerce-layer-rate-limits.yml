@@ -1,0 +1,119 @@
+specification: API Commons Rate Limits
+specificationVersion: '0.1'
+schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main/schema/api-commons.yml#/$defs/RateLimits
+provider: Commerce Layer
+providerId: commerce-layer
+created: '2026-05-25'
+modified: '2026-05-25'
+reconciled: true
+tags:
+  - Commerce Layer
+  - Rate Limiting
+  - Quotas
+  - Sliding Window
+description: 'Reconciled rate limits for the Commerce Layer Core API. Sliding-window algorithm, applied per
+  IP, differentiated by HTTP method (read vs write), environment (live vs test), and resource cacheability.
+  Counts are never reset; therefore no X-Ratelimit-Reset header is emitted. Source:
+  https://docs.commercelayer.io/core/rate-limits.'
+sources:
+  - https://docs.commercelayer.io/core/rate-limits
+  - https://docs.commercelayer.io/core/handling-errors
+headers:
+  limit: X-Ratelimit-Limit
+  interval: X-Ratelimit-Interval
+  remaining: X-Ratelimit-Remaining
+  reset: null
+  retryAfter: Retry-After
+responseCodes:
+  throttled: 429
+  quotaExceeded: 429
+algorithm: sliding-window
+limits:
+  - scope: Authentication
+    endpoint: /oauth/token
+    environment: live+test
+    limitType: per-ip
+    maxRequests: 30
+    window: 1m
+    notes: |
+      Authentication requests are never cached and follow stricter limits across both environments.
+  - scope: Read — cacheable
+    endpoint: /api/* (bundles, imports, markets, prices, price_lists, promotions, *_promotions, skus, sku_options, stock_items, stock_locations)
+    environment: live
+    limitType: average-per-ip
+    maxRequests: 1000
+    window: 1m
+    notes: Sum of requests to all cacheable resource endpoints in this class.
+  - scope: Read — cacheable
+    endpoint: /api/*
+    environment: test
+    limitType: average-per-ip
+    maxRequests: 500
+    window: 1m
+  - scope: Read — cacheable
+    endpoint: /api/*
+    environment: live
+    limitType: burst-per-endpoint
+    maxRequests: 250
+    window: 10s
+  - scope: Read — cacheable
+    endpoint: /api/*
+    environment: test
+    limitType: burst-per-endpoint
+    maxRequests: 125
+    window: 10s
+  - scope: Read — uncacheable
+    endpoint: /api/* (all other resource endpoints)
+    environment: live
+    limitType: average-per-ip
+    maxRequests: 200
+    window: 1m
+  - scope: Read — uncacheable
+    endpoint: /api/*
+    environment: test
+    limitType: average-per-ip
+    maxRequests: 100
+    window: 1m
+  - scope: Read — uncacheable
+    endpoint: /api/*
+    environment: live
+    limitType: burst-per-endpoint
+    maxRequests: 50
+    window: 10s
+  - scope: Read — uncacheable
+    endpoint: /api/*
+    environment: test
+    limitType: burst-per-endpoint
+    maxRequests: 25
+    window: 10s
+  - scope: Write — any
+    endpoint: /api/* (POST, PUT, PATCH, DELETE)
+    environment: live
+    limitType: average-per-ip
+    maxRequests: 200
+    window: 1m
+  - scope: Write — any
+    endpoint: /api/*
+    environment: test
+    limitType: average-per-ip
+    maxRequests: 100
+    window: 1m
+  - scope: Write — any
+    endpoint: /api/*
+    environment: live
+    limitType: burst-per-endpoint
+    maxRequests: 50
+    window: 10s
+  - scope: Write — any
+    endpoint: /api/*
+    environment: test
+    limitType: burst-per-endpoint
+    maxRequests: 25
+    window: 10s
+recommendations:
+  - Use the official commercelayer-sdk plus commercelayer-sdk-utils `executeBatch` helper to safely batch
+    high-volume writes against per-endpoint burst limits.
+  - The X-Ratelimit-* headers describe the Average limit type only. Burst limits are not surfaced in
+    response headers.
+  - When you receive HTTP 429, back off until the relevant sliding window clears — there is no Retry-After
+    promise.

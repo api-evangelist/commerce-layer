@@ -1,0 +1,114 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://api-evangelist.com/schemas/commerce-layer/commerce-layer-order-schema.json",
+  "title": "Commerce Layer Order",
+  "description": "Schema for the Commerce Layer Order resource. Conforms to JSON:API (jsonapi.org/format/). Use POST /api/orders to create, GET /api/orders/{orderId} to retrieve, and PATCH /api/orders/{orderId} to update. Order state transitions (place, approve, cancel, refund, archive, fulfill, capture, void, authorize) are driven via the `_status`-style triggers in the resource attributes.",
+  "type": "object",
+  "required": ["data"],
+  "properties": {
+    "data": { "$ref": "#/definitions/OrderResource" }
+  },
+  "definitions": {
+    "OrderResource": {
+      "type": "object",
+      "required": ["type"],
+      "properties": {
+        "type": { "type": "string", "const": "orders" },
+        "id": { "type": "string", "description": "Server-assigned ULID-like order identifier." },
+        "attributes": { "$ref": "#/definitions/OrderAttributes" },
+        "relationships": { "$ref": "#/definitions/OrderRelationships" },
+        "meta": { "type": "object" },
+        "links": { "type": "object" }
+      }
+    },
+    "OrderAttributes": {
+      "type": "object",
+      "properties": {
+        "number": { "type": "string", "description": "Friendly progressive order number." },
+        "status": { "type": "string", "enum": ["draft","pending","placed","approved","cancelled"] },
+        "payment_status": { "type": "string", "enum": ["unpaid","authorized","partially_authorized","paid","partially_paid","voided","partially_voided","refunded","partially_refunded","free","unknown"] },
+        "fulfillment_status": { "type": "string", "enum": ["unfulfilled","in_progress","fulfilled","not_required"] },
+        "guest": { "type": "boolean" },
+        "editable": { "type": "boolean" },
+        "customer_email": { "type": "string", "format": "email" },
+        "language_code": { "type": "string", "description": "BCP 47 language code." },
+        "currency_code": { "type": "string", "description": "ISO 4217 currency code." },
+        "subtotal_amount_cents": { "type": "integer" },
+        "shipping_amount_cents": { "type": "integer" },
+        "payment_method_amount_cents": { "type": "integer" },
+        "discount_amount_cents": { "type": "integer" },
+        "adjustment_amount_cents": { "type": "integer" },
+        "gift_card_amount_cents": { "type": "integer" },
+        "total_tax_amount_cents": { "type": "integer" },
+        "subtotal_tax_amount_cents": { "type": "integer" },
+        "shipping_tax_amount_cents": { "type": "integer" },
+        "payment_method_tax_amount_cents": { "type": "integer" },
+        "adjustment_tax_amount_cents": { "type": "integer" },
+        "total_amount_cents": { "type": "integer" },
+        "fees_amount_cents": { "type": "integer" },
+        "duty_amount_cents": { "type": "integer" },
+        "skus_count": { "type": "integer" },
+        "line_items_count": { "type": "integer" },
+        "shipments_count": { "type": "integer" },
+        "payment_source_details": { "type": "object" },
+        "_place": { "type": "boolean", "description": "Trigger: place the order." },
+        "_approve": { "type": "boolean", "description": "Trigger: approve the order." },
+        "_cancel": { "type": "boolean", "description": "Trigger: cancel the order." },
+        "_refund": { "type": "boolean", "description": "Trigger: refund the order." },
+        "_archive": { "type": "boolean", "description": "Trigger: archive the order." },
+        "_fulfill": { "type": "boolean", "description": "Trigger: fulfill the order." },
+        "_capture": { "type": "boolean", "description": "Trigger: capture the order's authorization." },
+        "_authorize": { "type": "boolean", "description": "Trigger: authorize the order." },
+        "_void": { "type": "boolean", "description": "Trigger: void the order's authorization." },
+        "metadata": { "type": "object" },
+        "tags": { "type": "array", "items": { "type": "string" } },
+        "created_at": { "type": "string", "format": "date-time" },
+        "updated_at": { "type": "string", "format": "date-time" },
+        "placed_at": { "type": "string", "format": "date-time" }
+      }
+    },
+    "OrderRelationships": {
+      "type": "object",
+      "properties": {
+        "market": { "$ref": "#/definitions/Relationship" },
+        "customer": { "$ref": "#/definitions/Relationship" },
+        "line_items": { "$ref": "#/definitions/Relationship" },
+        "shipping_address": { "$ref": "#/definitions/Relationship" },
+        "billing_address": { "$ref": "#/definitions/Relationship" },
+        "payment_method": { "$ref": "#/definitions/Relationship" },
+        "payment_source": { "$ref": "#/definitions/Relationship" },
+        "shipments": { "$ref": "#/definitions/Relationship" },
+        "transactions": { "$ref": "#/definitions/Relationship" },
+        "authorizations": { "$ref": "#/definitions/Relationship" },
+        "captures": { "$ref": "#/definitions/Relationship" },
+        "voids": { "$ref": "#/definitions/Relationship" },
+        "refunds": { "$ref": "#/definitions/Relationship" },
+        "promotions": { "$ref": "#/definitions/Relationship" },
+        "available_payment_methods": { "$ref": "#/definitions/Relationship" },
+        "available_free_skus": { "$ref": "#/definitions/Relationship" },
+        "available_free_bundles": { "$ref": "#/definitions/Relationship" }
+      }
+    },
+    "Relationship": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "oneOf": [
+            { "$ref": "#/definitions/ResourceIdentifier" },
+            { "type": "array", "items": { "$ref": "#/definitions/ResourceIdentifier" } },
+            { "type": "null" }
+          ]
+        },
+        "links": { "type": "object" }
+      }
+    },
+    "ResourceIdentifier": {
+      "type": "object",
+      "required": ["type","id"],
+      "properties": {
+        "type": { "type": "string" },
+        "id": { "type": "string" }
+      }
+    }
+  }
+}

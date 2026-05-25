@@ -1,0 +1,97 @@
+specification: FinOps Framework
+specificationVersion: '1.0'
+schema: https://www.finops.org/framework/
+provider: Commerce Layer
+providerId: commerce-layer
+created: '2026-05-25'
+modified: '2026-05-25'
+reconciled: true
+tags:
+  - FinOps
+  - Cost Management
+  - FOCUS
+  - Commerce
+  - Headless Commerce
+description: 'FOCUS-aligned FinOps definition for Commerce Layer. The product is commercial-license based
+  rather than per-token: Commerce Layer prices on plan (Developer / Enterprise / Pro-bono), live-order
+  volume, add-ons (Distributed OMS, Promotion Engine), and dedicated services rather than on a granular
+  metered unit. The Metrics API exposes commerce KPIs that consumers wire into their own FinOps reporting.'
+sources:
+  - https://commercelayer.io/pricing
+  - https://docs.commercelayer.io/metrics/welcome
+  - https://docs.commercelayer.io/core/rate-limits
+alignedWith:
+  framework: FinOps Foundation Framework
+  frameworkUrl: https://www.finops.org/framework/
+  dataSpec: FOCUS
+  dataSpecVersion: '1.3'
+  dataSpecUrl: https://focus.finops.org/focus-specification/v1-3/
+publisherName: Commerce Layer
+serviceCategory: Composable Commerce
+billingModel:
+  pricingCategory: Subscription + Add-Ons
+  billingFrequency: Annual (Enterprise) / Free (Developer)
+  billingCurrency: USD
+  chargeCategories:
+    - Subscription
+    - Usage
+    - Purchase
+    - Adjustment
+  primaryUnit: order
+  secondaryUnits:
+    - organization
+    - environment
+    - market
+chargeTypes:
+  - chargeCategory: Subscription
+    chargeSubcategory: Plan fee
+    description: Annual subscription priced per organization. Tier (Developer / Enterprise) and
+      negotiated volume bands drive the fee.
+  - chargeCategory: Usage
+    chargeSubcategory: Live orders
+    description: Live-order volume is the primary commerce-unit signal. Developer plan includes a free
+      monthly allotment; Enterprise contracts negotiate live-order bands explicitly.
+  - chargeCategory: Purchase
+    chargeSubcategory: Distributed OMS add-on
+    description: Optional add-on enabling distributed order management.
+  - chargeCategory: Purchase
+    chargeSubcategory: Promotion Engine add-on
+    description: Optional add-on for advanced promotion authoring (flex promotions, external promotion hooks).
+  - chargeCategory: Purchase
+    chargeSubcategory: Dedicated support / SLA tiers
+    description: Premium support and SLA tiers as part of Enterprise add-ons.
+governance:
+  costAllocation:
+    by: market
+    granularity:
+      - organization
+      - environment
+      - market
+      - merchant
+      - store
+  reporting:
+    metricsApi: https://docs.commercelayer.io/metrics/welcome
+    queries:
+      - orders/breakdown
+      - orders/date_breakdown
+      - orders/stats
+      - usage/date_breakdown
+      - usage/search
+  mcp:
+    available: true
+    server: https://github.com/commercelayer/mcp-server-metrics
+    description: Commerce Layer publishes a local MCP server for the Metrics API. FinOps and BI agents can
+      query orders, carts, returns, and usage breakdowns through MCP.
+  observability:
+    rateLimitHeaders:
+      - X-Ratelimit-Limit
+      - X-Ratelimit-Interval
+      - X-Ratelimit-Remaining
+    webhookTopics:
+      - orders.placed
+      - orders.approved
+      - orders.cancelled
+      - orders.refunded
+    eventStream:
+      type: SSE
+      url: https://docs.commercelayer.io/core/event-stream-hub

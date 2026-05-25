@@ -1,0 +1,378 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Commerce Layer Core API — SKUs
+  description: 'Manage catalog SKUs and related entities: SKU lists, SKU list items, SKU options, bundles, stock items, stock locations, inventory models.'
+  tags:
+  - Commerce Layer
+  created: '2026-05-25'
+  modified: '2026-05-25'
+binds:
+- namespace: env
+  keys:
+    COMMERCE_LAYER_ACCESS_TOKEN: COMMERCE_LAYER_ACCESS_TOKEN
+    COMMERCE_LAYER_ORG_SLUG: COMMERCE_LAYER_ORG_SLUG
+capability:
+  consumes:
+  - type: http
+    namespace: core-skus
+    baseUri: https://{{env.COMMERCE_LAYER_ORG_SLUG}}.commercelayer.io/api
+    description: Commerce Layer Core API — SKUs business surface.
+    resources:
+    - name: skus
+      path: /skus
+      operations:
+      - name: listskus
+        method: GET
+        description: List All SKUs
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: createsku
+        method: POST
+        description: Create A SKU
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          required: true
+    - name: skus-skuid
+      path: /skus/{skuId}
+      operations:
+      - name: retrievesku
+        method: GET
+        description: Retrieve A SKU
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: updatesku
+        method: PATCH
+        description: Update A SKU
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          required: true
+      - name: deletesku
+        method: DELETE
+        description: Delete A SKU
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: sku_lists
+      path: /sku_lists
+      operations:
+      - name: listskulists
+        method: GET
+        description: List All SKU Lists
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: createskulist
+        method: POST
+        description: Create A SKU List
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          required: true
+    - name: bundles
+      path: /bundles
+      operations:
+      - name: listbundles
+        method: GET
+        description: List All Bundles
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: createbundle
+        method: POST
+        description: Create A Bundle
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          required: true
+    - name: stock_items
+      path: /stock_items
+      operations:
+      - name: liststockitems
+        method: GET
+        description: List All Stock Items
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: createstockitem
+        method: POST
+        description: Create A Stock Item
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          required: true
+    authentication:
+      type: oauth2
+      flow: client_credentials
+      tokenUrl: https://auth.commercelayer.io/oauth/token
+      value: 'Bearer {{env.COMMERCE_LAYER_ACCESS_TOKEN}}'
+      placement: header
+      key: Authorization
+  exposes:
+  - type: rest
+    namespace: core-skus-rest
+    port: 8080
+    description: REST adapter for Commerce Layer Core API — SKUs.
+    resources:
+    - path: /api/skus
+      name: skus
+      operations:
+      - method: GET
+        name: listskus
+        call: core-skus.listskus
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: createsku
+        call: core-skus.createsku
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /api/skus/{skuId}
+      name: skus-skuid
+      operations:
+      - method: GET
+        name: retrievesku
+        call: core-skus.retrievesku
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: PATCH
+        name: updatesku
+        call: core-skus.updatesku
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: DELETE
+        name: deletesku
+        call: core-skus.deletesku
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /api/sku_lists
+      name: sku-lists
+      operations:
+      - method: GET
+        name: listskulists
+        call: core-skus.listskulists
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: createskulist
+        call: core-skus.createskulist
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /api/bundles
+      name: bundles
+      operations:
+      - method: GET
+        name: listbundles
+        call: core-skus.listbundles
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: createbundle
+        call: core-skus.createbundle
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /api/stock_items
+      name: stock-items
+      operations:
+      - method: GET
+        name: liststockitems
+        call: core-skus.liststockitems
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: createstockitem
+        call: core-skus.createstockitem
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: core-skus-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Commerce Layer Core API — SKUs.
+    tools:
+    - name: commerce-layer-listskus
+      description: List All SKUs
+      hints:
+        readOnly: true
+        idempotent: true
+        destructive: false
+      call: core-skus.listskus
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: commerce-layer-createsku
+      description: Create A SKU
+      hints:
+        readOnly: false
+        idempotent: false
+        destructive: false
+      call: core-skus.createsku
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: commerce-layer-retrievesku
+      description: Retrieve A SKU
+      hints:
+        readOnly: true
+        idempotent: true
+        destructive: false
+      call: core-skus.retrievesku
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: commerce-layer-updatesku
+      description: Update A SKU
+      hints:
+        readOnly: false
+        idempotent: true
+        destructive: false
+      call: core-skus.updatesku
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: commerce-layer-deletesku
+      description: Delete A SKU
+      hints:
+        readOnly: false
+        idempotent: true
+        destructive: true
+      call: core-skus.deletesku
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: commerce-layer-listskulists
+      description: List All SKU Lists
+      hints:
+        readOnly: true
+        idempotent: true
+        destructive: false
+      call: core-skus.listskulists
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: commerce-layer-createskulist
+      description: Create A SKU List
+      hints:
+        readOnly: false
+        idempotent: false
+        destructive: false
+      call: core-skus.createskulist
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: commerce-layer-listbundles
+      description: List All Bundles
+      hints:
+        readOnly: true
+        idempotent: true
+        destructive: false
+      call: core-skus.listbundles
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: commerce-layer-createbundle
+      description: Create A Bundle
+      hints:
+        readOnly: false
+        idempotent: false
+        destructive: false
+      call: core-skus.createbundle
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: commerce-layer-liststockitems
+      description: List All Stock Items
+      hints:
+        readOnly: true
+        idempotent: true
+        destructive: false
+      call: core-skus.liststockitems
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: commerce-layer-createstockitem
+      description: Create A Stock Item
+      hints:
+        readOnly: false
+        idempotent: false
+        destructive: false
+      call: core-skus.createstockitem
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.

@@ -1,0 +1,164 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Commerce Layer Provisioning API — Organizations
+  description: 'Provision Commerce Layer organizations and inspect organization metadata.'
+  tags:
+  - Commerce Layer
+  created: '2026-05-25'
+  modified: '2026-05-25'
+binds:
+- namespace: env
+  keys:
+    COMMERCE_LAYER_PROVISIONING_ACCESS_TOKEN: COMMERCE_LAYER_PROVISIONING_ACCESS_TOKEN
+capability:
+  consumes:
+  - type: http
+    namespace: provisioning-organizations
+    baseUri: https://provisioning.commercelayer.io
+    description: Commerce Layer Provisioning API — Organizations business surface.
+    resources:
+    - name: organizations
+      path: /organizations
+      operations:
+      - name: listorganizations
+        method: GET
+        description: List All Organizations
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: createorganization
+        method: POST
+        description: Create An Organization
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          required: true
+    - name: organizations-organizationId
+      path: /organizations/{organizationId}
+      operations:
+      - name: retrieveorganization
+        method: GET
+        description: Retrieve An Organization
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: updateorganization
+        method: PATCH
+        description: Update An Organization
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          required: true
+    authentication:
+      type: oauth2
+      flow: client_credentials
+      tokenUrl: https://auth.commercelayer.io/oauth/token
+      value: 'Bearer {{env.COMMERCE_LAYER_PROVISIONING_ACCESS_TOKEN}}'
+      placement: header
+      key: Authorization
+  exposes:
+  - type: rest
+    namespace: provisioning-organizations-rest
+    port: 8080
+    description: REST adapter for Commerce Layer Provisioning API — Organizations.
+    resources:
+    - path: /api/organizations
+      name: organizations
+      operations:
+      - method: GET
+        name: listorganizations
+        call: provisioning-organizations.listorganizations
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: createorganization
+        call: provisioning-organizations.createorganization
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /api/organizations/{organizationId}
+      name: organizations-organizationId
+      operations:
+      - method: GET
+        name: retrieveorganization
+        call: provisioning-organizations.retrieveorganization
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: PATCH
+        name: updateorganization
+        call: provisioning-organizations.updateorganization
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: provisioning-organizations-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Commerce Layer Provisioning API — Organizations.
+    tools:
+    - name: commerce-layer-listorganizations
+      description: List All Organizations
+      hints:
+        readOnly: true
+        idempotent: true
+        destructive: false
+      call: provisioning-organizations.listorganizations
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: commerce-layer-createorganization
+      description: Create An Organization
+      hints:
+        readOnly: false
+        idempotent: false
+        destructive: false
+      call: provisioning-organizations.createorganization
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: commerce-layer-retrieveorganization
+      description: Retrieve An Organization
+      hints:
+        readOnly: true
+        idempotent: true
+        destructive: false
+      call: provisioning-organizations.retrieveorganization
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: commerce-layer-updateorganization
+      description: Update An Organization
+      hints:
+        readOnly: false
+        idempotent: true
+        destructive: false
+      call: provisioning-organizations.updateorganization
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.

@@ -1,0 +1,108 @@
+specification: API Commons Plans
+specificationVersion: '0.1'
+schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main/schema/api-commons.yml#/$defs/Plans
+provider: Commerce Layer
+providerId: commerce-layer
+created: '2026-05-25'
+modified: '2026-05-25'
+reconciled: true
+tags:
+  - Commerce
+  - Headless Commerce
+  - Composable Commerce
+  - Ecommerce
+  - Pricing
+description: 'Plans and commercial offering for Commerce Layer. Source: commercelayer.io/pricing. Commerce
+  Layer markets a Free Developer plan and an Enterprise plan. The Enterprise plan is custom-priced and ships
+  with additional capability add-ons (Distributed OMS, Promotion Engine). Pro-bono plans are also offered
+  for selected non-profits. Live-order quotas, environment limits, and SLA tiers are negotiated at the
+  Enterprise level — captured here as fields rather than fixed dollar amounts.'
+sources:
+  - https://commercelayer.io/pricing
+  - https://commercelayer.io/product
+plans:
+  - id: commerce-layer-developer
+    name: Developer
+    type: free
+    description: Free developer plan. Free live orders/month for evaluation, prototyping, and small projects.
+      Always free for developers.
+    entries:
+      - label: Subscription
+        name: subscription
+        type: flat
+        metric: organization
+        limit: 1
+        timeFrame: month
+        geo: global
+        unit: 1
+        price: '0.00'
+        userMultiplied: false
+        description: Free developer plan, single organization.
+      - label: Live orders
+        name: live-orders
+        type: metered
+        metric: order
+        limit: -1
+        timeFrame: month
+        geo: global
+        unit: 1
+        price: '0.00'
+        userMultiplied: false
+        description: Bundled free live orders per month for developer accounts.
+    elements:
+      - name: Core API access (live + test environments)
+        description: Full JSON:API access to the Core API across both environments at developer rate limits.
+      - name: Real-time webhooks
+      - name: Event Stream Hub (SSE)
+      - name: Open-source SDKs, CLI, micro frontends
+      - name: Community Discord support
+      - name: Public OpenAPI, carrier schema, rules schemas
+  - id: commerce-layer-enterprise
+    name: Enterprise
+    type: enterprise
+    description: Custom-priced enterprise plan. Includes Provisioning API access, dedicated support, custom
+      user roles, custom identity providers, and enterprise SLAs. Available add-ons include Distributed
+      OMS and the Promotion Engine.
+    entries:
+      - label: Annual contract
+        name: annual-contract
+        type: flat
+        metric: organization
+        limit: -1
+        timeFrame: year
+        geo: global
+        unit: 1
+        price: contact
+        userMultiplied: false
+        description: Annual contract priced per organization and order volume. Contact sales.
+    elements:
+      - name: Everything in Developer
+      - name: Provisioning API access
+        description: Programmatic organization, membership, role, API credential, and identity-provider management.
+      - name: Higher rate limits
+      - name: Custom user roles and permissions
+      - name: Custom identity providers (SSO / federation)
+      - name: Enterprise SLAs
+      - name: Dedicated support
+      - name: Distributed OMS add-on
+        description: Distributed order management add-on.
+      - name: Promotion Engine add-on
+        description: Advanced promotion-engine add-on with flex promotions and external promotion hooks.
+  - id: commerce-layer-pro-bono
+    name: Pro Bono
+    type: discounted
+    description: Pro-bono plan offered to selected non-profit organizations on a case-by-case basis.
+    entries:
+      - label: Subscription
+        name: subscription
+        type: flat
+        metric: organization
+        limit: 1
+        timeFrame: month
+        geo: global
+        unit: 1
+        price: '0.00'
+        userMultiplied: false
+        description: Pro-bono plan for qualified non-profits. Negotiated directly.
+    elements:
+      - name: Same surface area as Enterprise

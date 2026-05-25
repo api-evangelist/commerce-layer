@@ -1,0 +1,156 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Commerce Layer Metrics API — Usage and FBT Analysis
+  description: 'Usage metering queries and frequently-bought-together (FBT) analysis helper.'
+  tags:
+  - Commerce Layer
+  created: '2026-05-25'
+  modified: '2026-05-25'
+binds:
+- namespace: env
+  keys:
+    COMMERCE_LAYER_ACCESS_TOKEN: COMMERCE_LAYER_ACCESS_TOKEN
+    COMMERCE_LAYER_ORG_SLUG: COMMERCE_LAYER_ORG_SLUG
+capability:
+  consumes:
+  - type: http
+    namespace: metrics-usage
+    baseUri: https://{{env.COMMERCE_LAYER_ORG_SLUG}}.commercelayer.io/metrics
+    description: Commerce Layer Metrics API — Usage and FBT Analysis business surface.
+    resources:
+    - name: usage-date_breakdown
+      path: /usage/date_breakdown
+      operations:
+      - name: usagedatebreakdown
+        method: POST
+        description: Run A Usage Date-Breakdown Query
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          required: true
+    - name: usage-search
+      path: /usage/search
+      operations:
+      - name: usagesearch
+        method: POST
+        description: Run A Usage Search Query
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          required: true
+    - name: analysis-fbt
+      path: /analysis/fbt
+      operations:
+      - name: fbtanalysis
+        method: POST
+        description: Run A Frequently-Bought-Together Analysis
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          required: true
+    authentication:
+      type: oauth2
+      flow: client_credentials
+      tokenUrl: https://auth.commercelayer.io/oauth/token
+      value: 'Bearer {{env.COMMERCE_LAYER_ACCESS_TOKEN}}'
+      placement: header
+      key: Authorization
+  exposes:
+  - type: rest
+    namespace: metrics-usage-rest
+    port: 8080
+    description: REST adapter for Commerce Layer Metrics API — Usage and FBT Analysis.
+    resources:
+    - path: /api/usage/date_breakdown
+      name: usage-date-breakdown
+      operations:
+      - method: POST
+        name: usagedatebreakdown
+        call: metrics-usage.usagedatebreakdown
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /api/usage/search
+      name: usage-search
+      operations:
+      - method: POST
+        name: usagesearch
+        call: metrics-usage.usagesearch
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /api/analysis/fbt
+      name: analysis-fbt
+      operations:
+      - method: POST
+        name: fbtanalysis
+        call: metrics-usage.fbtanalysis
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: metrics-usage-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Commerce Layer Metrics API — Usage and FBT Analysis.
+    tools:
+    - name: commerce-layer-usagedatebreakdown
+      description: Run A Usage Date-Breakdown Query
+      hints:
+        readOnly: false
+        idempotent: false
+        destructive: false
+      call: metrics-usage.usagedatebreakdown
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: commerce-layer-usagesearch
+      description: Run A Usage Search Query
+      hints:
+        readOnly: false
+        idempotent: false
+        destructive: false
+      call: metrics-usage.usagesearch
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: commerce-layer-fbtanalysis
+      description: Run A Frequently-Bought-Together Analysis
+      hints:
+        readOnly: false
+        idempotent: false
+        destructive: false
+      call: metrics-usage.fbtanalysis
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.

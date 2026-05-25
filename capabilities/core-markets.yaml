@@ -1,0 +1,375 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Commerce Layer Core API — Markets
+  description: 'Markets, merchants, stores, organization, and application singletons.'
+  tags:
+  - Commerce Layer
+  created: '2026-05-25'
+  modified: '2026-05-25'
+binds:
+- namespace: env
+  keys:
+    COMMERCE_LAYER_ACCESS_TOKEN: COMMERCE_LAYER_ACCESS_TOKEN
+    COMMERCE_LAYER_ORG_SLUG: COMMERCE_LAYER_ORG_SLUG
+capability:
+  consumes:
+  - type: http
+    namespace: core-markets
+    baseUri: https://{{env.COMMERCE_LAYER_ORG_SLUG}}.commercelayer.io/api
+    description: Commerce Layer Core API — Markets business surface.
+    resources:
+    - name: markets
+      path: /markets
+      operations:
+      - name: listmarkets
+        method: GET
+        description: List All Markets
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: createmarket
+        method: POST
+        description: Create A Market
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          required: true
+    - name: markets-marketId
+      path: /markets/{marketId}
+      operations:
+      - name: retrievemarket
+        method: GET
+        description: Retrieve A Market
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: updatemarket
+        method: PATCH
+        description: Update A Market
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          required: true
+      - name: deletemarket
+        method: DELETE
+        description: Delete A Market
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: merchants
+      path: /merchants
+      operations:
+      - name: listmerchants
+        method: GET
+        description: List All Merchants
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: createmerchant
+        method: POST
+        description: Create A Merchant
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          required: true
+    - name: stores
+      path: /stores
+      operations:
+      - name: liststores
+        method: GET
+        description: List All Stores
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: createstore
+        method: POST
+        description: Create A Store
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          required: true
+    - name: organization
+      path: /organization
+      operations:
+      - name: retrieveorganization
+        method: GET
+        description: Retrieve The Organization Singleton
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: application
+      path: /application
+      operations:
+      - name: retrieveapplication
+        method: GET
+        description: Retrieve The Application Singleton
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    authentication:
+      type: oauth2
+      flow: client_credentials
+      tokenUrl: https://auth.commercelayer.io/oauth/token
+      value: 'Bearer {{env.COMMERCE_LAYER_ACCESS_TOKEN}}'
+      placement: header
+      key: Authorization
+  exposes:
+  - type: rest
+    namespace: core-markets-rest
+    port: 8080
+    description: REST adapter for Commerce Layer Core API — Markets.
+    resources:
+    - path: /api/markets
+      name: markets
+      operations:
+      - method: GET
+        name: listmarkets
+        call: core-markets.listmarkets
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: createmarket
+        call: core-markets.createmarket
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /api/markets/{marketId}
+      name: markets-marketId
+      operations:
+      - method: GET
+        name: retrievemarket
+        call: core-markets.retrievemarket
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: PATCH
+        name: updatemarket
+        call: core-markets.updatemarket
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: DELETE
+        name: deletemarket
+        call: core-markets.deletemarket
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /api/merchants
+      name: merchants
+      operations:
+      - method: GET
+        name: listmerchants
+        call: core-markets.listmerchants
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: createmerchant
+        call: core-markets.createmerchant
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /api/stores
+      name: stores
+      operations:
+      - method: GET
+        name: liststores
+        call: core-markets.liststores
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: createstore
+        call: core-markets.createstore
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /api/organization
+      name: organization
+      operations:
+      - method: GET
+        name: retrieveorganization
+        call: core-markets.retrieveorganization
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /api/application
+      name: application
+      operations:
+      - method: GET
+        name: retrieveapplication
+        call: core-markets.retrieveapplication
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: core-markets-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Commerce Layer Core API — Markets.
+    tools:
+    - name: commerce-layer-listmarkets
+      description: List All Markets
+      hints:
+        readOnly: true
+        idempotent: true
+        destructive: false
+      call: core-markets.listmarkets
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: commerce-layer-createmarket
+      description: Create A Market
+      hints:
+        readOnly: false
+        idempotent: false
+        destructive: false
+      call: core-markets.createmarket
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: commerce-layer-retrievemarket
+      description: Retrieve A Market
+      hints:
+        readOnly: true
+        idempotent: true
+        destructive: false
+      call: core-markets.retrievemarket
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: commerce-layer-updatemarket
+      description: Update A Market
+      hints:
+        readOnly: false
+        idempotent: true
+        destructive: false
+      call: core-markets.updatemarket
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: commerce-layer-deletemarket
+      description: Delete A Market
+      hints:
+        readOnly: false
+        idempotent: true
+        destructive: true
+      call: core-markets.deletemarket
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: commerce-layer-listmerchants
+      description: List All Merchants
+      hints:
+        readOnly: true
+        idempotent: true
+        destructive: false
+      call: core-markets.listmerchants
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: commerce-layer-createmerchant
+      description: Create A Merchant
+      hints:
+        readOnly: false
+        idempotent: false
+        destructive: false
+      call: core-markets.createmerchant
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: commerce-layer-liststores
+      description: List All Stores
+      hints:
+        readOnly: true
+        idempotent: true
+        destructive: false
+      call: core-markets.liststores
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: commerce-layer-createstore
+      description: Create A Store
+      hints:
+        readOnly: false
+        idempotent: false
+        destructive: false
+      call: core-markets.createstore
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: commerce-layer-retrieveorganization
+      description: Retrieve The Organization Singleton
+      hints:
+        readOnly: true
+        idempotent: true
+        destructive: false
+      call: core-markets.retrieveorganization
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: commerce-layer-retrieveapplication
+      description: Retrieve The Application Singleton
+      hints:
+        readOnly: true
+        idempotent: true
+        destructive: false
+      call: core-markets.retrieveapplication
+      outputParameters:
+      - type: object
+        mapping: $.

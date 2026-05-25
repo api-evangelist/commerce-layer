@@ -1,0 +1,55 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://api-evangelist.com/schemas/commerce-layer/commerce-layer-sku-schema.json",
+  "title": "Commerce Layer SKU",
+  "description": "Schema for the Commerce Layer SKU resource — the unit-level entity that connects a catalog item to inventory and pricing. Conforms to JSON:API.",
+  "type": "object",
+  "required": ["data"],
+  "properties": {
+    "data": { "$ref": "#/definitions/SkuResource" }
+  },
+  "definitions": {
+    "SkuResource": {
+      "type": "object",
+      "required": ["type"],
+      "properties": {
+        "type": { "type": "string", "const": "skus" },
+        "id": { "type": "string" },
+        "attributes": { "$ref": "#/definitions/SkuAttributes" },
+        "relationships": { "$ref": "#/definitions/SkuRelationships" }
+      }
+    },
+    "SkuAttributes": {
+      "type": "object",
+      "required": ["code","name"],
+      "properties": {
+        "code": { "type": "string", "description": "Unique stock-keeping unit identifier within the organization." },
+        "name": { "type": "string" },
+        "description": { "type": "string" },
+        "image_url": { "type": "string", "format": "uri" },
+        "pieces_per_pack": { "type": "integer" },
+        "weight": { "type": "number" },
+        "unit_of_weight": { "type": "string", "enum": ["gr","oz","lb","kg"] },
+        "hs_tariff_number": { "type": "string", "description": "Harmonized System tariff number for cross-border duty calculation." },
+        "do_not_ship": { "type": "boolean", "description": "Digital or non-shippable SKU." },
+        "do_not_track": { "type": "boolean", "description": "Skip inventory tracking — treat as infinite stock." },
+        "inventory": { "type": "object", "description": "Per-stock-location availability summary." },
+        "metadata": { "type": "object" },
+        "tags": { "type": "array", "items": { "type": "string" } },
+        "created_at": { "type": "string", "format": "date-time" },
+        "updated_at": { "type": "string", "format": "date-time" }
+      }
+    },
+    "SkuRelationships": {
+      "type": "object",
+      "properties": {
+        "shipping_category": { "type": "object" },
+        "prices": { "type": "object" },
+        "stock_items": { "type": "object" },
+        "sku_options": { "type": "object" },
+        "delivery_lead_times": { "type": "object" },
+        "tags": { "type": "object" }
+      }
+    }
+  }
+}

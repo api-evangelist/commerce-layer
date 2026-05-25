@@ -1,0 +1,234 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Commerce Layer Metrics API — Carts
+  description: 'Analytics queries for shopping carts (open / abandoned orders).'
+  tags:
+  - Commerce Layer
+  created: '2026-05-25'
+  modified: '2026-05-25'
+binds:
+- namespace: env
+  keys:
+    COMMERCE_LAYER_ACCESS_TOKEN: COMMERCE_LAYER_ACCESS_TOKEN
+    COMMERCE_LAYER_ORG_SLUG: COMMERCE_LAYER_ORG_SLUG
+capability:
+  consumes:
+  - type: http
+    namespace: metrics-carts
+    baseUri: https://{{env.COMMERCE_LAYER_ORG_SLUG}}.commercelayer.io/metrics
+    description: Commerce Layer Metrics API — Carts business surface.
+    resources:
+    - name: carts-breakdown
+      path: /carts/breakdown
+      operations:
+      - name: cartsbreakdown
+        method: POST
+        description: Run A Carts Breakdown Query
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          required: true
+    - name: carts-date_breakdown
+      path: /carts/date_breakdown
+      operations:
+      - name: cartsdatebreakdown
+        method: POST
+        description: Run A Carts Date-Breakdown Query
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          required: true
+    - name: carts-stats
+      path: /carts/stats
+      operations:
+      - name: cartsstats
+        method: POST
+        description: Run A Carts Stats Query
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          required: true
+    - name: carts-search
+      path: /carts/search
+      operations:
+      - name: cartssearch
+        method: POST
+        description: Run A Carts Search Query
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          required: true
+    - name: carts-export
+      path: /carts/export
+      operations:
+      - name: cartsexport
+        method: POST
+        description: Run A Carts Export Query
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          required: true
+    authentication:
+      type: oauth2
+      flow: client_credentials
+      tokenUrl: https://auth.commercelayer.io/oauth/token
+      value: 'Bearer {{env.COMMERCE_LAYER_ACCESS_TOKEN}}'
+      placement: header
+      key: Authorization
+  exposes:
+  - type: rest
+    namespace: metrics-carts-rest
+    port: 8080
+    description: REST adapter for Commerce Layer Metrics API — Carts.
+    resources:
+    - path: /api/carts/breakdown
+      name: carts-breakdown
+      operations:
+      - method: POST
+        name: cartsbreakdown
+        call: metrics-carts.cartsbreakdown
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /api/carts/date_breakdown
+      name: carts-date-breakdown
+      operations:
+      - method: POST
+        name: cartsdatebreakdown
+        call: metrics-carts.cartsdatebreakdown
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /api/carts/stats
+      name: carts-stats
+      operations:
+      - method: POST
+        name: cartsstats
+        call: metrics-carts.cartsstats
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /api/carts/search
+      name: carts-search
+      operations:
+      - method: POST
+        name: cartssearch
+        call: metrics-carts.cartssearch
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /api/carts/export
+      name: carts-export
+      operations:
+      - method: POST
+        name: cartsexport
+        call: metrics-carts.cartsexport
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: metrics-carts-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Commerce Layer Metrics API — Carts.
+    tools:
+    - name: commerce-layer-cartsbreakdown
+      description: Run A Carts Breakdown Query
+      hints:
+        readOnly: false
+        idempotent: false
+        destructive: false
+      call: metrics-carts.cartsbreakdown
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: commerce-layer-cartsdatebreakdown
+      description: Run A Carts Date-Breakdown Query
+      hints:
+        readOnly: false
+        idempotent: false
+        destructive: false
+      call: metrics-carts.cartsdatebreakdown
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: commerce-layer-cartsstats
+      description: Run A Carts Stats Query
+      hints:
+        readOnly: false
+        idempotent: false
+        destructive: false
+      call: metrics-carts.cartsstats
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: commerce-layer-cartssearch
+      description: Run A Carts Search Query
+      hints:
+        readOnly: false
+        idempotent: false
+        destructive: false
+      call: metrics-carts.cartssearch
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: commerce-layer-cartsexport
+      description: Run A Carts Export Query
+      hints:
+        readOnly: false
+        idempotent: false
+        destructive: false
+      call: metrics-carts.cartsexport
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.

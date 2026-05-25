@@ -1,0 +1,252 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Commerce Layer Core API — Orders
+  description: 'Commerce Layer Core API — Orders. Order lifecycle management: create draft orders, list orders, retrieve an
+    order with nested line items / shipments / payments, update / place / cancel / approve / refund / archive / fulfill / capture
+    / void / authorize orders, plus order copies and recurring order copies for subscriptions.'
+  tags:
+  - Commerce Layer
+  - Orders
+  - Checkout
+  - Order Management
+  created: '2026-05-25'
+  modified: '2026-05-25'
+binds:
+- namespace: env
+  keys:
+    COMMERCE_LAYER_ACCESS_TOKEN: COMMERCE_LAYER_ACCESS_TOKEN
+    COMMERCE_LAYER_ORG_SLUG: COMMERCE_LAYER_ORG_SLUG
+capability:
+  consumes:
+  - type: http
+    namespace: core-orders
+    baseUri: https://{{env.COMMERCE_LAYER_ORG_SLUG}}.commercelayer.io/api
+    description: Commerce Layer Core API orders business surface. JSON:API media type required.
+    resources:
+    - name: orders
+      path: /orders
+      operations:
+      - name: listorders
+        method: GET
+        description: List All Orders
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: createorder
+        method: POST
+        description: Create An Order
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: JSON:API payload for the order resource.
+          required: true
+    - name: orders-orderId
+      path: /orders/{orderId}
+      operations:
+      - name: retrieveorder
+        method: GET
+        description: Retrieve An Order
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: updateorder
+        method: PATCH
+        description: Update An Order — also used to place, approve, cancel, refund, archive, fulfill, capture, void,
+          authorize via the `_status` triggers in the body.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          required: true
+      - name: deleteorder
+        method: DELETE
+        description: Delete A Draft Order
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: line_items
+      path: /line_items
+      operations:
+      - name: createlineitem
+        method: POST
+        description: Add A Line Item To An Order
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          required: true
+    - name: order_copies
+      path: /order_copies
+      operations:
+      - name: createordercopy
+        method: POST
+        description: Create An Order Copy
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          required: true
+    authentication:
+      type: oauth2
+      flow: client_credentials
+      tokenUrl: https://auth.commercelayer.io/oauth/token
+      value: 'Bearer {{env.COMMERCE_LAYER_ACCESS_TOKEN}}'
+      placement: header
+      key: Authorization
+  exposes:
+  - type: rest
+    namespace: core-orders-rest
+    port: 8080
+    description: REST adapter for Commerce Layer Core Orders.
+    resources:
+    - path: /api/orders
+      name: orders
+      operations:
+      - method: GET
+        name: listorders
+        call: core-orders.listorders
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: createorder
+        call: core-orders.createorder
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /api/orders/{order-id}
+      name: orders-order-id
+      operations:
+      - method: GET
+        name: retrieveorder
+        call: core-orders.retrieveorder
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: PATCH
+        name: updateorder
+        call: core-orders.updateorder
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: DELETE
+        name: deleteorder
+        call: core-orders.deleteorder
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: core-orders-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Commerce Layer Core Orders.
+    tools:
+    - name: commerce-layer-list-orders
+      description: List orders for an organization with JSON:API filters.
+      hints:
+        readOnly: true
+        idempotent: true
+        destructive: false
+      call: core-orders.listorders
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: commerce-layer-create-order
+      description: Create a new draft order.
+      hints:
+        readOnly: false
+        idempotent: false
+        destructive: false
+      call: core-orders.createorder
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: commerce-layer-retrieve-order
+      description: Retrieve a single order by id.
+      hints:
+        readOnly: true
+        idempotent: true
+        destructive: false
+      call: core-orders.retrieveorder
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: commerce-layer-update-order
+      description: Update an order — including state transitions (place/approve/cancel/refund/archive/etc).
+      hints:
+        readOnly: false
+        idempotent: true
+        destructive: false
+      call: core-orders.updateorder
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: commerce-layer-delete-order
+      description: Delete a draft order.
+      hints:
+        readOnly: false
+        idempotent: true
+        destructive: true
+      call: core-orders.deleteorder
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: commerce-layer-add-line-item
+      description: Add a line item to an existing order.
+      hints:
+        readOnly: false
+        idempotent: false
+        destructive: false
+      call: core-orders.createlineitem
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: commerce-layer-create-order-copy
+      description: Create an order copy (used for subscriptions and re-orders).
+      hints:
+        readOnly: false
+        idempotent: false
+        destructive: false
+      call: core-orders.createordercopy
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
