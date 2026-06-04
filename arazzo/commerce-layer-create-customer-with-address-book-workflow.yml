@@ -1,0 +1,120 @@
+arazzo: 1.0.1
+info:
+  title: Commerce Layer Create Customer with Address Book Entry
+  summary: Create a customer, create an address, and link it as a customer address book entry.
+  description: >-
+    The Commerce Layer customer address book setup flow. The workflow creates a
+    customer, creates a reusable address resource, and links the two by creating
+    a customer address that references both. Every step spells out its JSON:API
+    request inline so the flow can be read and executed without opening the
+    underlying OpenAPI description.
+  version: 1.0.0
+sourceDescriptions:
+- name: coreApi
+  url: ../openapi/commerce-layer-core-api-openapi.json
+  type: openapi
+workflows:
+- workflowId: create-customer-with-address-book
+  summary: Create a customer and add an address book entry.
+  description: >-
+    Creates a customer, creates an address, then links them with a customer
+    address book entry.
+  inputs:
+    type: object
+    required:
+    - accessToken
+    - email
+    - line1
+    - city
+    - countryCode
+    - phone
+    properties:
+      accessToken:
+        type: string
+        description: Bearer access token for the Commerce Layer organization.
+      email:
+        type: string
+        description: The customer email address.
+      line1:
+        type: string
+        description: First line of the street address.
+      city:
+        type: string
+        description: City of the address.
+      countryCode:
+        type: string
+        description: Two-letter country code of the address.
+      phone:
+        type: string
+        description: Phone number for the address.
+  steps:
+  - stepId: createCustomer
+    description: Create the customer record.
+    operationId: POST/customers
+    parameters:
+    - name: Authorization
+      in: header
+      value: "Bearer $inputs.accessToken"
+    requestBody:
+      contentType: application/vnd.api+json
+      payload:
+        data:
+          type: customers
+          attributes:
+            email: $inputs.email
+    successCriteria:
+    - condition: $statusCode == 201
+    outputs:
+      customerId: $response.body#/data/id
+  - stepId: createAddress
+    description: Create the address resource.
+    operationId: POST/addresses
+    parameters:
+    - name: Authorization
+      in: header
+      value: "Bearer $inputs.accessToken"
+    requestBody:
+      contentType: application/vnd.api+json
+      payload:
+        data:
+          type: addresses
+          attributes:
+            line_1: $inputs.line1
+            city: $inputs.city
+            country_code: $inputs.countryCode
+            phone: $inputs.phone
+    successCriteria:
+    - condition: $statusCode == 201
+    outputs:
+      addressId: $response.body#/data/id
+  - stepId: linkCustomerAddress
+    description: Link the customer and address with a customer address book entry.
+    operationId: POST/customer_addresses
+    parameters:
+    - name: Authorization
+      in: header
+      value: "Bearer $inputs.accessToken"
+    requestBody:
+      contentType: application/vnd.api+json
+      payload:
+        data:
+          type: customer_addresses
+          attributes:
+            customer_email: $inputs.email
+          relationships:
+            customer:
+              data:
+                type: customers
+                id: $steps.createCustomer.outputs.customerId
+            address:
+              data:
+                type: addresses
+                id: $steps.createAddress.outputs.addressId
+    successCriteria:
+    - condition: $statusCode == 201
+    outputs:
+      customerAddressId: $response.body#/data/id
+  outputs:
+    customerId: $steps.createCustomer.outputs.customerId
+    addressId: $steps.createAddress.outputs.addressId
+    customerAddressId: $steps.linkCustomerAddress.outputs.customerAddressId

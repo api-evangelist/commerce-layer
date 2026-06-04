@@ -1,0 +1,120 @@
+arazzo: 1.0.1
+info:
+  title: Commerce Layer Create Market with Payment Method
+  summary: Create a market tied to merchant, price list, and inventory model, then add a payment method to it.
+  description: >-
+    A Commerce Layer storefront configuration flow. The workflow creates a
+    market wired to its required merchant, price list, and inventory model, then
+    creates a payment method scoped to that market and a payment gateway. Every
+    step spells out its JSON:API request inline so the flow can be read and
+    executed without opening the underlying OpenAPI description.
+  version: 1.0.0
+sourceDescriptions:
+- name: coreApi
+  url: ../openapi/commerce-layer-core-api-openapi.json
+  type: openapi
+workflows:
+- workflowId: create-market-with-payment-method
+  summary: Create a market and add a payment method to it.
+  description: >-
+    Creates a market with its required merchant, price list, and inventory model
+    relationships, then creates a payment method bound to the market and gateway.
+  inputs:
+    type: object
+    required:
+    - accessToken
+    - name
+    - merchantId
+    - priceListId
+    - inventoryModelId
+    - paymentGatewayId
+    - paymentSourceType
+    - priceAmountCents
+    properties:
+      accessToken:
+        type: string
+        description: Bearer access token for the Commerce Layer organization.
+      name:
+        type: string
+        description: The market name.
+      merchantId:
+        type: string
+        description: The id of the merchant for the market.
+      priceListId:
+        type: string
+        description: The id of the price list for the market.
+      inventoryModelId:
+        type: string
+        description: The id of the inventory model for the market.
+      paymentGatewayId:
+        type: string
+        description: The id of the payment gateway backing the payment method.
+      paymentSourceType:
+        type: string
+        description: The payment source type for the payment method (e.g. credit_cards).
+      priceAmountCents:
+        type: integer
+        description: The price amount in cents for the payment method.
+  steps:
+  - stepId: createMarket
+    description: Create the market with its required relationships.
+    operationId: POST/markets
+    parameters:
+    - name: Authorization
+      in: header
+      value: "Bearer $inputs.accessToken"
+    requestBody:
+      contentType: application/vnd.api+json
+      payload:
+        data:
+          type: markets
+          attributes:
+            name: $inputs.name
+          relationships:
+            merchant:
+              data:
+                type: merchants
+                id: $inputs.merchantId
+            price_list:
+              data:
+                type: price_lists
+                id: $inputs.priceListId
+            inventory_model:
+              data:
+                type: inventory_models
+                id: $inputs.inventoryModelId
+    successCriteria:
+    - condition: $statusCode == 201
+    outputs:
+      marketId: $response.body#/data/id
+  - stepId: createPaymentMethod
+    description: Create a payment method scoped to the market and gateway.
+    operationId: POST/payment_methods
+    parameters:
+    - name: Authorization
+      in: header
+      value: "Bearer $inputs.accessToken"
+    requestBody:
+      contentType: application/vnd.api+json
+      payload:
+        data:
+          type: payment_methods
+          attributes:
+            payment_source_type: $inputs.paymentSourceType
+            price_amount_cents: $inputs.priceAmountCents
+          relationships:
+            market:
+              data:
+                type: markets
+                id: $steps.createMarket.outputs.marketId
+            payment_gateway:
+              data:
+                type: payment_gateways
+                id: $inputs.paymentGatewayId
+    successCriteria:
+    - condition: $statusCode == 201
+    outputs:
+      paymentMethodId: $response.body#/data/id
+  outputs:
+    marketId: $steps.createMarket.outputs.marketId
+    paymentMethodId: $steps.createPaymentMethod.outputs.paymentMethodId

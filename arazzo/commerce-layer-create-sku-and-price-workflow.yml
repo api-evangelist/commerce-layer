@@ -1,0 +1,105 @@
+arazzo: 1.0.1
+info:
+  title: Commerce Layer Create SKU and Price
+  summary: Create a SKU under a shipping category, then create a price for it in a price list.
+  description: >-
+    The product catalog bootstrap flow for Commerce Layer. The workflow creates
+    a SKU associated to a shipping category and then creates a price for that
+    SKU inside a price list, linking the price to both the price list and the
+    new SKU. Every step spells out its JSON:API request inline so the flow can
+    be read and executed without opening the underlying OpenAPI description.
+  version: 1.0.0
+sourceDescriptions:
+- name: coreApi
+  url: ../openapi/commerce-layer-core-api-openapi.json
+  type: openapi
+workflows:
+- workflowId: create-sku-and-price
+  summary: Create a SKU and a price for it in a price list.
+  description: >-
+    Creates a SKU under a shipping category, then creates a price referencing
+    the SKU and the supplied price list.
+  inputs:
+    type: object
+    required:
+    - accessToken
+    - shippingCategoryId
+    - priceListId
+    - code
+    - name
+    - amountCents
+    properties:
+      accessToken:
+        type: string
+        description: Bearer access token for the Commerce Layer organization.
+      shippingCategoryId:
+        type: string
+        description: The id of the shipping category for the SKU.
+      priceListId:
+        type: string
+        description: The id of the price list the price belongs to.
+      code:
+        type: string
+        description: The unique SKU code.
+      name:
+        type: string
+        description: The SKU display name.
+      amountCents:
+        type: integer
+        description: The price amount in cents.
+  steps:
+  - stepId: createSku
+    description: Create the SKU under the supplied shipping category.
+    operationId: POST/skus
+    parameters:
+    - name: Authorization
+      in: header
+      value: "Bearer $inputs.accessToken"
+    requestBody:
+      contentType: application/vnd.api+json
+      payload:
+        data:
+          type: skus
+          attributes:
+            code: $inputs.code
+            name: $inputs.name
+          relationships:
+            shipping_category:
+              data:
+                type: shipping_categories
+                id: $inputs.shippingCategoryId
+    successCriteria:
+    - condition: $statusCode == 201
+    outputs:
+      skuId: $response.body#/data/id
+  - stepId: createPrice
+    description: Create a price for the SKU inside the supplied price list.
+    operationId: POST/prices
+    parameters:
+    - name: Authorization
+      in: header
+      value: "Bearer $inputs.accessToken"
+    requestBody:
+      contentType: application/vnd.api+json
+      payload:
+        data:
+          type: prices
+          attributes:
+            sku_code: $inputs.code
+            amount_cents: $inputs.amountCents
+          relationships:
+            price_list:
+              data:
+                type: price_lists
+                id: $inputs.priceListId
+            sku:
+              data:
+                type: skus
+                id: $steps.createSku.outputs.skuId
+    successCriteria:
+    - condition: $statusCode == 201
+    outputs:
+      priceId: $response.body#/data/id
+  outputs:
+    skuId: $steps.createSku.outputs.skuId
+    priceId: $steps.createPrice.outputs.priceId

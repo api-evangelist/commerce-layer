@@ -1,0 +1,117 @@
+arazzo: 1.0.1
+info:
+  title: Commerce Layer Create Return with Line Item
+  summary: Open a return against an order, add a return line item for an order line item, then request it.
+  description: >-
+    The Commerce Layer post-purchase returns flow. The workflow creates a return
+    associated to an order, adds a return line item that references both the
+    return and an original order line item with a return quantity, and then
+    patches the return with the documented _request transition flag to submit
+    it. Every step spells out its JSON:API request inline so the flow can be
+    read and executed without opening the underlying OpenAPI description.
+  version: 1.0.0
+sourceDescriptions:
+- name: coreApi
+  url: ../openapi/commerce-layer-core-api-openapi.json
+  type: openapi
+workflows:
+- workflowId: create-return-with-line-item
+  summary: Create a return, add a return line item, and request the return.
+  description: >-
+    Creates a return for an order, adds a return line item referencing an order
+    line item, then patches the return with the documented _request flag.
+  inputs:
+    type: object
+    required:
+    - accessToken
+    - orderId
+    - lineItemId
+    - quantity
+    properties:
+      accessToken:
+        type: string
+        description: Bearer access token for the Commerce Layer organization.
+      orderId:
+        type: string
+        description: The id of the order the return is for.
+      lineItemId:
+        type: string
+        description: The id of the original order line item being returned.
+      quantity:
+        type: integer
+        description: The quantity of the line item to return.
+  steps:
+  - stepId: createReturn
+    description: Create the return associated to the order.
+    operationId: POST/returns
+    parameters:
+    - name: Authorization
+      in: header
+      value: "Bearer $inputs.accessToken"
+    requestBody:
+      contentType: application/vnd.api+json
+      payload:
+        data:
+          type: returns
+          relationships:
+            order:
+              data:
+                type: orders
+                id: $inputs.orderId
+    successCriteria:
+    - condition: $statusCode == 201
+    outputs:
+      returnId: $response.body#/data/id
+  - stepId: addReturnLineItem
+    description: Add a return line item referencing the return and the order line item.
+    operationId: POST/return_line_items
+    parameters:
+    - name: Authorization
+      in: header
+      value: "Bearer $inputs.accessToken"
+    requestBody:
+      contentType: application/vnd.api+json
+      payload:
+        data:
+          type: return_line_items
+          attributes:
+            quantity: $inputs.quantity
+          relationships:
+            return:
+              data:
+                type: returns
+                id: $steps.createReturn.outputs.returnId
+            line_item:
+              data:
+                type: line_items
+                id: $inputs.lineItemId
+    successCriteria:
+    - condition: $statusCode == 201
+    outputs:
+      returnLineItemId: $response.body#/data/id
+  - stepId: requestReturn
+    description: Toggle the documented _request transition flag to submit the return.
+    operationId: PATCH/returns/returnId
+    parameters:
+    - name: Authorization
+      in: header
+      value: "Bearer $inputs.accessToken"
+    - name: returnId
+      in: path
+      value: $steps.createReturn.outputs.returnId
+    requestBody:
+      contentType: application/vnd.api+json
+      payload:
+        data:
+          type: returns
+          id: $steps.createReturn.outputs.returnId
+          attributes:
+            _request: true
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      status: $response.body#/data/attributes/status
+  outputs:
+    returnId: $steps.createReturn.outputs.returnId
+    returnLineItemId: $steps.addReturnLineItem.outputs.returnLineItemId
+    status: $steps.requestReturn.outputs.status

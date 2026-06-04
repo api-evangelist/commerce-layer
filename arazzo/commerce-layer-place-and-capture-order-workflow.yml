@@ -1,0 +1,99 @@
+arazzo: 1.0.1
+info:
+  title: Commerce Layer Place and Capture an Order
+  summary: Place an order, read its status, then capture payment only once it is placed.
+  description: >-
+    A Commerce Layer payment settlement flow with branching. The workflow
+    patches an order with the documented _place transition flag, reads the
+    resulting status, and branches: when the order reached the placed state it
+    patches the order with the documented _capture flag to settle payment,
+    otherwise it ends. Every step spells out its JSON:API request inline so the
+    flow can be read and executed without opening the underlying OpenAPI
+    description.
+  version: 1.0.0
+sourceDescriptions:
+- name: coreApi
+  url: ../openapi/commerce-layer-core-api-openapi.json
+  type: openapi
+workflows:
+- workflowId: place-and-capture-order
+  summary: Place an order and capture payment once it is placed.
+  description: >-
+    Patches the order with the documented _place flag, then branches on the
+    resulting status to capture payment with the documented _capture flag.
+  inputs:
+    type: object
+    required:
+    - accessToken
+    - orderId
+    properties:
+      accessToken:
+        type: string
+        description: Bearer access token for the Commerce Layer organization.
+      orderId:
+        type: string
+        description: The id of the order to place and capture.
+  steps:
+  - stepId: placeOrder
+    description: Toggle the documented _place transition flag to submit the order.
+    operationId: PATCH/orders/orderId
+    parameters:
+    - name: Authorization
+      in: header
+      value: "Bearer $inputs.accessToken"
+    - name: orderId
+      in: path
+      value: $inputs.orderId
+    requestBody:
+      contentType: application/vnd.api+json
+      payload:
+        data:
+          type: orders
+          id: $inputs.orderId
+          attributes:
+            _place: true
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      status: $response.body#/data/attributes/status
+    onSuccess:
+    - name: isPlaced
+      type: goto
+      stepId: captureOrder
+      criteria:
+      - context: $response.body
+        condition: $.data.attributes.status == "placed"
+        type: jsonpath
+    - name: notPlaced
+      type: end
+      criteria:
+      - context: $response.body
+        condition: $.data.attributes.status != "placed"
+        type: jsonpath
+  - stepId: captureOrder
+    description: Toggle the documented _capture transition flag to settle payment.
+    operationId: PATCH/orders/orderId
+    parameters:
+    - name: Authorization
+      in: header
+      value: "Bearer $inputs.accessToken"
+    - name: orderId
+      in: path
+      value: $inputs.orderId
+    requestBody:
+      contentType: application/vnd.api+json
+      payload:
+        data:
+          type: orders
+          id: $inputs.orderId
+          attributes:
+            _capture: true
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      status: $response.body#/data/attributes/status
+      paymentStatus: $response.body#/data/attributes/payment_status
+  outputs:
+    orderId: $inputs.orderId
+    status: $steps.captureOrder.outputs.status
+    paymentStatus: $steps.captureOrder.outputs.paymentStatus

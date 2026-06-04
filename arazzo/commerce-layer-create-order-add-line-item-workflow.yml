@@ -1,0 +1,108 @@
+arazzo: 1.0.1
+info:
+  title: Commerce Layer Create Order and Add Line Item
+  summary: Create a draft order in a market, add a SKU line item to it, then read the order back.
+  description: >-
+    The foundational Commerce Layer cart-building flow. The workflow creates a
+    draft order scoped to a market, attaches a line item referencing a SKU by
+    code with a quantity, and then retrieves the order so the caller can read
+    the recalculated totals and item count. Every step spells out its JSON:API
+    request inline so the flow can be read and executed without opening the
+    underlying OpenAPI description.
+  version: 1.0.0
+sourceDescriptions:
+- name: coreApi
+  url: ../openapi/commerce-layer-core-api-openapi.json
+  type: openapi
+workflows:
+- workflowId: create-order-add-line-item
+  summary: Create an order, add a SKU line item, and read the order back.
+  description: >-
+    Creates a draft order in the supplied market, adds a single SKU line item
+    referencing the order, and retrieves the order to expose its totals.
+  inputs:
+    type: object
+    required:
+    - accessToken
+    - marketId
+    - skuCode
+    - quantity
+    properties:
+      accessToken:
+        type: string
+        description: Bearer access token for the Commerce Layer organization.
+      marketId:
+        type: string
+        description: The id of the market the order belongs to.
+      skuCode:
+        type: string
+        description: The SKU code to add as a line item.
+      quantity:
+        type: integer
+        description: The quantity of the SKU to add.
+  steps:
+  - stepId: createOrder
+    description: Create a draft order associated to the supplied market.
+    operationId: POST/orders
+    parameters:
+    - name: Authorization
+      in: header
+      value: "Bearer $inputs.accessToken"
+    requestBody:
+      contentType: application/vnd.api+json
+      payload:
+        data:
+          type: orders
+          relationships:
+            market:
+              data:
+                type: markets
+                id: $inputs.marketId
+    successCriteria:
+    - condition: $statusCode == 201
+    outputs:
+      orderId: $response.body#/data/id
+  - stepId: addLineItem
+    description: Add a SKU line item to the order using the SKU code and quantity.
+    operationId: POST/line_items
+    parameters:
+    - name: Authorization
+      in: header
+      value: "Bearer $inputs.accessToken"
+    requestBody:
+      contentType: application/vnd.api+json
+      payload:
+        data:
+          type: line_items
+          attributes:
+            sku_code: $inputs.skuCode
+            quantity: $inputs.quantity
+          relationships:
+            order:
+              data:
+                type: orders
+                id: $steps.createOrder.outputs.orderId
+    successCriteria:
+    - condition: $statusCode == 201
+    outputs:
+      lineItemId: $response.body#/data/id
+  - stepId: getOrder
+    description: Retrieve the order to read back its recalculated totals.
+    operationId: GET/orders/orderId
+    parameters:
+    - name: Authorization
+      in: header
+      value: "Bearer $inputs.accessToken"
+    - name: orderId
+      in: path
+      value: $steps.createOrder.outputs.orderId
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      status: $response.body#/data/attributes/status
+      skusCount: $response.body#/data/attributes/skus_count
+      totalAmountCents: $response.body#/data/attributes/total_amount_cents
+  outputs:
+    orderId: $steps.createOrder.outputs.orderId
+    lineItemId: $steps.addLineItem.outputs.lineItemId
+    totalAmountCents: $steps.getOrder.outputs.totalAmountCents

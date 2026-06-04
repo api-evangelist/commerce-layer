@@ -1,0 +1,85 @@
+arazzo: 1.0.1
+info:
+  title: Commerce Layer Add Line Item and Read It Back
+  summary: Add a SKU line item to an existing order and retrieve the created line item.
+  description: >-
+    A focused Commerce Layer cart operation. The workflow adds a SKU line item
+    to an existing order and then retrieves that line item so the caller can
+    read the resolved name, unit amount, and total. Every step spells out its
+    JSON:API request inline so the flow can be read and executed without opening
+    the underlying OpenAPI description.
+  version: 1.0.0
+sourceDescriptions:
+- name: coreApi
+  url: ../openapi/commerce-layer-core-api-openapi.json
+  type: openapi
+workflows:
+- workflowId: add-line-item-get-line-item
+  summary: Add a SKU line item to an order and read it back.
+  description: >-
+    Creates a line item on the supplied order, then retrieves the line item to
+    expose its resolved pricing attributes.
+  inputs:
+    type: object
+    required:
+    - accessToken
+    - orderId
+    - skuCode
+    - quantity
+    properties:
+      accessToken:
+        type: string
+        description: Bearer access token for the Commerce Layer organization.
+      orderId:
+        type: string
+        description: The id of the order to add the line item to.
+      skuCode:
+        type: string
+        description: The SKU code to add as a line item.
+      quantity:
+        type: integer
+        description: The quantity of the SKU to add.
+  steps:
+  - stepId: addLineItem
+    description: Add the SKU line item to the supplied order.
+    operationId: POST/line_items
+    parameters:
+    - name: Authorization
+      in: header
+      value: "Bearer $inputs.accessToken"
+    requestBody:
+      contentType: application/vnd.api+json
+      payload:
+        data:
+          type: line_items
+          attributes:
+            sku_code: $inputs.skuCode
+            quantity: $inputs.quantity
+          relationships:
+            order:
+              data:
+                type: orders
+                id: $inputs.orderId
+    successCriteria:
+    - condition: $statusCode == 201
+    outputs:
+      lineItemId: $response.body#/data/id
+  - stepId: getLineItem
+    description: Retrieve the created line item to read its resolved attributes.
+    operationId: GET/line_items/lineItemId
+    parameters:
+    - name: Authorization
+      in: header
+      value: "Bearer $inputs.accessToken"
+    - name: lineItemId
+      in: path
+      value: $steps.addLineItem.outputs.lineItemId
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      name: $response.body#/data/attributes/name
+      unitAmountCents: $response.body#/data/attributes/unit_amount_cents
+      totalAmountCents: $response.body#/data/attributes/total_amount_cents
+  outputs:
+    lineItemId: $steps.addLineItem.outputs.lineItemId
+    totalAmountCents: $steps.getLineItem.outputs.totalAmountCents

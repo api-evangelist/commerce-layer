@@ -1,0 +1,145 @@
+arazzo: 1.0.1
+info:
+  title: Commerce Layer Build Cart and Branch on Order Status
+  summary: Create an order, add a line item, read the order, and branch to place it only when it is in draft.
+  description: >-
+    A Commerce Layer cart flow with branching driven by a documented response
+    field. The workflow creates an order, adds a SKU line item, retrieves the
+    order, and then branches on the order status: when the order is still in
+    draft it patches it with the documented _place transition flag, otherwise it
+    ends without attempting to place an already-advanced order. The list
+    endpoints in this spec document no filter parameters, so this flow branches
+    on a real response attribute rather than a search. Every step spells out its
+    JSON:API request inline so the flow can be read and executed without opening
+    the underlying OpenAPI description.
+  version: 1.0.0
+sourceDescriptions:
+- name: coreApi
+  url: ../openapi/commerce-layer-core-api-openapi.json
+  type: openapi
+workflows:
+- workflowId: build-cart-branch-on-status
+  summary: Create an order, add a line item, and place it only when still in draft.
+  description: >-
+    Creates an order, adds a SKU line item, reads the order back, then branches
+    on the order status to place the order when it is still in draft.
+  inputs:
+    type: object
+    required:
+    - accessToken
+    - marketId
+    - skuCode
+    - quantity
+    properties:
+      accessToken:
+        type: string
+        description: Bearer access token for the Commerce Layer organization.
+      marketId:
+        type: string
+        description: The id of the market the order belongs to.
+      skuCode:
+        type: string
+        description: The SKU code to add as a line item.
+      quantity:
+        type: integer
+        description: The quantity of the SKU to add.
+  steps:
+  - stepId: createOrder
+    description: Create a draft order in the supplied market.
+    operationId: POST/orders
+    parameters:
+    - name: Authorization
+      in: header
+      value: "Bearer $inputs.accessToken"
+    requestBody:
+      contentType: application/vnd.api+json
+      payload:
+        data:
+          type: orders
+          relationships:
+            market:
+              data:
+                type: markets
+                id: $inputs.marketId
+    successCriteria:
+    - condition: $statusCode == 201
+    outputs:
+      orderId: $response.body#/data/id
+  - stepId: addLineItem
+    description: Add a SKU line item to the order.
+    operationId: POST/line_items
+    parameters:
+    - name: Authorization
+      in: header
+      value: "Bearer $inputs.accessToken"
+    requestBody:
+      contentType: application/vnd.api+json
+      payload:
+        data:
+          type: line_items
+          attributes:
+            sku_code: $inputs.skuCode
+            quantity: $inputs.quantity
+          relationships:
+            order:
+              data:
+                type: orders
+                id: $steps.createOrder.outputs.orderId
+    successCriteria:
+    - condition: $statusCode == 201
+    outputs:
+      lineItemId: $response.body#/data/id
+  - stepId: getOrder
+    description: Retrieve the order and read its status for branching.
+    operationId: GET/orders/orderId
+    parameters:
+    - name: Authorization
+      in: header
+      value: "Bearer $inputs.accessToken"
+    - name: orderId
+      in: path
+      value: $steps.createOrder.outputs.orderId
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      status: $response.body#/data/attributes/status
+    onSuccess:
+    - name: isDraft
+      type: goto
+      stepId: placeOrder
+      criteria:
+      - context: $response.body
+        condition: $.data.attributes.status == "draft"
+        type: jsonpath
+    - name: notDraft
+      type: end
+      criteria:
+      - context: $response.body
+        condition: $.data.attributes.status != "draft"
+        type: jsonpath
+  - stepId: placeOrder
+    description: Toggle the documented _place transition flag to submit the draft order.
+    operationId: PATCH/orders/orderId
+    parameters:
+    - name: Authorization
+      in: header
+      value: "Bearer $inputs.accessToken"
+    - name: orderId
+      in: path
+      value: $steps.createOrder.outputs.orderId
+    requestBody:
+      contentType: application/vnd.api+json
+      payload:
+        data:
+          type: orders
+          id: $steps.createOrder.outputs.orderId
+          attributes:
+            _place: true
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      status: $response.body#/data/attributes/status
+  outputs:
+    orderId: $steps.createOrder.outputs.orderId
+    lineItemId: $steps.addLineItem.outputs.lineItemId
+    finalStatus: $steps.placeOrder.outputs.status

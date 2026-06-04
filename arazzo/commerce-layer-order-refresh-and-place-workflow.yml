@@ -1,0 +1,84 @@
+arazzo: 1.0.1
+info:
+  title: Commerce Layer Refresh and Place an Order
+  summary: Refresh an order's prices and taxes, then place it once recalculated.
+  description: >-
+    A Commerce Layer pre-submit finalization flow. The workflow patches an order
+    with the documented _refresh transition flag to recalculate its prices and
+    taxes, then issues a second patch with the documented _place flag to submit
+    the order. Every step spells out its JSON:API request inline so the flow can
+    be read and executed without opening the underlying OpenAPI description.
+  version: 1.0.0
+sourceDescriptions:
+- name: coreApi
+  url: ../openapi/commerce-layer-core-api-openapi.json
+  type: openapi
+workflows:
+- workflowId: order-refresh-and-place
+  summary: Refresh an order's totals, then place it.
+  description: >-
+    Patches the order with the documented _refresh flag to recalculate totals,
+    then patches it again with the documented _place flag to submit it.
+  inputs:
+    type: object
+    required:
+    - accessToken
+    - orderId
+    properties:
+      accessToken:
+        type: string
+        description: Bearer access token for the Commerce Layer organization.
+      orderId:
+        type: string
+        description: The id of the order to refresh and place.
+  steps:
+  - stepId: refreshOrder
+    description: Toggle the documented _refresh transition flag to recalculate the order.
+    operationId: PATCH/orders/orderId
+    parameters:
+    - name: Authorization
+      in: header
+      value: "Bearer $inputs.accessToken"
+    - name: orderId
+      in: path
+      value: $inputs.orderId
+    requestBody:
+      contentType: application/vnd.api+json
+      payload:
+        data:
+          type: orders
+          id: $inputs.orderId
+          attributes:
+            _refresh: true
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      status: $response.body#/data/attributes/status
+      totalAmountCents: $response.body#/data/attributes/total_amount_cents
+  - stepId: placeOrder
+    description: Toggle the documented _place transition flag to submit the refreshed order.
+    operationId: PATCH/orders/orderId
+    parameters:
+    - name: Authorization
+      in: header
+      value: "Bearer $inputs.accessToken"
+    - name: orderId
+      in: path
+      value: $inputs.orderId
+    requestBody:
+      contentType: application/vnd.api+json
+      payload:
+        data:
+          type: orders
+          id: $inputs.orderId
+          attributes:
+            _place: true
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      status: $response.body#/data/attributes/status
+      placedAt: $response.body#/data/attributes/placed_at
+  outputs:
+    orderId: $inputs.orderId
+    status: $steps.placeOrder.outputs.status
+    placedAt: $steps.placeOrder.outputs.placedAt

@@ -1,0 +1,110 @@
+arazzo: 1.0.1
+info:
+  title: Commerce Layer Set Order Shipping and Billing Addresses
+  summary: Create a shipping address and a billing address, then attach both to an existing order.
+  description: >-
+    The checkout address step for a Commerce Layer order. The workflow creates a
+    shipping address and a billing address as standalone address resources and
+    then patches the order to associate both addresses, advancing the order
+    toward checkout. Every step spells out its JSON:API request inline so the
+    flow can be read and executed without opening the underlying OpenAPI
+    description.
+  version: 1.0.0
+sourceDescriptions:
+- name: coreApi
+  url: ../openapi/commerce-layer-core-api-openapi.json
+  type: openapi
+workflows:
+- workflowId: order-set-addresses
+  summary: Create shipping and billing addresses and attach them to an order.
+  description: >-
+    Creates a shipping address and a billing address, then updates the order to
+    reference both, returning the order status.
+  inputs:
+    type: object
+    required:
+    - accessToken
+    - orderId
+    - shipping
+    - billing
+    properties:
+      accessToken:
+        type: string
+        description: Bearer access token for the Commerce Layer organization.
+      orderId:
+        type: string
+        description: The id of the order to set addresses on.
+      shipping:
+        type: object
+        description: Shipping address attributes (line_1, city, country_code, phone, plus optional fields).
+      billing:
+        type: object
+        description: Billing address attributes (line_1, city, country_code, phone, plus optional fields).
+  steps:
+  - stepId: createShippingAddress
+    description: Create the shipping address resource.
+    operationId: POST/addresses
+    parameters:
+    - name: Authorization
+      in: header
+      value: "Bearer $inputs.accessToken"
+    requestBody:
+      contentType: application/vnd.api+json
+      payload:
+        data:
+          type: addresses
+          attributes: $inputs.shipping
+    successCriteria:
+    - condition: $statusCode == 201
+    outputs:
+      shippingAddressId: $response.body#/data/id
+  - stepId: createBillingAddress
+    description: Create the billing address resource.
+    operationId: POST/addresses
+    parameters:
+    - name: Authorization
+      in: header
+      value: "Bearer $inputs.accessToken"
+    requestBody:
+      contentType: application/vnd.api+json
+      payload:
+        data:
+          type: addresses
+          attributes: $inputs.billing
+    successCriteria:
+    - condition: $statusCode == 201
+    outputs:
+      billingAddressId: $response.body#/data/id
+  - stepId: attachAddresses
+    description: Patch the order to associate the shipping and billing addresses.
+    operationId: PATCH/orders/orderId
+    parameters:
+    - name: Authorization
+      in: header
+      value: "Bearer $inputs.accessToken"
+    - name: orderId
+      in: path
+      value: $inputs.orderId
+    requestBody:
+      contentType: application/vnd.api+json
+      payload:
+        data:
+          type: orders
+          id: $inputs.orderId
+          relationships:
+            shipping_address:
+              data:
+                type: addresses
+                id: $steps.createShippingAddress.outputs.shippingAddressId
+            billing_address:
+              data:
+                type: addresses
+                id: $steps.createBillingAddress.outputs.billingAddressId
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      status: $response.body#/data/attributes/status
+  outputs:
+    shippingAddressId: $steps.createShippingAddress.outputs.shippingAddressId
+    billingAddressId: $steps.createBillingAddress.outputs.billingAddressId
+    status: $steps.attachAddresses.outputs.status

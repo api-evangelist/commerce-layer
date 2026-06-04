@@ -1,0 +1,91 @@
+arazzo: 1.0.1
+info:
+  title: Commerce Layer Add Payment Method and Place Order
+  summary: Attach a payment method to an order and then transition the order to placed.
+  description: >-
+    The Commerce Layer checkout completion flow. The workflow patches an order
+    to attach a payment method, then issues a second patch that toggles the
+    order's place transition flag to submit the order. Every step spells out its
+    JSON:API request inline, including the documented order state-transition
+    attribute, so the flow can be read and executed without opening the
+    underlying OpenAPI description.
+  version: 1.0.0
+sourceDescriptions:
+- name: coreApi
+  url: ../openapi/commerce-layer-core-api-openapi.json
+  type: openapi
+workflows:
+- workflowId: order-add-payment-method-place
+  summary: Attach a payment method to an order and place it.
+  description: >-
+    Updates the order with a payment method relationship, then patches the order
+    again with the documented _place transition flag to submit it.
+  inputs:
+    type: object
+    required:
+    - accessToken
+    - orderId
+    - paymentMethodId
+    properties:
+      accessToken:
+        type: string
+        description: Bearer access token for the Commerce Layer organization.
+      orderId:
+        type: string
+        description: The id of the order to complete.
+      paymentMethodId:
+        type: string
+        description: The id of the payment method to attach to the order.
+  steps:
+  - stepId: attachPaymentMethod
+    description: Associate the payment method with the order.
+    operationId: PATCH/orders/orderId
+    parameters:
+    - name: Authorization
+      in: header
+      value: "Bearer $inputs.accessToken"
+    - name: orderId
+      in: path
+      value: $inputs.orderId
+    requestBody:
+      contentType: application/vnd.api+json
+      payload:
+        data:
+          type: orders
+          id: $inputs.orderId
+          relationships:
+            payment_method:
+              data:
+                type: payment_methods
+                id: $inputs.paymentMethodId
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      status: $response.body#/data/attributes/status
+  - stepId: placeOrder
+    description: Toggle the documented _place transition flag to submit the order.
+    operationId: PATCH/orders/orderId
+    parameters:
+    - name: Authorization
+      in: header
+      value: "Bearer $inputs.accessToken"
+    - name: orderId
+      in: path
+      value: $inputs.orderId
+    requestBody:
+      contentType: application/vnd.api+json
+      payload:
+        data:
+          type: orders
+          id: $inputs.orderId
+          attributes:
+            _place: true
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      status: $response.body#/data/attributes/status
+      placedAt: $response.body#/data/attributes/placed_at
+  outputs:
+    orderId: $inputs.orderId
+    status: $steps.placeOrder.outputs.status
+    placedAt: $steps.placeOrder.outputs.placedAt
