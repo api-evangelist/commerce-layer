@@ -1,0 +1,1630 @@
+"""
+Commerce Layer GraphQL Schema
+Conceptual GraphQL translation of the Commerce Layer JSON:API REST surface.
+Source: https://docs.commercelayer.io/core-api-reference/
+OpenAPI: https://data.commercelayer.app/schemas/openapi.json
+"""
+
+scalar DateTime
+scalar JSON
+
+# ─── Enums ───────────────────────────────────────────────────────────────────
+
+enum OrderStatus {
+  DRAFT
+  PENDING
+  PLACED
+  APPROVED
+  CANCELLED
+  PAYMENT_GATING
+}
+
+enum ShipmentStatus {
+  UPCOMING
+  CANCELLED
+  PICKING
+  PACKING
+  READY_TO_SHIP
+  SHIPPED
+  DELIVERED
+}
+
+enum ReturnStatus {
+  DRAFT
+  REQUESTED
+  APPROVED
+  CANCELLED
+  SHIPPED
+  RECEIVED
+  REJECTED
+  REFUNDED
+  ARCHIVED
+}
+
+enum TransactionType {
+  AUTHORIZATION
+  CAPTURE
+  VOID
+  REFUND
+}
+
+enum ImportStatus {
+  PENDING
+  IN_PROGRESS
+  COMPLETED
+  INTERRUPTED
+}
+
+enum ExportStatus {
+  PENDING
+  IN_PROGRESS
+  COMPLETED
+  INTERRUPTED
+}
+
+enum PromotionType {
+  PERCENTAGE_DISCOUNT
+  FIXED_AMOUNT
+  FIXED_PRICE
+  FREE_GIFT
+  FREE_SHIPPING
+  BUY_X_PAY_Y
+  EXTERNAL
+  FLEX
+}
+
+enum PaymentSourceType {
+  STRIPE_PAYMENT
+  ADYEN_PAYMENT
+  BRAINTREE_PAYMENT
+  PAYPAL_PAYMENT
+  KLARNA_PAYMENT
+  CHECKOUT_COM_PAYMENT
+  AXERVE_PAYMENT
+  SATISPAY_PAYMENT
+  EXTERNAL_PAYMENT
+  MANUAL_PAYMENT
+  GIFT_CARD
+}
+
+enum TaxCalculatorType {
+  MANUAL
+  AVALARA
+  TAXJAR
+  VERTEX
+  STRIPE_TAX
+  EXTERNAL
+}
+
+enum EnvironmentMode {
+  LIVE
+  TEST
+}
+
+# ─── Common interfaces ────────────────────────────────────────────────────────
+
+interface Node {
+  id: ID!
+  type: String!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+# ─── Organization / Tenancy ───────────────────────────────────────────────────
+
+"""Top-level tenant configuration returned by the provisioning surface."""
+type Organization implements Node {
+  id: ID!
+  type: String!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  name: String!
+  slug: String!
+  domain: String
+  supportPhone: String
+  supportEmail: String
+  logoUrl: String
+  faviconUrl: String
+  primaryColor: String
+  contrastColor: String
+  gtmId: String
+  gtm_id_test: String
+  countryCodes: [String!]
+  currencyCodes: [String!]
+  orderSubjects: JSON
+  markets: [Market!]
+}
+
+"""A selling context with its own price list, inventory model, and payment/shipping configuration."""
+type Market implements Node {
+  id: ID!
+  type: String!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  name: String!
+  number: Int
+  facebookPixelId: String
+  checkoutUrl: String
+  externalPricesUrl: String
+  privacyUrl: String
+  cookiesUrl: String
+  defaultCountryCode: String
+  georestrictions: Boolean
+  enabled: Boolean
+  shared: Boolean
+  organization: Organization
+  merchant: Merchant
+  priceList: PriceList
+  inventoryModel: InventoryModel
+  taxCalculator: TaxCalculator
+  customerGroup: CustomerGroup
+  stores: [Store!]
+  paymentMethods: [PaymentMethod!]
+  shippingMethods: [ShippingMethod!]
+}
+
+"""A commerce channel (e.g. web, mobile, in-store kiosk)."""
+type Channel implements Node {
+  id: ID!
+  type: String!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  name: String!
+  code: String
+  description: String
+  market: Market
+}
+
+"""Payment/merchant account configuration."""
+type Merchant implements Node {
+  id: ID!
+  type: String!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  name: String!
+  addresses: [Address!]
+}
+
+"""A physical or virtual storefront within a market."""
+type Store implements Node {
+  id: ID!
+  type: String!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  name: String!
+  code: String
+  market: Market
+}
+
+# ─── Catalog ──────────────────────────────────────────────────────────────────
+
+"""A Stock Keeping Unit representing a sellable product variant."""
+type SKU implements Node {
+  id: ID!
+  type: String!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  code: String!
+  name: String!
+  description: String
+  imageUrl: String
+  pieces_per_pack: Int
+  weight: Float
+  unitOfWeight: String
+  hsTariffNumber: String
+  doNotShip: Boolean
+  doNotTrack: Boolean
+  modeOfTransportation: String
+  shippingCategory: ShippingCategory
+  skuOptions: [SKUOption!]
+  prices: [Price!]
+  stockItems: [StockItem!]
+  tags: [Tag!]
+}
+
+"""An add-on option that can be attached to a line item."""
+type SKUOption implements Node {
+  id: ID!
+  type: String!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  name: String!
+  description: String
+  currencyCode: String
+  priceAmountCents: Int
+  priceAmountFloat: Float
+  formattedPriceAmount: String
+  skuOptionType: String
+  material: String
+  colorCode: String
+  imageUrl: String
+  attachmentUrl: String
+}
+
+"""A grouping of products sold together at a special price."""
+type Bundle implements Node {
+  id: ID!
+  type: String!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  code: String!
+  name: String!
+  description: String
+  imageUrl: String
+  currencyCode: String
+  priceAmountCents: Int
+  priceAmountFloat: Float
+  formattedPriceAmount: String
+  compareAtAmountCents: Int
+  compareAtAmountFloat: Float
+  doNotShip: Boolean
+  doNotTrack: Boolean
+  priceList: PriceList
+  skuList: SKUList
+  bundleItems: [BundleItem!]
+  skus: [SKU!]
+  tags: [Tag!]
+}
+
+"""A single SKU entry inside a Bundle."""
+type BundleItem implements Node {
+  id: ID!
+  type: String!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  name: String
+  quantity: Int!
+  bundle: Bundle
+  sku: SKU
+}
+
+"""Logical grouping category used for shipping rules."""
+type ShippingCategory implements Node {
+  id: ID!
+  type: String!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  name: String!
+  skus: [SKU!]
+  shippingMethods: [ShippingMethod!]
+}
+
+"""A reusable label attached to any Commerce Layer resource."""
+type Tag implements Node {
+  id: ID!
+  type: String!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  name: String!
+}
+
+# ─── Pricing ──────────────────────────────────────────────────────────────────
+
+"""A catalog of prices for a set of SKUs, scoped to a currency."""
+type PriceList implements Node {
+  id: ID!
+  type: String!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  name: String!
+  currencyCode: String!
+  taxIncluded: Boolean
+  rules: JSON
+  markets: [Market!]
+  prices: [Price!]
+}
+
+"""The selling price of a SKU in a price list."""
+type Price implements Node {
+  id: ID!
+  type: String!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  currencyCode: String!
+  skuCode: String
+  amountCents: Int!
+  amountFloat: Float!
+  formattedAmount: String!
+  compareAtAmountCents: Int
+  compareAtAmountFloat: Float
+  formattedCompareAtAmount: String
+  priceList: PriceList
+  sku: SKU
+  priceTiers: [PriceTier!]
+}
+
+"""A quantity-based price tier attached to a Price."""
+type PriceTier implements Node {
+  id: ID!
+  type: String!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  name: String!
+  upToQuantity: Int
+  priceAmountCents: Int!
+  priceAmountFloat: Float!
+  formattedPriceAmount: String!
+  price: Price
+}
+
+"""A named list of SKUs used by bundles and promotions."""
+type SKUList implements Node {
+  id: ID!
+  type: String!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  name: String!
+  description: String
+  imageUrl: String
+  manual: Boolean
+  skuCode: String
+  rules: JSON
+  skus: [SKU!]
+  skuListItems: [SKUListItem!]
+}
+
+"""A single SKU entry inside an SKUList."""
+type SKUListItem implements Node {
+  id: ID!
+  type: String!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  position: Int
+  quantity: Int
+  skuList: SKUList
+  sku: SKU
+}
+
+# ─── Inventory ────────────────────────────────────────────────────────────────
+
+"""Configuration for inventory management across locations."""
+type InventoryModel implements Node {
+  id: ID!
+  type: String!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  name: String!
+  strategy: String
+  stockLocations: [StockLocation!]
+  inventoryReturnLocations: [InventoryReturnLocation!]
+  deliveryLeadTimes: [DeliveryLeadTime!]
+}
+
+"""A warehouse or fulfillment center holding physical stock."""
+type StockLocation implements Node {
+  id: ID!
+  type: String!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  name: String!
+  label: String
+  latitude: Float
+  longitude: Float
+  address: Address
+  stockItems: [StockItem!]
+}
+
+"""The quantity of a specific SKU available at a stock location."""
+type StockItem implements Node {
+  id: ID!
+  type: String!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  skuCode: String!
+  quantity: Int!
+  sku: SKU
+  stockLocation: StockLocation
+}
+
+"""A movement of stock between two locations."""
+type StockTransfer implements Node {
+  id: ID!
+  type: String!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  skuCode: String
+  status: String
+  quantity: Int!
+  completedAt: DateTime
+  cancelledAt: DateTime
+  sku: SKU
+  originStockLocation: StockLocation
+  destinationStockLocation: StockLocation
+  shipment: Shipment
+  lineItem: LineItem
+}
+
+"""A temporary reservation of stock for an order."""
+type StockReservation implements Node {
+  id: ID!
+  type: String!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  quantity: Int!
+  expiresAt: DateTime
+  sku: SKU
+  stockLocation: StockLocation
+  lineItem: LineItem
+}
+
+"""Already-reserved stock awaiting fulfillment."""
+type ReservedStock implements Node {
+  id: ID!
+  type: String!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  quantity: Int!
+  sku: SKU
+  stockItem: StockItem
+}
+
+"""Estimated delivery window from a stock location via a shipping method."""
+type DeliveryLeadTime implements Node {
+  id: ID!
+  type: String!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  minDays: Int
+  maxDays: Int
+  levelName: String
+  stockLocation: StockLocation
+  shippingMethod: ShippingMethod
+}
+
+"""A preferred return location for inventory."""
+type InventoryReturnLocation implements Node {
+  id: ID!
+  type: String!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  priority: Int
+  inventoryModel: InventoryModel
+  stockLocation: StockLocation
+}
+
+# ─── Orders ───────────────────────────────────────────────────────────────────
+
+"""A customer order encompassing line items, addresses, payments, and shipments."""
+type Order implements Node {
+  id: ID!
+  type: String!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  number: Int
+  autorefresh: Boolean
+  status: OrderStatus!
+  paymentStatus: String
+  fulfillmentStatus: String
+  guest: Boolean
+  editable: Boolean
+  customerEmail: String
+  customerPassword: String
+  languageCode: String
+  currencyCode: String
+  taxIncluded: Boolean
+  taxRate: Float
+  freightTaxable: Boolean
+  requiresBillingInfo: Boolean
+  countryCode: String
+  shippingCountryCodeLock: String
+  couponCode: String
+  giftCardCode: String
+  giftCardOrCouponCode: String
+  subtotalAmountCents: Int
+  subtotalAmountFloat: Float
+  formattedSubtotalAmount: String
+  shippingAmountCents: Int
+  shippingAmountFloat: Float
+  formattedShippingAmount: String
+  discountAmountCents: Int
+  discountAmountFloat: Float
+  formattedDiscountAmount: String
+  adjustmentAmountCents: Int
+  adjustmentAmountFloat: Float
+  formattedAdjustmentAmount: String
+  giftCardAmountCents: Int
+  giftCardAmountFloat: Float
+  formattedGiftCardAmount: String
+  totalTaxAmountCents: Int
+  totalTaxAmountFloat: Float
+  formattedTotalTaxAmount: String
+  subtotalWithAdjustmentsAmountCents: Int
+  subtotalWithAdjustmentsAmountFloat: Float
+  formattedSubtotalWithAdjustmentsAmount: String
+  shippingAndHandlingAmountCents: Int
+  shippingAndHandlingAmountFloat: Float
+  formattedShippingAndHandlingAmount: String
+  totalAmountWithTaxesCents: Int
+  totalAmountWithTaxesFloat: Float
+  formattedTotalAmountWithTaxes: String
+  feesAmountCents: Int
+  feesAmountFloat: Float
+  formattedFeesAmount: String
+  skusCount: Int
+  lineItemOptionsCount: Int
+  shipmentsCount: Int
+  taxCalculationsCount: Int
+  validationsCount: Int
+  errorsCount: Int
+  couponCodeDiscountAmountCents: Int
+  couponCodeDiscountAmountFloat: Float
+  formattedCouponCodeDiscountAmount: String
+  placedAt: DateTime
+  approvedAt: DateTime
+  cancelledAt: DateTime
+  archivedAt: DateTime
+  expiresAt: DateTime
+  market: Market
+  customer: Customer
+  shippingAddress: Address
+  billingAddress: Address
+  paymentMethod: PaymentMethod
+  paymentSource: PaymentSource
+  lineItems: [LineItem!]
+  shipments: [Shipment!]
+  transactions: [Transaction!]
+  authorizations: [Authorization!]
+  captures: [Capture!]
+  voids: [Void!]
+  refunds: [Refund!]
+  returns: [Return!]
+  tags: [Tag!]
+}
+
+"""A single product or service line within an order."""
+type LineItem implements Node {
+  id: ID!
+  type: String!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  skuCode: String
+  bundleCode: String
+  quantity: Int!
+  currencyCode: String
+  unitAmountCents: Int
+  unitAmountFloat: Float
+  formattedUnitAmount: String
+  compareAtAmountCents: Int
+  compareAtAmountFloat: Float
+  formattedCompareAtAmount: String
+  options_amount_cents: Int
+  options_amount_float: Float
+  formatted_options_amount: String
+  discount_cents: Int
+  discount_float: Float
+  formatted_discount: String
+  totalAmountCents: Int
+  totalAmountFloat: Float
+  formattedTotalAmount: String
+  totalTaxAmountCents: Int
+  totalTaxAmountFloat: Float
+  formattedTotalTaxAmount: String
+  totalAmountWithTaxesCents: Int
+  totalAmountWithTaxesFloat: Float
+  formattedTotalAmountWithTaxes: String
+  unitTaxAmountCents: Int
+  unitTaxAmountFloat: Float
+  formattedUnitTaxAmount: String
+  itemType: String
+  imagUrl: String
+  name: String
+  taxRate: Float
+  taxCode: String
+  freightTaxable: Boolean
+  shippingRequired: Boolean
+  weight: Float
+  unitOfWeight: String
+  hsTariffNumber: String
+  order: Order
+  item: SKU
+  lineItemOptions: [LineItemOption!]
+  stockTransfers: [StockTransfer!]
+  stockReservations: [StockReservation!]
+}
+
+"""An option selected for a line item (e.g. engraving, gift wrap)."""
+type LineItemOption implements Node {
+  id: ID!
+  type: String!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  name: String
+  quantity: Int
+  currencyCode: String
+  unitAmountCents: Int
+  unitAmountFloat: Float
+  formattedUnitAmount: String
+  totalAmountCents: Int
+  totalAmountFloat: Float
+  formattedTotalAmount: String
+  options: JSON
+  lineItem: LineItem
+  skuOption: SKUOption
+}
+
+"""A manual price or fee adjustment applied to an order."""
+type Adjustment implements Node {
+  id: ID!
+  type: String!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  name: String!
+  currencyCode: String
+  amountCents: Int!
+  amountFloat: Float!
+  formattedAmount: String!
+  taxable: Boolean
+  freightTaxable: Boolean
+  order: Order
+}
+
+# ─── Promotions ───────────────────────────────────────────────────────────────
+
+"""Base type for all promotion kinds."""
+type Promotion implements Node {
+  id: ID!
+  type: String!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  name: String!
+  code: String
+  currencyCode: String
+  startsAt: DateTime
+  expiresAt: DateTime
+  active: Boolean!
+  promotionType: PromotionType!
+  totalUsageLimit: Int
+  totalUsageCount: Int
+  exclusive: Boolean
+  priority: Int
+  order: Order
+  promotionRules: [PromotionRule!]
+  orderAmountPromotionRule: PromotionRule
+  skuListPromotionRule: PromotionRule
+  couponCodesPromotionRule: PromotionRule
+  coupons: [Coupon!]
+  tags: [Tag!]
+}
+
+"""A rule that gates or modifies a promotion."""
+type PromotionRule implements Node {
+  id: ID!
+  type: String!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  name: String
+  valid: Boolean
+  promotion: Promotion
+}
+
+"""A single-use or multi-use coupon code for a promotion."""
+type Coupon implements Node {
+  id: ID!
+  type: String!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  code: String!
+  usageLimit: Int
+  usageCount: Int
+  recipientEmail: String
+  promotion: Promotion
+}
+
+"""A preloaded gift card used as a payment source or discount."""
+type GiftCard implements Node {
+  id: ID!
+  type: String!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  code: String
+  status: String
+  currencyCode: String
+  initialBalanceCents: Int
+  initialBalanceFloat: Float
+  formattedInitialBalance: String
+  currentBalanceCents: Int
+  currentBalanceFloat: Float
+  formattedCurrentBalance: String
+  singleUse: Boolean
+  rechargeable: Boolean
+  imageUrl: String
+  expiresAt: DateTime
+  recipient: GiftCardRecipient
+  market: Market
+}
+
+"""The email recipient of a gift card."""
+type GiftCardRecipient implements Node {
+  id: ID!
+  type: String!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  email: String!
+  firstName: String
+  lastName: String
+  referenceOrigin: String
+}
+
+# ─── Customers ────────────────────────────────────────────────────────────────
+
+"""A registered or guest buyer."""
+type Customer implements Node {
+  id: ID!
+  type: String!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  email: String!
+  status: String
+  hasPassword: Boolean
+  totalOrdersCount: Int
+  customerGroup: CustomerGroup
+  customerAddresses: [CustomerAddress!]
+  customerSubscriptions: [CustomerSubscription!]
+  customerPaymentSources: [CustomerPaymentSource!]
+  orders: [Order!]
+  tags: [Tag!]
+}
+
+"""A segment of customers used to control market access."""
+type CustomerGroup implements Node {
+  id: ID!
+  type: String!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  name: String!
+  customers: [Customer!]
+  markets: [Market!]
+}
+
+"""An address book entry linking a customer to an address."""
+type CustomerAddress implements Node {
+  id: ID!
+  type: String!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  name: String
+  customer: Customer
+  address: Address
+}
+
+"""A recurring subscription for a customer."""
+type CustomerSubscription implements Node {
+  id: ID!
+  type: String!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  customerEmail: String
+  customer: Customer
+}
+
+"""A saved payment source on a customer profile."""
+type CustomerPaymentSource implements Node {
+  id: ID!
+  type: String!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  name: String
+  customer: Customer
+  paymentSourceType: String
+}
+
+"""A back-in-stock notification subscription."""
+type InStockSubscription implements Node {
+  id: ID!
+  type: String!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  customerEmail: String
+  skuCode: String
+  status: String
+  customer: Customer
+  sku: SKU
+  market: Market
+}
+
+# ─── Addresses ────────────────────────────────────────────────────────────────
+
+"""A postal address used for shipping, billing, or merchant records."""
+type Address implements Node {
+  id: ID!
+  type: String!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  business: Boolean
+  firstName: String
+  lastName: String
+  company: String
+  fullName: String
+  line1: String!
+  line2: String
+  city: String!
+  zipCode: String!
+  stateCode: String
+  countryCode: String!
+  phone: String
+  email: String
+  notes: String
+  lat: Float
+  lng: Float
+  isLocalized: Boolean
+  isGeocoded: Boolean
+  providersGeojson: JSON
+  geocoder: Geocoder
+}
+
+"""Base type for address geocoders."""
+type Geocoder implements Node {
+  id: ID!
+  type: String!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  name: String!
+  geocoderType: String
+}
+
+# ─── Payments ─────────────────────────────────────────────────────────────────
+
+"""A payment method available in a market (e.g. Stripe, PayPal, gift card)."""
+type PaymentMethod implements Node {
+  id: ID!
+  type: String!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  paymentSourceType: PaymentSourceType!
+  name: String
+  currencyCode: String
+  motoEnabled: Boolean
+  requireCapture: Boolean
+  autoCapture: Boolean
+  autoCaptureMaxAmountCents: Int
+  priceAmountCents: Int!
+  priceAmountFloat: Float!
+  formattedPriceAmount: String!
+  disabled: Boolean
+  market: Market
+  paymentGateway: ExternalGateway
+}
+
+"""Abstract polymorphic base for all payment sources."""
+type PaymentSource implements Node {
+  id: ID!
+  type: String!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  paymentSourceType: PaymentSourceType
+}
+
+"""A payment record linked to an order."""
+type Transaction implements Node {
+  id: ID!
+  type: String!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  number: String
+  currencyCode: String
+  amountCents: Int!
+  amountFloat: Float!
+  formattedAmount: String!
+  succeeded: Boolean!
+  message: String
+  errorCode: String
+  errorDetail: String
+  token: String
+  gatewayTransactionId: String
+  transactionType: TransactionType
+  order: Order
+}
+
+"""An authorization hold placed on a payment source."""
+type Authorization implements Node {
+  id: ID!
+  type: String!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  number: String
+  currencyCode: String
+  amountCents: Int!
+  amountFloat: Float!
+  formattedAmount: String!
+  succeeded: Boolean!
+  message: String
+  errorCode: String
+  errorDetail: String
+  token: String
+  gatewayTransactionId: String
+  captureAmountCents: Int
+  captureAmountFloat: Float
+  formattedCaptureAmount: String
+  captureBalanceCents: Int
+  voidBalanceCents: Int
+  order: Order
+  captures: [Capture!]
+  voids: [Void!]
+}
+
+"""A completed capture of an authorized amount."""
+type Capture implements Node {
+  id: ID!
+  type: String!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  number: String
+  currencyCode: String
+  amountCents: Int!
+  amountFloat: Float!
+  formattedAmount: String!
+  succeeded: Boolean!
+  message: String
+  errorCode: String
+  errorDetail: String
+  token: String
+  gatewayTransactionId: String
+  refundBalanceCents: Int
+  order: Order
+  authorization: Authorization
+  refunds: [Refund!]
+}
+
+"""A release of an authorization before capture."""
+type Void implements Node {
+  id: ID!
+  type: String!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  number: String
+  currencyCode: String
+  amountCents: Int!
+  amountFloat: Float!
+  formattedAmount: String!
+  succeeded: Boolean!
+  message: String
+  errorCode: String
+  errorDetail: String
+  token: String
+  gatewayTransactionId: String
+  order: Order
+  authorization: Authorization
+}
+
+"""A refund of a previously captured amount."""
+type Refund implements Node {
+  id: ID!
+  type: String!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  number: String
+  currencyCode: String
+  amountCents: Int!
+  amountFloat: Float!
+  formattedAmount: String!
+  succeeded: Boolean!
+  message: String
+  errorCode: String
+  errorDetail: String
+  token: String
+  gatewayTransactionId: String
+  order: Order
+  capture: Capture
+}
+
+"""A Stripe payment source."""
+type StripePayment implements Node {
+  id: ID!
+  type: String!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  clientSecret: String
+  publishableKey: String
+  paymentMethod: JSON
+  paymentIntentId: String
+  status: String
+  options: JSON
+  order: Order
+}
+
+"""A PayPal payment source."""
+type PaypalPayment implements Node {
+  id: ID!
+  type: String!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  returnUrl: String
+  cancelUrl: String
+  noteToPayerCountryCode: String
+  noteToPayerEmail: String
+  noteToPayerName: String
+  paypalPayerId: String
+  paypalPayerEmail: String
+  paypalPayerStatus: String
+  paypalAuthorizationId: String
+  paypalCaptureId: String
+  order: Order
+}
+
+"""A Braintree payment source."""
+type BraintreePayment implements Node {
+  id: ID!
+  type: String!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  clientToken: String
+  paymentMethodNonce: String
+  paymentId: String
+  local: Boolean
+  options: JSON
+  order: Order
+}
+
+"""An external (custom) payment gateway integration."""
+type ExternalGateway implements Node {
+  id: ID!
+  type: String!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  name: String!
+  authorizeUrl: String
+  captureUrl: String
+  voidUrl: String
+  refundUrl: String
+  tokenUrl: String
+  shared: Boolean
+}
+
+# ─── Tax ──────────────────────────────────────────────────────────────────────
+
+"""Abstract tax calculator attached to a market."""
+type TaxCalculator implements Node {
+  id: ID!
+  type: String!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  name: String!
+  calculatorType: TaxCalculatorType!
+}
+
+"""A tax code override for a specific SKU or shipping category."""
+type TaxCategory implements Node {
+  id: ID!
+  type: String!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  code: String!
+  skuCode: String
+  shippingCategory: ShippingCategory
+  taxCalculator: TaxCalculator
+}
+
+# ─── Shipping ─────────────────────────────────────────────────────────────────
+
+"""A carrier service level available in a shipping zone."""
+type ShippingMethod implements Node {
+  id: ID!
+  type: String!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  name: String!
+  scheme: String
+  currencyCode: String
+  external: Boolean
+  priceAmountCents: Int
+  priceAmountFloat: Float
+  formattedPriceAmount: String
+  freeOverAmountCents: Int
+  freeOverAmountFloat: Float
+  formattedFreeOverAmount: String
+  minWeight: Float
+  maxWeight: Float
+  unitOfWeight: String
+  disabled: Boolean
+  market: Market
+  shippingZone: ShippingZone
+  shippingCategory: ShippingCategory
+  shippingRates: [ShippingRate!]
+  deliveryLeadTimes: [DeliveryLeadTime!]
+}
+
+"""Geographic area for which specific shipping methods apply."""
+type ShippingZone implements Node {
+  id: ID!
+  type: String!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  name: String!
+  countryCodes: String
+  notCountryCodes: String
+  zipCodes: String
+  notZipCodes: String
+  shippingMethods: [ShippingMethod!]
+}
+
+"""A carrier-calculated rate for a specific shipment."""
+type ShippingRate implements Node {
+  id: ID!
+  type: String!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  rateCarrier: String
+  rateService: String
+  currencyCode: String
+  rateAmountCents: Int
+  rateAmountFloat: Float
+  formattedRateAmount: String
+  deliveryDays: Int
+  shipment: Shipment
+  shippingMethod: ShippingMethod
+}
+
+"""A package configuration used when building parcels."""
+type Package implements Node {
+  id: ID!
+  type: String!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  name: String!
+  code: String
+  length: Float
+  width: Float
+  height: Float
+  unitOfLength: String
+  stockLocation: StockLocation
+}
+
+"""A fulfillment group grouping line items into a single physical shipment."""
+type Shipment implements Node {
+  id: ID!
+  type: String!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  number: String
+  status: ShipmentStatus!
+  currencyCode: String
+  costAmountCents: Int
+  costAmountFloat: Float
+  formattedCostAmount: String
+  skusCount: Int
+  selectedRateId: String
+  shippingMethod: ShippingMethod
+  stockLocation: StockLocation
+  order: Order
+  shippingAddress: Address
+  shipmentLineItems: [ShipmentLineItem!]
+  stockTransfers: [StockTransfer!]
+  parcels: [Parcel!]
+  shippingRates: [ShippingRate!]
+}
+
+"""A line item entry within a shipment."""
+type ShipmentLineItem implements Node {
+  id: ID!
+  type: String!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  skuCode: String
+  quantity: Int!
+  shipment: Shipment
+  lineItem: LineItem
+  sku: SKU
+}
+
+"""A physical parcel generated from a shipment."""
+type Parcel implements Node {
+  id: ID!
+  type: String!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  number: String
+  weight: Float
+  unitOfWeight: String
+  eel_pfc: String
+  contents_type: String
+  contents_explanation: String
+  customsCertify: Boolean
+  customsSigner: String
+  nonDeliveryOption: String
+  restrictionType: String
+  restrictionComments: String
+  customsInfoRequired: Boolean
+  shippingLabelUrl: String
+  shippingLabelFileType: String
+  shippingLabelSize: String
+  shippingLabelResolution: String
+  trackingNumber: String
+  trackingStatus: String
+  trackingStatusUpdatedAt: DateTime
+  trackingStatusDetail: String
+  trackingCarrier: String
+  trackingEstimatedDelivery: DateTime
+  signatureRequired: Boolean
+  signedBy: String
+  incoterm: String
+  shipment: Shipment
+  package: Package
+  parcelLineItems: [ParcelLineItem!]
+}
+
+"""A line item entry within a parcel."""
+type ParcelLineItem implements Node {
+  id: ID!
+  type: String!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  skuCode: String
+  quantity: Int!
+  hsTariffNumber: String
+  weight: Float
+  unitOfWeight: String
+  parcel: Parcel
+  lineItem: LineItem
+  sku: SKU
+}
+
+# ─── Returns ──────────────────────────────────────────────────────────────────
+
+"""A merchandise return request against an order."""
+type Return implements Node {
+  id: ID!
+  type: String!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  number: String
+  status: ReturnStatus!
+  skusCount: Int
+  approvedAt: DateTime
+  cancelledAt: DateTime
+  shippedAt: DateTime
+  receivedAt: DateTime
+  rejectedAt: DateTime
+  archivedAt: DateTime
+  order: Order
+  customer: Customer
+  originAddress: Address
+  destinationAddress: Address
+  stockLocation: StockLocation
+  returnLineItems: [ReturnLineItem!]
+  refund: Refund
+}
+
+"""A single line item entry in a return request."""
+type ReturnLineItem implements Node {
+  id: ID!
+  type: String!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  skuCode: String
+  bundleCode: String
+  name: String
+  quantity: Int!
+  returnReason: JSON
+  approvedQuantity: Int
+  rejectedQuantity: Int
+  receivedQuantity: Int
+  return: Return
+  lineItem: LineItem
+  sku: SKU
+}
+
+# ─── Webhooks and Events ──────────────────────────────────────────────────────
+
+"""A webhook endpoint that receives Commerce Layer events."""
+type Webhook implements Node {
+  id: ID!
+  type: String!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  name: String!
+  topic: String!
+  callbackUrl: String!
+  includeResources: [String!]
+  disabled: Boolean
+  circuit: String
+  circuitState: String
+  failureCount: Int
+  lastEventCallbacks: [EventCallback!]
+}
+
+"""A platform event generated by a resource state transition."""
+type Event implements Node {
+  id: ID!
+  type: String!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  name: String
+  resourceType: String
+  resourceId: String
+  data: JSON
+  eventCallbacks: [EventCallback!]
+}
+
+"""A log entry for a single webhook delivery attempt."""
+type EventCallback implements Node {
+  id: ID!
+  type: String!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  callbackUrl: String
+  payload: JSON
+  responseCode: Int
+  responseHeaders: JSON
+  responseBody: String
+  succeededAt: DateTime
+  failedAt: DateTime
+  webhook: Webhook
+  event: Event
+}
+
+# ─── Bulk Operations ──────────────────────────────────────────────────────────
+
+"""A bulk import job that creates or updates resources from a data file."""
+type Import implements Node {
+  id: ID!
+  type: String!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  resourceType: String!
+  parentResourceId: String
+  status: ImportStatus!
+  cleanup: Boolean
+  pending: Boolean
+  inputs: JSON
+  inputsSize: Int
+  errorsCount: Int
+  warningsCount: Int
+  destroyedCount: Int
+  processedCount: Int
+  errorsLog: JSON
+  warningsLog: JSON
+  dryData: Boolean
+  completedAt: DateTime
+  interruptedAt: DateTime
+  validationStrategy: String
+}
+
+"""A bulk export job that extracts resource data to a downloadable file."""
+type Export implements Node {
+  id: ID!
+  type: String!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  resourceType: String!
+  status: ExportStatus!
+  includes: [String!]
+  filters: JSON
+  format: String
+  dryData: Boolean
+  started: Boolean
+  attachmentUrl: String
+  recordsCount: Int
+  completedAt: DateTime
+  interruptedAt: DateTime
+}
+
+# ─── Queries ──────────────────────────────────────────────────────────────────
+
+type Query {
+  # Organization
+  organization: Organization
+
+  # Markets
+  market(id: ID!): Market
+  markets(pageSize: Int, pageNumber: Int): [Market!]!
+
+  # Catalog
+  sku(id: ID!): SKU
+  skus(pageSize: Int, pageNumber: Int, filterByCode: String): [SKU!]!
+  skuOption(id: ID!): SKUOption
+  skuOptions(pageSize: Int, pageNumber: Int): [SKUOption!]!
+  bundle(id: ID!): Bundle
+  bundles(pageSize: Int, pageNumber: Int): [Bundle!]!
+
+  # Pricing
+  priceList(id: ID!): PriceList
+  priceLists(pageSize: Int, pageNumber: Int): [PriceList!]!
+  price(id: ID!): Price
+  prices(pageSize: Int, pageNumber: Int, filterBySkuCode: String): [Price!]!
+
+  # Inventory
+  inventoryModel(id: ID!): InventoryModel
+  inventoryModels(pageSize: Int, pageNumber: Int): [InventoryModel!]!
+  stockLocation(id: ID!): StockLocation
+  stockLocations(pageSize: Int, pageNumber: Int): [StockLocation!]!
+  stockItem(id: ID!): StockItem
+  stockItems(pageSize: Int, pageNumber: Int, filterBySkuCode: String): [StockItem!]!
+  stockTransfer(id: ID!): StockTransfer
+  stockTransfers(pageSize: Int, pageNumber: Int): [StockTransfer!]!
+
+  # Orders
+  order(id: ID!): Order
+  orders(pageSize: Int, pageNumber: Int, filterByStatus: OrderStatus, filterByCustomerEmail: String): [Order!]!
+  lineItem(id: ID!): LineItem
+  lineItems(orderId: ID, pageSize: Int, pageNumber: Int): [LineItem!]!
+
+  # Promotions
+  promotion(id: ID!): Promotion
+  promotions(pageSize: Int, pageNumber: Int): [Promotion!]!
+  coupon(id: ID!): Coupon
+  coupons(pageSize: Int, pageNumber: Int): [Coupon!]!
+  giftCard(id: ID!): GiftCard
+  giftCards(pageSize: Int, pageNumber: Int): [GiftCard!]!
+
+  # Customers
+  customer(id: ID!): Customer
+  customers(pageSize: Int, pageNumber: Int, filterByEmail: String): [Customer!]!
+  customerGroup(id: ID!): CustomerGroup
+  customerGroups(pageSize: Int, pageNumber: Int): [CustomerGroup!]!
+
+  # Addresses
+  address(id: ID!): Address
+  addresses(pageSize: Int, pageNumber: Int): [Address!]!
+
+  # Payments
+  paymentMethod(id: ID!): PaymentMethod
+  paymentMethods(pageSize: Int, pageNumber: Int): [PaymentMethod!]!
+  transaction(id: ID!): Transaction
+  transactions(orderId: ID, pageSize: Int, pageNumber: Int): [Transaction!]!
+  authorization(id: ID!): Authorization
+  capture(id: ID!): Capture
+  void(id: ID!): Void
+  refund(id: ID!): Refund
+
+  # Tax
+  taxCalculator(id: ID!): TaxCalculator
+  taxCalculators(pageSize: Int, pageNumber: Int): [TaxCalculator!]!
+  taxCategory(id: ID!): TaxCategory
+  taxCategories(pageSize: Int, pageNumber: Int): [TaxCategory!]!
+
+  # Shipping
+  shipment(id: ID!): Shipment
+  shipments(orderId: ID, pageSize: Int, pageNumber: Int): [Shipment!]!
+  shippingMethod(id: ID!): ShippingMethod
+  shippingMethods(pageSize: Int, pageNumber: Int): [ShippingMethod!]!
+  shippingZone(id: ID!): ShippingZone
+  shippingZones(pageSize: Int, pageNumber: Int): [ShippingZone!]!
+  parcel(id: ID!): Parcel
+  parcels(shipmentId: ID, pageSize: Int, pageNumber: Int): [Parcel!]!
+
+  # Returns
+  return(id: ID!): Return
+  returns(pageSize: Int, pageNumber: Int, filterByStatus: ReturnStatus): [Return!]!
+
+  # Webhooks
+  webhook(id: ID!): Webhook
+  webhooks(pageSize: Int, pageNumber: Int): [Webhook!]!
+
+  # Bulk
+  import(id: ID!): Import
+  imports(pageSize: Int, pageNumber: Int): [Import!]!
+  export(id: ID!): Export
+  exports(pageSize: Int, pageNumber: Int): [Export!]!
+}
+
+# ─── Input types ─────────────────────────────────────────────────────────────
+
+input CreateOrderInput {
+  marketId: ID!
+  customerEmail: String
+  languageCode: String
+  countryCode: String
+  couponCode: String
+  giftCardCode: String
+}
+
+input UpdateOrderInput {
+  id: ID!
+  customerEmail: String
+  shippingAddressId: ID
+  billingAddressId: ID
+  paymentMethodId: ID
+  couponCode: String
+  giftCardCode: String
+  _place: Boolean
+  _approve: Boolean
+  _cancel: Boolean
+  _refresh: Boolean
+  _approve_and_capture: Boolean
+}
+
+input CreateLineItemInput {
+  orderId: ID!
+  skuCode: String
+  bundleCode: String
+  quantity: Int!
+  name: String
+  imageUrl: String
+  unitAmountCents: Int
+}
+
+input CreateSkuInput {
+  code: String!
+  name: String!
+  description: String
+  imageUrl: String
+  shippingCategoryId: ID!
+  doNotShip: Boolean
+  doNotTrack: Boolean
+  weight: Float
+  unitOfWeight: String
+}
+
+input CreateAddressInput {
+  firstName: String
+  lastName: String
+  company: String
+  line1: String!
+  line2: String
+  city: String!
+  zipCode: String!
+  stateCode: String
+  countryCode: String!
+  phone: String
+  email: String
+}
+
+input CreateShipmentInput {
+  orderId: ID!
+  stockLocationId: ID!
+  shippingMethodId: ID
+}
+
+input CreateReturnInput {
+  orderId: ID!
+  stockLocationId: ID
+}
+
+# ─── Mutations ───────────────────────────────────────────────────────────────
+
+type Mutation {
+  # Orders
+  createOrder(input: CreateOrderInput!): Order
+  updateOrder(input: UpdateOrderInput!): Order
+  deleteOrder(id: ID!): Boolean
+
+  # Line items
+  createLineItem(input: CreateLineItemInput!): LineItem
+  updateLineItem(id: ID!, quantity: Int, name: String): LineItem
+  deleteLineItem(id: ID!): Boolean
+
+  # SKUs
+  createSku(input: CreateSkuInput!): SKU
+  updateSku(id: ID!, name: String, description: String, imageUrl: String): SKU
+  deleteSku(id: ID!): Boolean
+
+  # Addresses
+  createAddress(input: CreateAddressInput!): Address
+  updateAddress(id: ID!, input: CreateAddressInput!): Address
+  deleteAddress(id: ID!): Boolean
+
+  # Shipments
+  createShipment(input: CreateShipmentInput!): Shipment
+  updateShipment(id: ID!, shippingMethodId: ID, _ready_to_ship: Boolean, _ship: Boolean): Shipment
+  deleteShipment(id: ID!): Boolean
+
+  # Returns
+  createReturn(input: CreateReturnInput!): Return
+  updateReturn(id: ID!, _request: Boolean, _approve: Boolean, _cancel: Boolean, _ship: Boolean, _receive: Boolean, _reject: Boolean, _restock: Boolean, _archive: Boolean): Return
+  deleteReturn(id: ID!): Boolean
+
+  # Promotions
+  createPromotion(name: String!, promotionType: PromotionType!, startsAt: DateTime, expiresAt: DateTime, totalUsageLimit: Int): Promotion
+  updatePromotion(id: ID!, name: String, active: Boolean, expiresAt: DateTime): Promotion
+  deletePromotion(id: ID!): Boolean
+
+  # Coupons
+  createCoupon(promotionId: ID!, code: String!, usageLimit: Int, recipientEmail: String): Coupon
+  deleteCoupon(id: ID!): Boolean
+
+  # Webhooks
+  createWebhook(name: String!, topic: String!, callbackUrl: String!, includeResources: [String!]): Webhook
+  updateWebhook(id: ID!, name: String, disabled: Boolean, callbackUrl: String, includeResources: [String!]): Webhook
+  deleteWebhook(id: ID!): Boolean
+
+  # Imports
+  createImport(resourceType: String!, inputs: JSON!, cleanup: Boolean, dryData: Boolean): Import
+
+  # Exports
+  createExport(resourceType: String!, filters: JSON, includes: [String!], format: String, dryData: Boolean): Export
+
+  # Customers
+  createCustomer(email: String!, password: String): Customer
+  updateCustomer(id: ID!, email: String, customerGroupId: ID): Customer
+  deleteCustomer(id: ID!): Boolean
+}
