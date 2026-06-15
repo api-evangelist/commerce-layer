@@ -1,0 +1,1358 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Commerce Layer Provisioning API",
+    "version": "1.0.15"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "api_credentials",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List all API credentials",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://provisioning.commercelayer.io/api_credentials"
+          },
+          "docs": "List all API credentials"
+        },
+        {
+          "info": {
+            "name": "Creates an API credential",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://provisioning.commercelayer.io/api_credentials",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates an API credential"
+        },
+        {
+          "info": {
+            "name": "Retrieve an API credential",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://provisioning.commercelayer.io/api_credentials/:apiCredentialId",
+            "params": [
+              {
+                "name": "apiCredentialId",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the resource."
+              }
+            ]
+          },
+          "docs": "Retrieve an API credential"
+        },
+        {
+          "info": {
+            "name": "Updates an API credential",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://provisioning.commercelayer.io/api_credentials/:apiCredentialId",
+            "params": [
+              {
+                "name": "apiCredentialId",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the resource."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates an API credential"
+        },
+        {
+          "info": {
+            "name": "Delete an API credential",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://provisioning.commercelayer.io/api_credentials/:apiCredentialId",
+            "params": [
+              {
+                "name": "apiCredentialId",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the resource."
+              }
+            ]
+          },
+          "docs": "Delete an API credential"
+        },
+        {
+          "info": {
+            "name": "Related application membership",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://provisioning.commercelayer.io/application_memberships/:applicationMembershipId/api_credential",
+            "params": [
+              {
+                "name": "applicationMembershipId",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the resource."
+              }
+            ]
+          },
+          "docs": "Related application membership"
+        },
+        {
+          "info": {
+            "name": "Related organization",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://provisioning.commercelayer.io/organizations/:organizationId/api_credentials",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the resource."
+              }
+            ]
+          },
+          "docs": "Related organization"
+        },
+        {
+          "info": {
+            "name": "Related role",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://provisioning.commercelayer.io/roles/:roleId/api_credentials",
+            "params": [
+              {
+                "name": "roleId",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the resource."
+              }
+            ]
+          },
+          "docs": "Related role"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "organizations",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Related API credential",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://provisioning.commercelayer.io/api_credentials/:apiCredentialId/organization",
+            "params": [
+              {
+                "name": "apiCredentialId",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the resource."
+              }
+            ]
+          },
+          "docs": "Related API credential"
+        },
+        {
+          "info": {
+            "name": "Related application membership",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://provisioning.commercelayer.io/application_memberships/:applicationMembershipId/organization",
+            "params": [
+              {
+                "name": "applicationMembershipId",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the resource."
+              }
+            ]
+          },
+          "docs": "Related application membership"
+        },
+        {
+          "info": {
+            "name": "Related membership",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://provisioning.commercelayer.io/memberships/:membershipId/organization",
+            "params": [
+              {
+                "name": "membershipId",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the resource."
+              }
+            ]
+          },
+          "docs": "Related membership"
+        },
+        {
+          "info": {
+            "name": "Related membership profile",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://provisioning.commercelayer.io/membership_profiles/:membershipProfileId/organization",
+            "params": [
+              {
+                "name": "membershipProfileId",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the resource."
+              }
+            ]
+          },
+          "docs": "Related membership profile"
+        },
+        {
+          "info": {
+            "name": "List all organizations",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://provisioning.commercelayer.io/organizations"
+          },
+          "docs": "List all organizations"
+        },
+        {
+          "info": {
+            "name": "Creates an organization",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://provisioning.commercelayer.io/organizations",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates an organization"
+        },
+        {
+          "info": {
+            "name": "Retrieve an organization",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://provisioning.commercelayer.io/organizations/:organizationId",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the resource."
+              }
+            ]
+          },
+          "docs": "Retrieve an organization"
+        },
+        {
+          "info": {
+            "name": "Updates an organization",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://provisioning.commercelayer.io/organizations/:organizationId",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the resource."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates an organization"
+        },
+        {
+          "info": {
+            "name": "Transfer ownership of an organization",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://provisioning.commercelayer.io/organizations/:organizationId/transfer_ownership",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the resource."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Transfers the ownership of an organization to a new owner"
+        },
+        {
+          "info": {
+            "name": "Related permission",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://provisioning.commercelayer.io/permissions/:permissionId/organization",
+            "params": [
+              {
+                "name": "permissionId",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the resource."
+              }
+            ]
+          },
+          "docs": "Related permission"
+        },
+        {
+          "info": {
+            "name": "Related role",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://provisioning.commercelayer.io/roles/:roleId/organization",
+            "params": [
+              {
+                "name": "roleId",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the resource."
+              }
+            ]
+          },
+          "docs": "Related role"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "roles",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Related API credential",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://provisioning.commercelayer.io/api_credentials/:apiCredentialId/role",
+            "params": [
+              {
+                "name": "apiCredentialId",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the resource."
+              }
+            ]
+          },
+          "docs": "Related API credential"
+        },
+        {
+          "info": {
+            "name": "Related application membership",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://provisioning.commercelayer.io/application_memberships/:applicationMembershipId/role",
+            "params": [
+              {
+                "name": "applicationMembershipId",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the resource."
+              }
+            ]
+          },
+          "docs": "Related application membership"
+        },
+        {
+          "info": {
+            "name": "Related membership",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://provisioning.commercelayer.io/memberships/:membershipId/role",
+            "params": [
+              {
+                "name": "membershipId",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the resource."
+              }
+            ]
+          },
+          "docs": "Related membership"
+        },
+        {
+          "info": {
+            "name": "Related organization",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://provisioning.commercelayer.io/organizations/:organizationId/roles",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the resource."
+              }
+            ]
+          },
+          "docs": "Related organization"
+        },
+        {
+          "info": {
+            "name": "Related permission",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://provisioning.commercelayer.io/permissions/:permissionId/role",
+            "params": [
+              {
+                "name": "permissionId",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the resource."
+              }
+            ]
+          },
+          "docs": "Related permission"
+        },
+        {
+          "info": {
+            "name": "List all roles",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://provisioning.commercelayer.io/roles"
+          },
+          "docs": "List all roles"
+        },
+        {
+          "info": {
+            "name": "Creates an role",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://provisioning.commercelayer.io/roles",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates an role"
+        },
+        {
+          "info": {
+            "name": "Retrieve an role",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://provisioning.commercelayer.io/roles/:roleId",
+            "params": [
+              {
+                "name": "roleId",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the resource."
+              }
+            ]
+          },
+          "docs": "Retrieve an role"
+        },
+        {
+          "info": {
+            "name": "Updates an role",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://provisioning.commercelayer.io/roles/:roleId",
+            "params": [
+              {
+                "name": "roleId",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the resource."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates an role"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "application_memberships",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List all application memberships",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://provisioning.commercelayer.io/application_memberships"
+          },
+          "docs": "List all application memberships"
+        },
+        {
+          "info": {
+            "name": "Creates an application membership",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://provisioning.commercelayer.io/application_memberships",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates an application membership"
+        },
+        {
+          "info": {
+            "name": "Retrieve an application membership",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://provisioning.commercelayer.io/application_memberships/:applicationMembershipId",
+            "params": [
+              {
+                "name": "applicationMembershipId",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the resource."
+              }
+            ]
+          },
+          "docs": "Retrieve an application membership"
+        },
+        {
+          "info": {
+            "name": "Updates an application membership",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://provisioning.commercelayer.io/application_memberships/:applicationMembershipId",
+            "params": [
+              {
+                "name": "applicationMembershipId",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the resource."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates an application membership"
+        },
+        {
+          "info": {
+            "name": "Delete an application membership",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://provisioning.commercelayer.io/application_memberships/:applicationMembershipId",
+            "params": [
+              {
+                "name": "applicationMembershipId",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the resource."
+              }
+            ]
+          },
+          "docs": "Delete an application membership"
+        },
+        {
+          "info": {
+            "name": "Related membership",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://provisioning.commercelayer.io/memberships/:membershipId/application_memberships",
+            "params": [
+              {
+                "name": "membershipId",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the resource."
+              }
+            ]
+          },
+          "docs": "Related membership"
+        },
+        {
+          "info": {
+            "name": "Related membership profile",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://provisioning.commercelayer.io/membership_profiles/:membershipProfileId/application_memberships",
+            "params": [
+              {
+                "name": "membershipProfileId",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the resource."
+              }
+            ]
+          },
+          "docs": "Related membership profile"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "memberships",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Related application membership",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://provisioning.commercelayer.io/application_memberships/:applicationMembershipId/membership",
+            "params": [
+              {
+                "name": "applicationMembershipId",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the resource."
+              }
+            ]
+          },
+          "docs": "Related application membership"
+        },
+        {
+          "info": {
+            "name": "List all memberships",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://provisioning.commercelayer.io/memberships"
+          },
+          "docs": "List all memberships"
+        },
+        {
+          "info": {
+            "name": "Creates an membership",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://provisioning.commercelayer.io/memberships",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates an membership"
+        },
+        {
+          "info": {
+            "name": "Retrieve an membership",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://provisioning.commercelayer.io/memberships/:membershipId",
+            "params": [
+              {
+                "name": "membershipId",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the resource."
+              }
+            ]
+          },
+          "docs": "Retrieve an membership"
+        },
+        {
+          "info": {
+            "name": "Updates an membership",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://provisioning.commercelayer.io/memberships/:membershipId",
+            "params": [
+              {
+                "name": "membershipId",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the resource."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates an membership"
+        },
+        {
+          "info": {
+            "name": "Delete an membership",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://provisioning.commercelayer.io/memberships/:membershipId",
+            "params": [
+              {
+                "name": "membershipId",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the resource."
+              }
+            ]
+          },
+          "docs": "Delete an membership"
+        },
+        {
+          "info": {
+            "name": "Resend invitation",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://provisioning.commercelayer.io/memberships/:membershipId/resend",
+            "params": [
+              {
+                "name": "membershipId",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the resource."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Resend invitation for the given membership"
+        },
+        {
+          "info": {
+            "name": "Related organization",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://provisioning.commercelayer.io/organizations/:organizationId/memberships",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the resource."
+              }
+            ]
+          },
+          "docs": "Related organization"
+        },
+        {
+          "info": {
+            "name": "Related role",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://provisioning.commercelayer.io/roles/:roleId/memberships",
+            "params": [
+              {
+                "name": "roleId",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the resource."
+              }
+            ]
+          },
+          "docs": "Related role"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "membership_profiles",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Related application membership",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://provisioning.commercelayer.io/application_memberships/:applicationMembershipId/membership_profile",
+            "params": [
+              {
+                "name": "applicationMembershipId",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the resource."
+              }
+            ]
+          },
+          "docs": "Related application membership"
+        },
+        {
+          "info": {
+            "name": "Related membership",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://provisioning.commercelayer.io/memberships/:membershipId/membership_profile",
+            "params": [
+              {
+                "name": "membershipId",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the resource."
+              }
+            ]
+          },
+          "docs": "Related membership"
+        },
+        {
+          "info": {
+            "name": "List all membership profiles",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://provisioning.commercelayer.io/membership_profiles"
+          },
+          "docs": "List all membership profiles"
+        },
+        {
+          "info": {
+            "name": "Creates an membership profile",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://provisioning.commercelayer.io/membership_profiles",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates an membership profile"
+        },
+        {
+          "info": {
+            "name": "Retrieve an membership profile",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://provisioning.commercelayer.io/membership_profiles/:membershipProfileId",
+            "params": [
+              {
+                "name": "membershipProfileId",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the resource."
+              }
+            ]
+          },
+          "docs": "Retrieve an membership profile"
+        },
+        {
+          "info": {
+            "name": "Updates an membership profile",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://provisioning.commercelayer.io/membership_profiles/:membershipProfileId",
+            "params": [
+              {
+                "name": "membershipProfileId",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the resource."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates an membership profile"
+        },
+        {
+          "info": {
+            "name": "Delete an membership profile",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://provisioning.commercelayer.io/membership_profiles/:membershipProfileId",
+            "params": [
+              {
+                "name": "membershipProfileId",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the resource."
+              }
+            ]
+          },
+          "docs": "Delete an membership profile"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "identity_providers",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List all identity providers",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://provisioning.commercelayer.io/identity_providers"
+          },
+          "docs": "List all identity providers"
+        },
+        {
+          "info": {
+            "name": "Creates an identity provider",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://provisioning.commercelayer.io/identity_providers",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates an identity provider"
+        },
+        {
+          "info": {
+            "name": "Retrieve an identity provider",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://provisioning.commercelayer.io/identity_providers/:identityProviderId",
+            "params": [
+              {
+                "name": "identityProviderId",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the resource."
+              }
+            ]
+          },
+          "docs": "Retrieve an identity provider"
+        },
+        {
+          "info": {
+            "name": "Updates an identity provider",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://provisioning.commercelayer.io/identity_providers/:identityProviderId",
+            "params": [
+              {
+                "name": "identityProviderId",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the resource."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates an identity provider"
+        },
+        {
+          "info": {
+            "name": "Delete an identity provider",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://provisioning.commercelayer.io/identity_providers/:identityProviderId",
+            "params": [
+              {
+                "name": "identityProviderId",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the resource."
+              }
+            ]
+          },
+          "docs": "Delete an identity provider"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "users",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Related identity provider",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://provisioning.commercelayer.io/identity_providers/:identityProviderId/user",
+            "params": [
+              {
+                "name": "identityProviderId",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the resource."
+              }
+            ]
+          },
+          "docs": "Related identity provider"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "versions",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Related membership",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://provisioning.commercelayer.io/memberships/:membershipId/versions",
+            "params": [
+              {
+                "name": "membershipId",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the resource."
+              }
+            ]
+          },
+          "docs": "Related membership"
+        },
+        {
+          "info": {
+            "name": "Related permission",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://provisioning.commercelayer.io/permissions/:permissionId/versions",
+            "params": [
+              {
+                "name": "permissionId",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the resource."
+              }
+            ]
+          },
+          "docs": "Related permission"
+        },
+        {
+          "info": {
+            "name": "Related role",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://provisioning.commercelayer.io/roles/:roleId/versions",
+            "params": [
+              {
+                "name": "roleId",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the resource."
+              }
+            ]
+          },
+          "docs": "Related role"
+        },
+        {
+          "info": {
+            "name": "List all versions",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://provisioning.commercelayer.io/versions"
+          },
+          "docs": "List all versions"
+        },
+        {
+          "info": {
+            "name": "Retrieve an version",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://provisioning.commercelayer.io/versions/:versionId",
+            "params": [
+              {
+                "name": "versionId",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the resource."
+              }
+            ]
+          },
+          "docs": "Retrieve an version"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "permissions",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Related organization",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://provisioning.commercelayer.io/organizations/:organizationId/permissions",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the resource."
+              }
+            ]
+          },
+          "docs": "Related organization"
+        },
+        {
+          "info": {
+            "name": "List all permissions",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://provisioning.commercelayer.io/permissions"
+          },
+          "docs": "List all permissions"
+        },
+        {
+          "info": {
+            "name": "Creates an permission",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://provisioning.commercelayer.io/permissions",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates an permission"
+        },
+        {
+          "info": {
+            "name": "Retrieve an permission",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://provisioning.commercelayer.io/permissions/:permissionId",
+            "params": [
+              {
+                "name": "permissionId",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the resource."
+              }
+            ]
+          },
+          "docs": "Retrieve an permission"
+        },
+        {
+          "info": {
+            "name": "Updates an permission",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://provisioning.commercelayer.io/permissions/:permissionId",
+            "params": [
+              {
+                "name": "permissionId",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the resource."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates an permission"
+        },
+        {
+          "info": {
+            "name": "Related role",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://provisioning.commercelayer.io/roles/:roleId/permissions",
+            "params": [
+              {
+                "name": "roleId",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the resource."
+              }
+            ]
+          },
+          "docs": "Related role"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "user",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Retrieve an user",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://provisioning.commercelayer.io/user"
+          },
+          "docs": "Retrieve an user"
+        },
+        {
+          "info": {
+            "name": "Updates an user",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://provisioning.commercelayer.io/user",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates an user"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
