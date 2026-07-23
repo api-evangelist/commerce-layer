@@ -1,0 +1,550 @@
+openapi: 3.1.0
+info:
+  title: Commerce Layer addresses price_list_schedulers API
+  version: 7.10.1
+  contact:
+    name: API Support
+    url: https://commercelayer.io
+    email: support@commercelayer.io
+  description: Headless Commerce for Global Brands.
+servers:
+- url: https://{your_organization_slug}.commercelayer.io/api
+  description: API
+- url: https://core.commercelayer.io/users/sign_in
+  description: Sign in
+- url: https://docs.commercelayer.io/api
+  description: API reference
+security:
+- bearerAuth: []
+tags:
+- name: price_list_schedulers
+  description: resource type
+paths:
+  /markets/{marketId}/price_list_schedulers:
+    get:
+      operationId: GET/marketId/price_list_schedulers
+      summary: Retrieve the price list schedulers associated to the market
+      description: Retrieve the price list schedulers associated to the market
+      tags:
+      - price_list_schedulers
+      parameters:
+      - name: marketId
+        in: path
+        schema:
+          type: string
+        required: true
+        description: The resource's id
+      responses:
+        '200':
+          description: The price_list_schedulers associated to the market
+  /price_list_schedulers:
+    get:
+      operationId: GET/price_list_schedulers
+      summary: List all price list schedulers
+      description: List all price list schedulers
+      tags:
+      - price_list_schedulers
+      responses:
+        '200':
+          description: A list of price list scheduler objects
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/priceListSchedulerResponseList'
+    post:
+      operationId: POST/price_list_schedulers
+      summary: Create a price list scheduler
+      description: Create a price list scheduler
+      tags:
+      - price_list_schedulers
+      requestBody:
+        required: true
+        content:
+          application/vnd.api+json:
+            schema:
+              $ref: '#/components/schemas/priceListSchedulerCreate'
+      responses:
+        '201':
+          description: The created price list scheduler object
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/priceListSchedulerResponse'
+  /price_list_schedulers/{priceListSchedulerId}:
+    get:
+      operationId: GET/price_list_schedulers/priceListSchedulerId
+      summary: Retrieve a price list scheduler
+      description: Retrieve a price list scheduler
+      tags:
+      - price_list_schedulers
+      parameters:
+      - name: priceListSchedulerId
+        in: path
+        schema:
+          type: string
+        required: true
+        description: The resource's id
+      responses:
+        '200':
+          description: The price list scheduler object
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/priceListSchedulerResponse'
+    patch:
+      operationId: PATCH/price_list_schedulers/priceListSchedulerId
+      summary: Update a price list scheduler
+      description: Update a price list scheduler
+      tags:
+      - price_list_schedulers
+      parameters:
+      - name: priceListSchedulerId
+        in: path
+        schema:
+          type: string
+        required: true
+        description: The resource's id
+      requestBody:
+        required: true
+        content:
+          application/vnd.api+json:
+            schema:
+              $ref: '#/components/schemas/priceListSchedulerUpdate'
+      responses:
+        '200':
+          description: The updated price list scheduler object
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/priceListSchedulerResponse'
+    delete:
+      operationId: DELETE/price_list_schedulers/priceListSchedulerId
+      summary: Delete a price list scheduler
+      description: Delete a price list scheduler
+      tags:
+      - price_list_schedulers
+      parameters:
+      - name: priceListSchedulerId
+        in: path
+        schema:
+          type: string
+        required: true
+        description: The resource's id
+      responses:
+        '204':
+          description: No content
+  /price_lists/{priceListId}/price_list_schedulers:
+    get:
+      operationId: GET/priceListId/price_list_schedulers
+      summary: Retrieve the price list schedulers associated to the price list
+      description: Retrieve the price list schedulers associated to the price list
+      tags:
+      - price_list_schedulers
+      parameters:
+      - name: priceListId
+        in: path
+        schema:
+          type: string
+        required: true
+        description: The resource's id
+      responses:
+        '200':
+          description: The price_list_schedulers associated to the price list
+components:
+  schemas:
+    priceListSchedulerResponseList:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/priceListSchedulerResponse/properties/data'
+    priceListSchedulerCreate:
+      required:
+      - data
+      type: object
+      properties:
+        data:
+          type: object
+          required:
+          - type
+          - attributes
+          properties:
+            type:
+              type: string
+              description: The resource's type
+              enum:
+              - price_list_schedulers
+            attributes:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: The price list scheduler's internal name.
+                  example: FW SALE 2023
+                starts_at:
+                  type: string
+                  description: The activation date/time of this price list scheduler.
+                  example: '2018-01-01T12:00:00.000Z'
+                expires_at:
+                  type: string
+                  description: The expiration date/time of this price list scheduler (must be after starts_at).
+                  example: '2018-01-02T12:00:00.000Z'
+                _disable:
+                  type: boolean
+                  description: Send this attribute if you want to mark this resource as disabled.
+                  example: true
+                _enable:
+                  type: boolean
+                  description: Send this attribute if you want to mark this resource as enabled.
+                  example: true
+                reference:
+                  type: string
+                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
+                  example: ANY-EXTERNAL-REFEFERNCE
+                reference_origin:
+                  type: string
+                  description: Any identifier of the third party system that defines the reference code.
+                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
+                metadata:
+                  type: object
+                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
+                  example:
+                    foo: bar
+              required:
+              - name
+              - starts_at
+              - expires_at
+            relationships:
+              type: object
+              properties:
+                market:
+                  required:
+                  - data
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - markets
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+                price_list:
+                  required:
+                  - data
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - price_lists
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+              required:
+              - market
+              - price_list
+    priceListSchedulerResponse:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            id:
+              type: string
+              description: Unique identifier for the resource (hash).
+              example: XAyRWNUzyN
+            type:
+              type: string
+              description: The resource's type
+              enum:
+              - price_list_schedulers
+            links:
+              type: object
+              properties:
+                self:
+                  type: string
+                  description: URL
+            attributes:
+              $ref: '#/components/schemas/priceListScheduler/properties/data/properties/attributes'
+            relationships:
+              type: object
+              properties:
+                market:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - market
+                        id:
+                          type: string
+                          description: The resource ID
+                price_list:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - price_list
+                        id:
+                          type: string
+                          description: The resource ID
+                events:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - events
+                        id:
+                          type: string
+                          description: The resource ID
+                event_stores:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - event_stores
+                        id:
+                          type: string
+                          description: The resource ID
+    priceListScheduler:
+      properties:
+        data:
+          properties:
+            attributes:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: The price list scheduler's internal name.
+                  example: FW SALE 2023
+                  nullable: false
+                starts_at:
+                  type: string
+                  description: The activation date/time of this price list scheduler.
+                  example: '2018-01-01T12:00:00.000Z'
+                  nullable: false
+                expires_at:
+                  type: string
+                  description: The expiration date/time of this price list scheduler (must be after starts_at).
+                  example: '2018-01-02T12:00:00.000Z'
+                  nullable: false
+                active:
+                  type: boolean
+                  description: Indicates if the price list scheduler is active (enabled and not expired).
+                  example: true
+                  nullable: true
+                status:
+                  type: string
+                  description: The price list scheduler status. One of 'disabled', 'expired', 'pending', or 'active'.
+                  example: pending
+                  nullable: true
+                  enum:
+                  - disabled
+                  - expired
+                  - pending
+                  - active
+                disabled_at:
+                  type: string
+                  description: Time at which this resource was disabled.
+                  example: '2018-01-01T12:00:00.000Z'
+                  nullable: true
+                created_at:
+                  type: string
+                  description: Time at which the resource was created.
+                  example: '2018-01-01T12:00:00.000Z'
+                  nullable: false
+                updated_at:
+                  type: string
+                  description: Time at which the resource was last updated.
+                  example: '2018-01-01T12:00:00.000Z'
+                  nullable: false
+                reference:
+                  type: string
+                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
+                  example: ANY-EXTERNAL-REFEFERNCE
+                  nullable: true
+                reference_origin:
+                  type: string
+                  description: Any identifier of the third party system that defines the reference code.
+                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
+                  nullable: true
+                metadata:
+                  type: object
+                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
+                  example:
+                    foo: bar
+                  nullable: true
+    priceListSchedulerUpdate:
+      required:
+      - data
+      type: object
+      properties:
+        data:
+          type: object
+          required:
+          - type
+          - id
+          - attributes
+          properties:
+            type:
+              type: string
+              description: The resource's type
+              enum:
+              - price_list_schedulers
+            id:
+              type: string
+              description: Unique identifier for the resource (hash).
+              example: XAyRWNUzyN
+            attributes:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: The price list scheduler's internal name.
+                  example: FW SALE 2023
+                  nullable: false
+                starts_at:
+                  type: string
+                  description: The activation date/time of this price list scheduler.
+                  example: '2018-01-01T12:00:00.000Z'
+                  nullable: false
+                expires_at:
+                  type: string
+                  description: The expiration date/time of this price list scheduler (must be after starts_at).
+                  example: '2018-01-02T12:00:00.000Z'
+                  nullable: false
+                _disable:
+                  type: boolean
+                  description: Send this attribute if you want to mark this resource as disabled.
+                  example: true
+                  nullable: false
+                _enable:
+                  type: boolean
+                  description: Send this attribute if you want to mark this resource as enabled.
+                  example: true
+                  nullable: false
+                reference:
+                  type: string
+                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
+                  example: ANY-EXTERNAL-REFEFERNCE
+                  nullable: true
+                reference_origin:
+                  type: string
+                  description: Any identifier of the third party system that defines the reference code.
+                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
+                  nullable: true
+                metadata:
+                  type: object
+                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
+                  example:
+                    foo: bar
+                  nullable: true
+            relationships:
+              type: object
+              properties:
+                market:
+                  required:
+                  - data
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - markets
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+                price_list:
+                  required:
+                  - data
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - price_lists
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT

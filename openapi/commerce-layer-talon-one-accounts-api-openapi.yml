@@ -1,0 +1,421 @@
+openapi: 3.1.0
+info:
+  title: Commerce Layer addresses talon_one_accounts API
+  version: 7.10.1
+  contact:
+    name: API Support
+    url: https://commercelayer.io
+    email: support@commercelayer.io
+  description: Headless Commerce for Global Brands.
+servers:
+- url: https://{your_organization_slug}.commercelayer.io/api
+  description: API
+- url: https://core.commercelayer.io/users/sign_in
+  description: Sign in
+- url: https://docs.commercelayer.io/api
+  description: API reference
+security:
+- bearerAuth: []
+tags:
+- name: talon_one_accounts
+  description: resource type
+paths:
+  /talon_one_accounts:
+    get:
+      operationId: GET/talon_one_accounts
+      summary: List all talon one accounts
+      description: List all talon one accounts
+      tags:
+      - talon_one_accounts
+      responses:
+        '200':
+          description: A list of talon one account objects
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/talonOneAccountResponseList'
+    post:
+      operationId: POST/talon_one_accounts
+      summary: Create a talon one account
+      description: Create a talon one account
+      tags:
+      - talon_one_accounts
+      requestBody:
+        required: true
+        content:
+          application/vnd.api+json:
+            schema:
+              $ref: '#/components/schemas/talonOneAccountCreate'
+      responses:
+        '201':
+          description: The created talon one account object
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/talonOneAccountResponse'
+  /talon_one_accounts/{talonOneAccountId}:
+    get:
+      operationId: GET/talon_one_accounts/talonOneAccountId
+      summary: Retrieve a talon one account
+      description: Retrieve a talon one account
+      tags:
+      - talon_one_accounts
+      parameters:
+      - name: talonOneAccountId
+        in: path
+        schema:
+          type: string
+        required: true
+        description: The resource's id
+      responses:
+        '200':
+          description: The talon one account object
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/talonOneAccountResponse'
+    patch:
+      operationId: PATCH/talon_one_accounts/talonOneAccountId
+      summary: Update a talon one account
+      description: Update a talon one account
+      tags:
+      - talon_one_accounts
+      parameters:
+      - name: talonOneAccountId
+        in: path
+        schema:
+          type: string
+        required: true
+        description: The resource's id
+      requestBody:
+        required: true
+        content:
+          application/vnd.api+json:
+            schema:
+              $ref: '#/components/schemas/talonOneAccountUpdate'
+      responses:
+        '200':
+          description: The updated talon one account object
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/talonOneAccountResponse'
+    delete:
+      operationId: DELETE/talon_one_accounts/talonOneAccountId
+      summary: Delete a talon one account
+      description: Delete a talon one account
+      tags:
+      - talon_one_accounts
+      parameters:
+      - name: talonOneAccountId
+        in: path
+        schema:
+          type: string
+        required: true
+        description: The resource's id
+      responses:
+        '204':
+          description: No content
+components:
+  schemas:
+    talonOneAccountResponse:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            id:
+              type: string
+              description: Unique identifier for the resource (hash).
+              example: XAyRWNUzyN
+            type:
+              type: string
+              description: The resource's type
+              enum:
+              - talon_one_accounts
+            links:
+              type: object
+              properties:
+                self:
+                  type: string
+                  description: URL
+            attributes:
+              $ref: '#/components/schemas/talonOneAccount/properties/data/properties/attributes'
+            relationships:
+              type: object
+              properties:
+                markets:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - markets
+                        id:
+                          type: string
+                          description: The resource ID
+                discount_engine_items:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - discount_engine_items
+                        id:
+                          type: string
+                          description: The resource ID
+                attachments:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - attachments
+                        id:
+                          type: string
+                          description: The resource ID
+                event_stores:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - event_stores
+                        id:
+                          type: string
+                          description: The resource ID
+    talonOneAccountUpdate:
+      required:
+      - data
+      type: object
+      properties:
+        data:
+          type: object
+          required:
+          - type
+          - id
+          - attributes
+          properties:
+            type:
+              type: string
+              description: The resource's type
+              enum:
+              - talon_one_accounts
+            id:
+              type: string
+              description: Unique identifier for the resource (hash).
+              example: XAyRWNUzyN
+            attributes:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: The discount engine's internal name.
+                  example: Personal discount engine
+                  nullable: false
+                manage_gift_cards:
+                  type: boolean
+                  description: Indicates if the discount engine manages both promotions and gift cards application at once.
+                  example: false
+                  nullable: false
+                reference:
+                  type: string
+                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
+                  example: ANY-EXTERNAL-REFEFERNCE
+                  nullable: true
+                reference_origin:
+                  type: string
+                  description: Any identifier of the third party system that defines the reference code.
+                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
+                  nullable: true
+                metadata:
+                  type: object
+                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
+                  example:
+                    foo: bar
+                  nullable: true
+                api_key:
+                  type: string
+                  description: The Talon.One account API key.
+                  example: TALON_ONE_API_KEY
+                baseurl:
+                  type: string
+                  description: The Talon.One API baseurl (excluding the talon.one suffix).
+                  example: yourbaseurl
+            relationships:
+              type: object
+              properties: {}
+    talonOneAccountResponseList:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/talonOneAccountResponse/properties/data'
+    talonOneAccountCreate:
+      required:
+      - data
+      type: object
+      properties:
+        data:
+          type: object
+          required:
+          - type
+          - attributes
+          properties:
+            type:
+              type: string
+              description: The resource's type
+              enum:
+              - talon_one_accounts
+            attributes:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: The discount engine's internal name.
+                  example: Personal discount engine
+                manage_gift_cards:
+                  type: boolean
+                  description: Indicates if the discount engine manages both promotions and gift cards application at once.
+                  example: false
+                reference:
+                  type: string
+                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
+                  example: ANY-EXTERNAL-REFEFERNCE
+                reference_origin:
+                  type: string
+                  description: Any identifier of the third party system that defines the reference code.
+                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
+                metadata:
+                  type: object
+                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
+                  example:
+                    foo: bar
+                api_key:
+                  type: string
+                  description: The Talon.One account API key.
+                  example: TALON_ONE_API_KEY
+                baseurl:
+                  type: string
+                  description: The Talon.One API baseurl (excluding the talon.one suffix).
+                  example: yourbaseurl
+              required:
+              - name
+              - api_key
+              - baseurl
+            relationships:
+              type: object
+              properties: {}
+    talonOneAccount:
+      properties:
+        data:
+          properties:
+            attributes:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: The discount engine's internal name.
+                  example: Personal discount engine
+                  nullable: false
+                type:
+                  type: string
+                  description: The discount engine's type.
+                  example: talon_one_accounts
+                  nullable: false
+                  enum:
+                  - talon_one_accounts
+                manage_gift_cards:
+                  type: boolean
+                  description: Indicates if the discount engine manages both promotions and gift cards application at once.
+                  example: false
+                  nullable: true
+                created_at:
+                  type: string
+                  description: Time at which the resource was created.
+                  example: '2018-01-01T12:00:00.000Z'
+                  nullable: false
+                updated_at:
+                  type: string
+                  description: Time at which the resource was last updated.
+                  example: '2018-01-01T12:00:00.000Z'
+                  nullable: false
+                reference:
+                  type: string
+                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
+                  example: ANY-EXTERNAL-REFEFERNCE
+                  nullable: true
+                reference_origin:
+                  type: string
+                  description: Any identifier of the third party system that defines the reference code.
+                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
+                  nullable: true
+                metadata:
+                  type: object
+                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
+                  example:
+                    foo: bar
+                  nullable: true
+                api_endpoint:
+                  type: string
+                  description: The API endpoint as computed by specified baseurl.
+                  example: https://my_baseurl.talon.one/v2
+                  nullable: true
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT

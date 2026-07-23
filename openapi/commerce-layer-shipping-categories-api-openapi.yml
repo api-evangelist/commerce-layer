@@ -1,0 +1,419 @@
+openapi: 3.1.0
+info:
+  title: Commerce Layer addresses shipping_categories API
+  version: 7.10.1
+  contact:
+    name: API Support
+    url: https://commercelayer.io
+    email: support@commercelayer.io
+  description: Headless Commerce for Global Brands.
+servers:
+- url: https://{your_organization_slug}.commercelayer.io/api
+  description: API
+- url: https://core.commercelayer.io/users/sign_in
+  description: Sign in
+- url: https://docs.commercelayer.io/api
+  description: API reference
+security:
+- bearerAuth: []
+tags:
+- name: shipping_categories
+  description: resource type
+paths:
+  /shipments/{shipmentId}/shipping_category:
+    get:
+      operationId: GET/shipmentId/shipping_category
+      summary: Retrieve the shipping category associated to the shipment
+      description: Retrieve the shipping category associated to the shipment
+      tags:
+      - shipping_categories
+      parameters:
+      - name: shipmentId
+        in: path
+        schema:
+          type: string
+        required: true
+        description: The resource's id
+      responses:
+        '200':
+          description: The shipping_category associated to the shipment
+  /shipping_categories:
+    get:
+      operationId: GET/shipping_categories
+      summary: List all shipping categories
+      description: List all shipping categories
+      tags:
+      - shipping_categories
+      responses:
+        '200':
+          description: A list of shipping category objects
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/shippingCategoryResponseList'
+    post:
+      operationId: POST/shipping_categories
+      summary: Create a shipping category
+      description: Create a shipping category
+      tags:
+      - shipping_categories
+      requestBody:
+        required: true
+        content:
+          application/vnd.api+json:
+            schema:
+              $ref: '#/components/schemas/shippingCategoryCreate'
+      responses:
+        '201':
+          description: The created shipping category object
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/shippingCategoryResponse'
+  /shipping_categories/{shippingCategoryId}:
+    get:
+      operationId: GET/shipping_categories/shippingCategoryId
+      summary: Retrieve a shipping category
+      description: Retrieve a shipping category
+      tags:
+      - shipping_categories
+      parameters:
+      - name: shippingCategoryId
+        in: path
+        schema:
+          type: string
+        required: true
+        description: The resource's id
+      responses:
+        '200':
+          description: The shipping category object
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/shippingCategoryResponse'
+    patch:
+      operationId: PATCH/shipping_categories/shippingCategoryId
+      summary: Update a shipping category
+      description: Update a shipping category
+      tags:
+      - shipping_categories
+      parameters:
+      - name: shippingCategoryId
+        in: path
+        schema:
+          type: string
+        required: true
+        description: The resource's id
+      requestBody:
+        required: true
+        content:
+          application/vnd.api+json:
+            schema:
+              $ref: '#/components/schemas/shippingCategoryUpdate'
+      responses:
+        '200':
+          description: The updated shipping category object
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/shippingCategoryResponse'
+    delete:
+      operationId: DELETE/shipping_categories/shippingCategoryId
+      summary: Delete a shipping category
+      description: Delete a shipping category
+      tags:
+      - shipping_categories
+      parameters:
+      - name: shippingCategoryId
+        in: path
+        schema:
+          type: string
+        required: true
+        description: The resource's id
+      responses:
+        '204':
+          description: No content
+  /shipping_methods/{shippingMethodId}/shipping_category:
+    get:
+      operationId: GET/shippingMethodId/shipping_category
+      summary: Retrieve the shipping category associated to the shipping method
+      description: Retrieve the shipping category associated to the shipping method
+      tags:
+      - shipping_categories
+      parameters:
+      - name: shippingMethodId
+        in: path
+        schema:
+          type: string
+        required: true
+        description: The resource's id
+      responses:
+        '200':
+          description: The shipping_category associated to the shipping method
+  /skus/{skuId}/shipping_category:
+    get:
+      operationId: GET/skuId/shipping_category
+      summary: Retrieve the shipping category associated to the SKU
+      description: Retrieve the shipping category associated to the SKU
+      tags:
+      - shipping_categories
+      parameters:
+      - name: skuId
+        in: path
+        schema:
+          type: string
+        required: true
+        description: The resource's id
+      responses:
+        '200':
+          description: The shipping_category associated to the SKU
+components:
+  schemas:
+    shippingCategoryResponse:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            id:
+              type: string
+              description: Unique identifier for the resource (hash).
+              example: XAyRWNUzyN
+            type:
+              type: string
+              description: The resource's type
+              enum:
+              - shipping_categories
+            links:
+              type: object
+              properties:
+                self:
+                  type: string
+                  description: URL
+            attributes:
+              $ref: '#/components/schemas/shippingCategory/properties/data/properties/attributes'
+            relationships:
+              type: object
+              properties:
+                skus:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - skus
+                        id:
+                          type: string
+                          description: The resource ID
+                attachments:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - attachments
+                        id:
+                          type: string
+                          description: The resource ID
+                event_stores:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - event_stores
+                        id:
+                          type: string
+                          description: The resource ID
+    shippingCategoryCreate:
+      required:
+      - data
+      type: object
+      properties:
+        data:
+          type: object
+          required:
+          - type
+          - attributes
+          properties:
+            type:
+              type: string
+              description: The resource's type
+              enum:
+              - shipping_categories
+            attributes:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: The shipping category name.
+                  example: Merchandise
+                code:
+                  type: string
+                  description: A string that you can use to identify the shipping category (must be unique within the environment).
+                  example: europe1
+                reference:
+                  type: string
+                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
+                  example: ANY-EXTERNAL-REFEFERNCE
+                reference_origin:
+                  type: string
+                  description: Any identifier of the third party system that defines the reference code.
+                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
+                metadata:
+                  type: object
+                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
+                  example:
+                    foo: bar
+              required:
+              - name
+            relationships:
+              type: object
+              properties: {}
+    shippingCategoryUpdate:
+      required:
+      - data
+      type: object
+      properties:
+        data:
+          type: object
+          required:
+          - type
+          - id
+          - attributes
+          properties:
+            type:
+              type: string
+              description: The resource's type
+              enum:
+              - shipping_categories
+            id:
+              type: string
+              description: Unique identifier for the resource (hash).
+              example: XAyRWNUzyN
+            attributes:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: The shipping category name.
+                  example: Merchandise
+                  nullable: false
+                code:
+                  type: string
+                  description: A string that you can use to identify the shipping category (must be unique within the environment).
+                  example: europe1
+                  nullable: true
+                reference:
+                  type: string
+                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
+                  example: ANY-EXTERNAL-REFEFERNCE
+                  nullable: true
+                reference_origin:
+                  type: string
+                  description: Any identifier of the third party system that defines the reference code.
+                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
+                  nullable: true
+                metadata:
+                  type: object
+                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
+                  example:
+                    foo: bar
+                  nullable: true
+            relationships:
+              type: object
+              properties: {}
+    shippingCategoryResponseList:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/shippingCategoryResponse/properties/data'
+    shippingCategory:
+      properties:
+        data:
+          properties:
+            attributes:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: The shipping category name.
+                  example: Merchandise
+                  nullable: false
+                code:
+                  type: string
+                  description: A string that you can use to identify the shipping category (must be unique within the environment).
+                  example: europe1
+                  nullable: true
+                created_at:
+                  type: string
+                  description: Time at which the resource was created.
+                  example: '2018-01-01T12:00:00.000Z'
+                  nullable: false
+                updated_at:
+                  type: string
+                  description: Time at which the resource was last updated.
+                  example: '2018-01-01T12:00:00.000Z'
+                  nullable: false
+                reference:
+                  type: string
+                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
+                  example: ANY-EXTERNAL-REFEFERNCE
+                  nullable: true
+                reference_origin:
+                  type: string
+                  description: Any identifier of the third party system that defines the reference code.
+                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
+                  nullable: true
+                metadata:
+                  type: object
+                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
+                  example:
+                    foo: bar
+                  nullable: true
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT

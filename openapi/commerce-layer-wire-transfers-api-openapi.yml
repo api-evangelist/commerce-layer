@@ -1,0 +1,358 @@
+openapi: 3.1.0
+info:
+  title: Commerce Layer addresses wire_transfers API
+  version: 7.10.1
+  contact:
+    name: API Support
+    url: https://commercelayer.io
+    email: support@commercelayer.io
+  description: Headless Commerce for Global Brands.
+servers:
+- url: https://{your_organization_slug}.commercelayer.io/api
+  description: API
+- url: https://core.commercelayer.io/users/sign_in
+  description: Sign in
+- url: https://docs.commercelayer.io/api
+  description: API reference
+security:
+- bearerAuth: []
+tags:
+- name: wire_transfers
+  description: resource type
+paths:
+  /wire_transfers:
+    get:
+      operationId: GET/wire_transfers
+      summary: List all wire transfers
+      description: List all wire transfers
+      tags:
+      - wire_transfers
+      responses:
+        '200':
+          description: A list of wire transfer objects
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/wireTransferResponseList'
+    post:
+      operationId: POST/wire_transfers
+      summary: Create a wire transfer
+      description: Create a wire transfer
+      tags:
+      - wire_transfers
+      requestBody:
+        required: true
+        content:
+          application/vnd.api+json:
+            schema:
+              $ref: '#/components/schemas/wireTransferCreate'
+      responses:
+        '201':
+          description: The created wire transfer object
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/wireTransferResponse'
+  /wire_transfers/{wireTransferId}:
+    get:
+      operationId: GET/wire_transfers/wireTransferId
+      summary: Retrieve a wire transfer
+      description: Retrieve a wire transfer
+      tags:
+      - wire_transfers
+      parameters:
+      - name: wireTransferId
+        in: path
+        schema:
+          type: string
+        required: true
+        description: The resource's id
+      responses:
+        '200':
+          description: The wire transfer object
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/wireTransferResponse'
+    patch:
+      operationId: PATCH/wire_transfers/wireTransferId
+      summary: Update a wire transfer
+      description: Update a wire transfer
+      tags:
+      - wire_transfers
+      parameters:
+      - name: wireTransferId
+        in: path
+        schema:
+          type: string
+        required: true
+        description: The resource's id
+      requestBody:
+        required: true
+        content:
+          application/vnd.api+json:
+            schema:
+              $ref: '#/components/schemas/wireTransferUpdate'
+      responses:
+        '200':
+          description: The updated wire transfer object
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/wireTransferResponse'
+    delete:
+      operationId: DELETE/wire_transfers/wireTransferId
+      summary: Delete a wire transfer
+      description: Delete a wire transfer
+      tags:
+      - wire_transfers
+      parameters:
+      - name: wireTransferId
+        in: path
+        schema:
+          type: string
+        required: true
+        description: The resource's id
+      responses:
+        '204':
+          description: No content
+components:
+  schemas:
+    wireTransferResponseList:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/wireTransferResponse/properties/data'
+    wireTransfer:
+      properties:
+        data:
+          properties:
+            attributes:
+              type: object
+              properties:
+                payment_instrument:
+                  type: object
+                  description: Information about the payment instrument used in the transaction.
+                  example:
+                    issuer: cl bank
+                    card_type: visa
+                  nullable: true
+                created_at:
+                  type: string
+                  description: Time at which the resource was created.
+                  example: '2018-01-01T12:00:00.000Z'
+                  nullable: false
+                updated_at:
+                  type: string
+                  description: Time at which the resource was last updated.
+                  example: '2018-01-01T12:00:00.000Z'
+                  nullable: false
+                reference:
+                  type: string
+                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
+                  example: ANY-EXTERNAL-REFEFERNCE
+                  nullable: true
+                reference_origin:
+                  type: string
+                  description: Any identifier of the third party system that defines the reference code.
+                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
+                  nullable: true
+                metadata:
+                  type: object
+                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
+                  example:
+                    foo: bar
+                  nullable: true
+    wireTransferResponse:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            id:
+              type: string
+              description: Unique identifier for the resource (hash).
+              example: XAyRWNUzyN
+            type:
+              type: string
+              description: The resource's type
+              enum:
+              - wire_transfers
+            links:
+              type: object
+              properties:
+                self:
+                  type: string
+                  description: URL
+            attributes:
+              $ref: '#/components/schemas/wireTransfer/properties/data/properties/attributes'
+            relationships:
+              type: object
+              properties:
+                order:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - order
+                        id:
+                          type: string
+                          description: The resource ID
+                event_stores:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - event_stores
+                        id:
+                          type: string
+                          description: The resource ID
+    wireTransferCreate:
+      required:
+      - data
+      type: object
+      properties:
+        data:
+          type: object
+          required:
+          - type
+          - attributes
+          properties:
+            type:
+              type: string
+              description: The resource's type
+              enum:
+              - wire_transfers
+            attributes:
+              type: object
+              properties:
+                reference:
+                  type: string
+                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
+                  example: ANY-EXTERNAL-REFEFERNCE
+                reference_origin:
+                  type: string
+                  description: Any identifier of the third party system that defines the reference code.
+                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
+                metadata:
+                  type: object
+                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
+                  example:
+                    foo: bar
+            relationships:
+              type: object
+              properties:
+                order:
+                  required:
+                  - data
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - orders
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+              required:
+              - order
+    wireTransferUpdate:
+      required:
+      - data
+      type: object
+      properties:
+        data:
+          type: object
+          required:
+          - type
+          - id
+          - attributes
+          properties:
+            type:
+              type: string
+              description: The resource's type
+              enum:
+              - wire_transfers
+            id:
+              type: string
+              description: Unique identifier for the resource (hash).
+              example: XAyRWNUzyN
+            attributes:
+              type: object
+              properties:
+                reference:
+                  type: string
+                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
+                  example: ANY-EXTERNAL-REFEFERNCE
+                  nullable: true
+                reference_origin:
+                  type: string
+                  description: Any identifier of the third party system that defines the reference code.
+                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
+                  nullable: true
+                metadata:
+                  type: object
+                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
+                  example:
+                    foo: bar
+                  nullable: true
+            relationships:
+              type: object
+              properties:
+                order:
+                  required:
+                  - data
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - orders
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT

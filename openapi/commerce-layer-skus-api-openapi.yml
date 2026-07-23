@@ -1,0 +1,1277 @@
+openapi: 3.1.0
+info:
+  title: Commerce Layer addresses skus API
+  version: 7.10.1
+  contact:
+    name: API Support
+    url: https://commercelayer.io
+    email: support@commercelayer.io
+  description: Headless Commerce for Global Brands.
+servers:
+- url: https://{your_organization_slug}.commercelayer.io/api
+  description: API
+- url: https://core.commercelayer.io/users/sign_in
+  description: Sign in
+- url: https://docs.commercelayer.io/api
+  description: API reference
+security:
+- bearerAuth: []
+tags:
+- name: skus
+  description: resource type
+paths:
+  /bundles/{bundleId}/skus:
+    get:
+      operationId: GET/bundleId/skus
+      summary: Retrieve the skus associated to the bundle
+      description: Retrieve the skus associated to the bundle
+      tags:
+      - skus
+      parameters:
+      - name: bundleId
+        in: path
+        schema:
+          type: string
+        required: true
+        description: The resource's id
+      responses:
+        '200':
+          description: The skus associated to the bundle
+  /buy_x_pay_y_promotions/{buyXPayYPromotionId}/skus:
+    get:
+      operationId: GET/buyXPayYPromotionId/skus
+      summary: Retrieve the skus associated to the buy x pay y promotion
+      description: Retrieve the skus associated to the buy x pay y promotion
+      tags:
+      - skus
+      parameters:
+      - name: buyXPayYPromotionId
+        in: path
+        schema:
+          type: string
+        required: true
+        description: The resource's id
+      responses:
+        '200':
+          description: The skus associated to the buy x pay y promotion
+  /external_promotions/{externalPromotionId}/skus:
+    get:
+      operationId: GET/externalPromotionId/skus
+      summary: Retrieve the skus associated to the external promotion
+      description: Retrieve the skus associated to the external promotion
+      tags:
+      - skus
+      parameters:
+      - name: externalPromotionId
+        in: path
+        schema:
+          type: string
+        required: true
+        description: The resource's id
+      responses:
+        '200':
+          description: The skus associated to the external promotion
+  /fixed_amount_promotions/{fixedAmountPromotionId}/skus:
+    get:
+      operationId: GET/fixedAmountPromotionId/skus
+      summary: Retrieve the skus associated to the fixed amount promotion
+      description: Retrieve the skus associated to the fixed amount promotion
+      tags:
+      - skus
+      parameters:
+      - name: fixedAmountPromotionId
+        in: path
+        schema:
+          type: string
+        required: true
+        description: The resource's id
+      responses:
+        '200':
+          description: The skus associated to the fixed amount promotion
+  /fixed_price_promotions/{fixedPricePromotionId}/skus:
+    get:
+      operationId: GET/fixedPricePromotionId/skus
+      summary: Retrieve the skus associated to the fixed price promotion
+      description: Retrieve the skus associated to the fixed price promotion
+      tags:
+      - skus
+      parameters:
+      - name: fixedPricePromotionId
+        in: path
+        schema:
+          type: string
+        required: true
+        description: The resource's id
+      responses:
+        '200':
+          description: The skus associated to the fixed price promotion
+  /free_gift_promotions/{freeGiftPromotionId}/skus:
+    get:
+      operationId: GET/freeGiftPromotionId/skus
+      summary: Retrieve the skus associated to the free gift promotion
+      description: Retrieve the skus associated to the free gift promotion
+      tags:
+      - skus
+      parameters:
+      - name: freeGiftPromotionId
+        in: path
+        schema:
+          type: string
+        required: true
+        description: The resource's id
+      responses:
+        '200':
+          description: The skus associated to the free gift promotion
+  /in_stock_subscriptions/{inStockSubscriptionId}/sku:
+    get:
+      operationId: GET/inStockSubscriptionId/sku
+      summary: Retrieve the sku associated to the in stock subscription
+      description: Retrieve the sku associated to the in stock subscription
+      tags:
+      - skus
+      parameters:
+      - name: inStockSubscriptionId
+        in: path
+        schema:
+          type: string
+        required: true
+        description: The resource's id
+      responses:
+        '200':
+          description: The sku associated to the in stock subscription
+  /orders/{orderId}/available_free_skus:
+    get:
+      operationId: GET/orderId/available_free_skus
+      summary: Retrieve the available free skus associated to the order
+      description: Retrieve the available free skus associated to the order
+      tags:
+      - skus
+      parameters:
+      - name: orderId
+        in: path
+        schema:
+          type: string
+        required: true
+        description: The resource's id
+      responses:
+        '200':
+          description: The available_free_skus associated to the order
+  /percentage_discount_promotions/{percentageDiscountPromotionId}/skus:
+    get:
+      operationId: GET/percentageDiscountPromotionId/skus
+      summary: Retrieve the skus associated to the percentage discount promotion
+      description: Retrieve the skus associated to the percentage discount promotion
+      tags:
+      - skus
+      parameters:
+      - name: percentageDiscountPromotionId
+        in: path
+        schema:
+          type: string
+        required: true
+        description: The resource's id
+      responses:
+        '200':
+          description: The skus associated to the percentage discount promotion
+  /prices/{priceId}/sku:
+    get:
+      operationId: GET/priceId/sku
+      summary: Retrieve the sku associated to the price
+      description: Retrieve the sku associated to the price
+      tags:
+      - skus
+      parameters:
+      - name: priceId
+        in: path
+        schema:
+          type: string
+        required: true
+        description: The resource's id
+      responses:
+        '200':
+          description: The sku associated to the price
+  /reserved_stocks/{reservedStockId}/sku:
+    get:
+      operationId: GET/reservedStockId/sku
+      summary: Retrieve the sku associated to the reserved stock
+      description: Retrieve the sku associated to the reserved stock
+      tags:
+      - skus
+      parameters:
+      - name: reservedStockId
+        in: path
+        schema:
+          type: string
+        required: true
+        description: The resource's id
+      responses:
+        '200':
+          description: The sku associated to the reserved stock
+  /shipping_categories/{shippingCategoryId}/skus:
+    get:
+      operationId: GET/shippingCategoryId/skus
+      summary: Retrieve the skus associated to the shipping category
+      description: Retrieve the skus associated to the shipping category
+      tags:
+      - skus
+      parameters:
+      - name: shippingCategoryId
+        in: path
+        schema:
+          type: string
+        required: true
+        description: The resource's id
+      responses:
+        '200':
+          description: The skus associated to the shipping category
+  /sku_list_items/{skuListItemId}/sku:
+    get:
+      operationId: GET/skuListItemId/sku
+      summary: Retrieve the sku associated to the SKU list item
+      description: Retrieve the sku associated to the SKU list item
+      tags:
+      - skus
+      parameters:
+      - name: skuListItemId
+        in: path
+        schema:
+          type: string
+        required: true
+        description: The resource's id
+      responses:
+        '200':
+          description: The sku associated to the SKU list item
+  /sku_list_promotion_rules/{skuListPromotionRuleId}/skus:
+    get:
+      operationId: GET/skuListPromotionRuleId/skus
+      summary: Retrieve the skus associated to the SKU list promotion rule
+      description: Retrieve the skus associated to the SKU list promotion rule
+      tags:
+      - skus
+      parameters:
+      - name: skuListPromotionRuleId
+        in: path
+        schema:
+          type: string
+        required: true
+        description: The resource's id
+      responses:
+        '200':
+          description: The skus associated to the SKU list promotion rule
+  /sku_lists/{skuListId}/skus:
+    get:
+      operationId: GET/skuListId/skus
+      summary: Retrieve the skus associated to the SKU list
+      description: Retrieve the skus associated to the SKU list
+      tags:
+      - skus
+      parameters:
+      - name: skuListId
+        in: path
+        schema:
+          type: string
+        required: true
+        description: The resource's id
+      responses:
+        '200':
+          description: The skus associated to the SKU list
+  /skus:
+    get:
+      operationId: GET/skus
+      summary: List all SKUs
+      description: List all SKUs
+      tags:
+      - skus
+      responses:
+        '200':
+          description: A list of SKU objects
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/skuResponseList'
+    post:
+      operationId: POST/skus
+      summary: Create a SKU
+      description: Create a SKU
+      tags:
+      - skus
+      requestBody:
+        required: true
+        content:
+          application/vnd.api+json:
+            schema:
+              $ref: '#/components/schemas/skuCreate'
+      responses:
+        '201':
+          description: The created SKU object
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/skuResponse'
+  /skus/{skuId}:
+    get:
+      operationId: GET/skus/skuId
+      summary: Retrieve a SKU
+      description: Retrieve a SKU
+      tags:
+      - skus
+      parameters:
+      - name: skuId
+        in: path
+        schema:
+          type: string
+        required: true
+        description: The resource's id
+      responses:
+        '200':
+          description: The SKU object
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/skuResponse'
+    patch:
+      operationId: PATCH/skus/skuId
+      summary: Update a SKU
+      description: Update a SKU
+      tags:
+      - skus
+      parameters:
+      - name: skuId
+        in: path
+        schema:
+          type: string
+        required: true
+        description: The resource's id
+      requestBody:
+        required: true
+        content:
+          application/vnd.api+json:
+            schema:
+              $ref: '#/components/schemas/skuUpdate'
+      responses:
+        '200':
+          description: The updated SKU object
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/skuResponse'
+    delete:
+      operationId: DELETE/skus/skuId
+      summary: Delete a SKU
+      description: Delete a SKU
+      tags:
+      - skus
+      parameters:
+      - name: skuId
+        in: path
+        schema:
+          type: string
+        required: true
+        description: The resource's id
+      responses:
+        '204':
+          description: No content
+  /stock_items/{stockItemId}/sku:
+    get:
+      operationId: GET/stockItemId/sku
+      summary: Retrieve the sku associated to the stock item
+      description: Retrieve the sku associated to the stock item
+      tags:
+      - skus
+      parameters:
+      - name: stockItemId
+        in: path
+        schema:
+          type: string
+        required: true
+        description: The resource's id
+      responses:
+        '200':
+          description: The sku associated to the stock item
+  /stock_line_items/{stockLineItemId}/sku:
+    get:
+      operationId: GET/stockLineItemId/sku
+      summary: Retrieve the sku associated to the stock line item
+      description: Retrieve the sku associated to the stock line item
+      tags:
+      - skus
+      parameters:
+      - name: stockLineItemId
+        in: path
+        schema:
+          type: string
+        required: true
+        description: The resource's id
+      responses:
+        '200':
+          description: The sku associated to the stock line item
+  /stock_reservations/{stockReservationId}/sku:
+    get:
+      operationId: GET/stockReservationId/sku
+      summary: Retrieve the sku associated to the stock reservation
+      description: Retrieve the sku associated to the stock reservation
+      tags:
+      - skus
+      parameters:
+      - name: stockReservationId
+        in: path
+        schema:
+          type: string
+        required: true
+        description: The resource's id
+      responses:
+        '200':
+          description: The sku associated to the stock reservation
+  /stock_transfers/{stockTransferId}/sku:
+    get:
+      operationId: GET/stockTransferId/sku
+      summary: Retrieve the sku associated to the stock transfer
+      description: Retrieve the sku associated to the stock transfer
+      tags:
+      - skus
+      parameters:
+      - name: stockTransferId
+        in: path
+        schema:
+          type: string
+        required: true
+        description: The resource's id
+      responses:
+        '200':
+          description: The sku associated to the stock transfer
+  /tax_categories/{taxCategoryId}/sku:
+    get:
+      operationId: GET/taxCategoryId/sku
+      summary: Retrieve the sku associated to the tax category
+      description: Retrieve the sku associated to the tax category
+      tags:
+      - skus
+      parameters:
+      - name: taxCategoryId
+        in: path
+        schema:
+          type: string
+        required: true
+        description: The resource's id
+      responses:
+        '200':
+          description: The sku associated to the tax category
+components:
+  schemas:
+    skuCreate:
+      required:
+      - data
+      type: object
+      properties:
+        data:
+          type: object
+          required:
+          - type
+          - attributes
+          properties:
+            type:
+              type: string
+              description: The resource's type
+              enum:
+              - skus
+            attributes:
+              type: object
+              properties:
+                code:
+                  type: string
+                  description: The SKU code, that uniquely identifies the SKU within the organization.
+                  example: TSHIRTMM000000FFFFFFXLXX
+                name:
+                  type: string
+                  description: The internal name of the SKU.
+                  example: Men's Black T-shirt with White Logo (XL)
+                description:
+                  type: string
+                  description: An internal description of the SKU.
+                  example: Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                image_url:
+                  type: string
+                  description: The URL of an image that represents the SKU.
+                  example: https://img.yourdomain.com/skus/xYZkjABcde.png
+                pieces_per_pack:
+                  type: integer
+                  description: The number of pieces that compose the SKU. This is useful to describe sets and bundles.
+                  example: 6
+                weight:
+                  type: number
+                  description: The weight of the SKU. If present, it will be used to calculate the shipping rates.
+                  example: 300.0
+                unit_of_weight:
+                  type: string
+                  description: The unit of weight. One of 'gr', 'oz', or 'lb'.
+                  example: gr
+                  enum:
+                  - gr
+                  - oz
+                  - lb
+                hs_tariff_number:
+                  type: string
+                  description: The Harmonized System Code used by customs to identify the products shipped across international borders.
+                  example: 4901.91.0020
+                do_not_ship:
+                  type: boolean
+                  description: Indicates if the SKU doesn't generate shipments.
+                  example: false
+                do_not_track:
+                  type: boolean
+                  description: Indicates if the SKU doesn't track the stock inventory.
+                  example: false
+                reference:
+                  type: string
+                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
+                  example: ANY-EXTERNAL-REFEFERNCE
+                reference_origin:
+                  type: string
+                  description: Any identifier of the third party system that defines the reference code.
+                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
+                metadata:
+                  type: object
+                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
+                  example:
+                    foo: bar
+              required:
+              - code
+              - name
+            relationships:
+              type: object
+              properties:
+                shipping_category:
+                  required:
+                  - data
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - shipping_categories
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+                tags:
+                  required:
+                  - data
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - tags
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+              required:
+              - shipping_category
+    skuResponseList:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/skuResponse/properties/data'
+    skuUpdate:
+      required:
+      - data
+      type: object
+      properties:
+        data:
+          type: object
+          required:
+          - type
+          - id
+          - attributes
+          properties:
+            type:
+              type: string
+              description: The resource's type
+              enum:
+              - skus
+            id:
+              type: string
+              description: Unique identifier for the resource (hash).
+              example: XAyRWNUzyN
+            attributes:
+              type: object
+              properties:
+                code:
+                  type: string
+                  description: The SKU code, that uniquely identifies the SKU within the organization.
+                  example: TSHIRTMM000000FFFFFFXLXX
+                  nullable: false
+                name:
+                  type: string
+                  description: The internal name of the SKU.
+                  example: Men's Black T-shirt with White Logo (XL)
+                  nullable: false
+                description:
+                  type: string
+                  description: An internal description of the SKU.
+                  example: Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                  nullable: true
+                image_url:
+                  type: string
+                  description: The URL of an image that represents the SKU.
+                  example: https://img.yourdomain.com/skus/xYZkjABcde.png
+                  nullable: true
+                pieces_per_pack:
+                  type: integer
+                  description: The number of pieces that compose the SKU. This is useful to describe sets and bundles.
+                  example: 6
+                  nullable: true
+                weight:
+                  type: number
+                  description: The weight of the SKU. If present, it will be used to calculate the shipping rates.
+                  example: 300.0
+                  nullable: true
+                unit_of_weight:
+                  type: string
+                  description: The unit of weight. One of 'gr', 'oz', or 'lb'.
+                  example: gr
+                  nullable: true
+                  enum:
+                  - gr
+                  - oz
+                  - lb
+                hs_tariff_number:
+                  type: string
+                  description: The Harmonized System Code used by customs to identify the products shipped across international borders.
+                  example: 4901.91.0020
+                  nullable: true
+                do_not_ship:
+                  type: boolean
+                  description: Indicates if the SKU doesn't generate shipments.
+                  example: false
+                  nullable: false
+                do_not_track:
+                  type: boolean
+                  description: Indicates if the SKU doesn't track the stock inventory.
+                  example: false
+                  nullable: false
+                _add_tags:
+                  type: string
+                  description: Comma separated list of tags to be added. Duplicates, invalid and non existing ones are discarded. Cannot be passed by sales channels.
+                _remove_tags:
+                  type: string
+                  description: Comma separated list of tags to be removed. Duplicates, invalid and non existing ones are discarded. Cannot be passed by sales channels.
+                reference:
+                  type: string
+                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
+                  example: ANY-EXTERNAL-REFEFERNCE
+                  nullable: true
+                reference_origin:
+                  type: string
+                  description: Any identifier of the third party system that defines the reference code.
+                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
+                  nullable: true
+                metadata:
+                  type: object
+                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
+                  example:
+                    foo: bar
+                  nullable: true
+            relationships:
+              type: object
+              properties:
+                shipping_category:
+                  required:
+                  - data
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - shipping_categories
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+                tags:
+                  required:
+                  - data
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - tags
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+    skuResponse:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            id:
+              type: string
+              description: Unique identifier for the resource (hash).
+              example: XAyRWNUzyN
+            type:
+              type: string
+              description: The resource's type
+              enum:
+              - skus
+            links:
+              type: object
+              properties:
+                self:
+                  type: string
+                  description: URL
+            attributes:
+              $ref: '#/components/schemas/sku/properties/data/properties/attributes'
+            relationships:
+              type: object
+              properties:
+                shipping_category:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - shipping_category
+                        id:
+                          type: string
+                          description: The resource ID
+                prices:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - prices
+                        id:
+                          type: string
+                          description: The resource ID
+                stock_items:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - stock_items
+                        id:
+                          type: string
+                          description: The resource ID
+                stock_reservations:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - stock_reservations
+                        id:
+                          type: string
+                          description: The resource ID
+                delivery_lead_times:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - delivery_lead_times
+                        id:
+                          type: string
+                          description: The resource ID
+                sku_options:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - sku_options
+                        id:
+                          type: string
+                          description: The resource ID
+                sku_list_items:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - sku_list_items
+                        id:
+                          type: string
+                          description: The resource ID
+                sku_lists:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - sku_lists
+                        id:
+                          type: string
+                          description: The resource ID
+                attachments:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - attachments
+                        id:
+                          type: string
+                          description: The resource ID
+                links:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - links
+                        id:
+                          type: string
+                          description: The resource ID
+                events:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - events
+                        id:
+                          type: string
+                          description: The resource ID
+                tags:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - tags
+                        id:
+                          type: string
+                          description: The resource ID
+                jwt_customer:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - jwt_customer
+                        id:
+                          type: string
+                          description: The resource ID
+                jwt_markets:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - jwt_markets
+                        id:
+                          type: string
+                          description: The resource ID
+                jwt_stock_locations:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - jwt_stock_locations
+                        id:
+                          type: string
+                          description: The resource ID
+                event_stores:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - event_stores
+                        id:
+                          type: string
+                          description: The resource ID
+    sku:
+      properties:
+        data:
+          properties:
+            attributes:
+              type: object
+              properties:
+                code:
+                  type: string
+                  description: The SKU code, that uniquely identifies the SKU within the organization.
+                  example: TSHIRTMM000000FFFFFFXLXX
+                  nullable: false
+                name:
+                  type: string
+                  description: The internal name of the SKU.
+                  example: Men's Black T-shirt with White Logo (XL)
+                  nullable: false
+                description:
+                  type: string
+                  description: An internal description of the SKU.
+                  example: Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                  nullable: true
+                image_url:
+                  type: string
+                  description: The URL of an image that represents the SKU.
+                  example: https://img.yourdomain.com/skus/xYZkjABcde.png
+                  nullable: true
+                pieces_per_pack:
+                  type: integer
+                  description: The number of pieces that compose the SKU. This is useful to describe sets and bundles.
+                  example: 6
+                  nullable: true
+                weight:
+                  type: number
+                  description: The weight of the SKU. If present, it will be used to calculate the shipping rates.
+                  example: 300.0
+                  nullable: true
+                unit_of_weight:
+                  type: string
+                  description: The unit of weight. One of 'gr', 'oz', or 'lb'.
+                  example: gr
+                  nullable: true
+                  enum:
+                  - gr
+                  - oz
+                  - lb
+                hs_tariff_number:
+                  type: string
+                  description: The Harmonized System Code used by customs to identify the products shipped across international borders.
+                  example: 4901.91.0020
+                  nullable: true
+                do_not_ship:
+                  type: boolean
+                  description: Indicates if the SKU doesn't generate shipments.
+                  example: false
+                  nullable: true
+                do_not_track:
+                  type: boolean
+                  description: Indicates if the SKU doesn't track the stock inventory.
+                  example: false
+                  nullable: true
+                inventory:
+                  type: object
+                  description: Aggregated information about the SKU's inventory. Returned only when retrieving a single SKU.
+                  example:
+                    available: true
+                    quantity: 10
+                    levels:
+                    - quantity: 4
+                      delivery_lead_times:
+                      - shipping_method:
+                          name: Standard Shipping
+                          reference: null
+                          price_amount_cents: 700
+                          free_over_amount_cents: 9900
+                          formatted_price_amount: €7,00
+                          formatted_free_over_amount: €99,00
+                        min:
+                          hours: 72
+                          days: 3
+                        max:
+                          hours: 120
+                          days: 5
+                      - shipping_method:
+                          name: Express Delivery
+                          reference: null
+                          price_amount_cents: 1200
+                          free_over_amount_cents: null
+                          formatted_price_amount: €12,00
+                          formatted_free_over_amount: null
+                        min:
+                          hours: 48
+                          days: 2
+                        max:
+                          hours: 72
+                          days: 3
+                    - quantity: 6
+                      delivery_lead_times:
+                      - shipping_method:
+                          name: Standard Shipping
+                          reference: null
+                          price_amount_cents: 700
+                          free_over_amount_cents: 9900
+                          formatted_price_amount: €7,00
+                          formatted_free_over_amount: €99,00
+                        min:
+                          hours: 96
+                          days: 4
+                        max:
+                          hours: 144
+                          days: 6
+                      - shipping_method:
+                          name: Express Delivery
+                          reference: null
+                          price_amount_cents: 1200
+                          free_over_amount_cents: null
+                          formatted_price_amount: €12,00
+                          formatted_free_over_amount: null
+                        min:
+                          hours: 72
+                          days: 3
+                        max:
+                          hours: 96
+                          days: 4
+                  nullable: true
+                created_at:
+                  type: string
+                  description: Time at which the resource was created.
+                  example: '2018-01-01T12:00:00.000Z'
+                  nullable: false
+                updated_at:
+                  type: string
+                  description: Time at which the resource was last updated.
+                  example: '2018-01-01T12:00:00.000Z'
+                  nullable: false
+                reference:
+                  type: string
+                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
+                  example: ANY-EXTERNAL-REFEFERNCE
+                  nullable: true
+                reference_origin:
+                  type: string
+                  description: Any identifier of the third party system that defines the reference code.
+                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
+                  nullable: true
+                jwt_custom_claim:
+                  type: object
+                  description: The custom_claim attached to the current JWT (if any).
+                  example: {}
+                  nullable: true
+                metadata:
+                  type: object
+                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
+                  example:
+                    foo: bar
+                  nullable: true
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT

@@ -1,0 +1,467 @@
+openapi: 3.1.0
+info:
+  title: Commerce Layer addresses exports API
+  version: 7.10.1
+  contact:
+    name: API Support
+    url: https://commercelayer.io
+    email: support@commercelayer.io
+  description: Headless Commerce for Global Brands.
+servers:
+- url: https://{your_organization_slug}.commercelayer.io/api
+  description: API
+- url: https://core.commercelayer.io/users/sign_in
+  description: Sign in
+- url: https://docs.commercelayer.io/api
+  description: API reference
+security:
+- bearerAuth: []
+tags:
+- name: exports
+  description: resource type
+paths:
+  /exports:
+    get:
+      operationId: GET/exports
+      summary: List all exports
+      description: List all exports
+      tags:
+      - exports
+      responses:
+        '200':
+          description: A list of export objects
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/exportResponseList'
+    post:
+      operationId: POST/exports
+      summary: Create an export
+      description: Create an export
+      tags:
+      - exports
+      requestBody:
+        required: true
+        content:
+          application/vnd.api+json:
+            schema:
+              $ref: '#/components/schemas/exportCreate'
+      responses:
+        '201':
+          description: The created export object
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/exportResponse'
+  /exports/{exportId}:
+    get:
+      operationId: GET/exports/exportId
+      summary: Retrieve an export
+      description: Retrieve an export
+      tags:
+      - exports
+      parameters:
+      - name: exportId
+        in: path
+        schema:
+          type: string
+        required: true
+        description: The resource's id
+      responses:
+        '200':
+          description: The export object
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/exportResponse'
+    patch:
+      operationId: PATCH/exports/exportId
+      summary: Update an export
+      description: Update an export
+      tags:
+      - exports
+      parameters:
+      - name: exportId
+        in: path
+        schema:
+          type: string
+        required: true
+        description: The resource's id
+      requestBody:
+        required: true
+        content:
+          application/vnd.api+json:
+            schema:
+              $ref: '#/components/schemas/exportUpdate'
+      responses:
+        '200':
+          description: The updated export object
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/exportResponse'
+    delete:
+      operationId: DELETE/exports/exportId
+      summary: Delete an export
+      description: Delete an export
+      tags:
+      - exports
+      parameters:
+      - name: exportId
+        in: path
+        schema:
+          type: string
+        required: true
+        description: The resource's id
+      responses:
+        '204':
+          description: No content
+components:
+  schemas:
+    exportResponse:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            id:
+              type: string
+              description: Unique identifier for the resource (hash).
+              example: XAyRWNUzyN
+            type:
+              type: string
+              description: The resource's type
+              enum:
+              - exports
+            links:
+              type: object
+              properties:
+                self:
+                  type: string
+                  description: URL
+            attributes:
+              $ref: '#/components/schemas/export/properties/data/properties/attributes'
+            relationships:
+              type: object
+              properties:
+                events:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - events
+                        id:
+                          type: string
+                          description: The resource ID
+                event_stores:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - event_stores
+                        id:
+                          type: string
+                          description: The resource ID
+    exportCreate:
+      required:
+      - data
+      type: object
+      properties:
+        data:
+          type: object
+          required:
+          - type
+          - attributes
+          properties:
+            type:
+              type: string
+              description: The resource's type
+              enum:
+              - exports
+            attributes:
+              type: object
+              properties:
+                resource_type:
+                  type: string
+                  description: The type of resource being exported.
+                  example: skus
+                format:
+                  type: string
+                  description: The format of the export one of 'json' (default) or 'csv'.
+                  example: json
+                includes:
+                  type: array
+                  description: List of related resources that should be included in the export (redundant when 'fields' are specified).
+                  example:
+                  - prices.price_tiers
+                  items:
+                    type: string
+                fields:
+                  type: array
+                  description: List of fields to export for the main and related resources (automatically included). Pass the asterisk '*' to include all exportable fields for the main and related resources.
+                  example:
+                  - code
+                  - name
+                  - prices.*
+                  - prices.price_tiers.price_amount_cents
+                  items:
+                    type: string
+                filters:
+                  type: object
+                  description: The filters used to select the records to be exported.
+                  example:
+                    code_eq: AAA
+                dry_data:
+                  type: boolean
+                  description: Send this attribute if you want to skip exporting redundant attributes (IDs, timestamps, blanks, etc.), useful when combining export and import to duplicate your dataset.
+                  example: false
+                jwt_filters:
+                  type: boolean
+                  description: Send this attribute to apply JWT scope–based sales channel filtering to the exported data.
+                  example: true
+                reference:
+                  type: string
+                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
+                  example: ANY-EXTERNAL-REFEFERNCE
+                reference_origin:
+                  type: string
+                  description: Any identifier of the third party system that defines the reference code.
+                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
+                metadata:
+                  type: object
+                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
+                  example:
+                    foo: bar
+              required:
+              - resource_type
+            relationships:
+              type: object
+              properties: {}
+    exportUpdate:
+      required:
+      - data
+      type: object
+      properties:
+        data:
+          type: object
+          required:
+          - type
+          - id
+          - attributes
+          properties:
+            type:
+              type: string
+              description: The resource's type
+              enum:
+              - exports
+            id:
+              type: string
+              description: Unique identifier for the resource (hash).
+              example: XAyRWNUzyN
+            attributes:
+              type: object
+              properties:
+                _start:
+                  type: boolean
+                  description: Send this attribute if you want to restart an 'interrupted' export.
+                  example: true
+                  nullable: false
+                _interrupt:
+                  type: boolean
+                  description: Send this attribute if you want to mark status as 'interrupted'.
+                  example: true
+                  nullable: false
+                reference:
+                  type: string
+                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
+                  example: ANY-EXTERNAL-REFEFERNCE
+                  nullable: true
+                reference_origin:
+                  type: string
+                  description: Any identifier of the third party system that defines the reference code.
+                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
+                  nullable: true
+                metadata:
+                  type: object
+                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
+                  example:
+                    foo: bar
+                  nullable: true
+            relationships:
+              type: object
+              properties: {}
+    export:
+      properties:
+        data:
+          properties:
+            attributes:
+              type: object
+              properties:
+                resource_type:
+                  type: string
+                  description: The type of resource being exported.
+                  example: skus
+                  nullable: false
+                format:
+                  type: string
+                  description: The format of the export one of 'json' (default) or 'csv'.
+                  example: json
+                  nullable: true
+                status:
+                  type: string
+                  description: The export job status. One of 'pending' (default), 'in_progress', 'interrupted', 'completed', or 'failed'.
+                  example: in_progress
+                  nullable: false
+                  enum:
+                  - pending
+                  - in_progress
+                  - interrupted
+                  - completed
+                  - failed
+                includes:
+                  type: array
+                  description: List of related resources that should be included in the export (redundant when 'fields' are specified).
+                  example:
+                  - prices.price_tiers
+                  nullable: true
+                  items:
+                    type: string
+                fields:
+                  type: array
+                  description: List of fields to export for the main and related resources (automatically included). Pass the asterisk '*' to include all exportable fields for the main and related resources.
+                  example:
+                  - code
+                  - name
+                  - prices.*
+                  - prices.price_tiers.price_amount_cents
+                  nullable: true
+                  items:
+                    type: string
+                filters:
+                  type: object
+                  description: The filters used to select the records to be exported.
+                  example:
+                    code_eq: AAA
+                  nullable: true
+                dry_data:
+                  type: boolean
+                  description: Send this attribute if you want to skip exporting redundant attributes (IDs, timestamps, blanks, etc.), useful when combining export and import to duplicate your dataset.
+                  example: false
+                  nullable: true
+                jwt_filters:
+                  type: boolean
+                  description: Send this attribute to apply JWT scope–based sales channel filtering to the exported data.
+                  example: true
+                  nullable: true
+                started_at:
+                  type: string
+                  description: Time at which the export was started.
+                  example: '2018-01-01T12:00:00.000Z'
+                  nullable: true
+                completed_at:
+                  type: string
+                  description: Time at which the export was completed.
+                  example: '2018-01-01T12:00:00.000Z'
+                  nullable: true
+                estimated_completion_at:
+                  type: string
+                  description: Estimated time at which the export should complete (dynamically refres^hed).
+                  example: '2018-01-01T12:00:00.000Z'
+                  nullable: true
+                interrupted_at:
+                  type: string
+                  description: Time at which the export was interrupted.
+                  example: '2018-01-01T12:00:00.000Z'
+                  nullable: true
+                records_count:
+                  type: integer
+                  description: Indicates the number of records to be exported.
+                  example: 300
+                  nullable: true
+                processed_count:
+                  type: integer
+                  description: Indicates how many records have been processed in real time.
+                  example: 270
+                  nullable: true
+                progress:
+                  type: number
+                  description: The percentage of progress of the export.
+                  example: 30.0
+                  nullable: true
+                attachment_url:
+                  type: string
+                  description: The URL to the output file, which will be generated upon export completion.
+                  example: http://cl_exports.s3.amazonaws.com/
+                  nullable: true
+                errors_log:
+                  type: object
+                  description: Contains the exports errors, if any.
+                  example:
+                    RuntimeError: query timeout
+                  nullable: true
+                created_at:
+                  type: string
+                  description: Time at which the resource was created.
+                  example: '2018-01-01T12:00:00.000Z'
+                  nullable: false
+                updated_at:
+                  type: string
+                  description: Time at which the resource was last updated.
+                  example: '2018-01-01T12:00:00.000Z'
+                  nullable: false
+                reference:
+                  type: string
+                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
+                  example: ANY-EXTERNAL-REFEFERNCE
+                  nullable: true
+                reference_origin:
+                  type: string
+                  description: Any identifier of the third party system that defines the reference code.
+                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
+                  nullable: true
+                metadata:
+                  type: object
+                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
+                  example:
+                    foo: bar
+                  nullable: true
+    exportResponseList:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/exportResponse/properties/data'
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT

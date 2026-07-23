@@ -1,0 +1,213 @@
+openapi: 3.1.0
+info:
+  title: Commerce Layer addresses versions API
+  version: 7.10.1
+  contact:
+    name: API Support
+    url: https://commercelayer.io
+    email: support@commercelayer.io
+  description: Headless Commerce for Global Brands.
+servers:
+- url: https://{your_organization_slug}.commercelayer.io/api
+  description: API
+- url: https://core.commercelayer.io/users/sign_in
+  description: Sign in
+- url: https://docs.commercelayer.io/api
+  description: API reference
+security:
+- bearerAuth: []
+tags:
+- name: versions
+  description: resource type
+paths:
+  /memberships/{membershipId}/versions:
+    get:
+      operationId: GET/membershipId/versions
+      summary: Related membership
+      description: Related membership
+      tags:
+      - versions
+      parameters:
+      - name: membershipId
+        in: path
+        schema:
+          type: string
+        required: true
+        description: The ID of the resource.
+      responses:
+        '200':
+          description: The versions associated to the membership
+  /permissions/{permissionId}/versions:
+    get:
+      operationId: GET/permissionId/versions
+      summary: Related permission
+      description: Related permission
+      tags:
+      - versions
+      parameters:
+      - name: permissionId
+        in: path
+        schema:
+          type: string
+        required: true
+        description: The ID of the resource.
+      responses:
+        '200':
+          description: The versions associated to the permission
+  /roles/{roleId}/versions:
+    get:
+      operationId: GET/roleId/versions
+      summary: Related role
+      description: Related role
+      tags:
+      - versions
+      parameters:
+      - name: roleId
+        in: path
+        schema:
+          type: string
+        required: true
+        description: The ID of the resource.
+      responses:
+        '200':
+          description: The versions associated to the role
+  /versions:
+    get:
+      operationId: GET/versions
+      summary: List all versions
+      description: List all versions
+      tags:
+      - versions
+      responses:
+        '200':
+          description: A list of version objects
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/versionResponseList'
+  /versions/{versionId}:
+    get:
+      operationId: GET/versions/versionId
+      summary: Retrieve an version
+      description: Retrieve an version
+      parameters:
+      - name: versionId
+        in: path
+        schema:
+          type: string
+        required: true
+        description: The ID of the resource.
+      tags:
+      - versions
+      responses:
+        '200':
+          description: The version object
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/versionResponse'
+components:
+  schemas:
+    version:
+      properties:
+        data:
+          properties:
+            attributes:
+              type: object
+              properties:
+                resource_type:
+                  type: string
+                  description: The type of the versioned resource.
+                  example: roles
+                  readOnly: true
+                resource_id:
+                  type: string
+                  description: The versioned resource ID.
+                  example: PzdJhdLdYV
+                  readOnly: true
+                event:
+                  type: string
+                  description: The event which generates the version.
+                  example: update
+                  readOnly: true
+                changes:
+                  type: object
+                  description: The object changes payload.
+                  example:
+                    name:
+                    - previous
+                    - new
+                  readOnly: true
+                who:
+                  type: object
+                  description: Information about who triggered the change, only showed when it's from a JWT token.
+                  example:
+                    application:
+                      id: DNOPYiZYpn
+                      kind: integration
+                      public: true
+                  readOnly: true
+                created_at:
+                  type: string
+                  description: Time at which the resource was created.
+                  example: '2018-01-01T12:00:00.000Z'
+                  readOnly: true
+                updated_at:
+                  type: string
+                  description: Time at which the resource was last updated.
+                  example: '2018-01-01T12:00:00.000Z'
+                  readOnly: true
+                reference:
+                  type: string
+                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
+                  example: ANY-EXTERNAL-REFEFERNCE
+                  nullable: true
+                reference_origin:
+                  type: string
+                  description: Any identifier of the third party system that defines the reference code.
+                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
+                  nullable: true
+                metadata:
+                  type: object
+                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
+                  example:
+                    foo: bar
+                  nullable: true
+    versionResponseList:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/versionResponse/properties/data'
+    versionResponse:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            id:
+              type: string
+              description: The ID of the resource.
+              example: XGZwpOSrWL
+            type:
+              type: string
+              description: The resource's type.
+              enum:
+              - versions
+            links:
+              type: object
+              properties:
+                self:
+                  type: string
+                  description: URL
+            attributes:
+              $ref: '#/components/schemas/version/properties/data/properties/attributes'
+            relationships:
+              type: object
+              properties: {}
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT

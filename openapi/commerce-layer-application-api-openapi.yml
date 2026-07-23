@@ -1,0 +1,158 @@
+openapi: 3.1.0
+info:
+  title: Commerce Layer addresses application API
+  version: 7.10.1
+  contact:
+    name: API Support
+    url: https://commercelayer.io
+    email: support@commercelayer.io
+  description: Headless Commerce for Global Brands.
+servers:
+- url: https://{your_organization_slug}.commercelayer.io/api
+  description: API
+- url: https://core.commercelayer.io/users/sign_in
+  description: Sign in
+- url: https://docs.commercelayer.io/api
+  description: API reference
+security:
+- bearerAuth: []
+tags:
+- name: application
+  description: resource type
+paths:
+  /application:
+    get:
+      operationId: GET/application/applicationId
+      summary: Retrieve the application
+      description: Retrieve the application
+      tags:
+      - application
+      responses:
+        '200':
+          description: The application object
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/applicationResponse'
+components:
+  schemas:
+    application:
+      properties:
+        data:
+          properties:
+            attributes:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: The application's internal name.
+                  example: My app
+                  nullable: true
+                kind:
+                  type: string
+                  description: The application's kind. One of 'sales_channel', 'integration', or 'webapp'.
+                  example: sales-channel
+                  nullable: true
+                  enum:
+                  - dashboard
+                  - user
+                  - contentful
+                  - bundles
+                  - customers
+                  - datocms
+                  - exports
+                  - external
+                  - generic
+                  - gift_cards
+                  - imports
+                  - integration
+                  - inventory
+                  - metrics
+                  - orders
+                  - price_lists
+                  - promotions
+                  - resources
+                  - returns
+                  - sales_channel
+                  - sanity
+                  - shipments
+                  - skus
+                  - sku_lists
+                  - stock_transfers
+                  - subscriptions
+                  - tags
+                  - webapp
+                  - webhooks
+                  - zapier
+                public_access:
+                  type: boolean
+                  description: Indicates if the application has public access.
+                  example: true
+                  nullable: true
+                redirect_uri:
+                  type: string
+                  description: The application's redirect URI.
+                  example: https://bluebrand.com/img/logo.svg
+                  nullable: true
+                scopes:
+                  type: string
+                  description: The application's scopes.
+                  example: market:all market:9 market:122 market:6 stock_location:6 stock_location:33
+                  nullable: true
+                created_at:
+                  type: string
+                  description: Time at which the resource was created.
+                  example: '2018-01-01T12:00:00.000Z'
+                  nullable: false
+                updated_at:
+                  type: string
+                  description: Time at which the resource was last updated.
+                  example: '2018-01-01T12:00:00.000Z'
+                  nullable: false
+                reference:
+                  type: string
+                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
+                  example: ANY-EXTERNAL-REFEFERNCE
+                  nullable: true
+                reference_origin:
+                  type: string
+                  description: Any identifier of the third party system that defines the reference code.
+                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
+                  nullable: true
+                metadata:
+                  type: object
+                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
+                  example:
+                    foo: bar
+                  nullable: true
+    applicationResponse:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            id:
+              type: string
+              description: Unique identifier for the resource (hash).
+              example: XAyRWNUzyN
+            type:
+              type: string
+              description: The resource's type
+              enum:
+              - application
+            links:
+              type: object
+              properties:
+                self:
+                  type: string
+                  description: URL
+            attributes:
+              $ref: '#/components/schemas/application/properties/data/properties/attributes'
+            relationships:
+              type: object
+              properties: {}
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT

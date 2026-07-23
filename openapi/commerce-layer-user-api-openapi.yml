@@ -1,0 +1,205 @@
+openapi: 3.1.0
+info:
+  title: Commerce Layer addresses user API
+  version: 7.10.1
+  contact:
+    name: API Support
+    url: https://commercelayer.io
+    email: support@commercelayer.io
+  description: Headless Commerce for Global Brands.
+servers:
+- url: https://{your_organization_slug}.commercelayer.io/api
+  description: API
+- url: https://core.commercelayer.io/users/sign_in
+  description: Sign in
+- url: https://docs.commercelayer.io/api
+  description: API reference
+security:
+- bearerAuth: []
+tags:
+- name: user
+paths:
+  /user:
+    get:
+      operationId: GET/user
+      summary: Retrieve an user
+      description: Retrieve an user
+      parameters: []
+      tags:
+      - user
+      responses:
+        '200':
+          description: The user object
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/userResponse'
+    patch:
+      operationId: PATCH/user
+      summary: Updates an user
+      description: Updates an user
+      tags:
+      - user
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/vnd.api+json:
+            schema:
+              $ref: '#/components/schemas/userUpdate'
+      responses:
+        '200':
+          description: The updated user object
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/userResponse'
+components:
+  schemas:
+    userResponse:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            id:
+              type: string
+              description: The ID of the resource.
+              example: XGZwpOSrWL
+            type:
+              type: string
+              description: The resource's type.
+              enum:
+              - users
+            links:
+              type: object
+              properties:
+                self:
+                  type: string
+                  description: URL
+            attributes:
+              $ref: '#/components/schemas/user/properties/data/properties/attributes'
+            relationships:
+              type: object
+              properties: {}
+    userUpdate:
+      required:
+      - data
+      type: object
+      properties:
+        data:
+          type: object
+          required:
+          - type
+          - attributes
+          properties:
+            type:
+              type: string
+              description: The resource's type.
+              enum:
+              - users
+            attributes:
+              type: object
+              properties:
+                email:
+                  type: string
+                  description: The user email.
+                  example: user@commercelayer.io
+                  nullable: false
+                first_name:
+                  type: string
+                  description: The user first name.
+                  example: John
+                  nullable: false
+                last_name:
+                  type: string
+                  description: The user last name.
+                  example: Doe
+                  nullable: false
+                time_zone:
+                  type: string
+                  description: The user preferred timezone.
+                  example: UTC
+                  nullable: true
+                reference:
+                  type: string
+                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
+                  example: ANY-EXTERNAL-REFEFERNCE
+                  nullable: true
+                reference_origin:
+                  type: string
+                  description: Any identifier of the third party system that defines the reference code.
+                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
+                  nullable: true
+                metadata:
+                  type: object
+                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
+                  example:
+                    foo: bar
+                  nullable: true
+            relationships:
+              type: object
+              properties: {}
+    user:
+      properties:
+        data:
+          properties:
+            attributes:
+              type: object
+              properties:
+                email:
+                  type: string
+                  description: The user email.
+                  example: user@commercelayer.io
+                  nullable: false
+                first_name:
+                  type: string
+                  description: The user first name.
+                  example: John
+                  nullable: false
+                last_name:
+                  type: string
+                  description: The user last name.
+                  example: Doe
+                  nullable: false
+                time_zone:
+                  type: string
+                  description: The user preferred timezone.
+                  example: UTC
+                  nullable: true
+                otp_required_for_login:
+                  type: boolean
+                  description: The user 2FA setting.
+                  example: false
+                  readOnly: true
+                created_at:
+                  type: string
+                  description: Time at which the resource was created.
+                  example: '2018-01-01T12:00:00.000Z'
+                  readOnly: true
+                updated_at:
+                  type: string
+                  description: Time at which the resource was last updated.
+                  example: '2018-01-01T12:00:00.000Z'
+                  readOnly: true
+                reference:
+                  type: string
+                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
+                  example: ANY-EXTERNAL-REFEFERNCE
+                  nullable: true
+                reference_origin:
+                  type: string
+                  description: Any identifier of the third party system that defines the reference code.
+                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
+                  nullable: true
+                metadata:
+                  type: object
+                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
+                  example:
+                    foo: bar
+                  nullable: true
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT

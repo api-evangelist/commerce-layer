@@ -1,0 +1,847 @@
+openapi: 3.1.0
+info:
+  title: Commerce Layer addresses stock_transfers API
+  version: 7.10.1
+  contact:
+    name: API Support
+    url: https://commercelayer.io
+    email: support@commercelayer.io
+  description: Headless Commerce for Global Brands.
+servers:
+- url: https://{your_organization_slug}.commercelayer.io/api
+  description: API
+- url: https://core.commercelayer.io/users/sign_in
+  description: Sign in
+- url: https://docs.commercelayer.io/api
+  description: API reference
+security:
+- bearerAuth: []
+tags:
+- name: stock_transfers
+  description: resource type
+paths:
+  /line_items/{lineItemId}/stock_transfers:
+    get:
+      operationId: GET/lineItemId/stock_transfers
+      summary: Retrieve the stock transfers associated to the line item
+      description: Retrieve the stock transfers associated to the line item
+      tags:
+      - stock_transfers
+      parameters:
+      - name: lineItemId
+        in: path
+        schema:
+          type: string
+        required: true
+        description: The resource's id
+      responses:
+        '200':
+          description: The stock_transfers associated to the line item
+  /orders/{orderId}/stock_transfers:
+    get:
+      operationId: GET/orderId/stock_transfers
+      summary: Retrieve the stock transfers associated to the order
+      description: Retrieve the stock transfers associated to the order
+      tags:
+      - stock_transfers
+      parameters:
+      - name: orderId
+        in: path
+        schema:
+          type: string
+        required: true
+        description: The resource's id
+      responses:
+        '200':
+          description: The stock_transfers associated to the order
+  /shipments/{shipmentId}/stock_transfers:
+    get:
+      operationId: GET/shipmentId/stock_transfers
+      summary: Retrieve the stock transfers associated to the shipment
+      description: Retrieve the stock transfers associated to the shipment
+      tags:
+      - stock_transfers
+      parameters:
+      - name: shipmentId
+        in: path
+        schema:
+          type: string
+        required: true
+        description: The resource's id
+      responses:
+        '200':
+          description: The stock_transfers associated to the shipment
+  /stock_locations/{stockLocationId}/stock_transfers:
+    get:
+      operationId: GET/stockLocationId/stock_transfers
+      summary: Retrieve the stock transfers associated to the stock location
+      description: Retrieve the stock transfers associated to the stock location
+      tags:
+      - stock_transfers
+      parameters:
+      - name: stockLocationId
+        in: path
+        schema:
+          type: string
+        required: true
+        description: The resource's id
+      responses:
+        '200':
+          description: The stock_transfers associated to the stock location
+  /stock_reservations/{stockReservationId}/stock_transfer:
+    get:
+      operationId: GET/stockReservationId/stock_transfer
+      summary: Retrieve the stock transfer associated to the stock reservation
+      description: Retrieve the stock transfer associated to the stock reservation
+      tags:
+      - stock_transfers
+      parameters:
+      - name: stockReservationId
+        in: path
+        schema:
+          type: string
+        required: true
+        description: The resource's id
+      responses:
+        '200':
+          description: The stock_transfer associated to the stock reservation
+  /stock_transfers:
+    get:
+      operationId: GET/stock_transfers
+      summary: List all stock transfers
+      description: List all stock transfers
+      tags:
+      - stock_transfers
+      responses:
+        '200':
+          description: A list of stock transfer objects
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/stockTransferResponseList'
+    post:
+      operationId: POST/stock_transfers
+      summary: Create a stock transfer
+      description: Create a stock transfer
+      tags:
+      - stock_transfers
+      requestBody:
+        required: true
+        content:
+          application/vnd.api+json:
+            schema:
+              $ref: '#/components/schemas/stockTransferCreate'
+      responses:
+        '201':
+          description: The created stock transfer object
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/stockTransferResponse'
+  /stock_transfers/{stockTransferId}:
+    get:
+      operationId: GET/stock_transfers/stockTransferId
+      summary: Retrieve a stock transfer
+      description: Retrieve a stock transfer
+      tags:
+      - stock_transfers
+      parameters:
+      - name: stockTransferId
+        in: path
+        schema:
+          type: string
+        required: true
+        description: The resource's id
+      responses:
+        '200':
+          description: The stock transfer object
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/stockTransferResponse'
+    patch:
+      operationId: PATCH/stock_transfers/stockTransferId
+      summary: Update a stock transfer
+      description: Update a stock transfer
+      tags:
+      - stock_transfers
+      parameters:
+      - name: stockTransferId
+        in: path
+        schema:
+          type: string
+        required: true
+        description: The resource's id
+      requestBody:
+        required: true
+        content:
+          application/vnd.api+json:
+            schema:
+              $ref: '#/components/schemas/stockTransferUpdate'
+      responses:
+        '200':
+          description: The updated stock transfer object
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/stockTransferResponse'
+    delete:
+      operationId: DELETE/stock_transfers/stockTransferId
+      summary: Delete a stock transfer
+      description: Delete a stock transfer
+      tags:
+      - stock_transfers
+      parameters:
+      - name: stockTransferId
+        in: path
+        schema:
+          type: string
+        required: true
+        description: The resource's id
+      responses:
+        '204':
+          description: No content
+components:
+  schemas:
+    stockTransferCreate:
+      required:
+      - data
+      type: object
+      properties:
+        data:
+          type: object
+          required:
+          - type
+          - attributes
+          properties:
+            type:
+              type: string
+              description: The resource's type
+              enum:
+              - stock_transfers
+            attributes:
+              type: object
+              properties:
+                number:
+                  type: string
+                  description: Unique identifier for the stock transfer (numeric).
+                  example: '1234'
+                sku_code:
+                  type: string
+                  description: The code of the associated SKU.
+                  example: TSHIRTMM000000FFFFFFXLXX
+                quantity:
+                  type: integer
+                  description: The stock quantity to be transferred from the origin stock location to destination one. Updatable unless stock transfer is completed or cancelled and depending on origin stock availability.
+                  example: 2
+                reference:
+                  type: string
+                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
+                  example: ANY-EXTERNAL-REFEFERNCE
+                reference_origin:
+                  type: string
+                  description: Any identifier of the third party system that defines the reference code.
+                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
+                metadata:
+                  type: object
+                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
+                  example:
+                    foo: bar
+              required:
+              - quantity
+            relationships:
+              type: object
+              properties:
+                sku:
+                  required:
+                  - data
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - skus
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+                origin_stock_location:
+                  required:
+                  - data
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - stock_locations
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+                destination_stock_location:
+                  required:
+                  - data
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - stock_locations
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+                shipment:
+                  required:
+                  - data
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - shipments
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+                line_item:
+                  required:
+                  - data
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - line_items
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+              required:
+              - sku
+              - origin_stock_location
+              - destination_stock_location
+    stockTransferResponse:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            id:
+              type: string
+              description: Unique identifier for the resource (hash).
+              example: XAyRWNUzyN
+            type:
+              type: string
+              description: The resource's type
+              enum:
+              - stock_transfers
+            links:
+              type: object
+              properties:
+                self:
+                  type: string
+                  description: URL
+            attributes:
+              $ref: '#/components/schemas/stockTransfer/properties/data/properties/attributes'
+            relationships:
+              type: object
+              properties:
+                sku:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - sku
+                        id:
+                          type: string
+                          description: The resource ID
+                origin_stock_location:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - origin_stock_location
+                        id:
+                          type: string
+                          description: The resource ID
+                destination_stock_location:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - destination_stock_location
+                        id:
+                          type: string
+                          description: The resource ID
+                shipment:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - shipment
+                        id:
+                          type: string
+                          description: The resource ID
+                line_item:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - line_item
+                        id:
+                          type: string
+                          description: The resource ID
+                stock_reservation:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - stock_reservation
+                        id:
+                          type: string
+                          description: The resource ID
+                attachments:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - attachments
+                        id:
+                          type: string
+                          description: The resource ID
+                events:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - events
+                        id:
+                          type: string
+                          description: The resource ID
+                event_stores:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - event_stores
+                        id:
+                          type: string
+                          description: The resource ID
+    stockTransferResponseList:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/stockTransferResponse/properties/data'
+    stockTransfer:
+      properties:
+        data:
+          properties:
+            attributes:
+              type: object
+              properties:
+                number:
+                  type: string
+                  description: Unique identifier for the stock transfer (numeric).
+                  example: '1234'
+                  nullable: true
+                sku_code:
+                  type: string
+                  description: The code of the associated SKU.
+                  example: TSHIRTMM000000FFFFFFXLXX
+                  nullable: true
+                status:
+                  type: string
+                  description: The stock transfer status. One of 'draft' (default), 'upcoming', 'on_hold', 'picking', 'in_transit', 'completed', or 'cancelled'.
+                  example: draft
+                  nullable: false
+                  enum:
+                  - draft
+                  - upcoming
+                  - on_hold
+                  - picking
+                  - in_transit
+                  - completed
+                  - cancelled
+                quantity:
+                  type: integer
+                  description: The stock quantity to be transferred from the origin stock location to destination one. Updatable unless stock transfer is completed or cancelled and depending on origin stock availability.
+                  example: 2
+                  nullable: false
+                on_hold_at:
+                  type: string
+                  description: Time at which the stock transfer was put on hold.
+                  example: '2018-01-01T12:00:00.000Z'
+                  nullable: true
+                picking_at:
+                  type: string
+                  description: Time at which the stock transfer was picking.
+                  example: '2018-01-01T12:00:00.000Z'
+                  nullable: true
+                in_transit_at:
+                  type: string
+                  description: Time at which the stock transfer was in transit.
+                  example: '2018-01-01T12:00:00.000Z'
+                  nullable: true
+                completed_at:
+                  type: string
+                  description: Time at which the stock transfer was completed.
+                  example: '2018-01-01T12:00:00.000Z'
+                  nullable: true
+                cancelled_at:
+                  type: string
+                  description: Time at which the stock transfer was cancelled.
+                  example: '2018-01-01T12:00:00.000Z'
+                  nullable: true
+                created_at:
+                  type: string
+                  description: Time at which the resource was created.
+                  example: '2018-01-01T12:00:00.000Z'
+                  nullable: false
+                updated_at:
+                  type: string
+                  description: Time at which the resource was last updated.
+                  example: '2018-01-01T12:00:00.000Z'
+                  nullable: false
+                reference:
+                  type: string
+                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
+                  example: ANY-EXTERNAL-REFEFERNCE
+                  nullable: true
+                reference_origin:
+                  type: string
+                  description: Any identifier of the third party system that defines the reference code.
+                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
+                  nullable: true
+                metadata:
+                  type: object
+                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
+                  example:
+                    foo: bar
+                  nullable: true
+    stockTransferUpdate:
+      required:
+      - data
+      type: object
+      properties:
+        data:
+          type: object
+          required:
+          - type
+          - id
+          - attributes
+          properties:
+            type:
+              type: string
+              description: The resource's type
+              enum:
+              - stock_transfers
+            id:
+              type: string
+              description: Unique identifier for the resource (hash).
+              example: XAyRWNUzyN
+            attributes:
+              type: object
+              properties:
+                number:
+                  type: string
+                  description: Unique identifier for the stock transfer (numeric).
+                  example: '1234'
+                  nullable: true
+                sku_code:
+                  type: string
+                  description: The code of the associated SKU.
+                  example: TSHIRTMM000000FFFFFFXLXX
+                  nullable: true
+                quantity:
+                  type: integer
+                  description: The stock quantity to be transferred from the origin stock location to destination one. Updatable unless stock transfer is completed or cancelled and depending on origin stock availability.
+                  example: 2
+                  nullable: false
+                _upcoming:
+                  type: boolean
+                  description: Send this attribute if you want to mark this stock transfer as upcoming.
+                  example: true
+                  nullable: false
+                _on_hold:
+                  type: boolean
+                  description: Send this attribute if you want to put this stock transfer on hold.
+                  example: true
+                  nullable: false
+                _picking:
+                  type: boolean
+                  description: Send this attribute if you want to start picking this stock transfer.
+                  example: true
+                  nullable: false
+                _in_transit:
+                  type: boolean
+                  description: Send this attribute if you want to mark this stock transfer as in transit.
+                  example: true
+                  nullable: false
+                _complete:
+                  type: boolean
+                  description: Send this attribute if you want to complete this stock transfer.
+                  example: true
+                  nullable: false
+                _cancel:
+                  type: boolean
+                  description: Send this attribute if you want to cancel this stock transfer.
+                  example: true
+                  nullable: false
+                reference:
+                  type: string
+                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
+                  example: ANY-EXTERNAL-REFEFERNCE
+                  nullable: true
+                reference_origin:
+                  type: string
+                  description: Any identifier of the third party system that defines the reference code.
+                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
+                  nullable: true
+                metadata:
+                  type: object
+                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
+                  example:
+                    foo: bar
+                  nullable: true
+            relationships:
+              type: object
+              properties:
+                sku:
+                  required:
+                  - data
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - skus
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+                origin_stock_location:
+                  required:
+                  - data
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - stock_locations
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+                destination_stock_location:
+                  required:
+                  - data
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - stock_locations
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+                shipment:
+                  required:
+                  - data
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - shipments
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+                line_item:
+                  required:
+                  - data
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - line_items
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT

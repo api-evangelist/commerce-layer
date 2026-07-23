@@ -1,0 +1,421 @@
+openapi: 3.1.0
+info:
+  title: Commerce Layer addresses usage API
+  version: 7.10.1
+  contact:
+    name: API Support
+    url: https://commercelayer.io
+    email: support@commercelayer.io
+  description: Headless Commerce for Global Brands.
+servers:
+- url: https://{your_organization_slug}.commercelayer.io/api
+  description: API
+- url: https://core.commercelayer.io/users/sign_in
+  description: Sign in
+- url: https://docs.commercelayer.io/api
+  description: API reference
+security:
+- bearerAuth: []
+tags:
+- name: usage
+  description: Operations with usage resource
+paths:
+  /usage/date_breakdown:
+    post:
+      operationId: POST/usage/date_breakdown
+      summary: Query date_breakdown on usage
+      description: Get date_breakdown results from usage
+      tags:
+      - usage
+      requestBody:
+        required: true
+        content:
+          application/vnd.api+json:
+            schema:
+              $ref: '#/components/schemas/usage_date_breakdown_request'
+      responses:
+        '200':
+          description: The date_breakdown result from usage
+          content:
+            application/vnd.api+json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        date:
+                          type: string
+                          format: '%Y-%m-%dT%H:%M:%SZ'
+                          example: '2022-07-06T21:41:03Z'
+                        value:
+                          type: number
+                          example: 8
+                        dimension:
+                          type: object
+                          properties:
+                            dimension:
+                              type: string
+                            value:
+                              type: number
+                              example: 8
+                  meta:
+                    type: object
+                    properties:
+                      type:
+                        type: string
+                        description: Action name
+                      trace_id:
+                        type: string
+                        description: Request ID
+                      mode:
+                        type: string
+                        description: Filter mode
+                      organization_id:
+                        type: string
+                        description: Organization ID from request
+                      market_ids:
+                        type: array
+                        items:
+                          type: string
+                        description: Markets IDs from the organization
+                      payload:
+                        type: object
+                        properties:
+                          filter:
+                            $ref: '#/components/schemas/usage_date_breakdown_filter'
+                          date_breakdown:
+                            $ref: '#/components/schemas/usage_date_breakdown_request/properties/date_breakdown'
+  /usage/search:
+    post:
+      operationId: POST/usage/search
+      summary: Query search on usage
+      description: Get search results from usage
+      tags:
+      - usage
+      requestBody:
+        required: true
+        content:
+          application/vnd.api+json:
+            schema:
+              $ref: '#/components/schemas/usage_search_request'
+      responses:
+        '200':
+          description: The search result from usage
+          content:
+            application/vnd.api+json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        dimension:
+                          type: string
+                          description: The dimension name.
+                        date_from:
+                          type: string
+                          description: The lower limit of the date and time range used to filter the collected usage records (complete date plus hours, minutes and seconds — according to the [ISO 8601](https://www.w3.org/TR/NOTE-datetime) standard).
+                          format: '%Y-%m-%dT%H:%M:%SZ'
+                          example: '2022-07-06T21:41:03Z'
+                        date_to:
+                          type: string
+                          description: The upper limit of the date and time range used to filter the collected usage records (complete date plus hours, minutes and seconds — according to the [ISO 8601](https://www.w3.org/TR/NOTE-datetime) standard).
+                          format: '%Y-%m-%dT%H:%M:%SZ'
+                          example: '2022-07-06T21:41:03Z'
+                        mode:
+                          type: string
+                          description: Environment mode of the data.
+                          enum:
+                          - live
+                          - test
+                        types:
+                          type: string
+                          description: Usage data type
+                        metadata:
+                          type: object
+                          description: Usage metadata object.
+                        timestamp:
+                          type: string
+                          description: Timestamp of the record.
+                          format: '%Y-%m-%dT%H:%M:%SZ'
+                          example: '2022-07-06T21:41:03Z'
+                        dimension_value_numeric:
+                          type: number
+                          description: Value of the dimension as a number.
+                          example: 121
+                        organization:
+                          type: object
+                          properties:
+                            organization_id:
+                              type: string
+                              description: Organization identifier where the usage data belongs.
+                  meta:
+                    type: object
+                    properties:
+                      type:
+                        type: string
+                        description: Action name
+                      trace_id:
+                        type: string
+                        description: Request ID
+                      mode:
+                        type: string
+                        description: Filter mode
+                      organization_id:
+                        type: string
+                        description: Organization ID from request
+                      market_ids:
+                        type: array
+                        items:
+                          type: string
+                        description: Markets IDs from the organization
+                      payload:
+                        type: object
+                        properties:
+                          filter:
+                            $ref: '#/components/schemas/usage_search_filter'
+                          search:
+                            $ref: '#/components/schemas/usage_search_request/properties/search'
+                      pagination:
+                        type: object
+                        properties:
+                          record_count:
+                            type: integer
+                            example: 8
+                          cursor:
+                            type: string
+                            example: LS0tCi0gJzIwMjEtMTEtMD
+components:
+  schemas:
+    usage_search_filter:
+      type: object
+      properties:
+        usage:
+          type: object
+          properties:
+            dimension:
+              description: The dimension name.
+              oneOf:
+              - type: object
+                properties:
+                  in:
+                    type: array
+                    minItems: 1
+                    items:
+                      type: string
+                    description: To include, array of dimension
+              - type: object
+                properties:
+                  not_in:
+                    type: array
+                    minItems: 1
+                    items:
+                      type: string
+                    description: To exclude, array of dimension
+            date_from:
+              type: string
+              description: The lower limit of the date and time range used to filter the collected usage records (complete date plus hours, minutes and seconds — according to the [ISO 8601](https://www.w3.org/TR/NOTE-datetime) standard).
+              format: '%Y-%m-%dT%H:%M:%SZ'
+              example: '2022-07-06T21:41:03Z'
+            date_to:
+              type: string
+              description: The upper limit of the date and time range used to filter the collected usage records (complete date plus hours, minutes and seconds — according to the [ISO 8601](https://www.w3.org/TR/NOTE-datetime) standard).
+              format: '%Y-%m-%dT%H:%M:%SZ'
+              example: '2022-07-06T21:41:03Z'
+            mode:
+              type: string
+              description: Environment mode of the data.
+              enum:
+              - live
+              - test
+            types:
+              description: Usage data type
+              oneOf:
+              - type: object
+                properties:
+                  in:
+                    type: array
+                    minItems: 1
+                    items:
+                      type: string
+                    description: To include, array of types
+              - type: object
+                properties:
+                  not_in:
+                    type: array
+                    minItems: 1
+                    items:
+                      type: string
+                    description: To exclude, array of types
+            metadata:
+              type: object
+              description: Usage metadata object.
+            timestamp:
+              type: string
+              description: Timestamp of the record.
+              format: '%Y-%m-%dT%H:%M:%SZ'
+              example: '2022-07-06T21:41:03Z'
+            dimension_value_numeric:
+              type: number
+              description: Value of the dimension as a number.
+              example: 121
+        organization:
+          type: object
+          properties:
+            ids:
+              description: Organization identifier where the usage data belongs.
+              type: object
+              properties:
+                in:
+                  type: array
+                  minItems: 1
+                  items:
+                    type: string
+                  description: To include, array of ids
+    usage_date_breakdown_request:
+      type: object
+      properties:
+        filter:
+          $ref: '#/components/schemas/usage_date_breakdown_filter'
+        date_breakdown:
+          type: object
+          required:
+          - interval
+          - by_dimension
+          properties:
+            interval:
+              type: string
+              description: Interval to query
+              enum:
+              - day
+              - month
+              - year
+            by_dimension:
+              type: boolean
+              description: Enables a nested breakdown by dimension
+        meta:
+          type: object
+          properties:
+            payload:
+              type: boolean
+              description: Set to true if you want to receive how the payload has been made
+    usage_search_request:
+      type: object
+      properties:
+        filter:
+          $ref: '#/components/schemas/usage_search_filter'
+        search:
+          type: object
+          required:
+          - sort
+          properties:
+            sort:
+              type: string
+              description: Result sorting
+              enum:
+              - asc
+              - desc
+            limit:
+              type: integer
+              description: Results limit
+        meta:
+          type: object
+          properties:
+            payload:
+              type: boolean
+              description: Set to true if you want to receive how the payload has been made
+    usage_date_breakdown_filter:
+      type: object
+      properties:
+        usage:
+          type: object
+          properties:
+            dimension:
+              description: The dimension name.
+              oneOf:
+              - type: object
+                properties:
+                  in:
+                    type: array
+                    minItems: 1
+                    items:
+                      type: string
+                    description: To include, array of dimension
+              - type: object
+                properties:
+                  not_in:
+                    type: array
+                    minItems: 1
+                    items:
+                      type: string
+                    description: To exclude, array of dimension
+            date_from:
+              type: string
+              description: The lower limit of the date and time range used to filter the collected usage records (complete date plus hours, minutes and seconds — according to the [ISO 8601](https://www.w3.org/TR/NOTE-datetime) standard).
+              format: '%Y-%m-%dT%H:%M:%SZ'
+              example: '2022-07-06T21:41:03Z'
+            date_to:
+              type: string
+              description: The upper limit of the date and time range used to filter the collected usage records (complete date plus hours, minutes and seconds — according to the [ISO 8601](https://www.w3.org/TR/NOTE-datetime) standard).
+              format: '%Y-%m-%dT%H:%M:%SZ'
+              example: '2022-07-06T21:41:03Z'
+            mode:
+              type: string
+              description: Environment mode of the data.
+              enum:
+              - live
+              - test
+            types:
+              description: Usage data type
+              oneOf:
+              - type: object
+                properties:
+                  in:
+                    type: array
+                    minItems: 1
+                    items:
+                      type: string
+                    description: To include, array of types
+              - type: object
+                properties:
+                  not_in:
+                    type: array
+                    minItems: 1
+                    items:
+                      type: string
+                    description: To exclude, array of types
+            metadata:
+              type: object
+              description: Usage metadata object.
+            timestamp:
+              type: string
+              description: Timestamp of the record.
+              format: '%Y-%m-%dT%H:%M:%SZ'
+              example: '2022-07-06T21:41:03Z'
+            dimension_value_numeric:
+              type: number
+              description: Value of the dimension as a number.
+              example: 121
+        organization:
+          type: object
+          properties:
+            ids:
+              description: Organization identifier where the usage data belongs.
+              type: object
+              properties:
+                in:
+                  type: array
+                  minItems: 1
+                  items:
+                    type: string
+                  description: To include, array of ids
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT

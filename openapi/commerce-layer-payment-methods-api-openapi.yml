@@ -1,0 +1,982 @@
+openapi: 3.1.0
+info:
+  title: Commerce Layer addresses payment_methods API
+  version: 7.10.1
+  contact:
+    name: API Support
+    url: https://commercelayer.io
+    email: support@commercelayer.io
+  description: Headless Commerce for Global Brands.
+servers:
+- url: https://{your_organization_slug}.commercelayer.io/api
+  description: API
+- url: https://core.commercelayer.io/users/sign_in
+  description: Sign in
+- url: https://docs.commercelayer.io/api
+  description: API reference
+security:
+- bearerAuth: []
+tags:
+- name: payment_methods
+  description: resource type
+paths:
+  /adyen_gateways/{adyenGatewayId}/payment_methods:
+    get:
+      operationId: GET/adyenGatewayId/payment_methods
+      summary: Retrieve the payment methods associated to the adyen gateway
+      description: Retrieve the payment methods associated to the adyen gateway
+      tags:
+      - payment_methods
+      parameters:
+      - name: adyenGatewayId
+        in: path
+        schema:
+          type: string
+        required: true
+        description: The resource's id
+      responses:
+        '200':
+          description: The payment_methods associated to the adyen gateway
+  /axerve_gateways/{axerveGatewayId}/payment_methods:
+    get:
+      operationId: GET/axerveGatewayId/payment_methods
+      summary: Retrieve the payment methods associated to the axerve gateway
+      description: Retrieve the payment methods associated to the axerve gateway
+      tags:
+      - payment_methods
+      parameters:
+      - name: axerveGatewayId
+        in: path
+        schema:
+          type: string
+        required: true
+        description: The resource's id
+      responses:
+        '200':
+          description: The payment_methods associated to the axerve gateway
+  /braintree_gateways/{braintreeGatewayId}/payment_methods:
+    get:
+      operationId: GET/braintreeGatewayId/payment_methods
+      summary: Retrieve the payment methods associated to the braintree gateway
+      description: Retrieve the payment methods associated to the braintree gateway
+      tags:
+      - payment_methods
+      parameters:
+      - name: braintreeGatewayId
+        in: path
+        schema:
+          type: string
+        required: true
+        description: The resource's id
+      responses:
+        '200':
+          description: The payment_methods associated to the braintree gateway
+  /checkout_com_gateways/{checkoutComGatewayId}/payment_methods:
+    get:
+      operationId: GET/checkoutComGatewayId/payment_methods
+      summary: Retrieve the payment methods associated to the checkout.com gateway
+      description: Retrieve the payment methods associated to the checkout.com gateway
+      tags:
+      - payment_methods
+      parameters:
+      - name: checkoutComGatewayId
+        in: path
+        schema:
+          type: string
+        required: true
+        description: The resource's id
+      responses:
+        '200':
+          description: The payment_methods associated to the checkout.com gateway
+  /customer_payment_sources/{customerPaymentSourceId}/payment_method:
+    get:
+      operationId: GET/customerPaymentSourceId/payment_method
+      summary: Retrieve the payment method associated to the customer payment source
+      description: Retrieve the payment method associated to the customer payment source
+      tags:
+      - payment_methods
+      parameters:
+      - name: customerPaymentSourceId
+        in: path
+        schema:
+          type: string
+        required: true
+        description: The resource's id
+      responses:
+        '200':
+          description: The payment_method associated to the customer payment source
+  /external_gateways/{externalGatewayId}/payment_methods:
+    get:
+      operationId: GET/externalGatewayId/payment_methods
+      summary: Retrieve the payment methods associated to the external gateway
+      description: Retrieve the payment methods associated to the external gateway
+      tags:
+      - payment_methods
+      parameters:
+      - name: externalGatewayId
+        in: path
+        schema:
+          type: string
+        required: true
+        description: The resource's id
+      responses:
+        '200':
+          description: The payment_methods associated to the external gateway
+  /klarna_gateways/{klarnaGatewayId}/payment_methods:
+    get:
+      operationId: GET/klarnaGatewayId/payment_methods
+      summary: Retrieve the payment methods associated to the klarna gateway
+      description: Retrieve the payment methods associated to the klarna gateway
+      tags:
+      - payment_methods
+      parameters:
+      - name: klarnaGatewayId
+        in: path
+        schema:
+          type: string
+        required: true
+        description: The resource's id
+      responses:
+        '200':
+          description: The payment_methods associated to the klarna gateway
+  /manual_gateways/{manualGatewayId}/payment_methods:
+    get:
+      operationId: GET/manualGatewayId/payment_methods
+      summary: Retrieve the payment methods associated to the manual gateway
+      description: Retrieve the payment methods associated to the manual gateway
+      tags:
+      - payment_methods
+      parameters:
+      - name: manualGatewayId
+        in: path
+        schema:
+          type: string
+        required: true
+        description: The resource's id
+      responses:
+        '200':
+          description: The payment_methods associated to the manual gateway
+  /markets/{marketId}/default_payment_method:
+    get:
+      operationId: GET/marketId/default_payment_method
+      summary: Retrieve the default payment method associated to the market
+      description: Retrieve the default payment method associated to the market
+      tags:
+      - payment_methods
+      parameters:
+      - name: marketId
+        in: path
+        schema:
+          type: string
+        required: true
+        description: The resource's id
+      responses:
+        '200':
+          description: The default_payment_method associated to the market
+  /orders/{orderId}/default_payment_method:
+    get:
+      operationId: GET/orderId/default_payment_method
+      summary: Retrieve the default payment method associated to the order
+      description: Retrieve the default payment method associated to the order
+      tags:
+      - payment_methods
+      parameters:
+      - name: orderId
+        in: path
+        schema:
+          type: string
+        required: true
+        description: The resource's id
+      responses:
+        '200':
+          description: The default_payment_method associated to the order
+  /orders/{orderId}/available_payment_methods:
+    get:
+      operationId: GET/orderId/available_payment_methods
+      summary: Retrieve the available payment methods associated to the order
+      description: Retrieve the available payment methods associated to the order
+      tags:
+      - payment_methods
+      parameters:
+      - name: orderId
+        in: path
+        schema:
+          type: string
+        required: true
+        description: The resource's id
+      responses:
+        '200':
+          description: The available_payment_methods associated to the order
+  /orders/{orderId}/payment_method:
+    get:
+      operationId: GET/orderId/payment_method
+      summary: Retrieve the payment method associated to the order
+      description: Retrieve the payment method associated to the order
+      tags:
+      - payment_methods
+      parameters:
+      - name: orderId
+        in: path
+        schema:
+          type: string
+        required: true
+        description: The resource's id
+      responses:
+        '200':
+          description: The payment_method associated to the order
+  /payment_gateways/{paymentGatewayId}/payment_methods:
+    get:
+      operationId: GET/paymentGatewayId/payment_methods
+      summary: Retrieve the payment methods associated to the payment gateway
+      description: Retrieve the payment methods associated to the payment gateway
+      tags:
+      - payment_methods
+      parameters:
+      - name: paymentGatewayId
+        in: path
+        schema:
+          type: string
+        required: true
+        description: The resource's id
+      responses:
+        '200':
+          description: The payment_methods associated to the payment gateway
+  /payment_methods:
+    get:
+      operationId: GET/payment_methods
+      summary: List all payment methods
+      description: List all payment methods
+      tags:
+      - payment_methods
+      responses:
+        '200':
+          description: A list of payment method objects
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/paymentMethodResponseList'
+    post:
+      operationId: POST/payment_methods
+      summary: Create a payment method
+      description: Create a payment method
+      tags:
+      - payment_methods
+      requestBody:
+        required: true
+        content:
+          application/vnd.api+json:
+            schema:
+              $ref: '#/components/schemas/paymentMethodCreate'
+      responses:
+        '201':
+          description: The created payment method object
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/paymentMethodResponse'
+  /payment_methods/{paymentMethodId}:
+    get:
+      operationId: GET/payment_methods/paymentMethodId
+      summary: Retrieve a payment method
+      description: Retrieve a payment method
+      tags:
+      - payment_methods
+      parameters:
+      - name: paymentMethodId
+        in: path
+        schema:
+          type: string
+        required: true
+        description: The resource's id
+      responses:
+        '200':
+          description: The payment method object
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/paymentMethodResponse'
+    patch:
+      operationId: PATCH/payment_methods/paymentMethodId
+      summary: Update a payment method
+      description: Update a payment method
+      tags:
+      - payment_methods
+      parameters:
+      - name: paymentMethodId
+        in: path
+        schema:
+          type: string
+        required: true
+        description: The resource's id
+      requestBody:
+        required: true
+        content:
+          application/vnd.api+json:
+            schema:
+              $ref: '#/components/schemas/paymentMethodUpdate'
+      responses:
+        '200':
+          description: The updated payment method object
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/paymentMethodResponse'
+    delete:
+      operationId: DELETE/payment_methods/paymentMethodId
+      summary: Delete a payment method
+      description: Delete a payment method
+      tags:
+      - payment_methods
+      parameters:
+      - name: paymentMethodId
+        in: path
+        schema:
+          type: string
+        required: true
+        description: The resource's id
+      responses:
+        '204':
+          description: No content
+  /paypal_gateways/{paypalGatewayId}/payment_methods:
+    get:
+      operationId: GET/paypalGatewayId/payment_methods
+      summary: Retrieve the payment methods associated to the paypal gateway
+      description: Retrieve the payment methods associated to the paypal gateway
+      tags:
+      - payment_methods
+      parameters:
+      - name: paypalGatewayId
+        in: path
+        schema:
+          type: string
+        required: true
+        description: The resource's id
+      responses:
+        '200':
+          description: The payment_methods associated to the paypal gateway
+  /satispay_gateways/{satispayGatewayId}/payment_methods:
+    get:
+      operationId: GET/satispayGatewayId/payment_methods
+      summary: Retrieve the payment methods associated to the satispay gateway
+      description: Retrieve the payment methods associated to the satispay gateway
+      tags:
+      - payment_methods
+      parameters:
+      - name: satispayGatewayId
+        in: path
+        schema:
+          type: string
+        required: true
+        description: The resource's id
+      responses:
+        '200':
+          description: The payment_methods associated to the satispay gateway
+  /stores/{storeId}/payment_methods:
+    get:
+      operationId: GET/storeId/payment_methods
+      summary: Retrieve the payment methods associated to the store
+      description: Retrieve the payment methods associated to the store
+      tags:
+      - payment_methods
+      parameters:
+      - name: storeId
+        in: path
+        schema:
+          type: string
+        required: true
+        description: The resource's id
+      responses:
+        '200':
+          description: The payment_methods associated to the store
+  /stripe_gateways/{stripeGatewayId}/payment_methods:
+    get:
+      operationId: GET/stripeGatewayId/payment_methods
+      summary: Retrieve the payment methods associated to the stripe gateway
+      description: Retrieve the payment methods associated to the stripe gateway
+      tags:
+      - payment_methods
+      parameters:
+      - name: stripeGatewayId
+        in: path
+        schema:
+          type: string
+        required: true
+        description: The resource's id
+      responses:
+        '200':
+          description: The payment_methods associated to the stripe gateway
+components:
+  schemas:
+    paymentMethodCreate:
+      required:
+      - data
+      type: object
+      properties:
+        data:
+          type: object
+          required:
+          - type
+          - attributes
+          properties:
+            type:
+              type: string
+              description: The resource's type
+              enum:
+              - payment_methods
+            attributes:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: The payment method's internal name.
+                  example: Stripe Payment
+                payment_source_type:
+                  type: string
+                  description: The payment source type. One of 'adyen_payments', 'axerve_payments', 'braintree_payments', 'checkout_com_payments', 'external_payments', 'klarna_payments', 'paypal_payments', 'satispay_payments', 'stripe_payments', or 'wire_transfers'.
+                  example: stripe_payments
+                  enum:
+                  - adyen_payments
+                  - axerve_payments
+                  - braintree_payments
+                  - checkout_com_payments
+                  - external_payments
+                  - klarna_payments
+                  - paypal_payments
+                  - satispay_payments
+                  - stripe_payments
+                  - wire_transfers
+                currency_code:
+                  type: string
+                  description: The international 3-letter currency code as defined by the ISO 4217 standard.
+                  example: EUR
+                moto:
+                  type: boolean
+                  description: Send this attribute if you want to mark the payment as MOTO, must be supported by payment gateway.
+                  example: false
+                require_capture:
+                  type: boolean
+                  description: Send this attribute if you want to require the payment capture before fulfillment.
+                  example: true
+                auto_place:
+                  type: boolean
+                  description: Send this attribute if you want to automatically place the order upon authorization performed asynchronously.
+                  example: true
+                auto_capture:
+                  type: boolean
+                  description: Send this attribute if you want to automatically capture the payment upon authorization.
+                  example: false
+                price_amount_cents:
+                  type: integer
+                  description: The payment method's price, in cents.
+                  example: 0
+                auto_capture_max_amount_cents:
+                  type: integer
+                  description: Send this attribute if you want to limit automatic capture to orders for which the total amount is equal or less than the specified value, in cents.
+                  example: 0
+                _disable:
+                  type: boolean
+                  description: Send this attribute if you want to mark this resource as disabled.
+                  example: true
+                _enable:
+                  type: boolean
+                  description: Send this attribute if you want to mark this resource as enabled.
+                  example: true
+                reference:
+                  type: string
+                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
+                  example: ANY-EXTERNAL-REFEFERNCE
+                reference_origin:
+                  type: string
+                  description: Any identifier of the third party system that defines the reference code.
+                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
+                metadata:
+                  type: object
+                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
+                  example:
+                    foo: bar
+              required:
+              - payment_source_type
+              - price_amount_cents
+            relationships:
+              type: object
+              properties:
+                market:
+                  required:
+                  - data
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - markets
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+                payment_gateway:
+                  required:
+                  - data
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - payment_gateways
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+                store:
+                  required:
+                  - data
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - stores
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+              required:
+              - payment_gateway
+    paymentMethodUpdate:
+      required:
+      - data
+      type: object
+      properties:
+        data:
+          type: object
+          required:
+          - type
+          - id
+          - attributes
+          properties:
+            type:
+              type: string
+              description: The resource's type
+              enum:
+              - payment_methods
+            id:
+              type: string
+              description: Unique identifier for the resource (hash).
+              example: XAyRWNUzyN
+            attributes:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: The payment method's internal name.
+                  example: Stripe Payment
+                  nullable: true
+                payment_source_type:
+                  type: string
+                  description: The payment source type. One of 'adyen_payments', 'axerve_payments', 'braintree_payments', 'checkout_com_payments', 'external_payments', 'klarna_payments', 'paypal_payments', 'satispay_payments', 'stripe_payments', or 'wire_transfers'.
+                  example: stripe_payments
+                  nullable: false
+                  enum:
+                  - adyen_payments
+                  - axerve_payments
+                  - braintree_payments
+                  - checkout_com_payments
+                  - external_payments
+                  - klarna_payments
+                  - paypal_payments
+                  - satispay_payments
+                  - stripe_payments
+                  - wire_transfers
+                currency_code:
+                  type: string
+                  description: The international 3-letter currency code as defined by the ISO 4217 standard.
+                  example: EUR
+                  nullable: true
+                moto:
+                  type: boolean
+                  description: Send this attribute if you want to mark the payment as MOTO, must be supported by payment gateway.
+                  example: false
+                  nullable: false
+                require_capture:
+                  type: boolean
+                  description: Send this attribute if you want to require the payment capture before fulfillment.
+                  example: true
+                  nullable: false
+                auto_place:
+                  type: boolean
+                  description: Send this attribute if you want to automatically place the order upon authorization performed asynchronously.
+                  example: true
+                  nullable: false
+                auto_capture:
+                  type: boolean
+                  description: Send this attribute if you want to automatically capture the payment upon authorization.
+                  example: false
+                  nullable: false
+                price_amount_cents:
+                  type: integer
+                  description: The payment method's price, in cents.
+                  example: 0
+                  nullable: false
+                auto_capture_max_amount_cents:
+                  type: integer
+                  description: Send this attribute if you want to limit automatic capture to orders for which the total amount is equal or less than the specified value, in cents.
+                  example: 0
+                  nullable: true
+                _disable:
+                  type: boolean
+                  description: Send this attribute if you want to mark this resource as disabled.
+                  example: true
+                  nullable: false
+                _enable:
+                  type: boolean
+                  description: Send this attribute if you want to mark this resource as enabled.
+                  example: true
+                  nullable: false
+                reference:
+                  type: string
+                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
+                  example: ANY-EXTERNAL-REFEFERNCE
+                  nullable: true
+                reference_origin:
+                  type: string
+                  description: Any identifier of the third party system that defines the reference code.
+                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
+                  nullable: true
+                metadata:
+                  type: object
+                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
+                  example:
+                    foo: bar
+                  nullable: true
+            relationships:
+              type: object
+              properties:
+                market:
+                  required:
+                  - data
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - markets
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+                payment_gateway:
+                  required:
+                  - data
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - payment_gateways
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+                store:
+                  required:
+                  - data
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - stores
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+    paymentMethod:
+      properties:
+        data:
+          properties:
+            attributes:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: The payment method's internal name.
+                  example: Stripe Payment
+                  nullable: true
+                payment_source_type:
+                  type: string
+                  description: The payment source type. One of 'adyen_payments', 'axerve_payments', 'braintree_payments', 'checkout_com_payments', 'external_payments', 'klarna_payments', 'paypal_payments', 'satispay_payments', 'stripe_payments', or 'wire_transfers'.
+                  example: stripe_payments
+                  nullable: false
+                  enum:
+                  - adyen_payments
+                  - axerve_payments
+                  - braintree_payments
+                  - checkout_com_payments
+                  - external_payments
+                  - klarna_payments
+                  - paypal_payments
+                  - satispay_payments
+                  - stripe_payments
+                  - wire_transfers
+                currency_code:
+                  type: string
+                  description: The international 3-letter currency code as defined by the ISO 4217 standard.
+                  example: EUR
+                  nullable: true
+                moto:
+                  type: boolean
+                  description: Send this attribute if you want to mark the payment as MOTO, must be supported by payment gateway.
+                  example: false
+                  nullable: true
+                require_capture:
+                  type: boolean
+                  description: Send this attribute if you want to require the payment capture before fulfillment.
+                  example: true
+                  nullable: true
+                auto_place:
+                  type: boolean
+                  description: Send this attribute if you want to automatically place the order upon authorization performed asynchronously.
+                  example: true
+                  nullable: true
+                auto_capture:
+                  type: boolean
+                  description: Send this attribute if you want to automatically capture the payment upon authorization.
+                  example: false
+                  nullable: true
+                price_amount_cents:
+                  type: integer
+                  description: The payment method's price, in cents.
+                  example: 0
+                  nullable: false
+                price_amount_float:
+                  type: number
+                  description: The payment method's price, float.
+                  example: 0.0
+                  nullable: true
+                formatted_price_amount:
+                  type: string
+                  description: The payment method's price, formatted.
+                  example: €0,00
+                  nullable: true
+                auto_capture_max_amount_cents:
+                  type: integer
+                  description: Send this attribute if you want to limit automatic capture to orders for which the total amount is equal or less than the specified value, in cents.
+                  example: 0
+                  nullable: true
+                auto_capture_max_amount_float:
+                  type: number
+                  description: The automatic capture max amount, float.
+                  example: 0.0
+                  nullable: true
+                formatted_auto_capture_max_amount:
+                  type: string
+                  description: The automatic capture max amount, formatted.
+                  example: €0,00
+                  nullable: true
+                disabled_at:
+                  type: string
+                  description: Time at which this resource was disabled.
+                  example: '2018-01-01T12:00:00.000Z'
+                  nullable: true
+                created_at:
+                  type: string
+                  description: Time at which the resource was created.
+                  example: '2018-01-01T12:00:00.000Z'
+                  nullable: false
+                updated_at:
+                  type: string
+                  description: Time at which the resource was last updated.
+                  example: '2018-01-01T12:00:00.000Z'
+                  nullable: false
+                reference:
+                  type: string
+                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
+                  example: ANY-EXTERNAL-REFEFERNCE
+                  nullable: true
+                reference_origin:
+                  type: string
+                  description: Any identifier of the third party system that defines the reference code.
+                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
+                  nullable: true
+                metadata:
+                  type: object
+                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
+                  example:
+                    foo: bar
+                  nullable: true
+    paymentMethodResponse:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            id:
+              type: string
+              description: Unique identifier for the resource (hash).
+              example: XAyRWNUzyN
+            type:
+              type: string
+              description: The resource's type
+              enum:
+              - payment_methods
+            links:
+              type: object
+              properties:
+                self:
+                  type: string
+                  description: URL
+            attributes:
+              $ref: '#/components/schemas/paymentMethod/properties/data/properties/attributes'
+            relationships:
+              type: object
+              properties:
+                market:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - market
+                        id:
+                          type: string
+                          description: The resource ID
+                payment_gateway:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - payment_gateway
+                        id:
+                          type: string
+                          description: The resource ID
+                store:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - store
+                        id:
+                          type: string
+                          description: The resource ID
+                attachments:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - attachments
+                        id:
+                          type: string
+                          description: The resource ID
+                event_stores:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - event_stores
+                        id:
+                          type: string
+                          description: The resource ID
+    paymentMethodResponseList:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/paymentMethodResponse/properties/data'
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT

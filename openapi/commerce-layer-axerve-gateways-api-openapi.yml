@@ -1,0 +1,460 @@
+openapi: 3.1.0
+info:
+  title: Commerce Layer addresses axerve_gateways API
+  version: 7.10.1
+  contact:
+    name: API Support
+    url: https://commercelayer.io
+    email: support@commercelayer.io
+  description: Headless Commerce for Global Brands.
+servers:
+- url: https://{your_organization_slug}.commercelayer.io/api
+  description: API
+- url: https://core.commercelayer.io/users/sign_in
+  description: Sign in
+- url: https://docs.commercelayer.io/api
+  description: API reference
+security:
+- bearerAuth: []
+tags:
+- name: axerve_gateways
+  description: resource type
+paths:
+  /axerve_gateways:
+    get:
+      operationId: GET/axerve_gateways
+      summary: List all axerve gateways
+      description: List all axerve gateways
+      tags:
+      - axerve_gateways
+      responses:
+        '200':
+          description: A list of axerve gateway objects
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/axerveGatewayResponseList'
+    post:
+      operationId: POST/axerve_gateways
+      summary: Create an axerve gateway
+      description: Create an axerve gateway
+      tags:
+      - axerve_gateways
+      requestBody:
+        required: true
+        content:
+          application/vnd.api+json:
+            schema:
+              $ref: '#/components/schemas/axerveGatewayCreate'
+      responses:
+        '201':
+          description: The created axerve gateway object
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/axerveGatewayResponse'
+  /axerve_gateways/{axerveGatewayId}:
+    get:
+      operationId: GET/axerve_gateways/axerveGatewayId
+      summary: Retrieve an axerve gateway
+      description: Retrieve an axerve gateway
+      tags:
+      - axerve_gateways
+      parameters:
+      - name: axerveGatewayId
+        in: path
+        schema:
+          type: string
+        required: true
+        description: The resource's id
+      responses:
+        '200':
+          description: The axerve gateway object
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/axerveGatewayResponse'
+    patch:
+      operationId: PATCH/axerve_gateways/axerveGatewayId
+      summary: Update an axerve gateway
+      description: Update an axerve gateway
+      tags:
+      - axerve_gateways
+      parameters:
+      - name: axerveGatewayId
+        in: path
+        schema:
+          type: string
+        required: true
+        description: The resource's id
+      requestBody:
+        required: true
+        content:
+          application/vnd.api+json:
+            schema:
+              $ref: '#/components/schemas/axerveGatewayUpdate'
+      responses:
+        '200':
+          description: The updated axerve gateway object
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/axerveGatewayResponse'
+    delete:
+      operationId: DELETE/axerve_gateways/axerveGatewayId
+      summary: Delete an axerve gateway
+      description: Delete an axerve gateway
+      tags:
+      - axerve_gateways
+      parameters:
+      - name: axerveGatewayId
+        in: path
+        schema:
+          type: string
+        required: true
+        description: The resource's id
+      responses:
+        '204':
+          description: No content
+components:
+  schemas:
+    axerveGateway:
+      properties:
+        data:
+          properties:
+            attributes:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: The payment gateway's internal name.
+                  example: US payment gateway
+                  nullable: false
+                force_payments:
+                  type: boolean
+                  description: Indicates if the payment source is forced on the editable order upon receiving a successful event from the gateway.
+                  example: true
+                  nullable: true
+                credential_keys:
+                  type: object
+                  description: The payment gateway's API credential keys last digits.
+                  example:
+                    api_key: '********BW989'
+                  nullable: true
+                disabled_at:
+                  type: string
+                  description: Time at which this resource was disabled.
+                  example: '2018-01-01T12:00:00.000Z'
+                  nullable: true
+                created_at:
+                  type: string
+                  description: Time at which the resource was created.
+                  example: '2018-01-01T12:00:00.000Z'
+                  nullable: false
+                updated_at:
+                  type: string
+                  description: Time at which the resource was last updated.
+                  example: '2018-01-01T12:00:00.000Z'
+                  nullable: false
+                reference:
+                  type: string
+                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
+                  example: ANY-EXTERNAL-REFEFERNCE
+                  nullable: true
+                reference_origin:
+                  type: string
+                  description: Any identifier of the third party system that defines the reference code.
+                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
+                  nullable: true
+                metadata:
+                  type: object
+                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
+                  example:
+                    foo: bar
+                  nullable: true
+                login:
+                  type: string
+                  description: The merchant login code.
+                  example: xxxx-yyyy-zzzz
+                  nullable: false
+                webhook_endpoint_url:
+                  type: string
+                  description: The gateway webhook URL, generated automatically.
+                  example: https://core.commercelayer.co/webhook_callbacks/axerve_gateways/xxxxx
+                  nullable: true
+    axerveGatewayCreate:
+      required:
+      - data
+      type: object
+      properties:
+        data:
+          type: object
+          required:
+          - type
+          - attributes
+          properties:
+            type:
+              type: string
+              description: The resource's type
+              enum:
+              - axerve_gateways
+            attributes:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: The payment gateway's internal name.
+                  example: US payment gateway
+                force_payments:
+                  type: boolean
+                  description: Indicates if the payment source is forced on the editable order upon receiving a successful event from the gateway.
+                  example: true
+                _disable:
+                  type: boolean
+                  description: Send this attribute if you want to mark this resource as disabled.
+                  example: true
+                _enable:
+                  type: boolean
+                  description: Send this attribute if you want to mark this resource as enabled.
+                  example: true
+                reference:
+                  type: string
+                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
+                  example: ANY-EXTERNAL-REFEFERNCE
+                reference_origin:
+                  type: string
+                  description: Any identifier of the third party system that defines the reference code.
+                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
+                metadata:
+                  type: object
+                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
+                  example:
+                    foo: bar
+                login:
+                  type: string
+                  description: The merchant login code.
+                  example: xxxx-yyyy-zzzz
+                api_key:
+                  type: string
+                  description: The gateway API key.
+                  example: xxxx-yyyy-zzzz
+              required:
+              - name
+              - login
+              - api_key
+            relationships:
+              type: object
+              properties:
+                axerve_payments:
+                  required:
+                  - data
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - axerve_payments
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+    axerveGatewayResponse:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            id:
+              type: string
+              description: Unique identifier for the resource (hash).
+              example: XAyRWNUzyN
+            type:
+              type: string
+              description: The resource's type
+              enum:
+              - axerve_gateways
+            links:
+              type: object
+              properties:
+                self:
+                  type: string
+                  description: URL
+            attributes:
+              $ref: '#/components/schemas/axerveGateway/properties/data/properties/attributes'
+            relationships:
+              type: object
+              properties:
+                payment_methods:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - payment_methods
+                        id:
+                          type: string
+                          description: The resource ID
+                event_stores:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - event_stores
+                        id:
+                          type: string
+                          description: The resource ID
+                axerve_payments:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - axerve_payments
+                        id:
+                          type: string
+                          description: The resource ID
+    axerveGatewayResponseList:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/axerveGatewayResponse/properties/data'
+    axerveGatewayUpdate:
+      required:
+      - data
+      type: object
+      properties:
+        data:
+          type: object
+          required:
+          - type
+          - id
+          - attributes
+          properties:
+            type:
+              type: string
+              description: The resource's type
+              enum:
+              - axerve_gateways
+            id:
+              type: string
+              description: Unique identifier for the resource (hash).
+              example: XAyRWNUzyN
+            attributes:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: The payment gateway's internal name.
+                  example: US payment gateway
+                  nullable: false
+                force_payments:
+                  type: boolean
+                  description: Indicates if the payment source is forced on the editable order upon receiving a successful event from the gateway.
+                  example: true
+                  nullable: false
+                _disable:
+                  type: boolean
+                  description: Send this attribute if you want to mark this resource as disabled.
+                  example: true
+                  nullable: false
+                _enable:
+                  type: boolean
+                  description: Send this attribute if you want to mark this resource as enabled.
+                  example: true
+                  nullable: false
+                reference:
+                  type: string
+                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
+                  example: ANY-EXTERNAL-REFEFERNCE
+                  nullable: true
+                reference_origin:
+                  type: string
+                  description: Any identifier of the third party system that defines the reference code.
+                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
+                  nullable: true
+                metadata:
+                  type: object
+                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
+                  example:
+                    foo: bar
+                  nullable: true
+                login:
+                  type: string
+                  description: The merchant login code.
+                  example: xxxx-yyyy-zzzz
+                  nullable: false
+                api_key:
+                  type: string
+                  description: The gateway API key.
+                  example: xxxx-yyyy-zzzz
+            relationships:
+              type: object
+              properties:
+                axerve_payments:
+                  required:
+                  - data
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - axerve_payments
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT

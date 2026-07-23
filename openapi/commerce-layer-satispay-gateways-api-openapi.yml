@@ -1,0 +1,451 @@
+openapi: 3.1.0
+info:
+  title: Commerce Layer addresses satispay_gateways API
+  version: 7.10.1
+  contact:
+    name: API Support
+    url: https://commercelayer.io
+    email: support@commercelayer.io
+  description: Headless Commerce for Global Brands.
+servers:
+- url: https://{your_organization_slug}.commercelayer.io/api
+  description: API
+- url: https://core.commercelayer.io/users/sign_in
+  description: Sign in
+- url: https://docs.commercelayer.io/api
+  description: API reference
+security:
+- bearerAuth: []
+tags:
+- name: satispay_gateways
+  description: resource type
+paths:
+  /satispay_gateways:
+    get:
+      operationId: GET/satispay_gateways
+      summary: List all satispay gateways
+      description: List all satispay gateways
+      tags:
+      - satispay_gateways
+      responses:
+        '200':
+          description: A list of satispay gateway objects
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/satispayGatewayResponseList'
+    post:
+      operationId: POST/satispay_gateways
+      summary: Create a satispay gateway
+      description: Create a satispay gateway
+      tags:
+      - satispay_gateways
+      requestBody:
+        required: true
+        content:
+          application/vnd.api+json:
+            schema:
+              $ref: '#/components/schemas/satispayGatewayCreate'
+      responses:
+        '201':
+          description: The created satispay gateway object
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/satispayGatewayResponse'
+  /satispay_gateways/{satispayGatewayId}:
+    get:
+      operationId: GET/satispay_gateways/satispayGatewayId
+      summary: Retrieve a satispay gateway
+      description: Retrieve a satispay gateway
+      tags:
+      - satispay_gateways
+      parameters:
+      - name: satispayGatewayId
+        in: path
+        schema:
+          type: string
+        required: true
+        description: The resource's id
+      responses:
+        '200':
+          description: The satispay gateway object
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/satispayGatewayResponse'
+    patch:
+      operationId: PATCH/satispay_gateways/satispayGatewayId
+      summary: Update a satispay gateway
+      description: Update a satispay gateway
+      tags:
+      - satispay_gateways
+      parameters:
+      - name: satispayGatewayId
+        in: path
+        schema:
+          type: string
+        required: true
+        description: The resource's id
+      requestBody:
+        required: true
+        content:
+          application/vnd.api+json:
+            schema:
+              $ref: '#/components/schemas/satispayGatewayUpdate'
+      responses:
+        '200':
+          description: The updated satispay gateway object
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/satispayGatewayResponse'
+    delete:
+      operationId: DELETE/satispay_gateways/satispayGatewayId
+      summary: Delete a satispay gateway
+      description: Delete a satispay gateway
+      tags:
+      - satispay_gateways
+      parameters:
+      - name: satispayGatewayId
+        in: path
+        schema:
+          type: string
+        required: true
+        description: The resource's id
+      responses:
+        '204':
+          description: No content
+components:
+  schemas:
+    satispayGatewayResponse:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            id:
+              type: string
+              description: Unique identifier for the resource (hash).
+              example: XAyRWNUzyN
+            type:
+              type: string
+              description: The resource's type
+              enum:
+              - satispay_gateways
+            links:
+              type: object
+              properties:
+                self:
+                  type: string
+                  description: URL
+            attributes:
+              $ref: '#/components/schemas/satispayGateway/properties/data/properties/attributes'
+            relationships:
+              type: object
+              properties:
+                payment_methods:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - payment_methods
+                        id:
+                          type: string
+                          description: The resource ID
+                event_stores:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - event_stores
+                        id:
+                          type: string
+                          description: The resource ID
+                satispay_payments:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - satispay_payments
+                        id:
+                          type: string
+                          description: The resource ID
+    satispayGateway:
+      properties:
+        data:
+          properties:
+            attributes:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: The payment gateway's internal name.
+                  example: US payment gateway
+                  nullable: false
+                force_payments:
+                  type: boolean
+                  description: Indicates if the payment source is forced on the editable order upon receiving a successful event from the gateway.
+                  example: true
+                  nullable: true
+                credential_keys:
+                  type: object
+                  description: The payment gateway's API credential keys last digits.
+                  example:
+                    api_key: '********BW989'
+                  nullable: true
+                disabled_at:
+                  type: string
+                  description: Time at which this resource was disabled.
+                  example: '2018-01-01T12:00:00.000Z'
+                  nullable: true
+                created_at:
+                  type: string
+                  description: Time at which the resource was created.
+                  example: '2018-01-01T12:00:00.000Z'
+                  nullable: false
+                updated_at:
+                  type: string
+                  description: Time at which the resource was last updated.
+                  example: '2018-01-01T12:00:00.000Z'
+                  nullable: false
+                reference:
+                  type: string
+                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
+                  example: ANY-EXTERNAL-REFEFERNCE
+                  nullable: true
+                reference_origin:
+                  type: string
+                  description: Any identifier of the third party system that defines the reference code.
+                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
+                  nullable: true
+                metadata:
+                  type: object
+                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
+                  example:
+                    foo: bar
+                  nullable: true
+                token:
+                  type: string
+                  description: Activation code generated from the Satispay Dashboard.
+                  example: 623ECX
+                  nullable: false
+                key_id:
+                  type: string
+                  description: The Satispay API key auto generated basing on activation code.
+                  example: xxxx-yyyy-zzzz
+                  nullable: false
+                webhook_endpoint_url:
+                  type: string
+                  description: The gateway webhook URL, generated automatically.
+                  example: https://core.commercelayer.co/webhook_callbacks/satispay_gateways/xxxxx
+                  nullable: true
+    satispayGatewayResponseList:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/satispayGatewayResponse/properties/data'
+    satispayGatewayUpdate:
+      required:
+      - data
+      type: object
+      properties:
+        data:
+          type: object
+          required:
+          - type
+          - id
+          - attributes
+          properties:
+            type:
+              type: string
+              description: The resource's type
+              enum:
+              - satispay_gateways
+            id:
+              type: string
+              description: Unique identifier for the resource (hash).
+              example: XAyRWNUzyN
+            attributes:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: The payment gateway's internal name.
+                  example: US payment gateway
+                  nullable: false
+                force_payments:
+                  type: boolean
+                  description: Indicates if the payment source is forced on the editable order upon receiving a successful event from the gateway.
+                  example: true
+                  nullable: false
+                _disable:
+                  type: boolean
+                  description: Send this attribute if you want to mark this resource as disabled.
+                  example: true
+                  nullable: false
+                _enable:
+                  type: boolean
+                  description: Send this attribute if you want to mark this resource as enabled.
+                  example: true
+                  nullable: false
+                reference:
+                  type: string
+                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
+                  example: ANY-EXTERNAL-REFEFERNCE
+                  nullable: true
+                reference_origin:
+                  type: string
+                  description: Any identifier of the third party system that defines the reference code.
+                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
+                  nullable: true
+                metadata:
+                  type: object
+                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
+                  example:
+                    foo: bar
+                  nullable: true
+            relationships:
+              type: object
+              properties:
+                satispay_payments:
+                  required:
+                  - data
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - satispay_payments
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+    satispayGatewayCreate:
+      required:
+      - data
+      type: object
+      properties:
+        data:
+          type: object
+          required:
+          - type
+          - attributes
+          properties:
+            type:
+              type: string
+              description: The resource's type
+              enum:
+              - satispay_gateways
+            attributes:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: The payment gateway's internal name.
+                  example: US payment gateway
+                force_payments:
+                  type: boolean
+                  description: Indicates if the payment source is forced on the editable order upon receiving a successful event from the gateway.
+                  example: true
+                _disable:
+                  type: boolean
+                  description: Send this attribute if you want to mark this resource as disabled.
+                  example: true
+                _enable:
+                  type: boolean
+                  description: Send this attribute if you want to mark this resource as enabled.
+                  example: true
+                reference:
+                  type: string
+                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
+                  example: ANY-EXTERNAL-REFEFERNCE
+                reference_origin:
+                  type: string
+                  description: Any identifier of the third party system that defines the reference code.
+                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
+                metadata:
+                  type: object
+                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
+                  example:
+                    foo: bar
+                token:
+                  type: string
+                  description: Activation code generated from the Satispay Dashboard.
+                  example: 623ECX
+              required:
+              - name
+              - token
+            relationships:
+              type: object
+              properties:
+                satispay_payments:
+                  required:
+                  - data
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - satispay_payments
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT

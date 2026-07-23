@@ -1,0 +1,256 @@
+openapi: 3.1.0
+info:
+  title: Commerce Layer addresses pickups API
+  version: 7.10.1
+  contact:
+    name: API Support
+    url: https://commercelayer.io
+    email: support@commercelayer.io
+  description: Headless Commerce for Global Brands.
+servers:
+- url: https://{your_organization_slug}.commercelayer.io/api
+  description: API
+- url: https://core.commercelayer.io/users/sign_in
+  description: Sign in
+- url: https://docs.commercelayer.io/api
+  description: API reference
+security:
+- bearerAuth: []
+tags:
+- name: pickups
+  description: resource type
+paths:
+  /pickups:
+    get:
+      operationId: GET/pickups
+      summary: List all pickups
+      description: List all pickups
+      tags:
+      - pickups
+      responses:
+        '200':
+          description: A list of pickup objects
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/pickupResponseList'
+  /pickups/{pickupId}:
+    get:
+      operationId: GET/pickups/pickupId
+      summary: Retrieve a pickup
+      description: Retrieve a pickup
+      tags:
+      - pickups
+      parameters:
+      - name: pickupId
+        in: path
+        schema:
+          type: string
+        required: true
+        description: The resource's id
+      responses:
+        '200':
+          description: The pickup object
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/pickupResponse'
+  /shipments/{shipmentId}/pickup:
+    get:
+      operationId: GET/shipmentId/pickup
+      summary: Retrieve the pickup associated to the shipment
+      description: Retrieve the pickup associated to the shipment
+      tags:
+      - pickups
+      parameters:
+      - name: shipmentId
+        in: path
+        schema:
+          type: string
+        required: true
+        description: The resource's id
+      responses:
+        '200':
+          description: The pickup associated to the shipment
+components:
+  schemas:
+    pickupResponseList:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/pickupResponse/properties/data'
+    pickupResponse:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            id:
+              type: string
+              description: Unique identifier for the resource (hash).
+              example: XAyRWNUzyN
+            type:
+              type: string
+              description: The resource's type
+              enum:
+              - pickups
+            links:
+              type: object
+              properties:
+                self:
+                  type: string
+                  description: URL
+            attributes:
+              $ref: '#/components/schemas/pickup/properties/data/properties/attributes'
+            relationships:
+              type: object
+              properties:
+                shipment:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - shipment
+                        id:
+                          type: string
+                          description: The resource ID
+                parcels:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - parcels
+                        id:
+                          type: string
+                          description: The resource ID
+                events:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - events
+                        id:
+                          type: string
+                          description: The resource ID
+                event_stores:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - event_stores
+                        id:
+                          type: string
+                          description: The resource ID
+    pickup:
+      properties:
+        data:
+          properties:
+            attributes:
+              type: object
+              properties:
+                type:
+                  type: string
+                  description: The pick up's type.
+                  example: easypost_pickups
+                  nullable: false
+                  enum:
+                  - easypost_pickups
+                status:
+                  type: string
+                  description: The pick up status.
+                  example: unknown
+                  nullable: true
+                internal_id:
+                  type: string
+                  description: The pick up service internal ID.
+                  example: pickup_13e5d7e2a7824432a07975bc553944bc
+                  nullable: false
+                created_at:
+                  type: string
+                  description: Time at which the resource was created.
+                  example: '2018-01-01T12:00:00.000Z'
+                  nullable: false
+                updated_at:
+                  type: string
+                  description: Time at which the resource was last updated.
+                  example: '2018-01-01T12:00:00.000Z'
+                  nullable: false
+                reference:
+                  type: string
+                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
+                  example: ANY-EXTERNAL-REFEFERNCE
+                  nullable: true
+                reference_origin:
+                  type: string
+                  description: Any identifier of the third party system that defines the reference code.
+                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
+                  nullable: true
+                metadata:
+                  type: object
+                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
+                  example:
+                    foo: bar
+                  nullable: true
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT

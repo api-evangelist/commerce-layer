@@ -1,0 +1,1082 @@
+openapi: 3.1.0
+info:
+  title: Commerce Layer addresses organizations API
+  version: 7.10.1
+  contact:
+    name: API Support
+    url: https://commercelayer.io
+    email: support@commercelayer.io
+  description: Headless Commerce for Global Brands.
+servers:
+- url: https://{your_organization_slug}.commercelayer.io/api
+  description: API
+- url: https://core.commercelayer.io/users/sign_in
+  description: Sign in
+- url: https://docs.commercelayer.io/api
+  description: API reference
+security:
+- bearerAuth: []
+tags:
+- name: organizations
+  description: resource type
+paths:
+  /api_credentials/{apiCredentialId}/organization:
+    get:
+      operationId: GET/apiCredentialId/organization
+      summary: Related API credential
+      description: Related API credential
+      tags:
+      - organizations
+      parameters:
+      - name: apiCredentialId
+        in: path
+        schema:
+          type: string
+        required: true
+        description: The ID of the resource.
+      responses:
+        '200':
+          description: The organization associated to the API credential
+  /application_memberships/{applicationMembershipId}/organization:
+    get:
+      operationId: GET/applicationMembershipId/organization
+      summary: Related application membership
+      description: Related application membership
+      tags:
+      - organizations
+      parameters:
+      - name: applicationMembershipId
+        in: path
+        schema:
+          type: string
+        required: true
+        description: The ID of the resource.
+      responses:
+        '200':
+          description: The organization associated to the application membership
+  /memberships/{membershipId}/organization:
+    get:
+      operationId: GET/membershipId/organization
+      summary: Related membership
+      description: Related membership
+      tags:
+      - organizations
+      parameters:
+      - name: membershipId
+        in: path
+        schema:
+          type: string
+        required: true
+        description: The ID of the resource.
+      responses:
+        '200':
+          description: The organization associated to the membership
+  /membership_profiles/{membershipProfileId}/organization:
+    get:
+      operationId: GET/membershipProfileId/organization
+      summary: Related membership profile
+      description: Related membership profile
+      tags:
+      - organizations
+      parameters:
+      - name: membershipProfileId
+        in: path
+        schema:
+          type: string
+        required: true
+        description: The ID of the resource.
+      responses:
+        '200':
+          description: The organization associated to the membership profile
+  /organizations:
+    post:
+      operationId: POST/organizations
+      summary: Creates an organization
+      description: Creates an organization
+      tags:
+      - organizations
+      requestBody:
+        required: true
+        content:
+          application/vnd.api+json:
+            schema:
+              $ref: '#/components/schemas/organizationCreate'
+      responses:
+        '201':
+          description: The created organization object
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/organizationResponse'
+    get:
+      operationId: GET/organizations
+      summary: List all organizations
+      description: List all organizations
+      tags:
+      - organizations
+      responses:
+        '200':
+          description: A list of organization objects
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/organizationResponseList'
+  /organizations/{organizationId}:
+    get:
+      operationId: GET/organizations/organizationId
+      summary: Retrieve an organization
+      description: Retrieve an organization
+      parameters:
+      - name: organizationId
+        in: path
+        schema:
+          type: string
+        required: true
+        description: The ID of the resource.
+      tags:
+      - organizations
+      responses:
+        '200':
+          description: The organization object
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/organizationResponse'
+    patch:
+      operationId: PATCH/organizations/organizationId
+      summary: Updates an organization
+      description: Updates an organization
+      tags:
+      - organizations
+      parameters:
+      - name: organizationId
+        in: path
+        schema:
+          type: string
+        required: true
+        description: The ID of the resource.
+      requestBody:
+        required: true
+        content:
+          application/vnd.api+json:
+            schema:
+              $ref: '#/components/schemas/organizationUpdate'
+      responses:
+        '200':
+          description: The updated organization object
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/organizationResponse'
+  /organizations/{organizationId}/transfer_ownership:
+    patch:
+      operationId: PATCH/organizations/organizationId/transfer_ownership
+      summary: Transfer ownership of an organization
+      description: Transfers the ownership of an organization to a new owner
+      tags:
+      - organizations
+      parameters:
+      - name: organizationId
+        in: path
+        schema:
+          type: string
+        required: true
+        description: The ID of the resource.
+      requestBody:
+        required: true
+        content:
+          application/vnd.api+json:
+            schema:
+              required:
+              - data
+              type: object
+              properties:
+                data:
+                  type: object
+                  required:
+                  - type
+                  - id
+                  - attributes
+                  properties:
+                    type:
+                      type: string
+                      description: The resource's type.
+                      enum:
+                      - organizations
+                    id:
+                      type: string
+                      description: The ID of the resource.
+                      example: XGZwpOSrWL
+                    attributes:
+                      type: object
+                      properties:
+                        new_owner_email:
+                          type: string
+                          description: The user email of the new owner of the organization.
+                          example: test@commercelayer.io
+                          nullable: false
+      responses:
+        '202':
+          description: The confirmation of the transfer ownership
+          content: {}
+  /permissions/{permissionId}/organization:
+    get:
+      operationId: GET/permissionId/organization
+      summary: Related permission
+      description: Related permission
+      tags:
+      - organizations
+      parameters:
+      - name: permissionId
+        in: path
+        schema:
+          type: string
+        required: true
+        description: The ID of the resource.
+      responses:
+        '200':
+          description: The organization associated to the permission
+  /roles/{roleId}/organization:
+    get:
+      operationId: GET/roleId/organization
+      summary: Related role
+      description: Related role
+      tags:
+      - organizations
+      parameters:
+      - name: roleId
+        in: path
+        schema:
+          type: string
+        required: true
+        description: The ID of the resource.
+      responses:
+        '200':
+          description: The organization associated to the role
+components:
+  schemas:
+    organizationResponse:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            id:
+              type: string
+              description: The ID of the resource.
+              example: XGZwpOSrWL
+            type:
+              type: string
+              description: The resource's type.
+              enum:
+              - organizations
+            links:
+              type: object
+              properties:
+                self:
+                  type: string
+                  description: URL
+            attributes:
+              $ref: '#/components/schemas/organization/properties/data/properties/attributes'
+            relationships:
+              type: object
+              properties:
+                memberships:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type.
+                          enum:
+                          - memberships
+                        id:
+                          type: string
+                          description: The ID of the resource.
+                roles:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type.
+                          enum:
+                          - roles
+                        id:
+                          type: string
+                          description: The ID of the resource.
+                permissions:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type.
+                          enum:
+                          - permissions
+                        id:
+                          type: string
+                          description: The ID of the resource.
+                api_credentials:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type.
+                          enum:
+                          - api_credentials
+                        id:
+                          type: string
+                          description: The ID of the resource.
+    organizationUpdate:
+      required:
+      - data
+      type: object
+      properties:
+        data:
+          type: object
+          required:
+          - type
+          - id
+          - attributes
+          properties:
+            type:
+              type: string
+              description: The resource's type.
+              enum:
+              - organizations
+            id:
+              type: string
+              description: The ID of the resource.
+              example: XGZwpOSrWL
+            attributes:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: The organization's internal name.
+                  example: The Blue Brand
+                  nullable: false
+                support_phone:
+                  type: string
+                  description: The organization's support phone.
+                  example: +01 30800857
+                  nullable: true
+                support_email:
+                  type: string
+                  description: The organization's support email.
+                  example: support@bluebrand.com
+                  nullable: true
+                logo_url:
+                  type: string
+                  description: The URL to the organization's logo.
+                  example: https://bluebrand.com/img/logo.svg
+                  nullable: true
+                favicon_url:
+                  type: string
+                  description: The URL to the organization's favicon.
+                  example: https://bluebrand.com/img/favicon.ico
+                  nullable: true
+                primary_color:
+                  type: string
+                  description: The organization's primary color.
+                  example: '#C8984E'
+                  nullable: true
+                contrast_color:
+                  type: string
+                  description: The organization's contrast color. Format is HEX (starts with `#` and is followed by six letters and/or numbers).
+                  example: '#FFFFCC'
+                  nullable: true
+                gtm_id:
+                  type: string
+                  description: The organization's Google Tag Manager ID.
+                  example: GTM-5FJXX6
+                  nullable: true
+                gtm_id_test:
+                  type: string
+                  description: The organization's Google Tag Manager ID for test.
+                  example: GTM-5FJXX7
+                  nullable: true
+                config:
+                  type: object
+                  description: The organization's configuration.
+                  example:
+                    mfe:
+                      language: it-IT
+                      default:
+                        links:
+                          cart: https://cart.example.com/:order_id?accessToken=:access_token
+                          checkout: https://checkout.example.com/:order_id?accessToken=:access_token
+                          identity: https://example.com/login
+                          microstore: https://example.com/microstore/?accessToken=:access_token
+                          my_account: https://example.com/my-custom-account?accessToken=:access_token
+                        checkout:
+                          optional_billing_info: false
+                          thankyou_page: https://example.com/thanks/:lang/:order_id
+                          billing_countries:
+                          - value: ES
+                            label: Espana
+                          - value: IT
+                            label: Italia
+                          - value: US
+                            label: Unites States of America
+                          shipping_countries:
+                          - value: ES
+                            label: Espana
+                          - value: IT
+                            label: Italia
+                          - value: US
+                            label: Unites States of America
+                          billing_states:
+                            FR:
+                            - value: PA
+                              label: Paris
+                            - value: LY
+                              label: Lyon
+                            - value: NI
+                              label: Nice
+                            - value: MA
+                              label: Marseille
+                            - value: BO
+                              label: Bordeaux
+                          shipping_states:
+                            FR:
+                            - value: PA
+                              label: Paris
+                            - value: LY
+                              label: Lyon
+                            - value: NI
+                              label: Nice
+                            - value: MA
+                              label: Marseille
+                            - value: BO
+                              label: Bordeaux
+                          default_country: US
+                        urls:
+                          privacy: https://example.com/privacy/:lang
+                          terms: https://example.com/terms/:lang
+                      market:id:ZKcv13rT:
+                        links:
+                          cart: https://example.com/custom-cart/:order_id?accessToken=:access_token
+                        checkout:
+                          thankyou_page: https://example.com/thanks/:order_id
+                  nullable: true
+                reference:
+                  type: string
+                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
+                  example: ANY-EXTERNAL-REFEFERNCE
+                  nullable: true
+                reference_origin:
+                  type: string
+                  description: Any identifier of the third party system that defines the reference code.
+                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
+                  nullable: true
+                metadata:
+                  type: object
+                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
+                  example:
+                    foo: bar
+                  nullable: true
+            relationships:
+              type: object
+              properties: {}
+    organization:
+      properties:
+        data:
+          properties:
+            attributes:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: The organization's internal name.
+                  example: The Blue Brand
+                  nullable: false
+                slug:
+                  type: string
+                  description: The organization's slug name.
+                  example: the-blue-brand
+                  readOnly: true
+                domain:
+                  type: string
+                  description: The organization's domain.
+                  example: the-blue-brand.commercelayer.io
+                  readOnly: true
+                support_phone:
+                  type: string
+                  description: The organization's support phone.
+                  example: +01 30800857
+                  nullable: true
+                support_email:
+                  type: string
+                  description: The organization's support email.
+                  example: support@bluebrand.com
+                  nullable: true
+                logo_url:
+                  type: string
+                  description: The URL to the organization's logo.
+                  example: https://bluebrand.com/img/logo.svg
+                  nullable: true
+                favicon_url:
+                  type: string
+                  description: The URL to the organization's favicon.
+                  example: https://bluebrand.com/img/favicon.ico
+                  nullable: true
+                primary_color:
+                  type: string
+                  description: The organization's primary color.
+                  example: '#C8984E'
+                  nullable: true
+                contrast_color:
+                  type: string
+                  description: The organization's contrast color. Format is HEX (starts with `#` and is followed by six letters and/or numbers).
+                  example: '#FFFFCC'
+                  nullable: true
+                gtm_id:
+                  type: string
+                  description: The organization's Google Tag Manager ID.
+                  example: GTM-5FJXX6
+                  nullable: true
+                gtm_id_test:
+                  type: string
+                  description: The organization's Google Tag Manager ID for test.
+                  example: GTM-5FJXX7
+                  nullable: true
+                region:
+                  type: string
+                  description: The region where the organization is located. The default value is `eu-west-1`.
+                  example: eu-west-1
+                  nullable: true
+                can_switch_live:
+                  type: boolean
+                  description: Indicates if the organization can switch to live mode.
+                  example: false
+                  readOnly: true
+                subscription_info:
+                  type: object
+                  description: Information about the current subscription such as the plan type, limits, and subscription totals counter.
+                  example:
+                    plan_type: growth
+                    limits:
+                      markets: 5
+                      skus: 10000
+                      organizations: 2
+                      memberships: 5
+                    totals:
+                      organizations: 1
+                      markets: 0
+                      memberships: 2
+                      skus: 0
+                  readOnly: true
+                config:
+                  type: object
+                  description: The organization's configuration.
+                  example:
+                    mfe:
+                      language: it-IT
+                      default:
+                        links:
+                          cart: https://cart.example.com/:order_id?accessToken=:access_token
+                          checkout: https://checkout.example.com/:order_id?accessToken=:access_token
+                          identity: https://example.com/login
+                          microstore: https://example.com/microstore/?accessToken=:access_token
+                          my_account: https://example.com/my-custom-account?accessToken=:access_token
+                        checkout:
+                          optional_billing_info: false
+                          thankyou_page: https://example.com/thanks/:lang/:order_id
+                          billing_countries:
+                          - value: ES
+                            label: Espana
+                          - value: IT
+                            label: Italia
+                          - value: US
+                            label: Unites States of America
+                          shipping_countries:
+                          - value: ES
+                            label: Espana
+                          - value: IT
+                            label: Italia
+                          - value: US
+                            label: Unites States of America
+                          billing_states:
+                            FR:
+                            - value: PA
+                              label: Paris
+                            - value: LY
+                              label: Lyon
+                            - value: NI
+                              label: Nice
+                            - value: MA
+                              label: Marseille
+                            - value: BO
+                              label: Bordeaux
+                          shipping_states:
+                            FR:
+                            - value: PA
+                              label: Paris
+                            - value: LY
+                              label: Lyon
+                            - value: NI
+                              label: Nice
+                            - value: MA
+                              label: Marseille
+                            - value: BO
+                              label: Bordeaux
+                          default_country: US
+                        urls:
+                          privacy: https://example.com/privacy/:lang
+                          terms: https://example.com/terms/:lang
+                      market:id:ZKcv13rT:
+                        links:
+                          cart: https://example.com/custom-cart/:order_id?accessToken=:access_token
+                        checkout:
+                          thankyou_page: https://example.com/thanks/:order_id
+                  nullable: true
+                api_auth_redirect:
+                  type: boolean
+                  description: Enables the redirect on the new Auth API.
+                  example: true
+                  readOnly: true
+                api_rules_engine:
+                  type: boolean
+                  description: Enables the rules engine for flex promotions and price list rules.
+                  example: false
+                  readOnly: true
+                api_rules_engine_max_conditions_size:
+                  type: integer
+                  description: The fallback maximum number of conditions within a rules payload on a ruleable object, default is 150.
+                  example: 150
+                  readOnly: true
+                api_rules_engine_max_rules_size:
+                  type: integer
+                  description: The fallback maximum number of rules within a rules payload on a ruleable object, default is 15.
+                  example: 15
+                  readOnly: true
+                api_new_auth:
+                  type: boolean
+                  description: Forces the usage of the new Authentication API.
+                  example: true
+                  readOnly: true
+                api_purge_single_resource:
+                  type: boolean
+                  description: Enables the purge of cached single resources when list is purged.
+                  example: false
+                  readOnly: true
+                api_max_regex_length:
+                  type: integer
+                  description: The maximum length for the regular expressions, default is 5000.
+                  example: 5000
+                  readOnly: true
+                addresses_avs_check:
+                  type: boolean
+                  description: Indicates if AVS checking will be enforced during payment workflow by passing specific attributes, default is true.
+                  example: true
+                  readOnly: true
+                addresses_phone_required:
+                  type: boolean
+                  description: Indicates if the phone attribute is required for addresses, default is true.
+                  example: true
+                  readOnly: true
+                orders_sales_channel_guest_only:
+                  type: boolean
+                  description: Indicates if a sales channel application without customer can read and update just guest orders.
+                  example: true
+                  readOnly: true
+                orders_min_rebuild_shipments_lapse:
+                  type: number
+                  description: The minimum lapse in fraction of seconds to be observed between two consecutive shipments rebuilt. If shipments rebuilt is triggered within the minimum lapse, the update is performed, but no rebuilt is done.
+                  example: 0.0
+                  readOnly: true
+                orders_min_refresh_lapse:
+                  type: number
+                  description: The minimum lapse in fraction of seconds to be observed between two consecutive order refreshes. If refresh is triggered within the minimum lapse, the update is performed, but no order refresh is done.
+                  example: 0.0
+                  readOnly: true
+                orders_autorefresh_cutoff_test:
+                  type: integer
+                  description: The maximum number line items allowed for a test order before disabling the autorefresh option.
+                  example: 50
+                  readOnly: true
+                orders_autorefresh_cutoff_live:
+                  type: integer
+                  description: The maximum number line items allowed for a live order before disabling the autorefresh option.
+                  example: 500
+                  readOnly: true
+                orders_number_editable_test:
+                  type: boolean
+                  description: Enables orders number editing as a string in test (for enterprise plans only).
+                  example: false
+                  readOnly: true
+                orders_number_editable_live:
+                  type: boolean
+                  description: Enables orders number editing as a string in live (for enterprise plans only).
+                  example: false
+                  readOnly: true
+                orders_number_as_reference:
+                  type: boolean
+                  description: Enables to use the order number as payment reference on supported gateways.
+                  example: true
+                  readOnly: true
+                orders_invalid_coupon_errors:
+                  type: boolean
+                  description: Enables raising of API errors in case the provided coupon code is invalid, default is true.
+                  example: true
+                  readOnly: true
+                orders_invalid_gift_card_errors:
+                  type: boolean
+                  description: Enables raising of API errors in case the provided gift card code is invalid, default is true.
+                  example: true
+                  readOnly: true
+                orders_validate_shipping_stock:
+                  type: boolean
+                  description: Enables the validation of the generated stock line items and stock transfers before placing the order, default is false.
+                  example: false
+                  readOnly: true
+                bundles_max_items_count:
+                  type: integer
+                  description: The maximum number of SKUs allowed for bundles, default is 10.
+                  example: 10
+                  readOnly: true
+                coupons_min_code_length:
+                  type: integer
+                  description: The minimum length for coupon code, default is 8.
+                  example: 8
+                  readOnly: true
+                coupons_max_code_length:
+                  type: integer
+                  description: The maximum length for coupon code, default is 40.
+                  example: 40
+                  readOnly: true
+                gift_cards_exact_code_matching:
+                  type: boolean
+                  description: Enables matching the gift card code by its exact value, instead of by its first charachters, default is false.
+                  example: false
+                  readOnly: true
+                gift_cards_min_code_length:
+                  type: integer
+                  description: The minimum length for gift card code, default is 8.
+                  example: 8
+                  readOnly: true
+                gift_cards_max_code_length:
+                  type: integer
+                  description: The maximum length for gift card code, default is 40.
+                  example: 40
+                  readOnly: true
+                cleanups_max_concurrent_count:
+                  type: integer
+                  description: The maximum number of concurrent cleanups allowed for your organization, default is 10.
+                  example: 10
+                  readOnly: true
+                exports_max_concurrent_count:
+                  type: integer
+                  description: The maximum number of concurrent exports allowed for your organization, default is 10.
+                  example: 10
+                  readOnly: true
+                imports_max_concurrent_count:
+                  type: integer
+                  description: The maximum number of concurrent imports allowed for your organization, default is 10.
+                  example: 10
+                  readOnly: true
+                imports_purge_cache:
+                  type: boolean
+                  description: Enables purging of cached resources upon succeeded imports.
+                  example: true
+                  readOnly: true
+                imports_skip_errors:
+                  type: boolean
+                  description: Disables the interruption of the import in case its errors exceeds the 10% threshold, default is false.
+                  example: false
+                  readOnly: true
+                inventory_models_max_stock_locations_cutoff:
+                  type: integer
+                  description: The maximum number for stock locations cutoff, default is 10.
+                  example: 10
+                  readOnly: true
+                promotions_max_concurrent_count:
+                  type: integer
+                  description: The maximum number of active concurrent promotions allowed for your organization, default is 10.
+                  example: 10
+                  readOnly: true
+                promotions_max_conditions_size:
+                  type: integer
+                  description: The maximum number of conditions within a rules payload on a promotion object, default is 150.
+                  example: 150
+                  readOnly: true
+                promotions_max_rules_size:
+                  type: integer
+                  description: The maximum number of rules within a rules payload on a promotion object, default is 15.
+                  example: 15
+                  readOnly: true
+                price_lists_max_conditions_size:
+                  type: integer
+                  description: The maximum number of conditions within a rules payload on a price list object, default is 150.
+                  example: 150
+                  readOnly: true
+                price_lists_max_rules_size:
+                  type: integer
+                  description: The maximum number of rules within a rules payload on a price list object, default is 15.
+                  example: 15
+                  readOnly: true
+                imports_trigger_webhooks:
+                  type: integer
+                  description: Enables triggering of webhooks during imports, default is false.
+                  example: 0
+                  readOnly: true
+                discount_engines_enabled:
+                  type: boolean
+                  description: Enables the use of an external discount engine in place of the standard one, default is false.
+                  example: false
+                  readOnly: true
+                discount_engines_errors:
+                  type: boolean
+                  description: Enables raising of API errors in case of discount engine failure, default is false.
+                  example: false
+                  readOnly: true
+                tags_max_name_length:
+                  type: integer
+                  description: The maximum length for the tag name, default is 25.
+                  example: 25
+                  readOnly: true
+                tags_max_allowed_number:
+                  type: integer
+                  description: The maximum allowed number of tags for each resource, default is 10.
+                  example: 10
+                  readOnly: true
+                tax_calculators_errors:
+                  type: boolean
+                  description: Enables raising of API errors in case of tax calculation failure, default is false.
+                  example: false
+                  readOnly: true
+                external_promotions_errors:
+                  type: boolean
+                  description: Enables raising of API errors in case of external promotion failure, default is false.
+                  example: false
+                  readOnly: true
+                external_prices_errors:
+                  type: boolean
+                  description: Enables raising of API errors in case of external price failure, default is true.
+                  example: true
+                  readOnly: true
+                created_at:
+                  type: string
+                  description: Time at which the resource was created.
+                  example: '2018-01-01T12:00:00.000Z'
+                  readOnly: true
+                updated_at:
+                  type: string
+                  description: Time at which the resource was last updated.
+                  example: '2018-01-01T12:00:00.000Z'
+                  readOnly: true
+                reference:
+                  type: string
+                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
+                  example: ANY-EXTERNAL-REFEFERNCE
+                  nullable: true
+                reference_origin:
+                  type: string
+                  description: Any identifier of the third party system that defines the reference code.
+                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
+                  nullable: true
+                metadata:
+                  type: object
+                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
+                  example:
+                    foo: bar
+                  nullable: true
+    organizationCreate:
+      required:
+      - data
+      type: object
+      properties:
+        data:
+          type: object
+          required:
+          - type
+          - attributes
+          properties:
+            type:
+              type: string
+              description: The resource's type.
+              enum:
+              - organizations
+            attributes:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: The organization's internal name.
+                  example: The Blue Brand
+                support_phone:
+                  type: string
+                  description: The organization's support phone.
+                  example: +01 30800857
+                support_email:
+                  type: string
+                  description: The organization's support email.
+                  example: support@bluebrand.com
+                logo_url:
+                  type: string
+                  description: The URL to the organization's logo.
+                  example: https://bluebrand.com/img/logo.svg
+                favicon_url:
+                  type: string
+                  description: The URL to the organization's favicon.
+                  example: https://bluebrand.com/img/favicon.ico
+                primary_color:
+                  type: string
+                  description: The organization's primary color.
+                  example: '#C8984E'
+                contrast_color:
+                  type: string
+                  description: The organization's contrast color. Format is HEX (starts with `#` and is followed by six letters and/or numbers).
+                  example: '#FFFFCC'
+                gtm_id:
+                  type: string
+                  description: The organization's Google Tag Manager ID.
+                  example: GTM-5FJXX6
+                gtm_id_test:
+                  type: string
+                  description: The organization's Google Tag Manager ID for test.
+                  example: GTM-5FJXX7
+                region:
+                  type: string
+                  description: The region where the organization is located. The default value is `eu-west-1`.
+                  example: eu-west-1
+                config:
+                  type: object
+                  description: The organization's configuration.
+                  example:
+                    mfe:
+                      language: it-IT
+                      default:
+                        links:
+                          cart: https://cart.example.com/:order_id?accessToken=:access_token
+                          checkout: https://checkout.example.com/:order_id?accessToken=:access_token
+                          identity: https://example.com/login
+                          microstore: https://example.com/microstore/?accessToken=:access_token
+                          my_account: https://example.com/my-custom-account?accessToken=:access_token
+                        checkout:
+                          optional_billing_info: false
+                          thankyou_page: https://example.com/thanks/:lang/:order_id
+                          billing_countries:
+                          - value: ES
+                            label: Espana
+                          - value: IT
+                            label: Italia
+                          - value: US
+                            label: Unites States of America
+                          shipping_countries:
+                          - value: ES
+                            label: Espana
+                          - value: IT
+                            label: Italia
+                          - value: US
+                            label: Unites States of America
+                          billing_states:
+                            FR:
+                            - value: PA
+                              label: Paris
+                            - value: LY
+                              label: Lyon
+                            - value: NI
+                              label: Nice
+                            - value: MA
+                              label: Marseille
+                            - value: BO
+                              label: Bordeaux
+                          shipping_states:
+                            FR:
+                            - value: PA
+                              label: Paris
+                            - value: LY
+                              label: Lyon
+                            - value: NI
+                              label: Nice
+                            - value: MA
+                              label: Marseille
+                            - value: BO
+                              label: Bordeaux
+                          default_country: US
+                        urls:
+                          privacy: https://example.com/privacy/:lang
+                          terms: https://example.com/terms/:lang
+                      market:id:ZKcv13rT:
+                        links:
+                          cart: https://example.com/custom-cart/:order_id?accessToken=:access_token
+                        checkout:
+                          thankyou_page: https://example.com/thanks/:order_id
+                reference:
+                  type: string
+                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
+                  example: ANY-EXTERNAL-REFEFERNCE
+                reference_origin:
+                  type: string
+                  description: Any identifier of the third party system that defines the reference code.
+                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
+                metadata:
+                  type: object
+                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
+                  example:
+                    foo: bar
+              required:
+              - name
+            relationships:
+              type: object
+              properties: {}
+    organizationResponseList:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/organizationResponse/properties/data'
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT

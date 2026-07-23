@@ -1,0 +1,466 @@
+openapi: 3.1.0
+info:
+  title: Commerce Layer addresses webhooks API
+  version: 7.10.1
+  contact:
+    name: API Support
+    url: https://commercelayer.io
+    email: support@commercelayer.io
+  description: Headless Commerce for Global Brands.
+servers:
+- url: https://{your_organization_slug}.commercelayer.io/api
+  description: API
+- url: https://core.commercelayer.io/users/sign_in
+  description: Sign in
+- url: https://docs.commercelayer.io/api
+  description: API reference
+security:
+- bearerAuth: []
+tags:
+- name: webhooks
+  description: resource type
+paths:
+  /event_callbacks/{eventCallbackId}/webhook:
+    get:
+      operationId: GET/eventCallbackId/webhook
+      summary: Retrieve the webhook associated to the event callback
+      description: Retrieve the webhook associated to the event callback
+      tags:
+      - webhooks
+      parameters:
+      - name: eventCallbackId
+        in: path
+        schema:
+          type: string
+        required: true
+        description: The resource's id
+      responses:
+        '200':
+          description: The webhook associated to the event callback
+  /events/{eventId}/webhooks:
+    get:
+      operationId: GET/eventId/webhooks
+      summary: Retrieve the webhooks associated to the event
+      description: Retrieve the webhooks associated to the event
+      tags:
+      - webhooks
+      parameters:
+      - name: eventId
+        in: path
+        schema:
+          type: string
+        required: true
+        description: The resource's id
+      responses:
+        '200':
+          description: The webhooks associated to the event
+  /webhooks:
+    get:
+      operationId: GET/webhooks
+      summary: List all webhooks
+      description: List all webhooks
+      tags:
+      - webhooks
+      responses:
+        '200':
+          description: A list of webhook objects
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/webhookResponseList'
+    post:
+      operationId: POST/webhooks
+      summary: Create a webhook
+      description: Create a webhook
+      tags:
+      - webhooks
+      requestBody:
+        required: true
+        content:
+          application/vnd.api+json:
+            schema:
+              $ref: '#/components/schemas/webhookCreate'
+      responses:
+        '201':
+          description: The created webhook object
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/webhookResponse'
+  /webhooks/{webhookId}:
+    get:
+      operationId: GET/webhooks/webhookId
+      summary: Retrieve a webhook
+      description: Retrieve a webhook
+      tags:
+      - webhooks
+      parameters:
+      - name: webhookId
+        in: path
+        schema:
+          type: string
+        required: true
+        description: The resource's id
+      responses:
+        '200':
+          description: The webhook object
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/webhookResponse'
+    patch:
+      operationId: PATCH/webhooks/webhookId
+      summary: Update a webhook
+      description: Update a webhook
+      tags:
+      - webhooks
+      parameters:
+      - name: webhookId
+        in: path
+        schema:
+          type: string
+        required: true
+        description: The resource's id
+      requestBody:
+        required: true
+        content:
+          application/vnd.api+json:
+            schema:
+              $ref: '#/components/schemas/webhookUpdate'
+      responses:
+        '200':
+          description: The updated webhook object
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/webhookResponse'
+    delete:
+      operationId: DELETE/webhooks/webhookId
+      summary: Delete a webhook
+      description: Delete a webhook
+      tags:
+      - webhooks
+      parameters:
+      - name: webhookId
+        in: path
+        schema:
+          type: string
+        required: true
+        description: The resource's id
+      responses:
+        '204':
+          description: No content
+components:
+  schemas:
+    webhookCreate:
+      required:
+      - data
+      type: object
+      properties:
+        data:
+          type: object
+          required:
+          - type
+          - attributes
+          properties:
+            type:
+              type: string
+              description: The resource's type
+              enum:
+              - webhooks
+            attributes:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: Unique name for the webhook.
+                  example: myorg-orders.place
+                topic:
+                  type: string
+                  description: The identifier of the resource/event that will trigger the webhook.
+                  example: orders.place
+                callback_url:
+                  type: string
+                  description: URI where the webhook subscription should send the POST request when the event occurs.
+                  example: https://yourapp.com/webhooks
+                include_resources:
+                  type: array
+                  description: List of related resources that should be included in the webhook body.
+                  example:
+                  - customer
+                  - shipping_address
+                  - billing_address
+                  items:
+                    type: string
+                _disable:
+                  type: boolean
+                  description: Send this attribute if you want to mark this resource as disabled.
+                  example: true
+                _enable:
+                  type: boolean
+                  description: Send this attribute if you want to mark this resource as enabled.
+                  example: true
+                reference:
+                  type: string
+                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
+                  example: ANY-EXTERNAL-REFEFERNCE
+                reference_origin:
+                  type: string
+                  description: Any identifier of the third party system that defines the reference code.
+                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
+                metadata:
+                  type: object
+                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
+                  example:
+                    foo: bar
+              required:
+              - topic
+              - callback_url
+            relationships:
+              type: object
+              properties: {}
+    webhook:
+      properties:
+        data:
+          properties:
+            attributes:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: Unique name for the webhook.
+                  example: myorg-orders.place
+                  nullable: true
+                topic:
+                  type: string
+                  description: The identifier of the resource/event that will trigger the webhook.
+                  example: orders.place
+                  nullable: false
+                callback_url:
+                  type: string
+                  description: URI where the webhook subscription should send the POST request when the event occurs.
+                  example: https://yourapp.com/webhooks
+                  nullable: false
+                include_resources:
+                  type: array
+                  description: List of related resources that should be included in the webhook body.
+                  example:
+                  - customer
+                  - shipping_address
+                  - billing_address
+                  nullable: true
+                  items:
+                    type: string
+                disabled_at:
+                  type: string
+                  description: Time at which this resource was disabled.
+                  example: '2018-01-01T12:00:00.000Z'
+                  nullable: true
+                circuit_state:
+                  type: string
+                  description: The circuit breaker state, by default it is 'closed'. It can become 'open' once the number of consecutive failures overlaps the specified threshold, in such case no further calls to the failing callback are made.
+                  example: closed
+                  nullable: true
+                circuit_failure_count:
+                  type: integer
+                  description: The number of consecutive failures recorded by the circuit breaker associated to this resource, will be reset on first successful call to callback.
+                  example: 5
+                  nullable: true
+                shared_secret:
+                  type: string
+                  description: The shared secret used to sign the external request payload.
+                  example: 1c0994cc4e996e8c6ee56a2198f66f3c
+                  nullable: false
+                created_at:
+                  type: string
+                  description: Time at which the resource was created.
+                  example: '2018-01-01T12:00:00.000Z'
+                  nullable: false
+                updated_at:
+                  type: string
+                  description: Time at which the resource was last updated.
+                  example: '2018-01-01T12:00:00.000Z'
+                  nullable: false
+                reference:
+                  type: string
+                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
+                  example: ANY-EXTERNAL-REFEFERNCE
+                  nullable: true
+                reference_origin:
+                  type: string
+                  description: Any identifier of the third party system that defines the reference code.
+                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
+                  nullable: true
+                metadata:
+                  type: object
+                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
+                  example:
+                    foo: bar
+                  nullable: true
+    webhookResponse:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            id:
+              type: string
+              description: Unique identifier for the resource (hash).
+              example: XAyRWNUzyN
+            type:
+              type: string
+              description: The resource's type
+              enum:
+              - webhooks
+            links:
+              type: object
+              properties:
+                self:
+                  type: string
+                  description: URL
+            attributes:
+              $ref: '#/components/schemas/webhook/properties/data/properties/attributes'
+            relationships:
+              type: object
+              properties:
+                last_event_callbacks:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - last_event_callbacks
+                        id:
+                          type: string
+                          description: The resource ID
+                event_stores:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - event_stores
+                        id:
+                          type: string
+                          description: The resource ID
+    webhookUpdate:
+      required:
+      - data
+      type: object
+      properties:
+        data:
+          type: object
+          required:
+          - type
+          - id
+          - attributes
+          properties:
+            type:
+              type: string
+              description: The resource's type
+              enum:
+              - webhooks
+            id:
+              type: string
+              description: Unique identifier for the resource (hash).
+              example: XAyRWNUzyN
+            attributes:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: Unique name for the webhook.
+                  example: myorg-orders.place
+                  nullable: true
+                topic:
+                  type: string
+                  description: The identifier of the resource/event that will trigger the webhook.
+                  example: orders.place
+                  nullable: false
+                callback_url:
+                  type: string
+                  description: URI where the webhook subscription should send the POST request when the event occurs.
+                  example: https://yourapp.com/webhooks
+                  nullable: false
+                include_resources:
+                  type: array
+                  description: List of related resources that should be included in the webhook body.
+                  example:
+                  - customer
+                  - shipping_address
+                  - billing_address
+                  nullable: true
+                  items:
+                    type: string
+                _disable:
+                  type: boolean
+                  description: Send this attribute if you want to mark this resource as disabled.
+                  example: true
+                  nullable: false
+                _enable:
+                  type: boolean
+                  description: Send this attribute if you want to mark this resource as enabled.
+                  example: true
+                  nullable: false
+                _reset_circuit:
+                  type: boolean
+                  description: Send this attribute if you want to reset the circuit breaker associated to this resource to 'closed' state and zero failures count. Cannot be passed by sales channels.
+                  example: true
+                  nullable: false
+                reference:
+                  type: string
+                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
+                  example: ANY-EXTERNAL-REFEFERNCE
+                  nullable: true
+                reference_origin:
+                  type: string
+                  description: Any identifier of the third party system that defines the reference code.
+                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
+                  nullable: true
+                metadata:
+                  type: object
+                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
+                  example:
+                    foo: bar
+                  nullable: true
+            relationships:
+              type: object
+              properties: {}
+    webhookResponseList:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/webhookResponse/properties/data'
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT

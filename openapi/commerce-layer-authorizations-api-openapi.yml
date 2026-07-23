@@ -1,0 +1,580 @@
+openapi: 3.1.0
+info:
+  title: Commerce Layer addresses authorizations API
+  version: 7.10.1
+  contact:
+    name: API Support
+    url: https://commercelayer.io
+    email: support@commercelayer.io
+  description: Headless Commerce for Global Brands.
+servers:
+- url: https://{your_organization_slug}.commercelayer.io/api
+  description: API
+- url: https://core.commercelayer.io/users/sign_in
+  description: Sign in
+- url: https://docs.commercelayer.io/api
+  description: API reference
+security:
+- bearerAuth: []
+tags:
+- name: authorizations
+  description: resource type
+paths:
+  /authorizations:
+    get:
+      operationId: GET/authorizations
+      summary: List all authorizations
+      description: List all authorizations
+      tags:
+      - authorizations
+      responses:
+        '200':
+          description: A list of authorization objects
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/authorizationResponseList'
+  /authorizations/{authorizationId}:
+    get:
+      operationId: GET/authorizations/authorizationId
+      summary: Retrieve an authorization
+      description: Retrieve an authorization
+      tags:
+      - authorizations
+      parameters:
+      - name: authorizationId
+        in: path
+        schema:
+          type: string
+        required: true
+        description: The resource's id
+      responses:
+        '200':
+          description: The authorization object
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/authorizationResponse'
+    patch:
+      operationId: PATCH/authorizations/authorizationId
+      summary: Update an authorization
+      description: Update an authorization
+      tags:
+      - authorizations
+      parameters:
+      - name: authorizationId
+        in: path
+        schema:
+          type: string
+        required: true
+        description: The resource's id
+      requestBody:
+        required: true
+        content:
+          application/vnd.api+json:
+            schema:
+              $ref: '#/components/schemas/authorizationUpdate'
+      responses:
+        '200':
+          description: The updated authorization object
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/authorizationResponse'
+  /captures/{captureId}/reference_authorization:
+    get:
+      operationId: GET/captureId/reference_authorization
+      summary: Retrieve the reference authorization associated to the capture
+      description: Retrieve the reference authorization associated to the capture
+      tags:
+      - authorizations
+      parameters:
+      - name: captureId
+        in: path
+        schema:
+          type: string
+        required: true
+        description: The resource's id
+      responses:
+        '200':
+          description: The reference_authorization associated to the capture
+  /orders/{orderId}/authorizations:
+    get:
+      operationId: GET/orderId/authorizations
+      summary: Retrieve the authorizations associated to the order
+      description: Retrieve the authorizations associated to the order
+      tags:
+      - authorizations
+      parameters:
+      - name: orderId
+        in: path
+        schema:
+          type: string
+        required: true
+        description: The resource's id
+      responses:
+        '200':
+          description: The authorizations associated to the order
+  /voids/{voidId}/reference_authorization:
+    get:
+      operationId: GET/voidId/reference_authorization
+      summary: Retrieve the reference authorization associated to the void
+      description: Retrieve the reference authorization associated to the void
+      tags:
+      - authorizations
+      parameters:
+      - name: voidId
+        in: path
+        schema:
+          type: string
+        required: true
+        description: The resource's id
+      responses:
+        '200':
+          description: The reference_authorization associated to the void
+components:
+  schemas:
+    authorizationResponse:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            id:
+              type: string
+              description: Unique identifier for the resource (hash).
+              example: XAyRWNUzyN
+            type:
+              type: string
+              description: The resource's type
+              enum:
+              - authorizations
+            links:
+              type: object
+              properties:
+                self:
+                  type: string
+                  description: URL
+            attributes:
+              $ref: '#/components/schemas/authorization/properties/data/properties/attributes'
+            relationships:
+              type: object
+              properties:
+                order:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - order
+                        id:
+                          type: string
+                          description: The resource ID
+                payment_source:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - payment_source
+                        id:
+                          type: string
+                          description: The resource ID
+                attachments:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - attachments
+                        id:
+                          type: string
+                          description: The resource ID
+                events:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - events
+                        id:
+                          type: string
+                          description: The resource ID
+                event_stores:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - event_stores
+                        id:
+                          type: string
+                          description: The resource ID
+                captures:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - captures
+                        id:
+                          type: string
+                          description: The resource ID
+                voids:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - voids
+                        id:
+                          type: string
+                          description: The resource ID
+    authorization:
+      properties:
+        data:
+          properties:
+            attributes:
+              type: object
+              properties:
+                number:
+                  type: string
+                  description: The transaction number, auto generated.
+                  example: 42/T/001
+                  nullable: false
+                type:
+                  type: string
+                  description: The transaction's type.
+                  example: authorizations
+                  nullable: false
+                  enum:
+                  - authorizations
+                  - voids
+                  - captures
+                  - refunds
+                payment_method_type:
+                  type: string
+                  description: Information about the payment method used in the transaction.
+                  example: credit card
+                  nullable: true
+                currency_code:
+                  type: string
+                  description: The international 3-letter currency code as defined by the ISO 4217 standard, inherited from the associated order.
+                  example: EUR
+                  nullable: false
+                amount_cents:
+                  type: integer
+                  description: The transaction amount, in cents.
+                  example: 1500
+                  nullable: false
+                amount_float:
+                  type: number
+                  description: The transaction amount, float.
+                  example: 15.0
+                  nullable: false
+                formatted_amount:
+                  type: string
+                  description: The transaction amount, formatted.
+                  example: €15,00
+                  nullable: false
+                succeeded:
+                  type: boolean
+                  description: Indicates if the transaction is successful.
+                  example: false
+                  nullable: false
+                message:
+                  type: string
+                  description: The message returned by the payment gateway.
+                  example: Accepted
+                  nullable: true
+                error_code:
+                  type: string
+                  description: The error code, if any, returned by the payment gateway.
+                  example: '00001'
+                  nullable: true
+                error_detail:
+                  type: string
+                  description: The error detail, if any, returned by the payment gateway.
+                  example: Already settled
+                  nullable: true
+                token:
+                  type: string
+                  description: The token identifying the transaction, returned by the payment gateway.
+                  example: xxxx-yyyy-zzzz
+                  nullable: true
+                gateway_transaction_id:
+                  type: string
+                  description: The ID identifying the transaction, returned by the payment gateway.
+                  example: xxxx-yyyy-zzzz
+                  nullable: true
+                created_at:
+                  type: string
+                  description: Time at which the resource was created.
+                  example: '2018-01-01T12:00:00.000Z'
+                  nullable: false
+                updated_at:
+                  type: string
+                  description: Time at which the resource was last updated.
+                  example: '2018-01-01T12:00:00.000Z'
+                  nullable: false
+                reference:
+                  type: string
+                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
+                  example: ANY-EXTERNAL-REFEFERNCE
+                  nullable: true
+                reference_origin:
+                  type: string
+                  description: Any identifier of the third party system that defines the reference code.
+                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
+                  nullable: true
+                metadata:
+                  type: object
+                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
+                  example:
+                    foo: bar
+                  nullable: true
+                cvv_code:
+                  type: string
+                  description: The CVV code returned by the payment gateway.
+                  example: '000'
+                  nullable: true
+                cvv_message:
+                  type: string
+                  description: The CVV message returned by the payment gateway.
+                  example: validated
+                  nullable: true
+                avs_code:
+                  type: string
+                  description: The AVS code returned by the payment gateway.
+                  example: '000'
+                  nullable: true
+                avs_message:
+                  type: string
+                  description: The AVS message returned by the payment gateway.
+                  example: validated
+                  nullable: true
+                fraud_review:
+                  type: string
+                  description: The fraud review message, if any, returned by the payment gateway.
+                  example: passed
+                  nullable: true
+                capture_amount_cents:
+                  type: integer
+                  description: The amount to be captured, in cents.
+                  example: 500
+                  nullable: true
+                capture_amount_float:
+                  type: number
+                  description: The amount to be captured, float.
+                  example: 5.0
+                  nullable: true
+                formatted_capture_amount:
+                  type: string
+                  description: The amount to be captured, formatted.
+                  example: €5,00
+                  nullable: true
+                capture_balance_cents:
+                  type: integer
+                  description: The balance to be captured, in cents.
+                  example: 1000
+                  nullable: true
+                capture_balance_float:
+                  type: number
+                  description: The balance to be captured, float.
+                  example: 10.0
+                  nullable: true
+                formatted_capture_balance:
+                  type: string
+                  description: The balance to be captured, formatted.
+                  example: €10,00
+                  nullable: true
+                void_balance_cents:
+                  type: integer
+                  description: The balance to be voided, in cents.
+                  example: 1500
+                  nullable: true
+                void_balance_float:
+                  type: number
+                  description: The balance to be voided, float.
+                  example: 15.0
+                  nullable: true
+                formatted_void_balance:
+                  type: string
+                  description: The balance to be voided, formatted.
+                  example: €15,00
+                  nullable: true
+    authorizationUpdate:
+      required:
+      - data
+      type: object
+      properties:
+        data:
+          type: object
+          required:
+          - type
+          - id
+          - attributes
+          properties:
+            type:
+              type: string
+              description: The resource's type
+              enum:
+              - authorizations
+            id:
+              type: string
+              description: Unique identifier for the resource (hash).
+              example: XAyRWNUzyN
+            attributes:
+              type: object
+              properties:
+                succeeded:
+                  type: boolean
+                  description: Indicates if the transaction is successful.
+                  example: false
+                  nullable: false
+                _forward:
+                  type: boolean
+                  description: Send this attribute if you want to forward a stuck transaction to succeeded and update associated order states accordingly.
+                  example: true
+                  nullable: false
+                reference:
+                  type: string
+                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
+                  example: ANY-EXTERNAL-REFEFERNCE
+                  nullable: true
+                reference_origin:
+                  type: string
+                  description: Any identifier of the third party system that defines the reference code.
+                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
+                  nullable: true
+                metadata:
+                  type: object
+                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
+                  example:
+                    foo: bar
+                  nullable: true
+                _capture:
+                  type: boolean
+                  description: Send this attribute if you want to create a capture for this authorization.
+                  example: true
+                  nullable: false
+                _capture_amount_cents:
+                  type: integer
+                  description: Send this attribute as a value in cents if you want to overwrite the amount to be captured.
+                  example: 500
+                _void:
+                  type: boolean
+                  description: Send this attribute if you want to create a void for this authorization.
+                  example: true
+                  nullable: false
+                _cancel:
+                  type: boolean
+                  description: Send this attribute if you want to void a succeeded authorization of a pending order (which is left unpaid).
+                  example: true
+                  nullable: false
+            relationships:
+              type: object
+              properties: {}
+    authorizationResponseList:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/authorizationResponse/properties/data'
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT

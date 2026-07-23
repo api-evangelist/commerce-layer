@@ -1,0 +1,513 @@
+openapi: 3.1.0
+info:
+  title: Commerce Layer addresses avalara_accounts API
+  version: 7.10.1
+  contact:
+    name: API Support
+    url: https://commercelayer.io
+    email: support@commercelayer.io
+  description: Headless Commerce for Global Brands.
+servers:
+- url: https://{your_organization_slug}.commercelayer.io/api
+  description: API
+- url: https://core.commercelayer.io/users/sign_in
+  description: Sign in
+- url: https://docs.commercelayer.io/api
+  description: API reference
+security:
+- bearerAuth: []
+tags:
+- name: avalara_accounts
+  description: resource type
+paths:
+  /avalara_accounts:
+    get:
+      operationId: GET/avalara_accounts
+      summary: List all avalara accounts
+      description: List all avalara accounts
+      tags:
+      - avalara_accounts
+      responses:
+        '200':
+          description: A list of avalara account objects
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/avalaraAccountResponseList'
+    post:
+      operationId: POST/avalara_accounts
+      summary: Create an avalara account
+      description: Create an avalara account
+      tags:
+      - avalara_accounts
+      requestBody:
+        required: true
+        content:
+          application/vnd.api+json:
+            schema:
+              $ref: '#/components/schemas/avalaraAccountCreate'
+      responses:
+        '201':
+          description: The created avalara account object
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/avalaraAccountResponse'
+  /avalara_accounts/{avalaraAccountId}:
+    get:
+      operationId: GET/avalara_accounts/avalaraAccountId
+      summary: Retrieve an avalara account
+      description: Retrieve an avalara account
+      tags:
+      - avalara_accounts
+      parameters:
+      - name: avalaraAccountId
+        in: path
+        schema:
+          type: string
+        required: true
+        description: The resource's id
+      responses:
+        '200':
+          description: The avalara account object
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/avalaraAccountResponse'
+    patch:
+      operationId: PATCH/avalara_accounts/avalaraAccountId
+      summary: Update an avalara account
+      description: Update an avalara account
+      tags:
+      - avalara_accounts
+      parameters:
+      - name: avalaraAccountId
+        in: path
+        schema:
+          type: string
+        required: true
+        description: The resource's id
+      requestBody:
+        required: true
+        content:
+          application/vnd.api+json:
+            schema:
+              $ref: '#/components/schemas/avalaraAccountUpdate'
+      responses:
+        '200':
+          description: The updated avalara account object
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/avalaraAccountResponse'
+    delete:
+      operationId: DELETE/avalara_accounts/avalaraAccountId
+      summary: Delete an avalara account
+      description: Delete an avalara account
+      tags:
+      - avalara_accounts
+      parameters:
+      - name: avalaraAccountId
+        in: path
+        schema:
+          type: string
+        required: true
+        description: The resource's id
+      responses:
+        '204':
+          description: No content
+components:
+  schemas:
+    avalaraAccountUpdate:
+      required:
+      - data
+      type: object
+      properties:
+        data:
+          type: object
+          required:
+          - type
+          - id
+          - attributes
+          properties:
+            type:
+              type: string
+              description: The resource's type
+              enum:
+              - avalara_accounts
+            id:
+              type: string
+              description: Unique identifier for the resource (hash).
+              example: XAyRWNUzyN
+            attributes:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: The tax calculator's internal name.
+                  example: Personal tax calculator
+                  nullable: false
+                reference:
+                  type: string
+                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
+                  example: ANY-EXTERNAL-REFEFERNCE
+                  nullable: true
+                reference_origin:
+                  type: string
+                  description: Any identifier of the third party system that defines the reference code.
+                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
+                  nullable: true
+                metadata:
+                  type: object
+                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
+                  example:
+                    foo: bar
+                  nullable: true
+                username:
+                  type: string
+                  description: The Avalara account username.
+                  example: user@mydomain.com
+                  nullable: false
+                password:
+                  type: string
+                  description: The Avalara account password.
+                  example: secret
+                company_code:
+                  type: string
+                  description: The Avalara company code.
+                  example: MYCOMPANY
+                  nullable: false
+                commit_invoice:
+                  type: boolean
+                  description: Indicates if the transaction will be recorded and visible on the Avalara website.
+                  example: true
+                  nullable: false
+                ddp:
+                  type: boolean
+                  description: Indicates if the seller is responsible for paying/remitting the customs duty & import tax to the customs authorities.
+                  example: true
+                  nullable: false
+            relationships:
+              type: object
+              properties:
+                tax_categories:
+                  required:
+                  - data
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - tax_categories
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+    avalaraAccountResponse:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            id:
+              type: string
+              description: Unique identifier for the resource (hash).
+              example: XAyRWNUzyN
+            type:
+              type: string
+              description: The resource's type
+              enum:
+              - avalara_accounts
+            links:
+              type: object
+              properties:
+                self:
+                  type: string
+                  description: URL
+            attributes:
+              $ref: '#/components/schemas/avalaraAccount/properties/data/properties/attributes'
+            relationships:
+              type: object
+              properties:
+                markets:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - markets
+                        id:
+                          type: string
+                          description: The resource ID
+                attachments:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - attachments
+                        id:
+                          type: string
+                          description: The resource ID
+                events:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - events
+                        id:
+                          type: string
+                          description: The resource ID
+                event_stores:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - event_stores
+                        id:
+                          type: string
+                          description: The resource ID
+                tax_categories:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - tax_categories
+                        id:
+                          type: string
+                          description: The resource ID
+    avalaraAccount:
+      properties:
+        data:
+          properties:
+            attributes:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: The tax calculator's internal name.
+                  example: Personal tax calculator
+                  nullable: false
+                type:
+                  type: string
+                  description: The tax calculator's type.
+                  example: avalara_accounts
+                  nullable: false
+                  enum:
+                  - avalara_accounts
+                  - stripe_tax_accounts
+                  - vertex_accounts
+                  - taxjar_accounts
+                  - manual_tax_calculators
+                  - external_tax_calculators
+                created_at:
+                  type: string
+                  description: Time at which the resource was created.
+                  example: '2018-01-01T12:00:00.000Z'
+                  nullable: false
+                updated_at:
+                  type: string
+                  description: Time at which the resource was last updated.
+                  example: '2018-01-01T12:00:00.000Z'
+                  nullable: false
+                reference:
+                  type: string
+                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
+                  example: ANY-EXTERNAL-REFEFERNCE
+                  nullable: true
+                reference_origin:
+                  type: string
+                  description: Any identifier of the third party system that defines the reference code.
+                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
+                  nullable: true
+                metadata:
+                  type: object
+                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
+                  example:
+                    foo: bar
+                  nullable: true
+                username:
+                  type: string
+                  description: The Avalara account username.
+                  example: user@mydomain.com
+                  nullable: false
+                company_code:
+                  type: string
+                  description: The Avalara company code.
+                  example: MYCOMPANY
+                  nullable: false
+                commit_invoice:
+                  type: boolean
+                  description: Indicates if the transaction will be recorded and visible on the Avalara website.
+                  example: true
+                  nullable: true
+                ddp:
+                  type: boolean
+                  description: Indicates if the seller is responsible for paying/remitting the customs duty & import tax to the customs authorities.
+                  example: true
+                  nullable: true
+    avalaraAccountResponseList:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/avalaraAccountResponse/properties/data'
+    avalaraAccountCreate:
+      required:
+      - data
+      type: object
+      properties:
+        data:
+          type: object
+          required:
+          - type
+          - attributes
+          properties:
+            type:
+              type: string
+              description: The resource's type
+              enum:
+              - avalara_accounts
+            attributes:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: The tax calculator's internal name.
+                  example: Personal tax calculator
+                reference:
+                  type: string
+                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
+                  example: ANY-EXTERNAL-REFEFERNCE
+                reference_origin:
+                  type: string
+                  description: Any identifier of the third party system that defines the reference code.
+                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
+                metadata:
+                  type: object
+                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
+                  example:
+                    foo: bar
+                username:
+                  type: string
+                  description: The Avalara account username.
+                  example: user@mydomain.com
+                password:
+                  type: string
+                  description: The Avalara account password.
+                  example: secret
+                company_code:
+                  type: string
+                  description: The Avalara company code.
+                  example: MYCOMPANY
+                commit_invoice:
+                  type: boolean
+                  description: Indicates if the transaction will be recorded and visible on the Avalara website.
+                  example: true
+                ddp:
+                  type: boolean
+                  description: Indicates if the seller is responsible for paying/remitting the customs duty & import tax to the customs authorities.
+                  example: true
+              required:
+              - name
+              - username
+              - password
+              - company_code
+            relationships:
+              type: object
+              properties:
+                tax_categories:
+                  required:
+                  - data
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - tax_categories
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT

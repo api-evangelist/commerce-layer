@@ -1,0 +1,394 @@
+openapi: 3.1.0
+info:
+  title: Commerce Layer addresses google_geocoders API
+  version: 7.10.1
+  contact:
+    name: API Support
+    url: https://commercelayer.io
+    email: support@commercelayer.io
+  description: Headless Commerce for Global Brands.
+servers:
+- url: https://{your_organization_slug}.commercelayer.io/api
+  description: API
+- url: https://core.commercelayer.io/users/sign_in
+  description: Sign in
+- url: https://docs.commercelayer.io/api
+  description: API reference
+security:
+- bearerAuth: []
+tags:
+- name: google_geocoders
+  description: resource type
+paths:
+  /google_geocoders:
+    get:
+      operationId: GET/google_geocoders
+      summary: List all google geocoders
+      description: List all google geocoders
+      tags:
+      - google_geocoders
+      responses:
+        '200':
+          description: A list of google geocoder objects
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/googleGeocoderResponseList'
+    post:
+      operationId: POST/google_geocoders
+      summary: Create a google geocoder
+      description: Create a google geocoder
+      tags:
+      - google_geocoders
+      requestBody:
+        required: true
+        content:
+          application/vnd.api+json:
+            schema:
+              $ref: '#/components/schemas/googleGeocoderCreate'
+      responses:
+        '201':
+          description: The created google geocoder object
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/googleGeocoderResponse'
+  /google_geocoders/{googleGeocoderId}:
+    get:
+      operationId: GET/google_geocoders/googleGeocoderId
+      summary: Retrieve a google geocoder
+      description: Retrieve a google geocoder
+      tags:
+      - google_geocoders
+      parameters:
+      - name: googleGeocoderId
+        in: path
+        schema:
+          type: string
+        required: true
+        description: The resource's id
+      responses:
+        '200':
+          description: The google geocoder object
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/googleGeocoderResponse'
+    patch:
+      operationId: PATCH/google_geocoders/googleGeocoderId
+      summary: Update a google geocoder
+      description: Update a google geocoder
+      tags:
+      - google_geocoders
+      parameters:
+      - name: googleGeocoderId
+        in: path
+        schema:
+          type: string
+        required: true
+        description: The resource's id
+      requestBody:
+        required: true
+        content:
+          application/vnd.api+json:
+            schema:
+              $ref: '#/components/schemas/googleGeocoderUpdate'
+      responses:
+        '200':
+          description: The updated google geocoder object
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/googleGeocoderResponse'
+    delete:
+      operationId: DELETE/google_geocoders/googleGeocoderId
+      summary: Delete a google geocoder
+      description: Delete a google geocoder
+      tags:
+      - google_geocoders
+      parameters:
+      - name: googleGeocoderId
+        in: path
+        schema:
+          type: string
+        required: true
+        description: The resource's id
+      responses:
+        '204':
+          description: No content
+components:
+  schemas:
+    googleGeocoderResponse:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            id:
+              type: string
+              description: Unique identifier for the resource (hash).
+              example: XAyRWNUzyN
+            type:
+              type: string
+              description: The resource's type
+              enum:
+              - google_geocoders
+            links:
+              type: object
+              properties:
+                self:
+                  type: string
+                  description: URL
+            attributes:
+              $ref: '#/components/schemas/googleGeocoder/properties/data/properties/attributes'
+            relationships:
+              type: object
+              properties:
+                markets:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - markets
+                        id:
+                          type: string
+                          description: The resource ID
+                addresses:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - addresses
+                        id:
+                          type: string
+                          description: The resource ID
+                attachments:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - attachments
+                        id:
+                          type: string
+                          description: The resource ID
+                event_stores:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - event_stores
+                        id:
+                          type: string
+                          description: The resource ID
+    googleGeocoder:
+      properties:
+        data:
+          properties:
+            attributes:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: The geocoder's internal name.
+                  example: Default geocoder
+                  nullable: false
+                type:
+                  type: string
+                  description: The geocoder's type.
+                  example: google_geocoders
+                  nullable: false
+                  enum:
+                  - google_geocoders
+                  - bing_geocoders
+                created_at:
+                  type: string
+                  description: Time at which the resource was created.
+                  example: '2018-01-01T12:00:00.000Z'
+                  nullable: false
+                updated_at:
+                  type: string
+                  description: Time at which the resource was last updated.
+                  example: '2018-01-01T12:00:00.000Z'
+                  nullable: false
+                reference:
+                  type: string
+                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
+                  example: ANY-EXTERNAL-REFEFERNCE
+                  nullable: true
+                reference_origin:
+                  type: string
+                  description: Any identifier of the third party system that defines the reference code.
+                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
+                  nullable: true
+                metadata:
+                  type: object
+                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
+                  example:
+                    foo: bar
+                  nullable: true
+    googleGeocoderUpdate:
+      required:
+      - data
+      type: object
+      properties:
+        data:
+          type: object
+          required:
+          - type
+          - id
+          - attributes
+          properties:
+            type:
+              type: string
+              description: The resource's type
+              enum:
+              - google_geocoders
+            id:
+              type: string
+              description: Unique identifier for the resource (hash).
+              example: XAyRWNUzyN
+            attributes:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: The geocoder's internal name.
+                  example: Default geocoder
+                  nullable: false
+                reference:
+                  type: string
+                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
+                  example: ANY-EXTERNAL-REFEFERNCE
+                  nullable: true
+                reference_origin:
+                  type: string
+                  description: Any identifier of the third party system that defines the reference code.
+                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
+                  nullable: true
+                metadata:
+                  type: object
+                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
+                  example:
+                    foo: bar
+                  nullable: true
+                api_key:
+                  type: string
+                  description: The Google Map API key.
+                  example: xxxx-yyyy-zzzz
+            relationships:
+              type: object
+              properties: {}
+    googleGeocoderResponseList:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/googleGeocoderResponse/properties/data'
+    googleGeocoderCreate:
+      required:
+      - data
+      type: object
+      properties:
+        data:
+          type: object
+          required:
+          - type
+          - attributes
+          properties:
+            type:
+              type: string
+              description: The resource's type
+              enum:
+              - google_geocoders
+            attributes:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: The geocoder's internal name.
+                  example: Default geocoder
+                reference:
+                  type: string
+                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
+                  example: ANY-EXTERNAL-REFEFERNCE
+                reference_origin:
+                  type: string
+                  description: Any identifier of the third party system that defines the reference code.
+                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
+                metadata:
+                  type: object
+                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
+                  example:
+                    foo: bar
+                api_key:
+                  type: string
+                  description: The Google Map API key.
+                  example: xxxx-yyyy-zzzz
+              required:
+              - name
+              - api_key
+            relationships:
+              type: object
+              properties: {}
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT

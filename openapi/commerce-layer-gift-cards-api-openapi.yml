@@ -1,0 +1,738 @@
+openapi: 3.1.0
+info:
+  title: Commerce Layer addresses gift_cards API
+  version: 7.10.1
+  contact:
+    name: API Support
+    url: https://commercelayer.io
+    email: support@commercelayer.io
+  description: Headless Commerce for Global Brands.
+servers:
+- url: https://{your_organization_slug}.commercelayer.io/api
+  description: API
+- url: https://core.commercelayer.io/users/sign_in
+  description: Sign in
+- url: https://docs.commercelayer.io/api
+  description: API reference
+security:
+- bearerAuth: []
+tags:
+- name: gift_cards
+  description: resource type
+paths:
+  /gift_cards:
+    get:
+      operationId: GET/gift_cards
+      summary: List all gift cards
+      description: List all gift cards
+      tags:
+      - gift_cards
+      responses:
+        '200':
+          description: A list of gift card objects
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/giftCardResponseList'
+    post:
+      operationId: POST/gift_cards
+      summary: Create a gift card
+      description: Create a gift card
+      tags:
+      - gift_cards
+      requestBody:
+        required: true
+        content:
+          application/vnd.api+json:
+            schema:
+              $ref: '#/components/schemas/giftCardCreate'
+      responses:
+        '201':
+          description: The created gift card object
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/giftCardResponse'
+  /gift_cards/{giftCardId}:
+    get:
+      operationId: GET/gift_cards/giftCardId
+      summary: Retrieve a gift card
+      description: Retrieve a gift card
+      tags:
+      - gift_cards
+      parameters:
+      - name: giftCardId
+        in: path
+        schema:
+          type: string
+        required: true
+        description: The resource's id
+      responses:
+        '200':
+          description: The gift card object
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/giftCardResponse'
+    patch:
+      operationId: PATCH/gift_cards/giftCardId
+      summary: Update a gift card
+      description: Update a gift card
+      tags:
+      - gift_cards
+      parameters:
+      - name: giftCardId
+        in: path
+        schema:
+          type: string
+        required: true
+        description: The resource's id
+      requestBody:
+        required: true
+        content:
+          application/vnd.api+json:
+            schema:
+              $ref: '#/components/schemas/giftCardUpdate'
+      responses:
+        '200':
+          description: The updated gift card object
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/giftCardResponse'
+    delete:
+      operationId: DELETE/gift_cards/giftCardId
+      summary: Delete a gift card
+      description: Delete a gift card
+      tags:
+      - gift_cards
+      parameters:
+      - name: giftCardId
+        in: path
+        schema:
+          type: string
+        required: true
+        description: The resource's id
+      responses:
+        '204':
+          description: No content
+components:
+  schemas:
+    giftCardResponse:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            id:
+              type: string
+              description: Unique identifier for the resource (hash).
+              example: XAyRWNUzyN
+            type:
+              type: string
+              description: The resource's type
+              enum:
+              - gift_cards
+            links:
+              type: object
+              properties:
+                self:
+                  type: string
+                  description: URL
+            attributes:
+              $ref: '#/components/schemas/giftCard/properties/data/properties/attributes'
+            relationships:
+              type: object
+              properties:
+                market:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - market
+                        id:
+                          type: string
+                          description: The resource ID
+                gift_card_recipient:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - gift_card_recipient
+                        id:
+                          type: string
+                          description: The resource ID
+                attachments:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - attachments
+                        id:
+                          type: string
+                          description: The resource ID
+                events:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - events
+                        id:
+                          type: string
+                          description: The resource ID
+                tags:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - tags
+                        id:
+                          type: string
+                          description: The resource ID
+                event_stores:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - event_stores
+                        id:
+                          type: string
+                          description: The resource ID
+    giftCardResponseList:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/giftCardResponse/properties/data'
+    giftCardUpdate:
+      required:
+      - data
+      type: object
+      properties:
+        data:
+          type: object
+          required:
+          - type
+          - id
+          - attributes
+          properties:
+            type:
+              type: string
+              description: The resource's type
+              enum:
+              - gift_cards
+            id:
+              type: string
+              description: Unique identifier for the resource (hash).
+              example: XAyRWNUzyN
+            attributes:
+              type: object
+              properties:
+                currency_code:
+                  type: string
+                  description: The international 3-letter currency code as defined by the ISO 4217 standard.
+                  example: EUR
+                  nullable: true
+                balance_cents:
+                  type: integer
+                  description: The gift card balance, in cents.
+                  example: 15000
+                  nullable: false
+                balance_max_cents:
+                  type: integer
+                  description: The gift card balance max, in cents.
+                  example: 100000
+                  nullable: true
+                single_use:
+                  type: boolean
+                  description: Indicates if the gift card can be used only one.
+                  example: false
+                  nullable: false
+                rechargeable:
+                  type: boolean
+                  description: Indicates if the gift card can be recharged.
+                  example: true
+                  nullable: false
+                distribute_discount:
+                  type: boolean
+                  description: Indicates if redeemed gift card amount is distributed for tax calculation.
+                  example: true
+                  nullable: false
+                image_url:
+                  type: string
+                  description: The URL of an image that represents the gift card.
+                  example: https://img.yourdomain.com/gift_cards/32db311a.png
+                  nullable: true
+                expires_at:
+                  type: string
+                  description: Time at which the gift card will expire.
+                  example: '2018-01-01T12:00:00.000Z'
+                  nullable: true
+                recipient_email:
+                  type: string
+                  description: The email address of the associated recipient. When creating or updating a gift card, this is a shortcut to find or create the associated recipient by email.
+                  example: john@example.com
+                  nullable: true
+                _purchase:
+                  type: boolean
+                  description: Send this attribute if you want to confirm a draft gift card. The gift card becomes 'inactive', waiting to be activated.
+                  example: true
+                  nullable: false
+                _activate:
+                  type: boolean
+                  description: Send this attribute if you want to activate a gift card.
+                  example: true
+                  nullable: false
+                _deactivate:
+                  type: boolean
+                  description: Send this attribute if you want to deactivate a gift card.
+                  example: true
+                  nullable: false
+                _balance_change_cents:
+                  type: integer
+                  description: The balance change, in cents. Send a negative value to reduces the card balance by the specified amount. Send a positive value to recharge the gift card (if rechargeable).
+                  example: -5000
+                _add_tags:
+                  type: string
+                  description: Comma separated list of tags to be added. Duplicates, invalid and non existing ones are discarded. Cannot be passed by sales channels.
+                _remove_tags:
+                  type: string
+                  description: Comma separated list of tags to be removed. Duplicates, invalid and non existing ones are discarded. Cannot be passed by sales channels.
+                reference:
+                  type: string
+                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
+                  example: ANY-EXTERNAL-REFEFERNCE
+                  nullable: true
+                reference_origin:
+                  type: string
+                  description: Any identifier of the third party system that defines the reference code.
+                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
+                  nullable: true
+                metadata:
+                  type: object
+                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
+                  example:
+                    foo: bar
+                  nullable: true
+            relationships:
+              type: object
+              properties:
+                market:
+                  required:
+                  - data
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - markets
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+                gift_card_recipient:
+                  required:
+                  - data
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - gift_card_recipients
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+                tags:
+                  required:
+                  - data
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - tags
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+    giftCardCreate:
+      required:
+      - data
+      type: object
+      properties:
+        data:
+          type: object
+          required:
+          - type
+          - attributes
+          properties:
+            type:
+              type: string
+              description: The resource's type
+              enum:
+              - gift_cards
+            attributes:
+              type: object
+              properties:
+                code:
+                  type: string
+                  description: The gift card code UUID. If not set, it's automatically generated.
+                  example: 32db311a-75d9-4c17-9e34-2be220137ad6
+                currency_code:
+                  type: string
+                  description: The international 3-letter currency code as defined by the ISO 4217 standard.
+                  example: EUR
+                balance_cents:
+                  type: integer
+                  description: The gift card balance, in cents.
+                  example: 15000
+                balance_max_cents:
+                  type: integer
+                  description: The gift card balance max, in cents.
+                  example: 100000
+                single_use:
+                  type: boolean
+                  description: Indicates if the gift card can be used only one.
+                  example: false
+                rechargeable:
+                  type: boolean
+                  description: Indicates if the gift card can be recharged.
+                  example: true
+                distribute_discount:
+                  type: boolean
+                  description: Indicates if redeemed gift card amount is distributed for tax calculation.
+                  example: true
+                image_url:
+                  type: string
+                  description: The URL of an image that represents the gift card.
+                  example: https://img.yourdomain.com/gift_cards/32db311a.png
+                expires_at:
+                  type: string
+                  description: Time at which the gift card will expire.
+                  example: '2018-01-01T12:00:00.000Z'
+                recipient_email:
+                  type: string
+                  description: The email address of the associated recipient. When creating or updating a gift card, this is a shortcut to find or create the associated recipient by email.
+                  example: john@example.com
+                reference:
+                  type: string
+                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
+                  example: ANY-EXTERNAL-REFEFERNCE
+                reference_origin:
+                  type: string
+                  description: Any identifier of the third party system that defines the reference code.
+                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
+                metadata:
+                  type: object
+                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
+                  example:
+                    foo: bar
+              required:
+              - balance_cents
+            relationships:
+              type: object
+              properties:
+                market:
+                  required:
+                  - data
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - markets
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+                gift_card_recipient:
+                  required:
+                  - data
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - gift_card_recipients
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+                tags:
+                  required:
+                  - data
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - tags
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+    giftCard:
+      properties:
+        data:
+          properties:
+            attributes:
+              type: object
+              properties:
+                status:
+                  type: string
+                  description: The gift card status. One of 'draft' (default), 'inactive', 'active', or 'redeemed'.
+                  example: draft
+                  nullable: false
+                  enum:
+                  - draft
+                  - inactive
+                  - active
+                  - redeemed
+                code:
+                  type: string
+                  description: The gift card code UUID. If not set, it's automatically generated.
+                  example: 32db311a-75d9-4c17-9e34-2be220137ad6
+                  nullable: true
+                currency_code:
+                  type: string
+                  description: The international 3-letter currency code as defined by the ISO 4217 standard.
+                  example: EUR
+                  nullable: true
+                initial_balance_cents:
+                  type: integer
+                  description: The gift card initial balance, in cents.
+                  example: 15000
+                  nullable: false
+                initial_balance_float:
+                  type: number
+                  description: The gift card initial balance, float.
+                  example: 150.0
+                  nullable: false
+                formatted_initial_balance:
+                  type: string
+                  description: The gift card initial balance, formatted.
+                  example: €150,00
+                  nullable: false
+                balance_cents:
+                  type: integer
+                  description: The gift card balance, in cents.
+                  example: 15000
+                  nullable: false
+                balance_float:
+                  type: number
+                  description: The gift card balance, float.
+                  example: 150.0
+                  nullable: false
+                formatted_balance:
+                  type: string
+                  description: The gift card balance, formatted.
+                  example: €150,00
+                  nullable: false
+                balance_max_cents:
+                  type: integer
+                  description: The gift card balance max, in cents.
+                  example: 100000
+                  nullable: true
+                balance_max_float:
+                  type: number
+                  description: The gift card balance max, float.
+                  example: 1000.0
+                  nullable: true
+                formatted_balance_max:
+                  type: string
+                  description: The gift card balance max, formatted.
+                  example: €1000,00
+                  nullable: true
+                balance_log:
+                  type: array
+                  description: The gift card balance log. Tracks all the gift card transactions.
+                  example:
+                  - datetime: '2019-12-23T12:00:00.000Z'
+                    balance_change_cents: -10000
+                  - datetime: '2020-02-01T12:00:00.000Z'
+                    balance_change_cents: 5000
+                  nullable: false
+                  items:
+                    type: object
+                usage_log:
+                  type: object
+                  description: The gift card usage log. Tracks all the gift card usage actions by orders.
+                  example:
+                    eNoKkhmbNp:
+                    - action: use
+                      amount_cents: -1000
+                      balance_cents: 4000
+                      order_number: '11111'
+                      datetime: '2020-02-01T12:00:00.000Z'
+                  nullable: false
+                single_use:
+                  type: boolean
+                  description: Indicates if the gift card can be used only one.
+                  example: false
+                  nullable: true
+                rechargeable:
+                  type: boolean
+                  description: Indicates if the gift card can be recharged.
+                  example: true
+                  nullable: true
+                distribute_discount:
+                  type: boolean
+                  description: Indicates if redeemed gift card amount is distributed for tax calculation.
+                  example: true
+                  nullable: true
+                image_url:
+                  type: string
+                  description: The URL of an image that represents the gift card.
+                  example: https://img.yourdomain.com/gift_cards/32db311a.png
+                  nullable: true
+                expires_at:
+                  type: string
+                  description: Time at which the gift card will expire.
+                  example: '2018-01-01T12:00:00.000Z'
+                  nullable: true
+                recipient_email:
+                  type: string
+                  description: The email address of the associated recipient. When creating or updating a gift card, this is a shortcut to find or create the associated recipient by email.
+                  example: john@example.com
+                  nullable: true
+                created_at:
+                  type: string
+                  description: Time at which the resource was created.
+                  example: '2018-01-01T12:00:00.000Z'
+                  nullable: false
+                updated_at:
+                  type: string
+                  description: Time at which the resource was last updated.
+                  example: '2018-01-01T12:00:00.000Z'
+                  nullable: false
+                reference:
+                  type: string
+                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
+                  example: ANY-EXTERNAL-REFEFERNCE
+                  nullable: true
+                reference_origin:
+                  type: string
+                  description: Any identifier of the third party system that defines the reference code.
+                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
+                  nullable: true
+                metadata:
+                  type: object
+                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
+                  example:
+                    foo: bar
+                  nullable: true
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT

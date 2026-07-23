@@ -1,0 +1,469 @@
+openapi: 3.1.0
+info:
+  title: Commerce Layer addresses stripe_tax_accounts API
+  version: 7.10.1
+  contact:
+    name: API Support
+    url: https://commercelayer.io
+    email: support@commercelayer.io
+  description: Headless Commerce for Global Brands.
+servers:
+- url: https://{your_organization_slug}.commercelayer.io/api
+  description: API
+- url: https://core.commercelayer.io/users/sign_in
+  description: Sign in
+- url: https://docs.commercelayer.io/api
+  description: API reference
+security:
+- bearerAuth: []
+tags:
+- name: stripe_tax_accounts
+  description: resource type
+paths:
+  /stripe_tax_accounts:
+    get:
+      operationId: GET/stripe_tax_accounts
+      summary: List all stripe tax accounts
+      description: List all stripe tax accounts
+      tags:
+      - stripe_tax_accounts
+      responses:
+        '200':
+          description: A list of stripe tax account objects
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/stripeTaxAccountResponseList'
+    post:
+      operationId: POST/stripe_tax_accounts
+      summary: Create a stripe tax account
+      description: Create a stripe tax account
+      tags:
+      - stripe_tax_accounts
+      requestBody:
+        required: true
+        content:
+          application/vnd.api+json:
+            schema:
+              $ref: '#/components/schemas/stripeTaxAccountCreate'
+      responses:
+        '201':
+          description: The created stripe tax account object
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/stripeTaxAccountResponse'
+  /stripe_tax_accounts/{stripeTaxAccountId}:
+    get:
+      operationId: GET/stripe_tax_accounts/stripeTaxAccountId
+      summary: Retrieve a stripe tax account
+      description: Retrieve a stripe tax account
+      tags:
+      - stripe_tax_accounts
+      parameters:
+      - name: stripeTaxAccountId
+        in: path
+        schema:
+          type: string
+        required: true
+        description: The resource's id
+      responses:
+        '200':
+          description: The stripe tax account object
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/stripeTaxAccountResponse'
+    patch:
+      operationId: PATCH/stripe_tax_accounts/stripeTaxAccountId
+      summary: Update a stripe tax account
+      description: Update a stripe tax account
+      tags:
+      - stripe_tax_accounts
+      parameters:
+      - name: stripeTaxAccountId
+        in: path
+        schema:
+          type: string
+        required: true
+        description: The resource's id
+      requestBody:
+        required: true
+        content:
+          application/vnd.api+json:
+            schema:
+              $ref: '#/components/schemas/stripeTaxAccountUpdate'
+      responses:
+        '200':
+          description: The updated stripe tax account object
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/stripeTaxAccountResponse'
+    delete:
+      operationId: DELETE/stripe_tax_accounts/stripeTaxAccountId
+      summary: Delete a stripe tax account
+      description: Delete a stripe tax account
+      tags:
+      - stripe_tax_accounts
+      parameters:
+      - name: stripeTaxAccountId
+        in: path
+        schema:
+          type: string
+        required: true
+        description: The resource's id
+      responses:
+        '204':
+          description: No content
+components:
+  schemas:
+    stripeTaxAccountCreate:
+      required:
+      - data
+      type: object
+      properties:
+        data:
+          type: object
+          required:
+          - type
+          - attributes
+          properties:
+            type:
+              type: string
+              description: The resource's type
+              enum:
+              - stripe_tax_accounts
+            attributes:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: The tax calculator's internal name.
+                  example: Personal tax calculator
+                reference:
+                  type: string
+                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
+                  example: ANY-EXTERNAL-REFEFERNCE
+                reference_origin:
+                  type: string
+                  description: Any identifier of the third party system that defines the reference code.
+                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
+                metadata:
+                  type: object
+                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
+                  example:
+                    foo: bar
+                api_key:
+                  type: string
+                  description: The Stripe account API key.
+                  example: STRIPE_API_KEY
+                commit_invoice:
+                  type: boolean
+                  description: Indicates if the transaction will be recorded and visible on the Stripe website.
+                  example: true
+              required:
+              - name
+              - api_key
+            relationships:
+              type: object
+              properties:
+                tax_categories:
+                  required:
+                  - data
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - tax_categories
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+    stripeTaxAccountResponse:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            id:
+              type: string
+              description: Unique identifier for the resource (hash).
+              example: XAyRWNUzyN
+            type:
+              type: string
+              description: The resource's type
+              enum:
+              - stripe_tax_accounts
+            links:
+              type: object
+              properties:
+                self:
+                  type: string
+                  description: URL
+            attributes:
+              $ref: '#/components/schemas/stripeTaxAccount/properties/data/properties/attributes'
+            relationships:
+              type: object
+              properties:
+                markets:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - markets
+                        id:
+                          type: string
+                          description: The resource ID
+                attachments:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - attachments
+                        id:
+                          type: string
+                          description: The resource ID
+                events:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - events
+                        id:
+                          type: string
+                          description: The resource ID
+                event_stores:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - event_stores
+                        id:
+                          type: string
+                          description: The resource ID
+                tax_categories:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - tax_categories
+                        id:
+                          type: string
+                          description: The resource ID
+    stripeTaxAccountResponseList:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/stripeTaxAccountResponse/properties/data'
+    stripeTaxAccount:
+      properties:
+        data:
+          properties:
+            attributes:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: The tax calculator's internal name.
+                  example: Personal tax calculator
+                  nullable: false
+                type:
+                  type: string
+                  description: The tax calculator's type.
+                  example: avalara_accounts
+                  nullable: false
+                  enum:
+                  - avalara_accounts
+                  - stripe_tax_accounts
+                  - vertex_accounts
+                  - taxjar_accounts
+                  - manual_tax_calculators
+                  - external_tax_calculators
+                created_at:
+                  type: string
+                  description: Time at which the resource was created.
+                  example: '2018-01-01T12:00:00.000Z'
+                  nullable: false
+                updated_at:
+                  type: string
+                  description: Time at which the resource was last updated.
+                  example: '2018-01-01T12:00:00.000Z'
+                  nullable: false
+                reference:
+                  type: string
+                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
+                  example: ANY-EXTERNAL-REFEFERNCE
+                  nullable: true
+                reference_origin:
+                  type: string
+                  description: Any identifier of the third party system that defines the reference code.
+                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
+                  nullable: true
+                metadata:
+                  type: object
+                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
+                  example:
+                    foo: bar
+                  nullable: true
+                commit_invoice:
+                  type: boolean
+                  description: Indicates if the transaction will be recorded and visible on the Stripe website.
+                  example: true
+                  nullable: true
+    stripeTaxAccountUpdate:
+      required:
+      - data
+      type: object
+      properties:
+        data:
+          type: object
+          required:
+          - type
+          - id
+          - attributes
+          properties:
+            type:
+              type: string
+              description: The resource's type
+              enum:
+              - stripe_tax_accounts
+            id:
+              type: string
+              description: Unique identifier for the resource (hash).
+              example: XAyRWNUzyN
+            attributes:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: The tax calculator's internal name.
+                  example: Personal tax calculator
+                  nullable: false
+                reference:
+                  type: string
+                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
+                  example: ANY-EXTERNAL-REFEFERNCE
+                  nullable: true
+                reference_origin:
+                  type: string
+                  description: Any identifier of the third party system that defines the reference code.
+                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
+                  nullable: true
+                metadata:
+                  type: object
+                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
+                  example:
+                    foo: bar
+                  nullable: true
+                api_key:
+                  type: string
+                  description: The Stripe account API key.
+                  example: STRIPE_API_KEY
+                commit_invoice:
+                  type: boolean
+                  description: Indicates if the transaction will be recorded and visible on the Stripe website.
+                  example: true
+                  nullable: false
+            relationships:
+              type: object
+              properties:
+                tax_categories:
+                  required:
+                  - data
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - tax_categories
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT

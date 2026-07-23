@@ -1,0 +1,644 @@
+openapi: 3.1.0
+info:
+  title: Commerce Layer addresses memberships API
+  version: 7.10.1
+  contact:
+    name: API Support
+    url: https://commercelayer.io
+    email: support@commercelayer.io
+  description: Headless Commerce for Global Brands.
+servers:
+- url: https://{your_organization_slug}.commercelayer.io/api
+  description: API
+- url: https://core.commercelayer.io/users/sign_in
+  description: Sign in
+- url: https://docs.commercelayer.io/api
+  description: API reference
+security:
+- bearerAuth: []
+tags:
+- name: memberships
+  description: resource type
+paths:
+  /application_memberships/{applicationMembershipId}/membership:
+    get:
+      operationId: GET/applicationMembershipId/membership
+      summary: Related application membership
+      description: Related application membership
+      tags:
+      - memberships
+      parameters:
+      - name: applicationMembershipId
+        in: path
+        schema:
+          type: string
+        required: true
+        description: The ID of the resource.
+      responses:
+        '200':
+          description: The membership associated to the application membership
+  /memberships:
+    post:
+      operationId: POST/memberships
+      summary: Creates an membership
+      description: Creates an membership
+      tags:
+      - memberships
+      requestBody:
+        required: true
+        content:
+          application/vnd.api+json:
+            schema:
+              $ref: '#/components/schemas/membershipCreate'
+      responses:
+        '201':
+          description: The created membership object
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/membershipResponse'
+    get:
+      operationId: GET/memberships
+      summary: List all memberships
+      description: List all memberships
+      tags:
+      - memberships
+      responses:
+        '200':
+          description: A list of membership objects
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/membershipResponseList'
+  /memberships/{membershipId}:
+    get:
+      operationId: GET/memberships/membershipId
+      summary: Retrieve an membership
+      description: Retrieve an membership
+      parameters:
+      - name: membershipId
+        in: path
+        schema:
+          type: string
+        required: true
+        description: The ID of the resource.
+      tags:
+      - memberships
+      responses:
+        '200':
+          description: The membership object
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/membershipResponse'
+    patch:
+      operationId: PATCH/memberships/membershipId
+      summary: Updates an membership
+      description: Updates an membership
+      tags:
+      - memberships
+      parameters:
+      - name: membershipId
+        in: path
+        schema:
+          type: string
+        required: true
+        description: The ID of the resource.
+      requestBody:
+        required: true
+        content:
+          application/vnd.api+json:
+            schema:
+              $ref: '#/components/schemas/membershipUpdate'
+      responses:
+        '200':
+          description: The updated membership object
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/membershipResponse'
+    delete:
+      operationId: DELETE/memberships/membershipId
+      summary: Delete an membership
+      description: Delete an membership
+      tags:
+      - memberships
+      parameters:
+      - name: membershipId
+        in: path
+        schema:
+          type: string
+        required: true
+        description: The ID of the resource.
+      responses:
+        '204':
+          description: No content
+  /memberships/{membershipId}/resend:
+    post:
+      operationId: POST/memberships/membershipId/resend
+      summary: Resend invitation
+      description: Resend invitation for the given membership
+      tags:
+      - memberships
+      parameters:
+      - name: membershipId
+        in: path
+        schema:
+          type: string
+        required: true
+        description: The ID of the resource.
+      requestBody:
+        required: true
+        content:
+          application/vnd.api+json: {}
+      responses:
+        '202':
+          description: Confirmation that the invitation has been sent
+          content: {}
+  /organizations/{organizationId}/memberships:
+    get:
+      operationId: GET/organizationId/memberships
+      summary: Related organization
+      description: Related organization
+      tags:
+      - memberships
+      parameters:
+      - name: organizationId
+        in: path
+        schema:
+          type: string
+        required: true
+        description: The ID of the resource.
+      responses:
+        '200':
+          description: The memberships associated to the organization
+  /roles/{roleId}/memberships:
+    get:
+      operationId: GET/roleId/memberships
+      summary: Related role
+      description: Related role
+      tags:
+      - memberships
+      parameters:
+      - name: roleId
+        in: path
+        schema:
+          type: string
+        required: true
+        description: The ID of the resource.
+      responses:
+        '200':
+          description: The memberships associated to the role
+components:
+  schemas:
+    membershipResponse:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            id:
+              type: string
+              description: The ID of the resource.
+              example: XGZwpOSrWL
+            type:
+              type: string
+              description: The resource's type.
+              enum:
+              - memberships
+            links:
+              type: object
+              properties:
+                self:
+                  type: string
+                  description: URL
+            attributes:
+              $ref: '#/components/schemas/membership/properties/data/properties/attributes'
+            relationships:
+              type: object
+              properties:
+                organization:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type.
+                          enum:
+                          - organization
+                        id:
+                          type: string
+                          description: The ID of the resource.
+                role:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type.
+                          enum:
+                          - role
+                        id:
+                          type: string
+                          description: The ID of the resource.
+                application_memberships:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type.
+                          enum:
+                          - application_memberships
+                        id:
+                          type: string
+                          description: The ID of the resource.
+                membership_profile:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type.
+                          enum:
+                          - membership_profile
+                        id:
+                          type: string
+                          description: The ID of the resource.
+                versions:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type.
+                          enum:
+                          - versions
+                        id:
+                          type: string
+                          description: The ID of the resource.
+    membershipUpdate:
+      required:
+      - data
+      type: object
+      properties:
+        data:
+          type: object
+          required:
+          - type
+          - id
+          - attributes
+          properties:
+            type:
+              type: string
+              description: The resource's type.
+              enum:
+              - memberships
+            id:
+              type: string
+              description: The ID of the resource.
+              example: XGZwpOSrWL
+            attributes:
+              type: object
+              properties:
+                access_scope:
+                  type: string
+                  description: The access scope for applications. One of `live_access` (default), `test_access`, `all_access`.
+                  example: live_access
+                  nullable: true
+                  enum:
+                  - live_access
+                  - test_access
+                  - all_access
+                reference:
+                  type: string
+                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
+                  example: ANY-EXTERNAL-REFEFERNCE
+                  nullable: true
+                reference_origin:
+                  type: string
+                  description: Any identifier of the third party system that defines the reference code.
+                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
+                  nullable: true
+                metadata:
+                  type: object
+                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
+                  example:
+                    foo: bar
+                  nullable: true
+            relationships:
+              type: object
+              properties:
+                role:
+                  required:
+                  - data
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type.
+                          enum:
+                          - roles
+                        id:
+                          type: string
+                          description: The ID of the resource.
+                          example: XGZwpOSrWL
+                application_memberships:
+                  required:
+                  - data
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type.
+                          enum:
+                          - application_memberships
+                        id:
+                          type: string
+                          description: The ID of the resource.
+                          example: XGZwpOSrWL
+                membership_profile:
+                  required:
+                  - data
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type.
+                          enum:
+                          - membership_profiles
+                        id:
+                          type: string
+                          description: The ID of the resource.
+                          example: XGZwpOSrWL
+    membershipResponseList:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/membershipResponse/properties/data'
+    membershipCreate:
+      required:
+      - data
+      type: object
+      properties:
+        data:
+          type: object
+          required:
+          - type
+          - attributes
+          properties:
+            type:
+              type: string
+              description: The resource's type.
+              enum:
+              - memberships
+            attributes:
+              type: object
+              properties:
+                user_email:
+                  type: string
+                  description: The user email.
+                  example: commercelayer@commercelayer.io
+                access_scope:
+                  type: string
+                  description: The access scope for applications. One of `live_access` (default), `test_access`, `all_access`.
+                  example: live_access
+                  enum:
+                  - live_access
+                  - test_access
+                  - all_access
+                reference:
+                  type: string
+                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
+                  example: ANY-EXTERNAL-REFEFERNCE
+                reference_origin:
+                  type: string
+                  description: Any identifier of the third party system that defines the reference code.
+                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
+                metadata:
+                  type: object
+                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
+                  example:
+                    foo: bar
+              required:
+              - user_email
+            relationships:
+              type: object
+              properties:
+                organization:
+                  required:
+                  - data
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type.
+                          enum:
+                          - organizations
+                        id:
+                          type: string
+                          description: The ID of the resource.
+                          example: XGZwpOSrWL
+                role:
+                  required:
+                  - data
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type.
+                          enum:
+                          - roles
+                        id:
+                          type: string
+                          description: The ID of the resource.
+                          example: XGZwpOSrWL
+                application_memberships:
+                  required:
+                  - data
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type.
+                          enum:
+                          - application_memberships
+                        id:
+                          type: string
+                          description: The ID of the resource.
+                          example: XGZwpOSrWL
+                membership_profile:
+                  required:
+                  - data
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type.
+                          enum:
+                          - membership_profiles
+                        id:
+                          type: string
+                          description: The ID of the resource.
+                          example: XGZwpOSrWL
+              required:
+              - organization
+              - role
+    membership:
+      properties:
+        data:
+          properties:
+            attributes:
+              type: object
+              properties:
+                user_email:
+                  type: string
+                  description: The user email.
+                  example: commercelayer@commercelayer.io
+                  nullable: false
+                user_first_name:
+                  type: string
+                  description: The user first name.
+                  example: John
+                  readOnly: true
+                user_last_name:
+                  type: string
+                  description: The user last name.
+                  example: Doe
+                  readOnly: true
+                status:
+                  type: string
+                  description: The memberships status. One of `pending` (default), `active`.
+                  example: pending
+                  readOnly: true
+                  enum:
+                  - pending
+                  - active
+                owner:
+                  type: boolean
+                  description: Indicates if the user it's the owner of the organization.
+                  example: true
+                  readOnly: true
+                test_enabled:
+                  type: boolean
+                  description: Reflects the organization's access scope, either test_access or all_access.
+                  example: false
+                  readOnly: true
+                access_scope:
+                  type: string
+                  description: The access scope for applications. One of `live_access` (default), `test_access`, `all_access`.
+                  example: live_access
+                  nullable: true
+                  enum:
+                  - live_access
+                  - test_access
+                  - all_access
+                created_at:
+                  type: string
+                  description: Time at which the resource was created.
+                  example: '2018-01-01T12:00:00.000Z'
+                  readOnly: true
+                updated_at:
+                  type: string
+                  description: Time at which the resource was last updated.
+                  example: '2018-01-01T12:00:00.000Z'
+                  readOnly: true
+                reference:
+                  type: string
+                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
+                  example: ANY-EXTERNAL-REFEFERNCE
+                  nullable: true
+                reference_origin:
+                  type: string
+                  description: Any identifier of the third party system that defines the reference code.
+                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
+                  nullable: true
+                metadata:
+                  type: object
+                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
+                  example:
+                    foo: bar
+                  nullable: true
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT

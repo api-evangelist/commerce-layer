@@ -1,0 +1,446 @@
+openapi: 3.1.0
+info:
+  title: Commerce Layer addresses carrier_accounts API
+  version: 7.10.1
+  contact:
+    name: API Support
+    url: https://commercelayer.io
+    email: support@commercelayer.io
+  description: Headless Commerce for Global Brands.
+servers:
+- url: https://{your_organization_slug}.commercelayer.io/api
+  description: API
+- url: https://core.commercelayer.io/users/sign_in
+  description: Sign in
+- url: https://docs.commercelayer.io/api
+  description: API reference
+security:
+- bearerAuth: []
+tags:
+- name: carrier_accounts
+  description: resource type
+paths:
+  /carrier_accounts:
+    get:
+      operationId: GET/carrier_accounts
+      summary: List all carrier accounts
+      description: List all carrier accounts
+      tags:
+      - carrier_accounts
+      responses:
+        '200':
+          description: A list of carrier account objects
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/carrierAccountResponseList'
+    post:
+      operationId: POST/carrier_accounts
+      summary: Create a carrier account
+      description: Create a carrier account
+      tags:
+      - carrier_accounts
+      requestBody:
+        required: true
+        content:
+          application/vnd.api+json:
+            schema:
+              $ref: '#/components/schemas/carrierAccountCreate'
+      responses:
+        '201':
+          description: The created carrier account object
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/carrierAccountResponse'
+  /carrier_accounts/{carrierAccountId}:
+    get:
+      operationId: GET/carrier_accounts/carrierAccountId
+      summary: Retrieve a carrier account
+      description: Retrieve a carrier account
+      tags:
+      - carrier_accounts
+      parameters:
+      - name: carrierAccountId
+        in: path
+        schema:
+          type: string
+        required: true
+        description: The resource's id
+      responses:
+        '200':
+          description: The carrier account object
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/carrierAccountResponse'
+    patch:
+      operationId: PATCH/carrier_accounts/carrierAccountId
+      summary: Update a carrier account
+      description: Update a carrier account
+      tags:
+      - carrier_accounts
+      parameters:
+      - name: carrierAccountId
+        in: path
+        schema:
+          type: string
+        required: true
+        description: The resource's id
+      requestBody:
+        required: true
+        content:
+          application/vnd.api+json:
+            schema:
+              $ref: '#/components/schemas/carrierAccountUpdate'
+      responses:
+        '200':
+          description: The updated carrier account object
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/carrierAccountResponse'
+    delete:
+      operationId: DELETE/carrier_accounts/carrierAccountId
+      summary: Delete a carrier account
+      description: Delete a carrier account
+      tags:
+      - carrier_accounts
+      parameters:
+      - name: carrierAccountId
+        in: path
+        schema:
+          type: string
+        required: true
+        description: The resource's id
+      responses:
+        '204':
+          description: No content
+  /shipments/{shipmentId}/carrier_accounts:
+    get:
+      operationId: GET/shipmentId/carrier_accounts
+      summary: Retrieve the carrier accounts associated to the shipment
+      description: Retrieve the carrier accounts associated to the shipment
+      tags:
+      - carrier_accounts
+      parameters:
+      - name: shipmentId
+        in: path
+        schema:
+          type: string
+        required: true
+        description: The resource's id
+      responses:
+        '200':
+          description: The carrier_accounts associated to the shipment
+components:
+  schemas:
+    carrierAccountResponse:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            id:
+              type: string
+              description: Unique identifier for the resource (hash).
+              example: XAyRWNUzyN
+            type:
+              type: string
+              description: The resource's type
+              enum:
+              - carrier_accounts
+            links:
+              type: object
+              properties:
+                self:
+                  type: string
+                  description: URL
+            attributes:
+              $ref: '#/components/schemas/carrierAccount/properties/data/properties/attributes'
+            relationships:
+              type: object
+              properties:
+                market:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - market
+                        id:
+                          type: string
+                          description: The resource ID
+                attachments:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - attachments
+                        id:
+                          type: string
+                          description: The resource ID
+                event_stores:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - event_stores
+                        id:
+                          type: string
+                          description: The resource ID
+    carrierAccountCreate:
+      required:
+      - data
+      type: object
+      properties:
+        data:
+          type: object
+          required:
+          - type
+          - attributes
+          properties:
+            type:
+              type: string
+              description: The resource's type
+              enum:
+              - carrier_accounts
+            attributes:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: The carrier account internal name.
+                  example: Accurate
+                easypost_type:
+                  type: string
+                  description: The Easypost service carrier type.
+                  example: AccurateAccount
+                credentials:
+                  type: object
+                  description: The Easypost carrier accounts credentials fields.
+                  example:
+                    username: xxxx
+                    password: secret
+                reference:
+                  type: string
+                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
+                  example: ANY-EXTERNAL-REFEFERNCE
+                reference_origin:
+                  type: string
+                  description: Any identifier of the third party system that defines the reference code.
+                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
+                metadata:
+                  type: object
+                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
+                  example:
+                    foo: bar
+              required:
+              - name
+              - easypost_type
+              - credentials
+            relationships:
+              type: object
+              properties:
+                market:
+                  required:
+                  - data
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - markets
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+    carrierAccountUpdate:
+      required:
+      - data
+      type: object
+      properties:
+        data:
+          type: object
+          required:
+          - type
+          - id
+          - attributes
+          properties:
+            type:
+              type: string
+              description: The resource's type
+              enum:
+              - carrier_accounts
+            id:
+              type: string
+              description: Unique identifier for the resource (hash).
+              example: XAyRWNUzyN
+            attributes:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: The carrier account internal name.
+                  example: Accurate
+                  nullable: false
+                easypost_type:
+                  type: string
+                  description: The Easypost service carrier type.
+                  example: AccurateAccount
+                  nullable: false
+                credentials:
+                  type: object
+                  description: The Easypost carrier accounts credentials fields.
+                  example:
+                    username: xxxx
+                    password: secret
+                  nullable: false
+                reference:
+                  type: string
+                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
+                  example: ANY-EXTERNAL-REFEFERNCE
+                  nullable: true
+                reference_origin:
+                  type: string
+                  description: Any identifier of the third party system that defines the reference code.
+                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
+                  nullable: true
+                metadata:
+                  type: object
+                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
+                  example:
+                    foo: bar
+                  nullable: true
+            relationships:
+              type: object
+              properties:
+                market:
+                  required:
+                  - data
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - markets
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+    carrierAccount:
+      properties:
+        data:
+          properties:
+            attributes:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: The carrier account internal name.
+                  example: Accurate
+                  nullable: false
+                easypost_type:
+                  type: string
+                  description: The Easypost service carrier type.
+                  example: AccurateAccount
+                  nullable: false
+                easypost_id:
+                  type: string
+                  description: The Easypost internal reference ID.
+                  example: xxxx-yyyy-zzzz
+                  nullable: true
+                credentials:
+                  type: object
+                  description: The Easypost carrier accounts credentials fields.
+                  example:
+                    username: xxxx
+                    password: secret
+                  nullable: false
+                created_at:
+                  type: string
+                  description: Time at which the resource was created.
+                  example: '2018-01-01T12:00:00.000Z'
+                  nullable: false
+                updated_at:
+                  type: string
+                  description: Time at which the resource was last updated.
+                  example: '2018-01-01T12:00:00.000Z'
+                  nullable: false
+                reference:
+                  type: string
+                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
+                  example: ANY-EXTERNAL-REFEFERNCE
+                  nullable: true
+                reference_origin:
+                  type: string
+                  description: Any identifier of the third party system that defines the reference code.
+                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
+                  nullable: true
+                metadata:
+                  type: object
+                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
+                  example:
+                    foo: bar
+                  nullable: true
+    carrierAccountResponseList:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/carrierAccountResponse/properties/data'
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT

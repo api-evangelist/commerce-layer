@@ -1,0 +1,445 @@
+openapi: 3.1.0
+info:
+  title: Commerce Layer addresses imports API
+  version: 7.10.1
+  contact:
+    name: API Support
+    url: https://commercelayer.io
+    email: support@commercelayer.io
+  description: Headless Commerce for Global Brands.
+servers:
+- url: https://{your_organization_slug}.commercelayer.io/api
+  description: API
+- url: https://core.commercelayer.io/users/sign_in
+  description: Sign in
+- url: https://docs.commercelayer.io/api
+  description: API reference
+security:
+- bearerAuth: []
+tags:
+- name: imports
+  description: resource type
+paths:
+  /imports:
+    get:
+      operationId: GET/imports
+      summary: List all imports
+      description: List all imports
+      tags:
+      - imports
+      responses:
+        '200':
+          description: A list of import objects
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/importResponseList'
+    post:
+      operationId: POST/imports
+      summary: Create an import
+      description: Create an import
+      tags:
+      - imports
+      requestBody:
+        required: true
+        content:
+          application/vnd.api+json:
+            schema:
+              $ref: '#/components/schemas/importCreate'
+      responses:
+        '201':
+          description: The created import object
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/importResponse'
+  /imports/{importId}:
+    get:
+      operationId: GET/imports/importId
+      summary: Retrieve an import
+      description: Retrieve an import
+      tags:
+      - imports
+      parameters:
+      - name: importId
+        in: path
+        schema:
+          type: string
+        required: true
+        description: The resource's id
+      responses:
+        '200':
+          description: The import object
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/importResponse'
+    patch:
+      operationId: PATCH/imports/importId
+      summary: Update an import
+      description: Update an import
+      tags:
+      - imports
+      parameters:
+      - name: importId
+        in: path
+        schema:
+          type: string
+        required: true
+        description: The resource's id
+      requestBody:
+        required: true
+        content:
+          application/vnd.api+json:
+            schema:
+              $ref: '#/components/schemas/importUpdate'
+      responses:
+        '200':
+          description: The updated import object
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/importResponse'
+    delete:
+      operationId: DELETE/imports/importId
+      summary: Delete an import
+      description: Delete an import
+      tags:
+      - imports
+      parameters:
+      - name: importId
+        in: path
+        schema:
+          type: string
+        required: true
+        description: The resource's id
+      responses:
+        '204':
+          description: No content
+components:
+  schemas:
+    importResponseList:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/importResponse/properties/data'
+    importUpdate:
+      required:
+      - data
+      type: object
+      properties:
+        data:
+          type: object
+          required:
+          - type
+          - id
+          - attributes
+          properties:
+            type:
+              type: string
+              description: The resource's type
+              enum:
+              - imports
+            id:
+              type: string
+              description: Unique identifier for the resource (hash).
+              example: XAyRWNUzyN
+            attributes:
+              type: object
+              properties:
+                _interrupt:
+                  type: boolean
+                  description: Send this attribute if you want to mark status as 'interrupted'.
+                  example: true
+                  nullable: false
+                reference:
+                  type: string
+                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
+                  example: ANY-EXTERNAL-REFEFERNCE
+                  nullable: true
+                reference_origin:
+                  type: string
+                  description: Any identifier of the third party system that defines the reference code.
+                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
+                  nullable: true
+                metadata:
+                  type: object
+                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
+                  example:
+                    foo: bar
+                  nullable: true
+            relationships:
+              type: object
+              properties: {}
+    importResponse:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            id:
+              type: string
+              description: Unique identifier for the resource (hash).
+              example: XAyRWNUzyN
+            type:
+              type: string
+              description: The resource's type
+              enum:
+              - imports
+            links:
+              type: object
+              properties:
+                self:
+                  type: string
+                  description: URL
+            attributes:
+              $ref: '#/components/schemas/import/properties/data/properties/attributes'
+            relationships:
+              type: object
+              properties:
+                events:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - events
+                        id:
+                          type: string
+                          description: The resource ID
+                event_stores:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - event_stores
+                        id:
+                          type: string
+                          description: The resource ID
+    importCreate:
+      required:
+      - data
+      type: object
+      properties:
+        data:
+          type: object
+          required:
+          - type
+          - attributes
+          properties:
+            type:
+              type: string
+              description: The resource's type
+              enum:
+              - imports
+            attributes:
+              type: object
+              properties:
+                resource_type:
+                  type: string
+                  description: The type of resource being imported.
+                  example: skus
+                format:
+                  type: string
+                  description: The format of the import inputs one of 'json' (default) or 'csv'.
+                  example: json
+                parent_resource_id:
+                  type: string
+                  description: The ID of the parent resource to be associated with imported data.
+                  example: '1234'
+                inputs:
+                  type: array
+                  description: Array of objects representing the resources that are being imported.
+                  example:
+                  - code: ABC
+                    name: Foo
+                  - code: DEF
+                    name: Bar
+                  items:
+                    type: object
+                skip_errors:
+                  type: boolean
+                  description: Disables the interruption of the import in case its errors exceeds the 10% threshold.
+                  example: true
+                reference:
+                  type: string
+                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
+                  example: ANY-EXTERNAL-REFEFERNCE
+                reference_origin:
+                  type: string
+                  description: Any identifier of the third party system that defines the reference code.
+                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
+                metadata:
+                  type: object
+                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
+                  example:
+                    foo: bar
+              required:
+              - resource_type
+              - inputs
+            relationships:
+              type: object
+              properties: {}
+    import:
+      properties:
+        data:
+          properties:
+            attributes:
+              type: object
+              properties:
+                resource_type:
+                  type: string
+                  description: The type of resource being imported.
+                  example: skus
+                  nullable: false
+                format:
+                  type: string
+                  description: The format of the import inputs one of 'json' (default) or 'csv'.
+                  example: json
+                  nullable: true
+                parent_resource_id:
+                  type: string
+                  description: The ID of the parent resource to be associated with imported data.
+                  example: '1234'
+                  nullable: true
+                status:
+                  type: string
+                  description: The import job status. One of 'pending' (default), 'in_progress', 'interrupted', or 'completed'.
+                  example: in_progress
+                  nullable: false
+                  enum:
+                  - pending
+                  - in_progress
+                  - interrupted
+                  - completed
+                started_at:
+                  type: string
+                  description: Time at which the import was started.
+                  example: '2018-01-01T12:00:00.000Z'
+                  nullable: true
+                completed_at:
+                  type: string
+                  description: Time at which the import was completed.
+                  example: '2018-01-01T12:00:00.000Z'
+                  nullable: true
+                interrupted_at:
+                  type: string
+                  description: Time at which the import was interrupted.
+                  example: '2018-01-01T12:00:00.000Z'
+                  nullable: true
+                inputs:
+                  type: array
+                  description: Array of objects representing the resources that are being imported.
+                  example:
+                  - code: ABC
+                    name: Foo
+                  - code: DEF
+                    name: Bar
+                  nullable: false
+                  items:
+                    type: object
+                inputs_size:
+                  type: integer
+                  description: Indicates the size of the objects to be imported.
+                  example: 300
+                  nullable: true
+                errors_count:
+                  type: integer
+                  description: Indicates the number of import errors, if any.
+                  example: 30
+                  nullable: true
+                warnings_count:
+                  type: integer
+                  description: Indicates the number of import warnings, if any.
+                  example: 1
+                  nullable: true
+                processed_count:
+                  type: integer
+                  description: Indicates the number of records that have been processed (created or updated).
+                  example: 270
+                  nullable: true
+                errors_log:
+                  type: object
+                  description: Contains the import errors, if any.
+                  example:
+                    ABC:
+                      name:
+                      - has already been taken
+                  nullable: true
+                warnings_log:
+                  type: object
+                  description: Contains the import warnings, if any.
+                  example:
+                    ABC:
+                    - could not be deleted
+                  nullable: true
+                skip_errors:
+                  type: boolean
+                  description: Disables the interruption of the import in case its errors exceeds the 10% threshold.
+                  example: true
+                  nullable: true
+                attachment_url:
+                  type: string
+                  description: The URL the the raw inputs file, which will be generated at import start.
+                  example: http://cl_imports.s3.amazonaws.com/
+                  nullable: true
+                created_at:
+                  type: string
+                  description: Time at which the resource was created.
+                  example: '2018-01-01T12:00:00.000Z'
+                  nullable: false
+                updated_at:
+                  type: string
+                  description: Time at which the resource was last updated.
+                  example: '2018-01-01T12:00:00.000Z'
+                  nullable: false
+                reference:
+                  type: string
+                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
+                  example: ANY-EXTERNAL-REFEFERNCE
+                  nullable: true
+                reference_origin:
+                  type: string
+                  description: Any identifier of the third party system that defines the reference code.
+                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
+                  nullable: true
+                metadata:
+                  type: object
+                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
+                  example:
+                    foo: bar
+                  nullable: true
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT

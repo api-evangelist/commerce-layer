@@ -1,0 +1,512 @@
+openapi: 3.1.0
+info:
+  title: Commerce Layer addresses price_lists API
+  version: 7.10.1
+  contact:
+    name: API Support
+    url: https://commercelayer.io
+    email: support@commercelayer.io
+  description: Headless Commerce for Global Brands.
+servers:
+- url: https://{your_organization_slug}.commercelayer.io/api
+  description: API
+- url: https://core.commercelayer.io/users/sign_in
+  description: Sign in
+- url: https://docs.commercelayer.io/api
+  description: API reference
+security:
+- bearerAuth: []
+tags:
+- name: price_lists
+  description: resource type
+paths:
+  /markets/{marketId}/price_list:
+    get:
+      operationId: GET/marketId/price_list
+      summary: Retrieve the price list associated to the market
+      description: Retrieve the price list associated to the market
+      tags:
+      - price_lists
+      parameters:
+      - name: marketId
+        in: path
+        schema:
+          type: string
+        required: true
+        description: The resource's id
+      responses:
+        '200':
+          description: The price_list associated to the market
+  /markets/{marketId}/base_price_list:
+    get:
+      operationId: GET/marketId/base_price_list
+      summary: Retrieve the base price list associated to the market
+      description: Retrieve the base price list associated to the market
+      tags:
+      - price_lists
+      parameters:
+      - name: marketId
+        in: path
+        schema:
+          type: string
+        required: true
+        description: The resource's id
+      responses:
+        '200':
+          description: The base_price_list associated to the market
+  /price_list_schedulers/{priceListSchedulerId}/price_list:
+    get:
+      operationId: GET/priceListSchedulerId/price_list
+      summary: Retrieve the price list associated to the price list scheduler
+      description: Retrieve the price list associated to the price list scheduler
+      tags:
+      - price_lists
+      parameters:
+      - name: priceListSchedulerId
+        in: path
+        schema:
+          type: string
+        required: true
+        description: The resource's id
+      responses:
+        '200':
+          description: The price_list associated to the price list scheduler
+  /price_lists:
+    get:
+      operationId: GET/price_lists
+      summary: List all price lists
+      description: List all price lists
+      tags:
+      - price_lists
+      responses:
+        '200':
+          description: A list of price list objects
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/priceListResponseList'
+    post:
+      operationId: POST/price_lists
+      summary: Create a price list
+      description: Create a price list
+      tags:
+      - price_lists
+      requestBody:
+        required: true
+        content:
+          application/vnd.api+json:
+            schema:
+              $ref: '#/components/schemas/priceListCreate'
+      responses:
+        '201':
+          description: The created price list object
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/priceListResponse'
+  /price_lists/{priceListId}:
+    get:
+      operationId: GET/price_lists/priceListId
+      summary: Retrieve a price list
+      description: Retrieve a price list
+      tags:
+      - price_lists
+      parameters:
+      - name: priceListId
+        in: path
+        schema:
+          type: string
+        required: true
+        description: The resource's id
+      responses:
+        '200':
+          description: The price list object
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/priceListResponse'
+    patch:
+      operationId: PATCH/price_lists/priceListId
+      summary: Update a price list
+      description: Update a price list
+      tags:
+      - price_lists
+      parameters:
+      - name: priceListId
+        in: path
+        schema:
+          type: string
+        required: true
+        description: The resource's id
+      requestBody:
+        required: true
+        content:
+          application/vnd.api+json:
+            schema:
+              $ref: '#/components/schemas/priceListUpdate'
+      responses:
+        '200':
+          description: The updated price list object
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/priceListResponse'
+    delete:
+      operationId: DELETE/price_lists/priceListId
+      summary: Delete a price list
+      description: Delete a price list
+      tags:
+      - price_lists
+      parameters:
+      - name: priceListId
+        in: path
+        schema:
+          type: string
+        required: true
+        description: The resource's id
+      responses:
+        '204':
+          description: No content
+  /prices/{priceId}/price_list:
+    get:
+      operationId: GET/priceId/price_list
+      summary: Retrieve the price list associated to the price
+      description: Retrieve the price list associated to the price
+      tags:
+      - price_lists
+      parameters:
+      - name: priceId
+        in: path
+        schema:
+          type: string
+        required: true
+        description: The resource's id
+      responses:
+        '200':
+          description: The price_list associated to the price
+components:
+  schemas:
+    priceListResponse:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            id:
+              type: string
+              description: Unique identifier for the resource (hash).
+              example: XAyRWNUzyN
+            type:
+              type: string
+              description: The resource's type
+              enum:
+              - price_lists
+            links:
+              type: object
+              properties:
+                self:
+                  type: string
+                  description: URL
+            attributes:
+              $ref: '#/components/schemas/priceList/properties/data/properties/attributes'
+            relationships:
+              type: object
+              properties:
+                prices:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - prices
+                        id:
+                          type: string
+                          description: The resource ID
+                price_list_schedulers:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - price_list_schedulers
+                        id:
+                          type: string
+                          description: The resource ID
+                attachments:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - attachments
+                        id:
+                          type: string
+                          description: The resource ID
+                event_stores:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - event_stores
+                        id:
+                          type: string
+                          description: The resource ID
+    priceListUpdate:
+      required:
+      - data
+      type: object
+      properties:
+        data:
+          type: object
+          required:
+          - type
+          - id
+          - attributes
+          properties:
+            type:
+              type: string
+              description: The resource's type
+              enum:
+              - price_lists
+            id:
+              type: string
+              description: Unique identifier for the resource (hash).
+              example: XAyRWNUzyN
+            attributes:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: The price list's internal name.
+                  example: EU Price list
+                  nullable: false
+                code:
+                  type: string
+                  description: A string that you can use to identify the price list (must be unique within the environment).
+                  example: europe1
+                  nullable: true
+                currency_code:
+                  type: string
+                  description: The international 3-letter currency code as defined by the ISO 4217 standard.
+                  example: EUR
+                  nullable: false
+                tax_included:
+                  type: boolean
+                  description: Indicates if the associated prices include taxes.
+                  example: true
+                  nullable: false
+                reference:
+                  type: string
+                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
+                  example: ANY-EXTERNAL-REFEFERNCE
+                  nullable: true
+                reference_origin:
+                  type: string
+                  description: Any identifier of the third party system that defines the reference code.
+                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
+                  nullable: true
+                rules:
+                  type: object
+                  description: The rules (using Rules Engine) to be applied.
+                  example: {}
+                  nullable: true
+                metadata:
+                  type: object
+                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
+                  example:
+                    foo: bar
+                  nullable: true
+            relationships:
+              type: object
+              properties: {}
+    priceListCreate:
+      required:
+      - data
+      type: object
+      properties:
+        data:
+          type: object
+          required:
+          - type
+          - attributes
+          properties:
+            type:
+              type: string
+              description: The resource's type
+              enum:
+              - price_lists
+            attributes:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: The price list's internal name.
+                  example: EU Price list
+                code:
+                  type: string
+                  description: A string that you can use to identify the price list (must be unique within the environment).
+                  example: europe1
+                currency_code:
+                  type: string
+                  description: The international 3-letter currency code as defined by the ISO 4217 standard.
+                  example: EUR
+                tax_included:
+                  type: boolean
+                  description: Indicates if the associated prices include taxes.
+                  example: true
+                reference:
+                  type: string
+                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
+                  example: ANY-EXTERNAL-REFEFERNCE
+                reference_origin:
+                  type: string
+                  description: Any identifier of the third party system that defines the reference code.
+                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
+                rules:
+                  type: object
+                  description: The rules (using Rules Engine) to be applied.
+                  example: {}
+                metadata:
+                  type: object
+                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
+                  example:
+                    foo: bar
+              required:
+              - name
+              - currency_code
+            relationships:
+              type: object
+              properties: {}
+    priceList:
+      properties:
+        data:
+          properties:
+            attributes:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: The price list's internal name.
+                  example: EU Price list
+                  nullable: false
+                code:
+                  type: string
+                  description: A string that you can use to identify the price list (must be unique within the environment).
+                  example: europe1
+                  nullable: true
+                currency_code:
+                  type: string
+                  description: The international 3-letter currency code as defined by the ISO 4217 standard.
+                  example: EUR
+                  nullable: false
+                tax_included:
+                  type: boolean
+                  description: Indicates if the associated prices include taxes.
+                  example: true
+                  nullable: true
+                rule_outcomes:
+                  type: object
+                  description: The rule outcomes.
+                  example: []
+                  nullable: true
+                created_at:
+                  type: string
+                  description: Time at which the resource was created.
+                  example: '2018-01-01T12:00:00.000Z'
+                  nullable: false
+                updated_at:
+                  type: string
+                  description: Time at which the resource was last updated.
+                  example: '2018-01-01T12:00:00.000Z'
+                  nullable: false
+                reference:
+                  type: string
+                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
+                  example: ANY-EXTERNAL-REFEFERNCE
+                  nullable: true
+                reference_origin:
+                  type: string
+                  description: Any identifier of the third party system that defines the reference code.
+                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
+                  nullable: true
+                rules:
+                  type: object
+                  description: The rules (using Rules Engine) to be applied.
+                  example: {}
+                  nullable: true
+                resource_payload:
+                  type: object
+                  description: The payload used to evaluate the rules.
+                  example: {}
+                  nullable: true
+                metadata:
+                  type: object
+                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
+                  example:
+                    foo: bar
+                  nullable: true
+    priceListResponseList:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/priceListResponse/properties/data'
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT

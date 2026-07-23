@@ -1,0 +1,362 @@
+openapi: 3.1.0
+info:
+  title: Commerce Layer addresses adjustments API
+  version: 7.10.1
+  contact:
+    name: API Support
+    url: https://commercelayer.io
+    email: support@commercelayer.io
+  description: Headless Commerce for Global Brands.
+servers:
+- url: https://{your_organization_slug}.commercelayer.io/api
+  description: API
+- url: https://core.commercelayer.io/users/sign_in
+  description: Sign in
+- url: https://docs.commercelayer.io/api
+  description: API reference
+security:
+- bearerAuth: []
+tags:
+- name: adjustments
+  description: resource type
+paths:
+  /adjustments:
+    get:
+      operationId: GET/adjustments
+      summary: List all adjustments
+      description: List all adjustments
+      tags:
+      - adjustments
+      responses:
+        '200':
+          description: A list of adjustment objects
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/adjustmentResponseList'
+    post:
+      operationId: POST/adjustments
+      summary: Create an adjustment
+      description: Create an adjustment
+      tags:
+      - adjustments
+      requestBody:
+        required: true
+        content:
+          application/vnd.api+json:
+            schema:
+              $ref: '#/components/schemas/adjustmentCreate'
+      responses:
+        '201':
+          description: The created adjustment object
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/adjustmentResponse'
+  /adjustments/{adjustmentId}:
+    get:
+      operationId: GET/adjustments/adjustmentId
+      summary: Retrieve an adjustment
+      description: Retrieve an adjustment
+      tags:
+      - adjustments
+      parameters:
+      - name: adjustmentId
+        in: path
+        schema:
+          type: string
+        required: true
+        description: The resource's id
+      responses:
+        '200':
+          description: The adjustment object
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/adjustmentResponse'
+    patch:
+      operationId: PATCH/adjustments/adjustmentId
+      summary: Update an adjustment
+      description: Update an adjustment
+      tags:
+      - adjustments
+      parameters:
+      - name: adjustmentId
+        in: path
+        schema:
+          type: string
+        required: true
+        description: The resource's id
+      requestBody:
+        required: true
+        content:
+          application/vnd.api+json:
+            schema:
+              $ref: '#/components/schemas/adjustmentUpdate'
+      responses:
+        '200':
+          description: The updated adjustment object
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/adjustmentResponse'
+    delete:
+      operationId: DELETE/adjustments/adjustmentId
+      summary: Delete an adjustment
+      description: Delete an adjustment
+      tags:
+      - adjustments
+      parameters:
+      - name: adjustmentId
+        in: path
+        schema:
+          type: string
+        required: true
+        description: The resource's id
+      responses:
+        '204':
+          description: No content
+components:
+  schemas:
+    adjustment:
+      properties:
+        data:
+          properties:
+            attributes:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: The adjustment name.
+                  example: Additional service
+                  nullable: false
+                currency_code:
+                  type: string
+                  description: The international 3-letter currency code as defined by the ISO 4217 standard.
+                  example: EUR
+                  nullable: false
+                amount_cents:
+                  type: integer
+                  description: The adjustment amount, in cents.
+                  example: 1500
+                  nullable: false
+                amount_float:
+                  type: number
+                  description: The adjustment amount, float.
+                  example: 15.0
+                  nullable: false
+                formatted_amount:
+                  type: string
+                  description: The adjustment amount, formatted.
+                  example: €15,00
+                  nullable: false
+                distribute_discount:
+                  type: boolean
+                  description: Indicates if negative adjustment amount is distributed for tax calculation.
+                  example: true
+                  nullable: true
+                created_at:
+                  type: string
+                  description: Time at which the resource was created.
+                  example: '2018-01-01T12:00:00.000Z'
+                  nullable: false
+                updated_at:
+                  type: string
+                  description: Time at which the resource was last updated.
+                  example: '2018-01-01T12:00:00.000Z'
+                  nullable: false
+                reference:
+                  type: string
+                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
+                  example: ANY-EXTERNAL-REFEFERNCE
+                  nullable: true
+                reference_origin:
+                  type: string
+                  description: Any identifier of the third party system that defines the reference code.
+                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
+                  nullable: true
+                metadata:
+                  type: object
+                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
+                  example:
+                    foo: bar
+                  nullable: true
+    adjustmentUpdate:
+      required:
+      - data
+      type: object
+      properties:
+        data:
+          type: object
+          required:
+          - type
+          - id
+          - attributes
+          properties:
+            type:
+              type: string
+              description: The resource's type
+              enum:
+              - adjustments
+            id:
+              type: string
+              description: Unique identifier for the resource (hash).
+              example: XAyRWNUzyN
+            attributes:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: The adjustment name.
+                  example: Additional service
+                  nullable: false
+                currency_code:
+                  type: string
+                  description: The international 3-letter currency code as defined by the ISO 4217 standard.
+                  example: EUR
+                  nullable: false
+                amount_cents:
+                  type: integer
+                  description: The adjustment amount, in cents.
+                  example: 1500
+                  nullable: false
+                distribute_discount:
+                  type: boolean
+                  description: Indicates if negative adjustment amount is distributed for tax calculation.
+                  example: true
+                  nullable: false
+                reference:
+                  type: string
+                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
+                  example: ANY-EXTERNAL-REFEFERNCE
+                  nullable: true
+                reference_origin:
+                  type: string
+                  description: Any identifier of the third party system that defines the reference code.
+                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
+                  nullable: true
+                metadata:
+                  type: object
+                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
+                  example:
+                    foo: bar
+                  nullable: true
+            relationships:
+              type: object
+              properties: {}
+    adjustmentResponse:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            id:
+              type: string
+              description: Unique identifier for the resource (hash).
+              example: XAyRWNUzyN
+            type:
+              type: string
+              description: The resource's type
+              enum:
+              - adjustments
+            links:
+              type: object
+              properties:
+                self:
+                  type: string
+                  description: URL
+            attributes:
+              $ref: '#/components/schemas/adjustment/properties/data/properties/attributes'
+            relationships:
+              type: object
+              properties:
+                event_stores:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - event_stores
+                        id:
+                          type: string
+                          description: The resource ID
+    adjustmentResponseList:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/adjustmentResponse/properties/data'
+    adjustmentCreate:
+      required:
+      - data
+      type: object
+      properties:
+        data:
+          type: object
+          required:
+          - type
+          - attributes
+          properties:
+            type:
+              type: string
+              description: The resource's type
+              enum:
+              - adjustments
+            attributes:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: The adjustment name.
+                  example: Additional service
+                currency_code:
+                  type: string
+                  description: The international 3-letter currency code as defined by the ISO 4217 standard.
+                  example: EUR
+                amount_cents:
+                  type: integer
+                  description: The adjustment amount, in cents.
+                  example: 1500
+                distribute_discount:
+                  type: boolean
+                  description: Indicates if negative adjustment amount is distributed for tax calculation.
+                  example: true
+                reference:
+                  type: string
+                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
+                  example: ANY-EXTERNAL-REFEFERNCE
+                reference_origin:
+                  type: string
+                  description: Any identifier of the third party system that defines the reference code.
+                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
+                metadata:
+                  type: object
+                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
+                  example:
+                    foo: bar
+              required:
+              - name
+              - currency_code
+              - amount_cents
+            relationships:
+              type: object
+              properties: {}
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT

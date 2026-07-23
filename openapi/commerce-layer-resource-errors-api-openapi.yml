@@ -1,0 +1,225 @@
+openapi: 3.1.0
+info:
+  title: Commerce Layer addresses resource_errors API
+  version: 7.10.1
+  contact:
+    name: API Support
+    url: https://commercelayer.io
+    email: support@commercelayer.io
+  description: Headless Commerce for Global Brands.
+servers:
+- url: https://{your_organization_slug}.commercelayer.io/api
+  description: API
+- url: https://core.commercelayer.io/users/sign_in
+  description: Sign in
+- url: https://docs.commercelayer.io/api
+  description: API reference
+security:
+- bearerAuth: []
+tags:
+- name: resource_errors
+  description: resource type
+paths:
+  /orders/{orderId}/resource_errors:
+    get:
+      operationId: GET/orderId/resource_errors
+      summary: Retrieve the resource errors associated to the order
+      description: Retrieve the resource errors associated to the order
+      tags:
+      - resource_errors
+      parameters:
+      - name: orderId
+        in: path
+        schema:
+          type: string
+        required: true
+        description: The resource's id
+      responses:
+        '200':
+          description: The resource_errors associated to the order
+  /resource_errors:
+    get:
+      operationId: GET/resource_errors
+      summary: List all resource errors
+      description: List all resource errors
+      tags:
+      - resource_errors
+      responses:
+        '200':
+          description: A list of resource error objects
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/resourceErrorResponseList'
+  /resource_errors/{resourceErrorId}:
+    get:
+      operationId: GET/resource_errors/resourceErrorId
+      summary: Retrieve a resource error
+      description: Retrieve a resource error
+      tags:
+      - resource_errors
+      parameters:
+      - name: resourceErrorId
+        in: path
+        schema:
+          type: string
+        required: true
+        description: The resource's id
+      responses:
+        '200':
+          description: The resource error object
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/resourceErrorResponse'
+  /returns/{returnId}/resource_errors:
+    get:
+      operationId: GET/returnId/resource_errors
+      summary: Retrieve the resource errors associated to the return
+      description: Retrieve the resource errors associated to the return
+      tags:
+      - resource_errors
+      parameters:
+      - name: returnId
+        in: path
+        schema:
+          type: string
+        required: true
+        description: The resource's id
+      responses:
+        '200':
+          description: The resource_errors associated to the return
+components:
+  schemas:
+    resourceErrorResponse:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            id:
+              type: string
+              description: Unique identifier for the resource (hash).
+              example: XAyRWNUzyN
+            type:
+              type: string
+              description: The resource's type
+              enum:
+              - resource_errors
+            links:
+              type: object
+              properties:
+                self:
+                  type: string
+                  description: URL
+            attributes:
+              $ref: '#/components/schemas/resourceError/properties/data/properties/attributes'
+            relationships:
+              type: object
+              properties:
+                resource:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - resource
+                        id:
+                          type: string
+                          description: The resource ID
+                event_stores:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - event_stores
+                        id:
+                          type: string
+                          description: The resource ID
+    resourceErrorResponseList:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/resourceErrorResponse/properties/data'
+    resourceError:
+      properties:
+        data:
+          properties:
+            attributes:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: The resource attribute name related to the error.
+                  example: number
+                  nullable: false
+                code:
+                  type: string
+                  description: The error code.
+                  example: BLANK
+                  nullable: false
+                message:
+                  type: string
+                  description: The error message.
+                  example: can't be blank
+                  nullable: false
+                created_at:
+                  type: string
+                  description: Time at which the resource was created.
+                  example: '2018-01-01T12:00:00.000Z'
+                  nullable: false
+                updated_at:
+                  type: string
+                  description: Time at which the resource was last updated.
+                  example: '2018-01-01T12:00:00.000Z'
+                  nullable: false
+                reference:
+                  type: string
+                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
+                  example: ANY-EXTERNAL-REFEFERNCE
+                  nullable: true
+                reference_origin:
+                  type: string
+                  description: Any identifier of the third party system that defines the reference code.
+                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
+                  nullable: true
+                metadata:
+                  type: object
+                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
+                  example:
+                    foo: bar
+                  nullable: true
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT

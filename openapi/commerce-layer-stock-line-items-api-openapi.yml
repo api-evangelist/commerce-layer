@@ -1,0 +1,688 @@
+openapi: 3.1.0
+info:
+  title: Commerce Layer addresses stock_line_items API
+  version: 7.10.1
+  contact:
+    name: API Support
+    url: https://commercelayer.io
+    email: support@commercelayer.io
+  description: Headless Commerce for Global Brands.
+servers:
+- url: https://{your_organization_slug}.commercelayer.io/api
+  description: API
+- url: https://core.commercelayer.io/users/sign_in
+  description: Sign in
+- url: https://docs.commercelayer.io/api
+  description: API reference
+security:
+- bearerAuth: []
+tags:
+- name: stock_line_items
+  description: resource type
+paths:
+  /line_items/{lineItemId}/stock_line_items:
+    get:
+      operationId: GET/lineItemId/stock_line_items
+      summary: Retrieve the stock line items associated to the line item
+      description: Retrieve the stock line items associated to the line item
+      tags:
+      - stock_line_items
+      parameters:
+      - name: lineItemId
+        in: path
+        schema:
+          type: string
+        required: true
+        description: The resource's id
+      responses:
+        '200':
+          description: The stock_line_items associated to the line item
+  /orders/{orderId}/stock_line_items:
+    get:
+      operationId: GET/orderId/stock_line_items
+      summary: Retrieve the stock line items associated to the order
+      description: Retrieve the stock line items associated to the order
+      tags:
+      - stock_line_items
+      parameters:
+      - name: orderId
+        in: path
+        schema:
+          type: string
+        required: true
+        description: The resource's id
+      responses:
+        '200':
+          description: The stock_line_items associated to the order
+  /parcel_line_items/{parcelLineItemId}/stock_line_item:
+    get:
+      operationId: GET/parcelLineItemId/stock_line_item
+      summary: Retrieve the stock line item associated to the parcel line item
+      description: Retrieve the stock line item associated to the parcel line item
+      tags:
+      - stock_line_items
+      parameters:
+      - name: parcelLineItemId
+        in: path
+        schema:
+          type: string
+        required: true
+        description: The resource's id
+      responses:
+        '200':
+          description: The stock_line_item associated to the parcel line item
+  /shipments/{shipmentId}/stock_line_items:
+    get:
+      operationId: GET/shipmentId/stock_line_items
+      summary: Retrieve the stock line items associated to the shipment
+      description: Retrieve the stock line items associated to the shipment
+      tags:
+      - stock_line_items
+      parameters:
+      - name: shipmentId
+        in: path
+        schema:
+          type: string
+        required: true
+        description: The resource's id
+      responses:
+        '200':
+          description: The stock_line_items associated to the shipment
+  /stock_line_items:
+    get:
+      operationId: GET/stock_line_items
+      summary: List all stock line items
+      description: List all stock line items
+      tags:
+      - stock_line_items
+      responses:
+        '200':
+          description: A list of stock line item objects
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/stockLineItemResponseList'
+    post:
+      operationId: POST/stock_line_items
+      summary: Create a stock line item
+      description: Create a stock line item
+      tags:
+      - stock_line_items
+      requestBody:
+        required: true
+        content:
+          application/vnd.api+json:
+            schema:
+              $ref: '#/components/schemas/stockLineItemCreate'
+      responses:
+        '201':
+          description: The created stock line item object
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/stockLineItemResponse'
+  /stock_line_items/{stockLineItemId}:
+    get:
+      operationId: GET/stock_line_items/stockLineItemId
+      summary: Retrieve a stock line item
+      description: Retrieve a stock line item
+      tags:
+      - stock_line_items
+      parameters:
+      - name: stockLineItemId
+        in: path
+        schema:
+          type: string
+        required: true
+        description: The resource's id
+      responses:
+        '200':
+          description: The stock line item object
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/stockLineItemResponse'
+    patch:
+      operationId: PATCH/stock_line_items/stockLineItemId
+      summary: Update a stock line item
+      description: Update a stock line item
+      tags:
+      - stock_line_items
+      parameters:
+      - name: stockLineItemId
+        in: path
+        schema:
+          type: string
+        required: true
+        description: The resource's id
+      requestBody:
+        required: true
+        content:
+          application/vnd.api+json:
+            schema:
+              $ref: '#/components/schemas/stockLineItemUpdate'
+      responses:
+        '200':
+          description: The updated stock line item object
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/stockLineItemResponse'
+    delete:
+      operationId: DELETE/stock_line_items/stockLineItemId
+      summary: Delete a stock line item
+      description: Delete a stock line item
+      tags:
+      - stock_line_items
+      parameters:
+      - name: stockLineItemId
+        in: path
+        schema:
+          type: string
+        required: true
+        description: The resource's id
+      responses:
+        '204':
+          description: No content
+  /stock_reservations/{stockReservationId}/stock_line_item:
+    get:
+      operationId: GET/stockReservationId/stock_line_item
+      summary: Retrieve the stock line item associated to the stock reservation
+      description: Retrieve the stock line item associated to the stock reservation
+      tags:
+      - stock_line_items
+      parameters:
+      - name: stockReservationId
+        in: path
+        schema:
+          type: string
+        required: true
+        description: The resource's id
+      responses:
+        '200':
+          description: The stock_line_item associated to the stock reservation
+components:
+  schemas:
+    stockLineItemResponseList:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/stockLineItemResponse/properties/data'
+    stockLineItemUpdate:
+      required:
+      - data
+      type: object
+      properties:
+        data:
+          type: object
+          required:
+          - type
+          - id
+          - attributes
+          properties:
+            type:
+              type: string
+              description: The resource's type
+              enum:
+              - stock_line_items
+            id:
+              type: string
+              description: Unique identifier for the resource (hash).
+              example: XAyRWNUzyN
+            attributes:
+              type: object
+              properties:
+                sku_code:
+                  type: string
+                  description: The code of the associated SKU.
+                  example: TSHIRTMM000000FFFFFFXLXX
+                  nullable: true
+                quantity:
+                  type: integer
+                  description: The line item quantity.
+                  example: 4
+                  nullable: false
+                _reserve_stock:
+                  type: boolean
+                  description: Send this attribute if you want to automatically reserve the stock for this stock line item. Can be done only when fulfillment is in progress. Cannot be passed by sales channels.
+                  example: true
+                  nullable: false
+                _release_stock:
+                  type: boolean
+                  description: Send this attribute if you want to automatically destroy the stock reservation for this stock line item. Can be done only when fulfillment is in progress. Cannot be passed by sales channels.
+                  example: true
+                  nullable: false
+                _decrement_stock:
+                  type: boolean
+                  description: Send this attribute if you want to automatically decrement and release the stock this stock line item. Can be done only when fulfillment is in progress. Cannot be passed by sales channels.
+                  example: true
+                  nullable: false
+                reference:
+                  type: string
+                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
+                  example: ANY-EXTERNAL-REFEFERNCE
+                  nullable: true
+                reference_origin:
+                  type: string
+                  description: Any identifier of the third party system that defines the reference code.
+                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
+                  nullable: true
+                metadata:
+                  type: object
+                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
+                  example:
+                    foo: bar
+                  nullable: true
+            relationships:
+              type: object
+              properties:
+                shipment:
+                  required:
+                  - data
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - shipments
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+                line_item:
+                  required:
+                  - data
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - line_items
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+                stock_item:
+                  required:
+                  - data
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - stock_items
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+                sku:
+                  required:
+                  - data
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - skus
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+    stockLineItemResponse:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            id:
+              type: string
+              description: Unique identifier for the resource (hash).
+              example: XAyRWNUzyN
+            type:
+              type: string
+              description: The resource's type
+              enum:
+              - stock_line_items
+            links:
+              type: object
+              properties:
+                self:
+                  type: string
+                  description: URL
+            attributes:
+              $ref: '#/components/schemas/stockLineItem/properties/data/properties/attributes'
+            relationships:
+              type: object
+              properties:
+                shipment:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - shipment
+                        id:
+                          type: string
+                          description: The resource ID
+                line_item:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - line_item
+                        id:
+                          type: string
+                          description: The resource ID
+                stock_item:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - stock_item
+                        id:
+                          type: string
+                          description: The resource ID
+                sku:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - sku
+                        id:
+                          type: string
+                          description: The resource ID
+                stock_reservation:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - stock_reservation
+                        id:
+                          type: string
+                          description: The resource ID
+                event_stores:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - event_stores
+                        id:
+                          type: string
+                          description: The resource ID
+    stockLineItemCreate:
+      required:
+      - data
+      type: object
+      properties:
+        data:
+          type: object
+          required:
+          - type
+          - attributes
+          properties:
+            type:
+              type: string
+              description: The resource's type
+              enum:
+              - stock_line_items
+            attributes:
+              type: object
+              properties:
+                sku_code:
+                  type: string
+                  description: The code of the associated SKU.
+                  example: TSHIRTMM000000FFFFFFXLXX
+                quantity:
+                  type: integer
+                  description: The line item quantity.
+                  example: 4
+                reference:
+                  type: string
+                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
+                  example: ANY-EXTERNAL-REFEFERNCE
+                reference_origin:
+                  type: string
+                  description: Any identifier of the third party system that defines the reference code.
+                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
+                metadata:
+                  type: object
+                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
+                  example:
+                    foo: bar
+              required:
+              - quantity
+            relationships:
+              type: object
+              properties:
+                shipment:
+                  required:
+                  - data
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - shipments
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+                line_item:
+                  required:
+                  - data
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - line_items
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+                stock_item:
+                  required:
+                  - data
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - stock_items
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+                sku:
+                  required:
+                  - data
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - skus
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+    stockLineItem:
+      properties:
+        data:
+          properties:
+            attributes:
+              type: object
+              properties:
+                sku_code:
+                  type: string
+                  description: The code of the associated SKU.
+                  example: TSHIRTMM000000FFFFFFXLXX
+                  nullable: true
+                bundle_code:
+                  type: string
+                  description: The code of the associated bundle.
+                  example: BUNDLEMM000000FFFFFFXLXX
+                  nullable: true
+                quantity:
+                  type: integer
+                  description: The line item quantity.
+                  example: 4
+                  nullable: false
+                name:
+                  type: string
+                  description: The internal name of the associated line item.
+                  example: Men's Black T-shirt with White Logo (XL)
+                  nullable: true
+                image_url:
+                  type: string
+                  description: The image_url of the associated line item.
+                  example: https://img.yourdomain.com/skus/xYZkjABcde.png
+                  nullable: true
+                created_at:
+                  type: string
+                  description: Time at which the resource was created.
+                  example: '2018-01-01T12:00:00.000Z'
+                  nullable: false
+                updated_at:
+                  type: string
+                  description: Time at which the resource was last updated.
+                  example: '2018-01-01T12:00:00.000Z'
+                  nullable: false
+                reference:
+                  type: string
+                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
+                  example: ANY-EXTERNAL-REFEFERNCE
+                  nullable: true
+                reference_origin:
+                  type: string
+                  description: Any identifier of the third party system that defines the reference code.
+                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
+                  nullable: true
+                metadata:
+                  type: object
+                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
+                  example:
+                    foo: bar
+                  nullable: true
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT

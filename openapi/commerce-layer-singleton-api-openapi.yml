@@ -1,0 +1,768 @@
+openapi: 3.1.0
+info:
+  title: Commerce Layer addresses singleton API
+  version: 7.10.1
+  contact:
+    name: API Support
+    url: https://commercelayer.io
+    email: support@commercelayer.io
+  description: Headless Commerce for Global Brands.
+servers:
+- url: https://{your_organization_slug}.commercelayer.io/api
+  description: API
+- url: https://core.commercelayer.io/users/sign_in
+  description: Sign in
+- url: https://docs.commercelayer.io/api
+  description: API reference
+security:
+- bearerAuth: []
+tags:
+- name: singleton
+  description: singleton resource
+paths:
+  /application:
+    get:
+      operationId: GET/application/applicationId
+      summary: Retrieve the application
+      description: Retrieve the application
+      tags:
+      - singleton
+      responses:
+        '200':
+          description: The application object
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/applicationResponse'
+  /organization:
+    get:
+      operationId: GET/organization/organizationId
+      summary: Retrieve the organization
+      description: Retrieve the organization
+      tags:
+      - singleton
+      responses:
+        '200':
+          description: The organization object
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/organizationResponse'
+  /user:
+    get:
+      operationId: GET/user
+      summary: Retrieve an user
+      description: Retrieve an user
+      parameters: []
+      tags:
+      - singleton
+      responses:
+        '200':
+          description: The user object
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/userResponse'
+    patch:
+      operationId: PATCH/user
+      summary: Updates an user
+      description: Updates an user
+      tags:
+      - singleton
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/vnd.api+json:
+            schema:
+              $ref: '#/components/schemas/userUpdate'
+      responses:
+        '200':
+          description: The updated user object
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/userResponse'
+components:
+  schemas:
+    application:
+      properties:
+        data:
+          properties:
+            attributes:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: The application's internal name.
+                  example: My app
+                  nullable: true
+                kind:
+                  type: string
+                  description: The application's kind. One of 'sales_channel', 'integration', or 'webapp'.
+                  example: sales-channel
+                  nullable: true
+                  enum:
+                  - dashboard
+                  - user
+                  - contentful
+                  - bundles
+                  - customers
+                  - datocms
+                  - exports
+                  - external
+                  - generic
+                  - gift_cards
+                  - imports
+                  - integration
+                  - inventory
+                  - metrics
+                  - orders
+                  - price_lists
+                  - promotions
+                  - resources
+                  - returns
+                  - sales_channel
+                  - sanity
+                  - shipments
+                  - skus
+                  - sku_lists
+                  - stock_transfers
+                  - subscriptions
+                  - tags
+                  - webapp
+                  - webhooks
+                  - zapier
+                public_access:
+                  type: boolean
+                  description: Indicates if the application has public access.
+                  example: true
+                  nullable: true
+                redirect_uri:
+                  type: string
+                  description: The application's redirect URI.
+                  example: https://bluebrand.com/img/logo.svg
+                  nullable: true
+                scopes:
+                  type: string
+                  description: The application's scopes.
+                  example: market:all market:9 market:122 market:6 stock_location:6 stock_location:33
+                  nullable: true
+                created_at:
+                  type: string
+                  description: Time at which the resource was created.
+                  example: '2018-01-01T12:00:00.000Z'
+                  nullable: false
+                updated_at:
+                  type: string
+                  description: Time at which the resource was last updated.
+                  example: '2018-01-01T12:00:00.000Z'
+                  nullable: false
+                reference:
+                  type: string
+                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
+                  example: ANY-EXTERNAL-REFEFERNCE
+                  nullable: true
+                reference_origin:
+                  type: string
+                  description: Any identifier of the third party system that defines the reference code.
+                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
+                  nullable: true
+                metadata:
+                  type: object
+                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
+                  example:
+                    foo: bar
+                  nullable: true
+    organization:
+      properties:
+        data:
+          properties:
+            attributes:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: The organization's internal name.
+                  example: The Blue Brand
+                  nullable: true
+                slug:
+                  type: string
+                  description: The organization's slug name.
+                  example: the-blue-brand
+                  nullable: true
+                domain:
+                  type: string
+                  description: The organization's domain.
+                  example: the-blue-brand.commercelayer.io
+                  nullable: true
+                support_phone:
+                  type: string
+                  description: The organization's support phone.
+                  example: +01 30800857
+                  nullable: true
+                support_email:
+                  type: string
+                  description: The organization's support email.
+                  example: support@bluebrand.com
+                  nullable: true
+                logo_url:
+                  type: string
+                  description: The URL to the organization's logo.
+                  example: https://bluebrand.com/img/logo.svg
+                  nullable: true
+                favicon_url:
+                  type: string
+                  description: The URL to the organization's favicon.
+                  example: https://bluebrand.com/img/favicon.ico
+                  nullable: true
+                primary_color:
+                  type: string
+                  description: The organization's primary color.
+                  example: '#C8984E'
+                  nullable: true
+                gtm_id:
+                  type: string
+                  description: The organization's Google Tag Manager ID.
+                  example: GTM-5FJXX6
+                  nullable: true
+                gtm_id_test:
+                  type: string
+                  description: The organization's Google Tag Manager ID for test.
+                  example: GTM-5FJXX7
+                  nullable: true
+                config:
+                  type: object
+                  description: The organization's configuration.
+                  example:
+                    mfe:
+                      default:
+                        links:
+                          cart: https://cart.example.com/:order_id?accessToken=:access_token
+                          checkout: https://checkout.example.com/:order_id?accessToken=:accessToken
+                          identity: https://example.com/login
+                          microstore: https://example.com/microstore/?accessToken=:access_token
+                          my_account: https://example.com/my-custom-account?accessToken=:access_token
+                        checkout:
+                          thankyou_page: https://example.com/thanks/:lang/:orderId
+                          billing_countries:
+                          - value: ES
+                            label: Espana
+                          - value: IT
+                            label: Italia
+                          - value: US
+                            label: Unites States of America
+                          shipping_countries:
+                          - value: ES
+                            label: Espana
+                          - value: IT
+                            label: Italia
+                          - value: US
+                            label: Unites States of America
+                          billing_states:
+                            FR:
+                            - value: PA
+                              label: Paris
+                            - value: LY
+                              label: Lyon
+                            - value: NI
+                              label: Nice
+                            - value: MA
+                              label: Marseille
+                            - value: BO
+                              label: Bordeaux
+                          shipping_states:
+                            FR:
+                            - value: PA
+                              label: Paris
+                            - value: LY
+                              label: Lyon
+                            - value: NI
+                              label: Nice
+                            - value: MA
+                              label: Marseille
+                            - value: BO
+                              label: Bordeaux
+                          default_country: US
+                        urls:
+                          privacy: https://example.com/privacy/:lang
+                          terms: https://example.com/terms/:lang
+                      market:id:ZKcv13rT:
+                        links:
+                          cart: https://example.com/custom-cart/:order_id?accessToken=:access_token
+                        checkout:
+                          thankyou_page: https://example.com/thanks/:order_id
+                  nullable: true
+                api_auth_redirect:
+                  type: boolean
+                  description: Enables the redirect on the new Auth API.
+                  example: true
+                  nullable: true
+                api_rules_engine:
+                  type: boolean
+                  description: Enables the rules engine for flex promotions and price list rules.
+                  example: false
+                  nullable: true
+                api_rules_engine_max_conditions_size:
+                  type: integer
+                  description: The fallback maximum number of conditions within a rules payload on a ruleable object, default is 150.
+                  example: 150
+                  nullable: true
+                api_rules_engine_max_rules_size:
+                  type: integer
+                  description: The fallback maximum number of rules within a rules payload on a ruleable object, default is 15.
+                  example: 15
+                  nullable: true
+                api_new_auth:
+                  type: boolean
+                  description: Forces the usage of the new Authentication API.
+                  example: true
+                  nullable: true
+                api_purge_single_resource:
+                  type: boolean
+                  description: Enables the purge of cached single resources when list is purged.
+                  example: false
+                  nullable: true
+                api_max_regex_length:
+                  type: integer
+                  description: The maximum length for the regular expressions, default is 5000.
+                  example: 5000
+                  nullable: true
+                addresses_avs_check:
+                  type: boolean
+                  description: Indicates if AVS checking will be enforced during payment workflow by passing specific attributes, default is true.
+                  example: true
+                  nullable: true
+                addresses_phone_required:
+                  type: boolean
+                  description: Indicates if the phone attribute is required for addresses, default is true.
+                  example: true
+                  nullable: true
+                orders_sales_channel_guest_only:
+                  type: boolean
+                  description: Indicates if a sales channel application without customer can read and update just guest orders.
+                  example: true
+                  nullable: true
+                orders_min_rebuild_shipments_lapse:
+                  type: number
+                  description: The minimum lapse in fraction of seconds to be observed between two consecutive shipments rebuilt. If shipments rebuilt is triggered within the minimum lapse, the update is performed, but no rebuilt is done.
+                  example: 0.0
+                  nullable: true
+                orders_min_refresh_lapse:
+                  type: number
+                  description: The minimum lapse in fraction of seconds to be observed between two consecutive order refreshes. If refresh is triggered within the minimum lapse, the update is performed, but no order refresh is done.
+                  example: 0.0
+                  nullable: true
+                orders_autorefresh_cutoff_test:
+                  type: integer
+                  description: The maximum number line items allowed for a test order before disabling the autorefresh option.
+                  example: 50
+                  nullable: true
+                orders_autorefresh_cutoff_live:
+                  type: integer
+                  description: The maximum number line items allowed for a live order before disabling the autorefresh option.
+                  example: 500
+                  nullable: true
+                orders_number_editable_test:
+                  type: boolean
+                  description: Enables orders number editing as a string in test (for enterprise plans only).
+                  example: false
+                  nullable: true
+                orders_number_editable_live:
+                  type: boolean
+                  description: Enables orders number editing as a string in live (for enterprise plans only).
+                  example: false
+                  nullable: true
+                orders_number_as_reference:
+                  type: boolean
+                  description: Enables to use the order number as payment reference on supported gateways.
+                  example: true
+                  nullable: true
+                orders_invalid_coupon_errors:
+                  type: boolean
+                  description: Enables raising of API errors in case the provided coupon code is invalid, default is true.
+                  example: true
+                  nullable: true
+                orders_invalid_gift_card_errors:
+                  type: boolean
+                  description: Enables raising of API errors in case the provided gift card code is invalid, default is true.
+                  example: true
+                  nullable: true
+                orders_validate_shipping_stock:
+                  type: boolean
+                  description: Enables the validation of the generated stock line items and stock transfers before placing the order, default is false.
+                  example: false
+                  nullable: true
+                bundles_max_items_count:
+                  type: integer
+                  description: The maximum number of SKUs allowed for bundles, default is 10.
+                  example: 10
+                  nullable: true
+                coupons_min_code_length:
+                  type: integer
+                  description: The minimum length for coupon code, default is 8.
+                  example: 8
+                  nullable: true
+                coupons_max_code_length:
+                  type: integer
+                  description: The maximum length for coupon code, default is 40.
+                  example: 40
+                  nullable: true
+                gift_cards_exact_code_matching:
+                  type: boolean
+                  description: Enables matching the gift card code by its exact value, instead of by its first charachters, default is false.
+                  example: false
+                  nullable: true
+                gift_cards_min_code_length:
+                  type: integer
+                  description: The minimum length for gift card code, default is 8.
+                  example: 8
+                  nullable: true
+                gift_cards_max_code_length:
+                  type: integer
+                  description: The maximum length for gift card code, default is 40.
+                  example: 40
+                  nullable: true
+                cleanups_max_concurrent_count:
+                  type: integer
+                  description: The maximum number of concurrent cleanups allowed for your organization, default is 10.
+                  example: 10
+                  nullable: true
+                exports_max_concurrent_count:
+                  type: integer
+                  description: The maximum number of concurrent exports allowed for your organization, default is 10.
+                  example: 10
+                  nullable: true
+                imports_max_concurrent_count:
+                  type: integer
+                  description: The maximum number of concurrent imports allowed for your organization, default is 10.
+                  example: 10
+                  nullable: true
+                imports_purge_cache:
+                  type: boolean
+                  description: Enables purging of cached resources upon succeeded imports.
+                  example: true
+                  nullable: true
+                imports_skip_errors:
+                  type: boolean
+                  description: Disables the interruption of the import in case its errors exceeds the 10% threshold, default is false.
+                  example: false
+                  nullable: true
+                inventory_models_max_stock_locations_cutoff:
+                  type: integer
+                  description: The maximum number for stock locations cutoff, default is 10.
+                  example: 10
+                  nullable: true
+                promotions_max_concurrent_count:
+                  type: integer
+                  description: The maximum number of active concurrent promotions allowed for your organization, default is 10.
+                  example: 10
+                  nullable: true
+                promotions_max_conditions_size:
+                  type: integer
+                  description: The maximum number of conditions within a rules payload on a promotion object, default is 150.
+                  example: 150
+                  nullable: true
+                promotions_max_rules_size:
+                  type: integer
+                  description: The maximum number of rules within a rules payload on a promotion object, default is 15.
+                  example: 15
+                  nullable: true
+                price_lists_max_conditions_size:
+                  type: integer
+                  description: The maximum number of conditions within a rules payload on a price list object, default is 150.
+                  example: 150
+                  nullable: true
+                price_lists_max_rules_size:
+                  type: integer
+                  description: The maximum number of rules within a rules payload on a price list object, default is 15.
+                  example: 15
+                  nullable: true
+                imports_trigger_webhooks:
+                  type: integer
+                  description: Enables triggering of webhooks during imports, default is false.
+                  example: 0
+                  nullable: true
+                discount_engines_enabled:
+                  type: boolean
+                  description: Enables the use of an external discount engine in place of the standard one, default is false.
+                  example: false
+                  nullable: true
+                discount_engines_errors:
+                  type: boolean
+                  description: Enables raising of API errors in case of discount engine failure, default is false.
+                  example: false
+                  nullable: true
+                tags_max_name_length:
+                  type: integer
+                  description: The maximum length for the tag name, default is 25.
+                  example: 25
+                  nullable: true
+                tags_max_allowed_number:
+                  type: integer
+                  description: The maximum allowed number of tags for each resource, default is 10.
+                  example: 10
+                  nullable: true
+                tax_calculators_errors:
+                  type: boolean
+                  description: Enables raising of API errors in case of tax calculation failure, default is false.
+                  example: false
+                  nullable: true
+                external_promotions_errors:
+                  type: boolean
+                  description: Enables raising of API errors in case of external promotion failure, default is false.
+                  example: false
+                  nullable: true
+                external_prices_errors:
+                  type: boolean
+                  description: Enables raising of API errors in case of external price failure, default is true.
+                  example: true
+                  nullable: true
+                created_at:
+                  type: string
+                  description: Time at which the resource was created.
+                  example: '2018-01-01T12:00:00.000Z'
+                  nullable: false
+                updated_at:
+                  type: string
+                  description: Time at which the resource was last updated.
+                  example: '2018-01-01T12:00:00.000Z'
+                  nullable: false
+                reference:
+                  type: string
+                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
+                  example: ANY-EXTERNAL-REFEFERNCE
+                  nullable: true
+                reference_origin:
+                  type: string
+                  description: Any identifier of the third party system that defines the reference code.
+                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
+                  nullable: true
+                metadata:
+                  type: object
+                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
+                  example:
+                    foo: bar
+                  nullable: true
+    organizationResponse:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            id:
+              type: string
+              description: Unique identifier for the resource (hash).
+              example: XAyRWNUzyN
+            type:
+              type: string
+              description: The resource's type
+              enum:
+              - organization
+            links:
+              type: object
+              properties:
+                self:
+                  type: string
+                  description: URL
+            attributes:
+              $ref: '#/components/schemas/organization/properties/data/properties/attributes'
+            relationships:
+              type: object
+              properties:
+                event_stores:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - event_stores
+                        id:
+                          type: string
+                          description: The resource ID
+    userUpdate:
+      required:
+      - data
+      type: object
+      properties:
+        data:
+          type: object
+          required:
+          - type
+          - attributes
+          properties:
+            type:
+              type: string
+              description: The resource's type.
+              enum:
+              - users
+            attributes:
+              type: object
+              properties:
+                email:
+                  type: string
+                  description: The user email.
+                  example: user@commercelayer.io
+                  nullable: false
+                first_name:
+                  type: string
+                  description: The user first name.
+                  example: John
+                  nullable: false
+                last_name:
+                  type: string
+                  description: The user last name.
+                  example: Doe
+                  nullable: false
+                time_zone:
+                  type: string
+                  description: The user preferred timezone.
+                  example: UTC
+                  nullable: true
+                reference:
+                  type: string
+                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
+                  example: ANY-EXTERNAL-REFEFERNCE
+                  nullable: true
+                reference_origin:
+                  type: string
+                  description: Any identifier of the third party system that defines the reference code.
+                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
+                  nullable: true
+                metadata:
+                  type: object
+                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
+                  example:
+                    foo: bar
+                  nullable: true
+            relationships:
+              type: object
+              properties: {}
+    applicationResponse:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            id:
+              type: string
+              description: Unique identifier for the resource (hash).
+              example: XAyRWNUzyN
+            type:
+              type: string
+              description: The resource's type
+              enum:
+              - application
+            links:
+              type: object
+              properties:
+                self:
+                  type: string
+                  description: URL
+            attributes:
+              $ref: '#/components/schemas/application/properties/data/properties/attributes'
+            relationships:
+              type: object
+              properties: {}
+    userResponse:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            id:
+              type: string
+              description: The ID of the resource.
+              example: XGZwpOSrWL
+            type:
+              type: string
+              description: The resource's type.
+              enum:
+              - users
+            links:
+              type: object
+              properties:
+                self:
+                  type: string
+                  description: URL
+            attributes:
+              $ref: '#/components/schemas/user/properties/data/properties/attributes'
+            relationships:
+              type: object
+              properties: {}
+    user:
+      properties:
+        data:
+          properties:
+            attributes:
+              type: object
+              properties:
+                email:
+                  type: string
+                  description: The user email.
+                  example: user@commercelayer.io
+                  nullable: false
+                first_name:
+                  type: string
+                  description: The user first name.
+                  example: John
+                  nullable: false
+                last_name:
+                  type: string
+                  description: The user last name.
+                  example: Doe
+                  nullable: false
+                time_zone:
+                  type: string
+                  description: The user preferred timezone.
+                  example: UTC
+                  nullable: true
+                otp_required_for_login:
+                  type: boolean
+                  description: The user 2FA setting.
+                  example: false
+                  readOnly: true
+                created_at:
+                  type: string
+                  description: Time at which the resource was created.
+                  example: '2018-01-01T12:00:00.000Z'
+                  readOnly: true
+                updated_at:
+                  type: string
+                  description: Time at which the resource was last updated.
+                  example: '2018-01-01T12:00:00.000Z'
+                  readOnly: true
+                reference:
+                  type: string
+                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
+                  example: ANY-EXTERNAL-REFEFERNCE
+                  nullable: true
+                reference_origin:
+                  type: string
+                  description: Any identifier of the third party system that defines the reference code.
+                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
+                  nullable: true
+                metadata:
+                  type: object
+                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
+                  example:
+                    foo: bar
+                  nullable: true
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT

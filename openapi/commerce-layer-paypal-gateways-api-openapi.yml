@@ -1,0 +1,424 @@
+openapi: 3.1.0
+info:
+  title: Commerce Layer addresses paypal_gateways API
+  version: 7.10.1
+  contact:
+    name: API Support
+    url: https://commercelayer.io
+    email: support@commercelayer.io
+  description: Headless Commerce for Global Brands.
+servers:
+- url: https://{your_organization_slug}.commercelayer.io/api
+  description: API
+- url: https://core.commercelayer.io/users/sign_in
+  description: Sign in
+- url: https://docs.commercelayer.io/api
+  description: API reference
+security:
+- bearerAuth: []
+tags:
+- name: paypal_gateways
+  description: resource type
+paths:
+  /paypal_gateways:
+    get:
+      operationId: GET/paypal_gateways
+      summary: List all paypal gateways
+      description: List all paypal gateways
+      tags:
+      - paypal_gateways
+      responses:
+        '200':
+          description: A list of paypal gateway objects
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/paypalGatewayResponseList'
+    post:
+      operationId: POST/paypal_gateways
+      summary: Create a paypal gateway
+      description: Create a paypal gateway
+      tags:
+      - paypal_gateways
+      requestBody:
+        required: true
+        content:
+          application/vnd.api+json:
+            schema:
+              $ref: '#/components/schemas/paypalGatewayCreate'
+      responses:
+        '201':
+          description: The created paypal gateway object
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/paypalGatewayResponse'
+  /paypal_gateways/{paypalGatewayId}:
+    get:
+      operationId: GET/paypal_gateways/paypalGatewayId
+      summary: Retrieve a paypal gateway
+      description: Retrieve a paypal gateway
+      tags:
+      - paypal_gateways
+      parameters:
+      - name: paypalGatewayId
+        in: path
+        schema:
+          type: string
+        required: true
+        description: The resource's id
+      responses:
+        '200':
+          description: The paypal gateway object
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/paypalGatewayResponse'
+    patch:
+      operationId: PATCH/paypal_gateways/paypalGatewayId
+      summary: Update a paypal gateway
+      description: Update a paypal gateway
+      tags:
+      - paypal_gateways
+      parameters:
+      - name: paypalGatewayId
+        in: path
+        schema:
+          type: string
+        required: true
+        description: The resource's id
+      requestBody:
+        required: true
+        content:
+          application/vnd.api+json:
+            schema:
+              $ref: '#/components/schemas/paypalGatewayUpdate'
+      responses:
+        '200':
+          description: The updated paypal gateway object
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/paypalGatewayResponse'
+    delete:
+      operationId: DELETE/paypal_gateways/paypalGatewayId
+      summary: Delete a paypal gateway
+      description: Delete a paypal gateway
+      tags:
+      - paypal_gateways
+      parameters:
+      - name: paypalGatewayId
+        in: path
+        schema:
+          type: string
+        required: true
+        description: The resource's id
+      responses:
+        '204':
+          description: No content
+components:
+  schemas:
+    paypalGatewayResponseList:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/paypalGatewayResponse/properties/data'
+    paypalGateway:
+      properties:
+        data:
+          properties:
+            attributes:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: The payment gateway's internal name.
+                  example: US payment gateway
+                  nullable: false
+                force_payments:
+                  type: boolean
+                  description: Indicates if the payment source is forced on the editable order upon receiving a successful event from the gateway.
+                  example: true
+                  nullable: true
+                credential_keys:
+                  type: object
+                  description: The payment gateway's API credential keys last digits.
+                  example:
+                    api_key: '********BW989'
+                  nullable: true
+                disabled_at:
+                  type: string
+                  description: Time at which this resource was disabled.
+                  example: '2018-01-01T12:00:00.000Z'
+                  nullable: true
+                created_at:
+                  type: string
+                  description: Time at which the resource was created.
+                  example: '2018-01-01T12:00:00.000Z'
+                  nullable: false
+                updated_at:
+                  type: string
+                  description: Time at which the resource was last updated.
+                  example: '2018-01-01T12:00:00.000Z'
+                  nullable: false
+                reference:
+                  type: string
+                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
+                  example: ANY-EXTERNAL-REFEFERNCE
+                  nullable: true
+                reference_origin:
+                  type: string
+                  description: Any identifier of the third party system that defines the reference code.
+                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
+                  nullable: true
+                metadata:
+                  type: object
+                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
+                  example:
+                    foo: bar
+                  nullable: true
+    paypalGatewayUpdate:
+      required:
+      - data
+      type: object
+      properties:
+        data:
+          type: object
+          required:
+          - type
+          - id
+          - attributes
+          properties:
+            type:
+              type: string
+              description: The resource's type
+              enum:
+              - paypal_gateways
+            id:
+              type: string
+              description: Unique identifier for the resource (hash).
+              example: XAyRWNUzyN
+            attributes:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: The payment gateway's internal name.
+                  example: US payment gateway
+                  nullable: false
+                force_payments:
+                  type: boolean
+                  description: Indicates if the payment source is forced on the editable order upon receiving a successful event from the gateway.
+                  example: true
+                  nullable: false
+                _disable:
+                  type: boolean
+                  description: Send this attribute if you want to mark this resource as disabled.
+                  example: true
+                  nullable: false
+                _enable:
+                  type: boolean
+                  description: Send this attribute if you want to mark this resource as enabled.
+                  example: true
+                  nullable: false
+                reference:
+                  type: string
+                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
+                  example: ANY-EXTERNAL-REFEFERNCE
+                  nullable: true
+                reference_origin:
+                  type: string
+                  description: Any identifier of the third party system that defines the reference code.
+                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
+                  nullable: true
+                metadata:
+                  type: object
+                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
+                  example:
+                    foo: bar
+                  nullable: true
+                _check:
+                  type: boolean
+                  description: Send this attribute if you want to check the credentials against the payment gateway's APIs.
+                  example: true
+                  nullable: false
+                client_id:
+                  type: string
+                  description: The gateway client ID.
+                  example: xxxx-yyyy-zzzz
+                client_secret:
+                  type: string
+                  description: The gateway client secret.
+                  example: xxxx-yyyy-zzzz
+            relationships:
+              type: object
+              properties: {}
+    paypalGatewayCreate:
+      required:
+      - data
+      type: object
+      properties:
+        data:
+          type: object
+          required:
+          - type
+          - attributes
+          properties:
+            type:
+              type: string
+              description: The resource's type
+              enum:
+              - paypal_gateways
+            attributes:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: The payment gateway's internal name.
+                  example: US payment gateway
+                force_payments:
+                  type: boolean
+                  description: Indicates if the payment source is forced on the editable order upon receiving a successful event from the gateway.
+                  example: true
+                _disable:
+                  type: boolean
+                  description: Send this attribute if you want to mark this resource as disabled.
+                  example: true
+                _enable:
+                  type: boolean
+                  description: Send this attribute if you want to mark this resource as enabled.
+                  example: true
+                reference:
+                  type: string
+                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
+                  example: ANY-EXTERNAL-REFEFERNCE
+                reference_origin:
+                  type: string
+                  description: Any identifier of the third party system that defines the reference code.
+                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
+                metadata:
+                  type: object
+                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
+                  example:
+                    foo: bar
+                _check:
+                  type: boolean
+                  description: Send this attribute if you want to check the credentials against the payment gateway's APIs.
+                  example: true
+                client_id:
+                  type: string
+                  description: The gateway client ID.
+                  example: xxxx-yyyy-zzzz
+                client_secret:
+                  type: string
+                  description: The gateway client secret.
+                  example: xxxx-yyyy-zzzz
+              required:
+              - name
+              - client_id
+              - client_secret
+            relationships:
+              type: object
+              properties: {}
+    paypalGatewayResponse:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            id:
+              type: string
+              description: Unique identifier for the resource (hash).
+              example: XAyRWNUzyN
+            type:
+              type: string
+              description: The resource's type
+              enum:
+              - paypal_gateways
+            links:
+              type: object
+              properties:
+                self:
+                  type: string
+                  description: URL
+            attributes:
+              $ref: '#/components/schemas/paypalGateway/properties/data/properties/attributes'
+            relationships:
+              type: object
+              properties:
+                payment_methods:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - payment_methods
+                        id:
+                          type: string
+                          description: The resource ID
+                event_stores:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - event_stores
+                        id:
+                          type: string
+                          description: The resource ID
+                paypal_payments:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - paypal_payments
+                        id:
+                          type: string
+                          description: The resource ID
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT

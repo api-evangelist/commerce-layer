@@ -1,0 +1,570 @@
+openapi: 3.1.0
+info:
+  title: Commerce Layer addresses adyen_gateways API
+  version: 7.10.1
+  contact:
+    name: API Support
+    url: https://commercelayer.io
+    email: support@commercelayer.io
+  description: Headless Commerce for Global Brands.
+servers:
+- url: https://{your_organization_slug}.commercelayer.io/api
+  description: API
+- url: https://core.commercelayer.io/users/sign_in
+  description: Sign in
+- url: https://docs.commercelayer.io/api
+  description: API reference
+security:
+- bearerAuth: []
+tags:
+- name: adyen_gateways
+  description: resource type
+paths:
+  /adyen_gateways:
+    get:
+      operationId: GET/adyen_gateways
+      summary: List all adyen gateways
+      description: List all adyen gateways
+      tags:
+      - adyen_gateways
+      responses:
+        '200':
+          description: A list of adyen gateway objects
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/adyenGatewayResponseList'
+    post:
+      operationId: POST/adyen_gateways
+      summary: Create an adyen gateway
+      description: Create an adyen gateway
+      tags:
+      - adyen_gateways
+      requestBody:
+        required: true
+        content:
+          application/vnd.api+json:
+            schema:
+              $ref: '#/components/schemas/adyenGatewayCreate'
+      responses:
+        '201':
+          description: The created adyen gateway object
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/adyenGatewayResponse'
+  /adyen_gateways/{adyenGatewayId}:
+    get:
+      operationId: GET/adyen_gateways/adyenGatewayId
+      summary: Retrieve an adyen gateway
+      description: Retrieve an adyen gateway
+      tags:
+      - adyen_gateways
+      parameters:
+      - name: adyenGatewayId
+        in: path
+        schema:
+          type: string
+        required: true
+        description: The resource's id
+      responses:
+        '200':
+          description: The adyen gateway object
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/adyenGatewayResponse'
+    patch:
+      operationId: PATCH/adyen_gateways/adyenGatewayId
+      summary: Update an adyen gateway
+      description: Update an adyen gateway
+      tags:
+      - adyen_gateways
+      parameters:
+      - name: adyenGatewayId
+        in: path
+        schema:
+          type: string
+        required: true
+        description: The resource's id
+      requestBody:
+        required: true
+        content:
+          application/vnd.api+json:
+            schema:
+              $ref: '#/components/schemas/adyenGatewayUpdate'
+      responses:
+        '200':
+          description: The updated adyen gateway object
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/adyenGatewayResponse'
+    delete:
+      operationId: DELETE/adyen_gateways/adyenGatewayId
+      summary: Delete an adyen gateway
+      description: Delete an adyen gateway
+      tags:
+      - adyen_gateways
+      parameters:
+      - name: adyenGatewayId
+        in: path
+        schema:
+          type: string
+        required: true
+        description: The resource's id
+      responses:
+        '204':
+          description: No content
+components:
+  schemas:
+    adyenGateway:
+      properties:
+        data:
+          properties:
+            attributes:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: The payment gateway's internal name.
+                  example: US payment gateway
+                  nullable: false
+                force_payments:
+                  type: boolean
+                  description: Indicates if the payment source is forced on the editable order upon receiving a successful event from the gateway.
+                  example: true
+                  nullable: true
+                credential_keys:
+                  type: object
+                  description: The payment gateway's API credential keys last digits.
+                  example:
+                    api_key: '********BW989'
+                  nullable: true
+                disabled_at:
+                  type: string
+                  description: Time at which this resource was disabled.
+                  example: '2018-01-01T12:00:00.000Z'
+                  nullable: true
+                created_at:
+                  type: string
+                  description: Time at which the resource was created.
+                  example: '2018-01-01T12:00:00.000Z'
+                  nullable: false
+                updated_at:
+                  type: string
+                  description: Time at which the resource was last updated.
+                  example: '2018-01-01T12:00:00.000Z'
+                  nullable: false
+                reference:
+                  type: string
+                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
+                  example: ANY-EXTERNAL-REFEFERNCE
+                  nullable: true
+                reference_origin:
+                  type: string
+                  description: Any identifier of the third party system that defines the reference code.
+                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
+                  nullable: true
+                metadata:
+                  type: object
+                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
+                  example:
+                    foo: bar
+                  nullable: true
+                live_url_prefix:
+                  type: string
+                  description: The prefix of the endpoint used for live transactions.
+                  example: 1797a841fbb37ca7-AdyenDemo
+                  nullable: false
+                api_version:
+                  type: integer
+                  description: The checkout API version, supported range is from 66 to 71, default is 71.
+                  example: 71
+                  nullable: true
+                async_api:
+                  type: boolean
+                  description: Indicates if the gateway will leverage on the Adyen notification webhooks, using latest API version.
+                  example: true
+                  nullable: true
+                partial_payments:
+                  type: boolean
+                  description: Send this attribute if you want to enable partial payments for the order.
+                  example: false
+                  nullable: true
+                order_expiration_mins:
+                  type: integer
+                  description: The minutes after which the order created for partial payments automatically expires.
+                  example: 30
+                  nullable: true
+                native_customer_payment_sources:
+                  type: boolean
+                  description: Indicates if the gateway will use the native customer payment sources.
+                  example: true
+                  nullable: true
+                webhook_endpoint_secret:
+                  type: string
+                  description: The gateway webhook endpoint secret, generated by Adyen customer area.
+                  example: xxxx-yyyy-zzzz
+                  nullable: true
+                webhook_endpoint_url:
+                  type: string
+                  description: The gateway webhook URL, generated automatically.
+                  example: https://core.commercelayer.co/webhook_callbacks/adyen_gateways/xxxxx
+                  nullable: true
+    adyenGatewayResponse:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            id:
+              type: string
+              description: Unique identifier for the resource (hash).
+              example: XAyRWNUzyN
+            type:
+              type: string
+              description: The resource's type
+              enum:
+              - adyen_gateways
+            links:
+              type: object
+              properties:
+                self:
+                  type: string
+                  description: URL
+            attributes:
+              $ref: '#/components/schemas/adyenGateway/properties/data/properties/attributes'
+            relationships:
+              type: object
+              properties:
+                payment_methods:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - payment_methods
+                        id:
+                          type: string
+                          description: The resource ID
+                event_stores:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - event_stores
+                        id:
+                          type: string
+                          description: The resource ID
+                adyen_payments:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - adyen_payments
+                        id:
+                          type: string
+                          description: The resource ID
+    adyenGatewayResponseList:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/adyenGatewayResponse/properties/data'
+    adyenGatewayCreate:
+      required:
+      - data
+      type: object
+      properties:
+        data:
+          type: object
+          required:
+          - type
+          - attributes
+          properties:
+            type:
+              type: string
+              description: The resource's type
+              enum:
+              - adyen_gateways
+            attributes:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: The payment gateway's internal name.
+                  example: US payment gateway
+                force_payments:
+                  type: boolean
+                  description: Indicates if the payment source is forced on the editable order upon receiving a successful event from the gateway.
+                  example: true
+                _disable:
+                  type: boolean
+                  description: Send this attribute if you want to mark this resource as disabled.
+                  example: true
+                _enable:
+                  type: boolean
+                  description: Send this attribute if you want to mark this resource as enabled.
+                  example: true
+                reference:
+                  type: string
+                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
+                  example: ANY-EXTERNAL-REFEFERNCE
+                reference_origin:
+                  type: string
+                  description: Any identifier of the third party system that defines the reference code.
+                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
+                metadata:
+                  type: object
+                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
+                  example:
+                    foo: bar
+                _check:
+                  type: boolean
+                  description: Send this attribute if you want to check the credentials against the payment gateway's APIs.
+                  example: true
+                merchant_account:
+                  type: string
+                  description: The gateway merchant account.
+                  example: xxxx-yyyy-zzzz
+                api_key:
+                  type: string
+                  description: The gateway API key.
+                  example: xxxx-yyyy-zzzz
+                public_key:
+                  type: string
+                  description: The public key linked to your API credential.
+                  example: xxxx-yyyy-zzzz
+                live_url_prefix:
+                  type: string
+                  description: The prefix of the endpoint used for live transactions.
+                  example: 1797a841fbb37ca7-AdyenDemo
+                api_version:
+                  type: integer
+                  description: The checkout API version, supported range is from 66 to 71, default is 71.
+                  example: 71
+                async_api:
+                  type: boolean
+                  description: Indicates if the gateway will leverage on the Adyen notification webhooks, using latest API version.
+                  example: true
+                partial_payments:
+                  type: boolean
+                  description: Send this attribute if you want to enable partial payments for the order.
+                  example: false
+                order_expiration_mins:
+                  type: integer
+                  description: The minutes after which the order created for partial payments automatically expires.
+                  example: 30
+                native_customer_payment_sources:
+                  type: boolean
+                  description: Indicates if the gateway will use the native customer payment sources.
+                  example: true
+                webhook_endpoint_secret:
+                  type: string
+                  description: The gateway webhook endpoint secret, generated by Adyen customer area.
+                  example: xxxx-yyyy-zzzz
+              required:
+              - name
+              - merchant_account
+              - api_key
+              - live_url_prefix
+            relationships:
+              type: object
+              properties:
+                adyen_payments:
+                  required:
+                  - data
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - adyen_payments
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+    adyenGatewayUpdate:
+      required:
+      - data
+      type: object
+      properties:
+        data:
+          type: object
+          required:
+          - type
+          - id
+          - attributes
+          properties:
+            type:
+              type: string
+              description: The resource's type
+              enum:
+              - adyen_gateways
+            id:
+              type: string
+              description: Unique identifier for the resource (hash).
+              example: XAyRWNUzyN
+            attributes:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: The payment gateway's internal name.
+                  example: US payment gateway
+                  nullable: false
+                force_payments:
+                  type: boolean
+                  description: Indicates if the payment source is forced on the editable order upon receiving a successful event from the gateway.
+                  example: true
+                  nullable: false
+                _disable:
+                  type: boolean
+                  description: Send this attribute if you want to mark this resource as disabled.
+                  example: true
+                  nullable: false
+                _enable:
+                  type: boolean
+                  description: Send this attribute if you want to mark this resource as enabled.
+                  example: true
+                  nullable: false
+                reference:
+                  type: string
+                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
+                  example: ANY-EXTERNAL-REFEFERNCE
+                  nullable: true
+                reference_origin:
+                  type: string
+                  description: Any identifier of the third party system that defines the reference code.
+                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
+                  nullable: true
+                metadata:
+                  type: object
+                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
+                  example:
+                    foo: bar
+                  nullable: true
+                _check:
+                  type: boolean
+                  description: Send this attribute if you want to check the credentials against the payment gateway's APIs.
+                  example: true
+                  nullable: false
+                merchant_account:
+                  type: string
+                  description: The gateway merchant account.
+                  example: xxxx-yyyy-zzzz
+                api_key:
+                  type: string
+                  description: The gateway API key.
+                  example: xxxx-yyyy-zzzz
+                public_key:
+                  type: string
+                  description: The public key linked to your API credential.
+                  example: xxxx-yyyy-zzzz
+                live_url_prefix:
+                  type: string
+                  description: The prefix of the endpoint used for live transactions.
+                  example: 1797a841fbb37ca7-AdyenDemo
+                  nullable: false
+                api_version:
+                  type: integer
+                  description: The checkout API version, supported range is from 66 to 71, default is 71.
+                  example: 71
+                  nullable: true
+                async_api:
+                  type: boolean
+                  description: Indicates if the gateway will leverage on the Adyen notification webhooks, using latest API version.
+                  example: true
+                  nullable: false
+                partial_payments:
+                  type: boolean
+                  description: Send this attribute if you want to enable partial payments for the order.
+                  example: false
+                  nullable: false
+                order_expiration_mins:
+                  type: integer
+                  description: The minutes after which the order created for partial payments automatically expires.
+                  example: 30
+                  nullable: true
+                native_customer_payment_sources:
+                  type: boolean
+                  description: Indicates if the gateway will use the native customer payment sources.
+                  example: true
+                  nullable: false
+                webhook_endpoint_secret:
+                  type: string
+                  description: The gateway webhook endpoint secret, generated by Adyen customer area.
+                  example: xxxx-yyyy-zzzz
+                  nullable: true
+            relationships:
+              type: object
+              properties:
+                adyen_payments:
+                  required:
+                  - data
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - adyen_payments
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT

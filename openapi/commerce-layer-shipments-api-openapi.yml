@@ -1,0 +1,1215 @@
+openapi: 3.1.0
+info:
+  title: Commerce Layer addresses shipments API
+  version: 7.10.1
+  contact:
+    name: API Support
+    url: https://commercelayer.io
+    email: support@commercelayer.io
+  description: Headless Commerce for Global Brands.
+servers:
+- url: https://{your_organization_slug}.commercelayer.io/api
+  description: API
+- url: https://core.commercelayer.io/users/sign_in
+  description: Sign in
+- url: https://docs.commercelayer.io/api
+  description: API reference
+security:
+- bearerAuth: []
+tags:
+- name: shipments
+  description: resource type
+paths:
+  /easypost_pickups/{easypostPickupId}/shipment:
+    get:
+      operationId: GET/easypostPickupId/shipment
+      summary: Retrieve the shipment associated to the easypost pickup
+      description: Retrieve the shipment associated to the easypost pickup
+      tags:
+      - shipments
+      parameters:
+      - name: easypostPickupId
+        in: path
+        schema:
+          type: string
+        required: true
+        description: The resource's id
+      responses:
+        '200':
+          description: The shipment associated to the easypost pickup
+  /orders/{orderId}/shipments:
+    get:
+      operationId: GET/orderId/shipments
+      summary: Retrieve the shipments associated to the order
+      description: Retrieve the shipments associated to the order
+      tags:
+      - shipments
+      parameters:
+      - name: orderId
+        in: path
+        schema:
+          type: string
+        required: true
+        description: The resource's id
+      responses:
+        '200':
+          description: The shipments associated to the order
+  /parcels/{parcelId}/shipment:
+    get:
+      operationId: GET/parcelId/shipment
+      summary: Retrieve the shipment associated to the parcel
+      description: Retrieve the shipment associated to the parcel
+      tags:
+      - shipments
+      parameters:
+      - name: parcelId
+        in: path
+        schema:
+          type: string
+        required: true
+        description: The resource's id
+      responses:
+        '200':
+          description: The shipment associated to the parcel
+  /pickups/{pickupId}/shipment:
+    get:
+      operationId: GET/pickupId/shipment
+      summary: Retrieve the shipment associated to the pickup
+      description: Retrieve the shipment associated to the pickup
+      tags:
+      - shipments
+      parameters:
+      - name: pickupId
+        in: path
+        schema:
+          type: string
+        required: true
+        description: The resource's id
+      responses:
+        '200':
+          description: The shipment associated to the pickup
+  /shipments:
+    get:
+      operationId: GET/shipments
+      summary: List all shipments
+      description: List all shipments
+      tags:
+      - shipments
+      responses:
+        '200':
+          description: A list of shipment objects
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/shipmentResponseList'
+    post:
+      operationId: POST/shipments
+      summary: Create a shipment
+      description: Create a shipment
+      tags:
+      - shipments
+      requestBody:
+        required: true
+        content:
+          application/vnd.api+json:
+            schema:
+              $ref: '#/components/schemas/shipmentCreate'
+      responses:
+        '201':
+          description: The created shipment object
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/shipmentResponse'
+  /shipments/{shipmentId}:
+    get:
+      operationId: GET/shipments/shipmentId
+      summary: Retrieve a shipment
+      description: Retrieve a shipment
+      tags:
+      - shipments
+      parameters:
+      - name: shipmentId
+        in: path
+        schema:
+          type: string
+        required: true
+        description: The resource's id
+      responses:
+        '200':
+          description: The shipment object
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/shipmentResponse'
+    patch:
+      operationId: PATCH/shipments/shipmentId
+      summary: Update a shipment
+      description: Update a shipment
+      tags:
+      - shipments
+      parameters:
+      - name: shipmentId
+        in: path
+        schema:
+          type: string
+        required: true
+        description: The resource's id
+      requestBody:
+        required: true
+        content:
+          application/vnd.api+json:
+            schema:
+              $ref: '#/components/schemas/shipmentUpdate'
+      responses:
+        '200':
+          description: The updated shipment object
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/shipmentResponse'
+    delete:
+      operationId: DELETE/shipments/shipmentId
+      summary: Delete a shipment
+      description: Delete a shipment
+      tags:
+      - shipments
+      parameters:
+      - name: shipmentId
+        in: path
+        schema:
+          type: string
+        required: true
+        description: The resource's id
+      responses:
+        '204':
+          description: No content
+  /stock_line_items/{stockLineItemId}/shipment:
+    get:
+      operationId: GET/stockLineItemId/shipment
+      summary: Retrieve the shipment associated to the stock line item
+      description: Retrieve the shipment associated to the stock line item
+      tags:
+      - shipments
+      parameters:
+      - name: stockLineItemId
+        in: path
+        schema:
+          type: string
+        required: true
+        description: The resource's id
+      responses:
+        '200':
+          description: The shipment associated to the stock line item
+  /stock_transfers/{stockTransferId}/shipment:
+    get:
+      operationId: GET/stockTransferId/shipment
+      summary: Retrieve the shipment associated to the stock transfer
+      description: Retrieve the shipment associated to the stock transfer
+      tags:
+      - shipments
+      parameters:
+      - name: stockTransferId
+        in: path
+        schema:
+          type: string
+        required: true
+        description: The resource's id
+      responses:
+        '200':
+          description: The shipment associated to the stock transfer
+components:
+  schemas:
+    shipment:
+      properties:
+        data:
+          properties:
+            attributes:
+              type: object
+              properties:
+                number:
+                  type: string
+                  description: Unique identifier for the shipment. Cannot be passed by sales channels.
+                  example: '#1234/S/001'
+                  nullable: false
+                status:
+                  type: string
+                  description: The shipment status. One of 'draft' (default), 'upcoming', 'cancelled', 'on_hold', 'picking', 'packing', 'ready_to_ship', 'shipped', or 'delivered'.
+                  example: draft
+                  nullable: false
+                  enum:
+                  - draft
+                  - upcoming
+                  - cancelled
+                  - on_hold
+                  - picking
+                  - packing
+                  - ready_to_ship
+                  - shipped
+                  - delivered
+                currency_code:
+                  type: string
+                  description: The international 3-letter currency code as defined by the ISO 4217 standard, automatically inherited from the associated order.
+                  example: EUR
+                  nullable: true
+                cost_amount_cents:
+                  type: integer
+                  description: The cost of this shipment from the selected carrier account, in cents.
+                  example: 1000
+                  nullable: true
+                cost_amount_float:
+                  type: number
+                  description: The cost of this shipment from the selected carrier account, float.
+                  example: 10.0
+                  nullable: true
+                formatted_cost_amount:
+                  type: string
+                  description: The cost of this shipment from the selected carrier account, formatted.
+                  example: €10,00
+                  nullable: true
+                skus_count:
+                  type: integer
+                  description: The total number of SKUs in the shipment's line items. This can be useful to display a preview of the shipment content.
+                  example: 2
+                  nullable: true
+                selected_rate_id:
+                  type: string
+                  description: The selected purchase rate from the available shipping rates.
+                  example: rate_f89e4663c3ed47ee94d37763f6d21d54
+                  nullable: true
+                rates:
+                  type: array
+                  description: The available shipping rates.
+                  example:
+                  - id: rate_f89e4663c3ed47ee94d37763f6d21d54
+                    rate: '45.59'
+                    carrier: DHLExpress
+                    service: MedicalExpress
+                  nullable: true
+                  items:
+                    type: object
+                purchase_error_code:
+                  type: string
+                  description: The shipping rate purchase error code, if any.
+                  example: SHIPMENT.POSTAGE.FAILURE
+                  nullable: true
+                purchase_error_message:
+                  type: string
+                  description: The shipping rate purchase error message, if any.
+                  example: Account not allowed for this service.
+                  nullable: true
+                get_rates_errors:
+                  type: array
+                  description: Any errors collected when fetching shipping rates.
+                  example:
+                  - carrier: DHLExpress
+                    message: 'to_address.postal_code: Shorter than minimum length 3'
+                    type: rate_error
+                  nullable: true
+                  items:
+                    type: object
+                get_rates_started_at:
+                  type: string
+                  description: Time at which the getting of the shipping rates started.
+                  example: '2018-01-01T12:00:00.000Z'
+                  nullable: true
+                get_rates_completed_at:
+                  type: string
+                  description: Time at which the getting of the shipping rates completed.
+                  example: '2018-01-01T12:00:00.000Z'
+                  nullable: true
+                purchase_started_at:
+                  type: string
+                  description: Time at which the purchasing of the shipping rate started.
+                  example: '2018-01-01T12:00:00.000Z'
+                  nullable: true
+                purchase_completed_at:
+                  type: string
+                  description: Time at which the purchasing of the shipping rate completed.
+                  example: '2018-01-01T12:00:00.000Z'
+                  nullable: true
+                purchase_failed_at:
+                  type: string
+                  description: Time at which the purchasing of the shipping rate failed.
+                  example: '2018-01-01T12:00:00.000Z'
+                  nullable: true
+                on_hold_at:
+                  type: string
+                  description: Time at which the shipment was put on hold.
+                  example: '2018-01-01T12:00:00.000Z'
+                  nullable: true
+                picking_at:
+                  type: string
+                  description: Time at which the shipment was picking.
+                  example: '2018-01-01T12:00:00.000Z'
+                  nullable: true
+                packing_at:
+                  type: string
+                  description: Time at which the shipment was packing.
+                  example: '2018-01-01T12:00:00.000Z'
+                  nullable: true
+                ready_to_ship_at:
+                  type: string
+                  description: Time at which the shipment was ready to ship.
+                  example: '2018-01-01T12:00:00.000Z'
+                  nullable: true
+                shipped_at:
+                  type: string
+                  description: Time at which the shipment was shipped.
+                  example: '2018-01-01T12:00:00.000Z'
+                  nullable: true
+                delivered_at:
+                  type: string
+                  description: Time at which the shipment was delivered.
+                  example: '2018-01-01T12:00:00.000Z'
+                  nullable: true
+                created_at:
+                  type: string
+                  description: Time at which the resource was created.
+                  example: '2018-01-01T12:00:00.000Z'
+                  nullable: false
+                updated_at:
+                  type: string
+                  description: Time at which the resource was last updated.
+                  example: '2018-01-01T12:00:00.000Z'
+                  nullable: false
+                reference:
+                  type: string
+                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
+                  example: ANY-EXTERNAL-REFEFERNCE
+                  nullable: true
+                reference_origin:
+                  type: string
+                  description: Any identifier of the third party system that defines the reference code.
+                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
+                  nullable: true
+                metadata:
+                  type: object
+                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
+                  example:
+                    foo: bar
+                  nullable: true
+    shipmentCreate:
+      required:
+      - data
+      type: object
+      properties:
+        data:
+          type: object
+          required:
+          - type
+          - attributes
+          properties:
+            type:
+              type: string
+              description: The resource's type
+              enum:
+              - shipments
+            attributes:
+              type: object
+              properties:
+                reference:
+                  type: string
+                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
+                  example: ANY-EXTERNAL-REFEFERNCE
+                reference_origin:
+                  type: string
+                  description: Any identifier of the third party system that defines the reference code.
+                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
+                metadata:
+                  type: object
+                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
+                  example:
+                    foo: bar
+            relationships:
+              type: object
+              properties:
+                order:
+                  required:
+                  - data
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - orders
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+                shipping_category:
+                  required:
+                  - data
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - shipping_categories
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+                inventory_stock_location:
+                  required:
+                  - data
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - inventory_stock_locations
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+                shipping_address:
+                  required:
+                  - data
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - addresses
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+                shipping_method:
+                  required:
+                  - data
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - shipping_methods
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+                tags:
+                  required:
+                  - data
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - tags
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+              required:
+              - order
+              - inventory_stock_location
+    shipmentResponse:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            id:
+              type: string
+              description: Unique identifier for the resource (hash).
+              example: XAyRWNUzyN
+            type:
+              type: string
+              description: The resource's type
+              enum:
+              - shipments
+            links:
+              type: object
+              properties:
+                self:
+                  type: string
+                  description: URL
+            attributes:
+              $ref: '#/components/schemas/shipment/properties/data/properties/attributes'
+            relationships:
+              type: object
+              properties:
+                order:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - order
+                        id:
+                          type: string
+                          description: The resource ID
+                shipping_category:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - shipping_category
+                        id:
+                          type: string
+                          description: The resource ID
+                inventory_stock_location:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - inventory_stock_location
+                        id:
+                          type: string
+                          description: The resource ID
+                stock_location:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - stock_location
+                        id:
+                          type: string
+                          description: The resource ID
+                origin_address:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - origin_address
+                        id:
+                          type: string
+                          description: The resource ID
+                shipping_address:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - shipping_address
+                        id:
+                          type: string
+                          description: The resource ID
+                shipping_method:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - shipping_method
+                        id:
+                          type: string
+                          description: The resource ID
+                delivery_lead_time:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - delivery_lead_time
+                        id:
+                          type: string
+                          description: The resource ID
+                pickup:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - pickup
+                        id:
+                          type: string
+                          description: The resource ID
+                stock_line_items:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - stock_line_items
+                        id:
+                          type: string
+                          description: The resource ID
+                stock_transfers:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - stock_transfers
+                        id:
+                          type: string
+                          description: The resource ID
+                line_items:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - line_items
+                        id:
+                          type: string
+                          description: The resource ID
+                available_shipping_methods:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - available_shipping_methods
+                        id:
+                          type: string
+                          description: The resource ID
+                carrier_accounts:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - carrier_accounts
+                        id:
+                          type: string
+                          description: The resource ID
+                parcels:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - parcels
+                        id:
+                          type: string
+                          description: The resource ID
+                attachments:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - attachments
+                        id:
+                          type: string
+                          description: The resource ID
+                events:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - events
+                        id:
+                          type: string
+                          description: The resource ID
+                tags:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - tags
+                        id:
+                          type: string
+                          description: The resource ID
+                event_stores:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - event_stores
+                        id:
+                          type: string
+                          description: The resource ID
+    shipmentUpdate:
+      required:
+      - data
+      type: object
+      properties:
+        data:
+          type: object
+          required:
+          - type
+          - id
+          - attributes
+          properties:
+            type:
+              type: string
+              description: The resource's type
+              enum:
+              - shipments
+            id:
+              type: string
+              description: Unique identifier for the resource (hash).
+              example: XAyRWNUzyN
+            attributes:
+              type: object
+              properties:
+                number:
+                  type: string
+                  description: Unique identifier for the shipment. Cannot be passed by sales channels.
+                  example: '#1234/S/001'
+                  nullable: false
+                _upcoming:
+                  type: boolean
+                  description: Send this attribute if you want to mark this shipment as upcoming. Cannot be passed by sales channels.
+                  example: true
+                  nullable: false
+                _cancel:
+                  type: boolean
+                  description: Send this attribute if you want to mark this shipment as cancelled (unless already shipped or delivered). Cannot be passed by sales channels.
+                  example: true
+                  nullable: false
+                _on_hold:
+                  type: boolean
+                  description: Send this attribute if you want to put this shipment on hold.
+                  example: true
+                  nullable: false
+                _picking:
+                  type: boolean
+                  description: Send this attribute if you want to start picking this shipment.
+                  example: true
+                  nullable: false
+                _packing:
+                  type: boolean
+                  description: Send this attribute if you want to start packing this shipment.
+                  example: true
+                  nullable: false
+                _ready_to_ship:
+                  type: boolean
+                  description: Send this attribute if you want to mark this shipment as ready to ship.
+                  example: true
+                  nullable: false
+                _ship:
+                  type: boolean
+                  description: Send this attribute if you want to mark this shipment as shipped.
+                  example: true
+                  nullable: false
+                _deliver:
+                  type: boolean
+                  description: Send this attribute if you want to mark this shipment as delivered.
+                  example: true
+                  nullable: false
+                _reserve_stock:
+                  type: boolean
+                  description: Send this attribute if you want to automatically reserve the stock for each of the associated stock line item. Can be done only when fulfillment is in progress. Cannot be passed by sales channels.
+                  example: true
+                  nullable: false
+                _release_stock:
+                  type: boolean
+                  description: Send this attribute if you want to automatically destroy the stock reservations for each of the associated stock line item. Can be done only when fulfillment is in progress. Cannot be passed by sales channels.
+                  example: true
+                  nullable: false
+                _decrement_stock:
+                  type: boolean
+                  description: Send this attribute if you want to automatically decrement and release the stock for each of the associated stock line item. Can be done only when fulfillment is in progress. Cannot be passed by sales channels.
+                  example: true
+                  nullable: false
+                _get_rates:
+                  type: boolean
+                  description: Send this attribute if you want get the shipping rates from the associated carrier accounts.
+                  example: true
+                  nullable: false
+                selected_rate_id:
+                  type: string
+                  description: The selected purchase rate from the available shipping rates.
+                  example: rate_f89e4663c3ed47ee94d37763f6d21d54
+                  nullable: true
+                _purchase:
+                  type: boolean
+                  description: Send this attribute if you want to purchase this shipment with the selected rate.
+                  example: true
+                  nullable: false
+                _add_tags:
+                  type: string
+                  description: Comma separated list of tags to be added. Duplicates, invalid and non existing ones are discarded. Cannot be passed by sales channels.
+                _remove_tags:
+                  type: string
+                  description: Comma separated list of tags to be removed. Duplicates, invalid and non existing ones are discarded. Cannot be passed by sales channels.
+                reference:
+                  type: string
+                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
+                  example: ANY-EXTERNAL-REFEFERNCE
+                  nullable: true
+                reference_origin:
+                  type: string
+                  description: Any identifier of the third party system that defines the reference code.
+                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
+                  nullable: true
+                metadata:
+                  type: object
+                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
+                  example:
+                    foo: bar
+                  nullable: true
+            relationships:
+              type: object
+              properties:
+                shipping_category:
+                  required:
+                  - data
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - shipping_categories
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+                inventory_stock_location:
+                  required:
+                  - data
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - inventory_stock_locations
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+                shipping_address:
+                  required:
+                  - data
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - addresses
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+                shipping_method:
+                  required:
+                  - data
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - shipping_methods
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+                tags:
+                  required:
+                  - data
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - tags
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+    shipmentResponseList:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/shipmentResponse/properties/data'
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT

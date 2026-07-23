@@ -1,0 +1,121 @@
+openapi: 3.1.0
+info:
+  title: Commerce Layer addresses analysis API
+  version: 7.10.1
+  contact:
+    name: API Support
+    url: https://commercelayer.io
+    email: support@commercelayer.io
+  description: Headless Commerce for Global Brands.
+servers:
+- url: https://{your_organization_slug}.commercelayer.io/api
+  description: API
+- url: https://core.commercelayer.io/users/sign_in
+  description: Sign in
+- url: https://docs.commercelayer.io/api
+  description: API reference
+security:
+- bearerAuth: []
+tags:
+- name: analysis
+  description: Operations with analysis resource
+paths:
+  /analysis/fbt:
+    post:
+      operationId: POST/analysis/fbt
+      summary: Query fbt on analysis
+      description: Get fbt results from analysis
+      tags:
+      - analysis
+      requestBody:
+        required: true
+        content:
+          application/vnd.api+json:
+            schema:
+              $ref: '#/components/schemas/analysis_fbt_request'
+      responses:
+        '200':
+          description: The fbt result from analysis
+          content:
+            application/vnd.api+json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      item_id:
+                        type: string
+                      value:
+                        type: number
+                        example: 8
+                      type:
+                        type: string
+                      name:
+                        type: string
+                  meta:
+                    type: object
+                    properties:
+                      type:
+                        type: string
+                        description: Action name
+                      trace_id:
+                        type: string
+                        description: Request ID
+                      mode:
+                        type: string
+                        description: Filter mode
+                      organization_id:
+                        type: string
+                        description: Organization ID from request
+                      market_ids:
+                        type: array
+                        items:
+                          type: string
+                        description: Markets IDs from the organization
+                      payload:
+                        type: object
+                        properties:
+                          filter:
+                            $ref: '#/components/schemas/analysis_fbt_filter'
+                          fbt:
+                            $ref: '#/components/schemas/analysis_fbt_request/properties/fbt'
+components:
+  schemas:
+    analysis_fbt_filter:
+      type: object
+      properties:
+        line_items:
+          type: object
+          properties:
+            item_ids:
+              description: The ID of the associated item.
+              type: object
+              properties:
+                in:
+                  type: array
+                  minItems: 1
+                  items:
+                    type: string
+                  description: To include, array of item_ids
+    analysis_fbt_request:
+      type: object
+      properties:
+        filter:
+          $ref: '#/components/schemas/analysis_fbt_filter'
+        fbt:
+          type: object
+          properties: {}
+        meta:
+          type: object
+          properties:
+            payload:
+              type: boolean
+              description: Set to true if you want to receive how the payload has been made
+      required:
+      - filter
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT

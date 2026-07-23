@@ -1,0 +1,367 @@
+openapi: 3.1.0
+info:
+  title: Commerce Layer addresses customer_subscriptions API
+  version: 7.10.1
+  contact:
+    name: API Support
+    url: https://commercelayer.io
+    email: support@commercelayer.io
+  description: Headless Commerce for Global Brands.
+servers:
+- url: https://{your_organization_slug}.commercelayer.io/api
+  description: API
+- url: https://core.commercelayer.io/users/sign_in
+  description: Sign in
+- url: https://docs.commercelayer.io/api
+  description: API reference
+security:
+- bearerAuth: []
+tags:
+- name: customer_subscriptions
+  description: resource type
+paths:
+  /customer_subscriptions:
+    get:
+      operationId: GET/customer_subscriptions
+      summary: List all customer subscriptions
+      description: List all customer subscriptions
+      tags:
+      - customer_subscriptions
+      responses:
+        '200':
+          description: A list of customer subscription objects
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/customerSubscriptionResponseList'
+    post:
+      operationId: POST/customer_subscriptions
+      summary: Create a customer subscription
+      description: Create a customer subscription
+      tags:
+      - customer_subscriptions
+      requestBody:
+        required: true
+        content:
+          application/vnd.api+json:
+            schema:
+              $ref: '#/components/schemas/customerSubscriptionCreate'
+      responses:
+        '201':
+          description: The created customer subscription object
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/customerSubscriptionResponse'
+  /customer_subscriptions/{customerSubscriptionId}:
+    get:
+      operationId: GET/customer_subscriptions/customerSubscriptionId
+      summary: Retrieve a customer subscription
+      description: Retrieve a customer subscription
+      tags:
+      - customer_subscriptions
+      parameters:
+      - name: customerSubscriptionId
+        in: path
+        schema:
+          type: string
+        required: true
+        description: The resource's id
+      responses:
+        '200':
+          description: The customer subscription object
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/customerSubscriptionResponse'
+    patch:
+      operationId: PATCH/customer_subscriptions/customerSubscriptionId
+      summary: Update a customer subscription
+      description: Update a customer subscription
+      tags:
+      - customer_subscriptions
+      parameters:
+      - name: customerSubscriptionId
+        in: path
+        schema:
+          type: string
+        required: true
+        description: The resource's id
+      requestBody:
+        required: true
+        content:
+          application/vnd.api+json:
+            schema:
+              $ref: '#/components/schemas/customerSubscriptionUpdate'
+      responses:
+        '200':
+          description: The updated customer subscription object
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/customerSubscriptionResponse'
+    delete:
+      operationId: DELETE/customer_subscriptions/customerSubscriptionId
+      summary: Delete a customer subscription
+      description: Delete a customer subscription
+      tags:
+      - customer_subscriptions
+      parameters:
+      - name: customerSubscriptionId
+        in: path
+        schema:
+          type: string
+        required: true
+        description: The resource's id
+      responses:
+        '204':
+          description: No content
+  /customers/{customerId}/customer_subscriptions:
+    get:
+      operationId: GET/customerId/customer_subscriptions
+      summary: Retrieve the customer subscriptions associated to the customer
+      description: Retrieve the customer subscriptions associated to the customer
+      tags:
+      - customer_subscriptions
+      parameters:
+      - name: customerId
+        in: path
+        schema:
+          type: string
+        required: true
+        description: The resource's id
+      responses:
+        '200':
+          description: The customer_subscriptions associated to the customer
+components:
+  schemas:
+    customerSubscriptionResponse:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            id:
+              type: string
+              description: Unique identifier for the resource (hash).
+              example: XAyRWNUzyN
+            type:
+              type: string
+              description: The resource's type
+              enum:
+              - customer_subscriptions
+            links:
+              type: object
+              properties:
+                self:
+                  type: string
+                  description: URL
+            attributes:
+              $ref: '#/components/schemas/customerSubscription/properties/data/properties/attributes'
+            relationships:
+              type: object
+              properties:
+                customer:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - customer
+                        id:
+                          type: string
+                          description: The resource ID
+                events:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - events
+                        id:
+                          type: string
+                          description: The resource ID
+                event_stores:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - event_stores
+                        id:
+                          type: string
+                          description: The resource ID
+    customerSubscriptionCreate:
+      required:
+      - data
+      type: object
+      properties:
+        data:
+          type: object
+          required:
+          - type
+          - attributes
+          properties:
+            type:
+              type: string
+              description: The resource's type
+              enum:
+              - customer_subscriptions
+            attributes:
+              type: object
+              properties:
+                customer_email:
+                  type: string
+                  description: The email of the customer that owns the subscription.
+                  example: john@example.com
+                reference:
+                  type: string
+                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
+                  example: ANY-EXTERNAL-REFEFERNCE
+                reference_origin:
+                  type: string
+                  description: Any identifier of the third party system that defines the reference code.
+                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
+                metadata:
+                  type: object
+                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
+                  example:
+                    foo: bar
+              required:
+              - customer_email
+              - reference
+            relationships:
+              type: object
+              properties: {}
+    customerSubscription:
+      properties:
+        data:
+          properties:
+            attributes:
+              type: object
+              properties:
+                customer_email:
+                  type: string
+                  description: The email of the customer that owns the subscription.
+                  example: john@example.com
+                  nullable: false
+                reference:
+                  type: string
+                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
+                  example: ANY-EXTERNAL-REFEFERNCE
+                  nullable: false
+                created_at:
+                  type: string
+                  description: Time at which the resource was created.
+                  example: '2018-01-01T12:00:00.000Z'
+                  nullable: false
+                updated_at:
+                  type: string
+                  description: Time at which the resource was last updated.
+                  example: '2018-01-01T12:00:00.000Z'
+                  nullable: false
+                reference_origin:
+                  type: string
+                  description: Any identifier of the third party system that defines the reference code.
+                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
+                  nullable: true
+                metadata:
+                  type: object
+                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
+                  example:
+                    foo: bar
+                  nullable: true
+    customerSubscriptionUpdate:
+      required:
+      - data
+      type: object
+      properties:
+        data:
+          type: object
+          required:
+          - type
+          - id
+          - attributes
+          properties:
+            type:
+              type: string
+              description: The resource's type
+              enum:
+              - customer_subscriptions
+            id:
+              type: string
+              description: Unique identifier for the resource (hash).
+              example: XAyRWNUzyN
+            attributes:
+              type: object
+              properties:
+                reference:
+                  type: string
+                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
+                  example: ANY-EXTERNAL-REFEFERNCE
+                  nullable: false
+                reference_origin:
+                  type: string
+                  description: Any identifier of the third party system that defines the reference code.
+                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
+                  nullable: true
+                metadata:
+                  type: object
+                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
+                  example:
+                    foo: bar
+                  nullable: true
+            relationships:
+              type: object
+              properties: {}
+    customerSubscriptionResponseList:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/customerSubscriptionResponse/properties/data'
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT

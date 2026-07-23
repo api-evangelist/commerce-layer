@@ -1,0 +1,390 @@
+openapi: 3.1.0
+info:
+  title: Commerce Layer addresses cleanups API
+  version: 7.10.1
+  contact:
+    name: API Support
+    url: https://commercelayer.io
+    email: support@commercelayer.io
+  description: Headless Commerce for Global Brands.
+servers:
+- url: https://{your_organization_slug}.commercelayer.io/api
+  description: API
+- url: https://core.commercelayer.io/users/sign_in
+  description: Sign in
+- url: https://docs.commercelayer.io/api
+  description: API reference
+security:
+- bearerAuth: []
+tags:
+- name: cleanups
+  description: resource type
+paths:
+  /cleanups:
+    get:
+      operationId: GET/cleanups
+      summary: List all cleanups
+      description: List all cleanups
+      tags:
+      - cleanups
+      responses:
+        '200':
+          description: A list of cleanup objects
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/cleanupResponseList'
+    post:
+      operationId: POST/cleanups
+      summary: Create a cleanup
+      description: Create a cleanup
+      tags:
+      - cleanups
+      requestBody:
+        required: true
+        content:
+          application/vnd.api+json:
+            schema:
+              $ref: '#/components/schemas/cleanupCreate'
+      responses:
+        '201':
+          description: The created cleanup object
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/cleanupResponse'
+  /cleanups/{cleanupId}:
+    get:
+      operationId: GET/cleanups/cleanupId
+      summary: Retrieve a cleanup
+      description: Retrieve a cleanup
+      tags:
+      - cleanups
+      parameters:
+      - name: cleanupId
+        in: path
+        schema:
+          type: string
+        required: true
+        description: The resource's id
+      responses:
+        '200':
+          description: The cleanup object
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/cleanupResponse'
+    patch:
+      operationId: PATCH/cleanups/cleanupId
+      summary: Update a cleanup
+      description: Update a cleanup
+      tags:
+      - cleanups
+      parameters:
+      - name: cleanupId
+        in: path
+        schema:
+          type: string
+        required: true
+        description: The resource's id
+      requestBody:
+        required: true
+        content:
+          application/vnd.api+json:
+            schema:
+              $ref: '#/components/schemas/cleanupUpdate'
+      responses:
+        '200':
+          description: The updated cleanup object
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/cleanupResponse'
+    delete:
+      operationId: DELETE/cleanups/cleanupId
+      summary: Delete a cleanup
+      description: Delete a cleanup
+      tags:
+      - cleanups
+      parameters:
+      - name: cleanupId
+        in: path
+        schema:
+          type: string
+        required: true
+        description: The resource's id
+      responses:
+        '204':
+          description: No content
+components:
+  schemas:
+    cleanupUpdate:
+      required:
+      - data
+      type: object
+      properties:
+        data:
+          type: object
+          required:
+          - type
+          - id
+          - attributes
+          properties:
+            type:
+              type: string
+              description: The resource's type
+              enum:
+              - cleanups
+            id:
+              type: string
+              description: Unique identifier for the resource (hash).
+              example: XAyRWNUzyN
+            attributes:
+              type: object
+              properties:
+                _interrupt:
+                  type: boolean
+                  description: Send this attribute if you want to mark status as 'interrupted'.
+                  example: true
+                  nullable: false
+                reference:
+                  type: string
+                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
+                  example: ANY-EXTERNAL-REFEFERNCE
+                  nullable: true
+                reference_origin:
+                  type: string
+                  description: Any identifier of the third party system that defines the reference code.
+                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
+                  nullable: true
+                metadata:
+                  type: object
+                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
+                  example:
+                    foo: bar
+                  nullable: true
+            relationships:
+              type: object
+              properties: {}
+    cleanupResponseList:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/cleanupResponse/properties/data'
+    cleanupResponse:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            id:
+              type: string
+              description: Unique identifier for the resource (hash).
+              example: XAyRWNUzyN
+            type:
+              type: string
+              description: The resource's type
+              enum:
+              - cleanups
+            links:
+              type: object
+              properties:
+                self:
+                  type: string
+                  description: URL
+            attributes:
+              $ref: '#/components/schemas/cleanup/properties/data/properties/attributes'
+            relationships:
+              type: object
+              properties:
+                events:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - events
+                        id:
+                          type: string
+                          description: The resource ID
+                event_stores:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - event_stores
+                        id:
+                          type: string
+                          description: The resource ID
+    cleanup:
+      properties:
+        data:
+          properties:
+            attributes:
+              type: object
+              properties:
+                resource_type:
+                  type: string
+                  description: The type of resource being cleaned.
+                  example: skus
+                  nullable: false
+                status:
+                  type: string
+                  description: The cleanup job status. One of 'pending' (default), 'in_progress', 'interrupted', or 'completed'.
+                  example: in_progress
+                  nullable: false
+                  enum:
+                  - pending
+                  - in_progress
+                  - interrupted
+                  - completed
+                started_at:
+                  type: string
+                  description: Time at which the cleanup was started.
+                  example: '2018-01-01T12:00:00.000Z'
+                  nullable: true
+                completed_at:
+                  type: string
+                  description: Time at which the cleanup was completed.
+                  example: '2018-01-01T12:00:00.000Z'
+                  nullable: true
+                interrupted_at:
+                  type: string
+                  description: Time at which the cleanup was interrupted.
+                  example: '2018-01-01T12:00:00.000Z'
+                  nullable: true
+                filters:
+                  type: object
+                  description: The filters used to select the records to be cleaned.
+                  example:
+                    code_eq: AAA
+                  nullable: true
+                records_count:
+                  type: integer
+                  description: Indicates the number of records to be cleaned.
+                  example: 300
+                  nullable: true
+                errors_count:
+                  type: integer
+                  description: Indicates the number of cleanup errors, if any.
+                  example: 30
+                  nullable: true
+                processed_count:
+                  type: integer
+                  description: Indicates the number of records that have been cleaned.
+                  example: 270
+                  nullable: true
+                errors_log:
+                  type: object
+                  description: Contains the cleanup errors, if any.
+                  example:
+                    ABC:
+                      name:
+                      - has already been taken
+                  nullable: true
+                created_at:
+                  type: string
+                  description: Time at which the resource was created.
+                  example: '2018-01-01T12:00:00.000Z'
+                  nullable: false
+                updated_at:
+                  type: string
+                  description: Time at which the resource was last updated.
+                  example: '2018-01-01T12:00:00.000Z'
+                  nullable: false
+                reference:
+                  type: string
+                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
+                  example: ANY-EXTERNAL-REFEFERNCE
+                  nullable: true
+                reference_origin:
+                  type: string
+                  description: Any identifier of the third party system that defines the reference code.
+                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
+                  nullable: true
+                metadata:
+                  type: object
+                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
+                  example:
+                    foo: bar
+                  nullable: true
+    cleanupCreate:
+      required:
+      - data
+      type: object
+      properties:
+        data:
+          type: object
+          required:
+          - type
+          - attributes
+          properties:
+            type:
+              type: string
+              description: The resource's type
+              enum:
+              - cleanups
+            attributes:
+              type: object
+              properties:
+                resource_type:
+                  type: string
+                  description: The type of resource being cleaned.
+                  example: skus
+                filters:
+                  type: object
+                  description: The filters used to select the records to be cleaned.
+                  example:
+                    code_eq: AAA
+                reference:
+                  type: string
+                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
+                  example: ANY-EXTERNAL-REFEFERNCE
+                reference_origin:
+                  type: string
+                  description: Any identifier of the third party system that defines the reference code.
+                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
+                metadata:
+                  type: object
+                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
+                  example:
+                    foo: bar
+              required:
+              - resource_type
+            relationships:
+              type: object
+              properties: {}
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT

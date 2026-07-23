@@ -1,0 +1,546 @@
+openapi: 3.1.0
+info:
+  title: Commerce Layer addresses in_stock_subscriptions API
+  version: 7.10.1
+  contact:
+    name: API Support
+    url: https://commercelayer.io
+    email: support@commercelayer.io
+  description: Headless Commerce for Global Brands.
+servers:
+- url: https://{your_organization_slug}.commercelayer.io/api
+  description: API
+- url: https://core.commercelayer.io/users/sign_in
+  description: Sign in
+- url: https://docs.commercelayer.io/api
+  description: API reference
+security:
+- bearerAuth: []
+tags:
+- name: in_stock_subscriptions
+  description: resource type
+paths:
+  /in_stock_subscriptions:
+    get:
+      operationId: GET/in_stock_subscriptions
+      summary: List all in stock subscriptions
+      description: List all in stock subscriptions
+      tags:
+      - in_stock_subscriptions
+      responses:
+        '200':
+          description: A list of in stock subscription objects
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/inStockSubscriptionResponseList'
+    post:
+      operationId: POST/in_stock_subscriptions
+      summary: Create an in stock subscription
+      description: Create an in stock subscription
+      tags:
+      - in_stock_subscriptions
+      requestBody:
+        required: true
+        content:
+          application/vnd.api+json:
+            schema:
+              $ref: '#/components/schemas/inStockSubscriptionCreate'
+      responses:
+        '201':
+          description: The created in stock subscription object
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/inStockSubscriptionResponse'
+  /in_stock_subscriptions/{inStockSubscriptionId}:
+    get:
+      operationId: GET/in_stock_subscriptions/inStockSubscriptionId
+      summary: Retrieve an in stock subscription
+      description: Retrieve an in stock subscription
+      tags:
+      - in_stock_subscriptions
+      parameters:
+      - name: inStockSubscriptionId
+        in: path
+        schema:
+          type: string
+        required: true
+        description: The resource's id
+      responses:
+        '200':
+          description: The in stock subscription object
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/inStockSubscriptionResponse'
+    patch:
+      operationId: PATCH/in_stock_subscriptions/inStockSubscriptionId
+      summary: Update an in stock subscription
+      description: Update an in stock subscription
+      tags:
+      - in_stock_subscriptions
+      parameters:
+      - name: inStockSubscriptionId
+        in: path
+        schema:
+          type: string
+        required: true
+        description: The resource's id
+      requestBody:
+        required: true
+        content:
+          application/vnd.api+json:
+            schema:
+              $ref: '#/components/schemas/inStockSubscriptionUpdate'
+      responses:
+        '200':
+          description: The updated in stock subscription object
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/inStockSubscriptionResponse'
+    delete:
+      operationId: DELETE/in_stock_subscriptions/inStockSubscriptionId
+      summary: Delete an in stock subscription
+      description: Delete an in stock subscription
+      tags:
+      - in_stock_subscriptions
+      parameters:
+      - name: inStockSubscriptionId
+        in: path
+        schema:
+          type: string
+        required: true
+        description: The resource's id
+      responses:
+        '204':
+          description: No content
+components:
+  schemas:
+    inStockSubscriptionResponse:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            id:
+              type: string
+              description: Unique identifier for the resource (hash).
+              example: XAyRWNUzyN
+            type:
+              type: string
+              description: The resource's type
+              enum:
+              - in_stock_subscriptions
+            links:
+              type: object
+              properties:
+                self:
+                  type: string
+                  description: URL
+            attributes:
+              $ref: '#/components/schemas/inStockSubscription/properties/data/properties/attributes'
+            relationships:
+              type: object
+              properties:
+                market:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - market
+                        id:
+                          type: string
+                          description: The resource ID
+                customer:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - customer
+                        id:
+                          type: string
+                          description: The resource ID
+                sku:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - sku
+                        id:
+                          type: string
+                          description: The resource ID
+                events:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - events
+                        id:
+                          type: string
+                          description: The resource ID
+                event_stores:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - event_stores
+                        id:
+                          type: string
+                          description: The resource ID
+    inStockSubscriptionCreate:
+      required:
+      - data
+      type: object
+      properties:
+        data:
+          type: object
+          required:
+          - type
+          - attributes
+          properties:
+            type:
+              type: string
+              description: The resource's type
+              enum:
+              - in_stock_subscriptions
+            attributes:
+              type: object
+              properties:
+                customer_email:
+                  type: string
+                  description: The email of the associated customer, replace the relationship.
+                  example: john@example.com
+                sku_code:
+                  type: string
+                  description: The code of the associated SKU, replace the relationship.
+                  example: TSHIRTMM000000FFFFFFXLXX
+                stock_threshold:
+                  type: integer
+                  description: The threshold at which to trigger the back in stock notification.
+                  example: 3
+                reference:
+                  type: string
+                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
+                  example: ANY-EXTERNAL-REFEFERNCE
+                reference_origin:
+                  type: string
+                  description: Any identifier of the third party system that defines the reference code.
+                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
+                metadata:
+                  type: object
+                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
+                  example:
+                    foo: bar
+            relationships:
+              type: object
+              properties:
+                market:
+                  required:
+                  - data
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - markets
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+                customer:
+                  required:
+                  - data
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - customers
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+                sku:
+                  required:
+                  - data
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - skus
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+              required:
+              - market
+              - customer
+              - sku
+    inStockSubscriptionResponseList:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/inStockSubscriptionResponse/properties/data'
+    inStockSubscription:
+      properties:
+        data:
+          properties:
+            attributes:
+              type: object
+              properties:
+                status:
+                  type: string
+                  description: The subscription status. One of 'active' (default), 'inactive', or 'notified'.
+                  example: active
+                  nullable: false
+                  enum:
+                  - active
+                  - inactive
+                  - notified
+                customer_email:
+                  type: string
+                  description: The email of the associated customer, replace the relationship.
+                  example: john@example.com
+                  nullable: true
+                sku_code:
+                  type: string
+                  description: The code of the associated SKU, replace the relationship.
+                  example: TSHIRTMM000000FFFFFFXLXX
+                  nullable: true
+                stock_threshold:
+                  type: integer
+                  description: The threshold at which to trigger the back in stock notification.
+                  example: 3
+                  nullable: true
+                created_at:
+                  type: string
+                  description: Time at which the resource was created.
+                  example: '2018-01-01T12:00:00.000Z'
+                  nullable: false
+                updated_at:
+                  type: string
+                  description: Time at which the resource was last updated.
+                  example: '2018-01-01T12:00:00.000Z'
+                  nullable: false
+                reference:
+                  type: string
+                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
+                  example: ANY-EXTERNAL-REFEFERNCE
+                  nullable: true
+                reference_origin:
+                  type: string
+                  description: Any identifier of the third party system that defines the reference code.
+                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
+                  nullable: true
+                metadata:
+                  type: object
+                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
+                  example:
+                    foo: bar
+                  nullable: true
+    inStockSubscriptionUpdate:
+      required:
+      - data
+      type: object
+      properties:
+        data:
+          type: object
+          required:
+          - type
+          - id
+          - attributes
+          properties:
+            type:
+              type: string
+              description: The resource's type
+              enum:
+              - in_stock_subscriptions
+            id:
+              type: string
+              description: Unique identifier for the resource (hash).
+              example: XAyRWNUzyN
+            attributes:
+              type: object
+              properties:
+                sku_code:
+                  type: string
+                  description: The code of the associated SKU, replace the relationship.
+                  example: TSHIRTMM000000FFFFFFXLXX
+                  nullable: true
+                stock_threshold:
+                  type: integer
+                  description: The threshold at which to trigger the back in stock notification.
+                  example: 3
+                  nullable: true
+                _activate:
+                  type: boolean
+                  description: Send this attribute if you want to activate an inactive subscription.
+                  example: true
+                  nullable: false
+                _deactivate:
+                  type: boolean
+                  description: Send this attribute if you want to dactivate an active subscription.
+                  example: true
+                  nullable: false
+                reference:
+                  type: string
+                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
+                  example: ANY-EXTERNAL-REFEFERNCE
+                  nullable: true
+                reference_origin:
+                  type: string
+                  description: Any identifier of the third party system that defines the reference code.
+                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
+                  nullable: true
+                metadata:
+                  type: object
+                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
+                  example:
+                    foo: bar
+                  nullable: true
+            relationships:
+              type: object
+              properties:
+                market:
+                  required:
+                  - data
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - markets
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+                customer:
+                  required:
+                  - data
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - customers
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+                sku:
+                  required:
+                  - data
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - skus
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT

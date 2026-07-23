@@ -1,0 +1,476 @@
+openapi: 3.1.0
+info:
+  title: Commerce Layer addresses vertex_accounts API
+  version: 7.10.1
+  contact:
+    name: API Support
+    url: https://commercelayer.io
+    email: support@commercelayer.io
+  description: Headless Commerce for Global Brands.
+servers:
+- url: https://{your_organization_slug}.commercelayer.io/api
+  description: API
+- url: https://core.commercelayer.io/users/sign_in
+  description: Sign in
+- url: https://docs.commercelayer.io/api
+  description: API reference
+security:
+- bearerAuth: []
+tags:
+- name: vertex_accounts
+  description: resource type
+paths:
+  /vertex_accounts:
+    get:
+      operationId: GET/vertex_accounts
+      summary: List all vertex accounts
+      description: List all vertex accounts
+      tags:
+      - vertex_accounts
+      responses:
+        '200':
+          description: A list of vertex account objects
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/vertexAccountResponseList'
+    post:
+      operationId: POST/vertex_accounts
+      summary: Create a vertex account
+      description: Create a vertex account
+      tags:
+      - vertex_accounts
+      requestBody:
+        required: true
+        content:
+          application/vnd.api+json:
+            schema:
+              $ref: '#/components/schemas/vertexAccountCreate'
+      responses:
+        '201':
+          description: The created vertex account object
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/vertexAccountResponse'
+  /vertex_accounts/{vertexAccountId}:
+    get:
+      operationId: GET/vertex_accounts/vertexAccountId
+      summary: Retrieve a vertex account
+      description: Retrieve a vertex account
+      tags:
+      - vertex_accounts
+      parameters:
+      - name: vertexAccountId
+        in: path
+        schema:
+          type: string
+        required: true
+        description: The resource's id
+      responses:
+        '200':
+          description: The vertex account object
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/vertexAccountResponse'
+    patch:
+      operationId: PATCH/vertex_accounts/vertexAccountId
+      summary: Update a vertex account
+      description: Update a vertex account
+      tags:
+      - vertex_accounts
+      parameters:
+      - name: vertexAccountId
+        in: path
+        schema:
+          type: string
+        required: true
+        description: The resource's id
+      requestBody:
+        required: true
+        content:
+          application/vnd.api+json:
+            schema:
+              $ref: '#/components/schemas/vertexAccountUpdate'
+      responses:
+        '200':
+          description: The updated vertex account object
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/vertexAccountResponse'
+    delete:
+      operationId: DELETE/vertex_accounts/vertexAccountId
+      summary: Delete a vertex account
+      description: Delete a vertex account
+      tags:
+      - vertex_accounts
+      parameters:
+      - name: vertexAccountId
+        in: path
+        schema:
+          type: string
+        required: true
+        description: The resource's id
+      responses:
+        '204':
+          description: No content
+components:
+  schemas:
+    vertexAccount:
+      properties:
+        data:
+          properties:
+            attributes:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: The tax calculator's internal name.
+                  example: Personal tax calculator
+                  nullable: false
+                type:
+                  type: string
+                  description: The tax calculator's type.
+                  example: avalara_accounts
+                  nullable: false
+                  enum:
+                  - avalara_accounts
+                  - stripe_tax_accounts
+                  - vertex_accounts
+                  - taxjar_accounts
+                  - manual_tax_calculators
+                  - external_tax_calculators
+                created_at:
+                  type: string
+                  description: Time at which the resource was created.
+                  example: '2018-01-01T12:00:00.000Z'
+                  nullable: false
+                updated_at:
+                  type: string
+                  description: Time at which the resource was last updated.
+                  example: '2018-01-01T12:00:00.000Z'
+                  nullable: false
+                reference:
+                  type: string
+                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
+                  example: ANY-EXTERNAL-REFEFERNCE
+                  nullable: true
+                reference_origin:
+                  type: string
+                  description: Any identifier of the third party system that defines the reference code.
+                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
+                  nullable: true
+                metadata:
+                  type: object
+                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
+                  example:
+                    foo: bar
+                  nullable: true
+                kind:
+                  type: string
+                  description: The Vertex account kind. One of 'cloud', 'on_demand', or 'on_premise'.
+                  example: cloud
+                  nullable: true
+                  enum:
+                  - cloud
+                  - on_demand
+                  - on_premise
+                baseurl:
+                  type: string
+                  description: The Vertex API baseurl, optional for 'cloud' kind.
+                  example: yourbaseurl
+                  nullable: true
+                api_endpoint:
+                  type: string
+                  description: The API endpoint as computed by specified kind and baseurl.
+                  example: https://my_baseurl.ondemand.vertexinc.com
+                  nullable: true
+                commit_invoice:
+                  type: boolean
+                  description: Indicates if the transaction will be recorded and visible on the Vertex website.
+                  example: true
+                  nullable: true
+                token_expires_at:
+                  type: string
+                  description: The expiration date/time of the access token.
+                  example: '2018-01-02T12:00:00.000Z'
+                  nullable: true
+    vertexAccountResponseList:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/vertexAccountResponse/properties/data'
+    vertexAccountResponse:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            id:
+              type: string
+              description: Unique identifier for the resource (hash).
+              example: XAyRWNUzyN
+            type:
+              type: string
+              description: The resource's type
+              enum:
+              - vertex_accounts
+            links:
+              type: object
+              properties:
+                self:
+                  type: string
+                  description: URL
+            attributes:
+              $ref: '#/components/schemas/vertexAccount/properties/data/properties/attributes'
+            relationships:
+              type: object
+              properties:
+                markets:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - markets
+                        id:
+                          type: string
+                          description: The resource ID
+                attachments:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - attachments
+                        id:
+                          type: string
+                          description: The resource ID
+                events:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - events
+                        id:
+                          type: string
+                          description: The resource ID
+                event_stores:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - event_stores
+                        id:
+                          type: string
+                          description: The resource ID
+    vertexAccountUpdate:
+      required:
+      - data
+      type: object
+      properties:
+        data:
+          type: object
+          required:
+          - type
+          - id
+          - attributes
+          properties:
+            type:
+              type: string
+              description: The resource's type
+              enum:
+              - vertex_accounts
+            id:
+              type: string
+              description: Unique identifier for the resource (hash).
+              example: XAyRWNUzyN
+            attributes:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: The tax calculator's internal name.
+                  example: Personal tax calculator
+                  nullable: false
+                reference:
+                  type: string
+                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
+                  example: ANY-EXTERNAL-REFEFERNCE
+                  nullable: true
+                reference_origin:
+                  type: string
+                  description: Any identifier of the third party system that defines the reference code.
+                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
+                  nullable: true
+                metadata:
+                  type: object
+                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
+                  example:
+                    foo: bar
+                  nullable: true
+                kind:
+                  type: string
+                  description: The Vertex account kind. One of 'cloud', 'on_demand', or 'on_premise'.
+                  example: cloud
+                  nullable: true
+                  enum:
+                  - cloud
+                  - on_demand
+                  - on_premise
+                baseurl:
+                  type: string
+                  description: The Vertex API baseurl, optional for 'cloud' kind.
+                  example: yourbaseurl
+                  nullable: true
+                client_id:
+                  type: string
+                  description: The Vertex account client ID.
+                  example: xxx-yyy-zzz
+                client_secret:
+                  type: string
+                  description: The Vertex account client secret.
+                  example: xxx-yyy-zzz
+                commit_invoice:
+                  type: boolean
+                  description: Indicates if the transaction will be recorded and visible on the Vertex website.
+                  example: true
+                  nullable: false
+                _refresh_token:
+                  type: boolean
+                  description: Send this attribute if you want to manually refresh the access token.
+                  example: true
+                  nullable: false
+            relationships:
+              type: object
+              properties: {}
+    vertexAccountCreate:
+      required:
+      - data
+      type: object
+      properties:
+        data:
+          type: object
+          required:
+          - type
+          - attributes
+          properties:
+            type:
+              type: string
+              description: The resource's type
+              enum:
+              - vertex_accounts
+            attributes:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: The tax calculator's internal name.
+                  example: Personal tax calculator
+                reference:
+                  type: string
+                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
+                  example: ANY-EXTERNAL-REFEFERNCE
+                reference_origin:
+                  type: string
+                  description: Any identifier of the third party system that defines the reference code.
+                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
+                metadata:
+                  type: object
+                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
+                  example:
+                    foo: bar
+                kind:
+                  type: string
+                  description: The Vertex account kind. One of 'cloud', 'on_demand', or 'on_premise'.
+                  example: cloud
+                  enum:
+                  - cloud
+                  - on_demand
+                  - on_premise
+                baseurl:
+                  type: string
+                  description: The Vertex API baseurl, optional for 'cloud' kind.
+                  example: yourbaseurl
+                client_id:
+                  type: string
+                  description: The Vertex account client ID.
+                  example: xxx-yyy-zzz
+                client_secret:
+                  type: string
+                  description: The Vertex account client secret.
+                  example: xxx-yyy-zzz
+                commit_invoice:
+                  type: boolean
+                  description: Indicates if the transaction will be recorded and visible on the Vertex website.
+                  example: true
+              required:
+              - name
+              - client_id
+              - client_secret
+            relationships:
+              type: object
+              properties: {}
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT

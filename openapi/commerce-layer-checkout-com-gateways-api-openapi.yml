@@ -1,0 +1,473 @@
+openapi: 3.1.0
+info:
+  title: Commerce Layer addresses checkout_com_gateways API
+  version: 7.10.1
+  contact:
+    name: API Support
+    url: https://commercelayer.io
+    email: support@commercelayer.io
+  description: Headless Commerce for Global Brands.
+servers:
+- url: https://{your_organization_slug}.commercelayer.io/api
+  description: API
+- url: https://core.commercelayer.io/users/sign_in
+  description: Sign in
+- url: https://docs.commercelayer.io/api
+  description: API reference
+security:
+- bearerAuth: []
+tags:
+- name: checkout_com_gateways
+  description: resource type
+paths:
+  /checkout_com_gateways:
+    get:
+      operationId: GET/checkout_com_gateways
+      summary: List all checkout.com gateways
+      description: List all checkout.com gateways
+      tags:
+      - checkout_com_gateways
+      responses:
+        '200':
+          description: A list of checkout.com gateway objects
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/checkoutComGatewayResponseList'
+    post:
+      operationId: POST/checkout_com_gateways
+      summary: Create a checkout.com gateway
+      description: Create a checkout.com gateway
+      tags:
+      - checkout_com_gateways
+      requestBody:
+        required: true
+        content:
+          application/vnd.api+json:
+            schema:
+              $ref: '#/components/schemas/checkoutComGatewayCreate'
+      responses:
+        '201':
+          description: The created checkout.com gateway object
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/checkoutComGatewayResponse'
+  /checkout_com_gateways/{checkoutComGatewayId}:
+    get:
+      operationId: GET/checkout_com_gateways/checkoutComGatewayId
+      summary: Retrieve a checkout.com gateway
+      description: Retrieve a checkout.com gateway
+      tags:
+      - checkout_com_gateways
+      parameters:
+      - name: checkoutComGatewayId
+        in: path
+        schema:
+          type: string
+        required: true
+        description: The resource's id
+      responses:
+        '200':
+          description: The checkout.com gateway object
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/checkoutComGatewayResponse'
+    patch:
+      operationId: PATCH/checkout_com_gateways/checkoutComGatewayId
+      summary: Update a checkout.com gateway
+      description: Update a checkout.com gateway
+      tags:
+      - checkout_com_gateways
+      parameters:
+      - name: checkoutComGatewayId
+        in: path
+        schema:
+          type: string
+        required: true
+        description: The resource's id
+      requestBody:
+        required: true
+        content:
+          application/vnd.api+json:
+            schema:
+              $ref: '#/components/schemas/checkoutComGatewayUpdate'
+      responses:
+        '200':
+          description: The updated checkout.com gateway object
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/checkoutComGatewayResponse'
+    delete:
+      operationId: DELETE/checkout_com_gateways/checkoutComGatewayId
+      summary: Delete a checkout.com gateway
+      description: Delete a checkout.com gateway
+      tags:
+      - checkout_com_gateways
+      parameters:
+      - name: checkoutComGatewayId
+        in: path
+        schema:
+          type: string
+        required: true
+        description: The resource's id
+      responses:
+        '204':
+          description: No content
+components:
+  schemas:
+    checkoutComGatewayCreate:
+      required:
+      - data
+      type: object
+      properties:
+        data:
+          type: object
+          required:
+          - type
+          - attributes
+          properties:
+            type:
+              type: string
+              description: The resource's type
+              enum:
+              - checkout_com_gateways
+            attributes:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: The payment gateway's internal name.
+                  example: US payment gateway
+                force_payments:
+                  type: boolean
+                  description: Indicates if the payment source is forced on the editable order upon receiving a successful event from the gateway.
+                  example: true
+                _disable:
+                  type: boolean
+                  description: Send this attribute if you want to mark this resource as disabled.
+                  example: true
+                _enable:
+                  type: boolean
+                  description: Send this attribute if you want to mark this resource as enabled.
+                  example: true
+                reference:
+                  type: string
+                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
+                  example: ANY-EXTERNAL-REFEFERNCE
+                reference_origin:
+                  type: string
+                  description: Any identifier of the third party system that defines the reference code.
+                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
+                metadata:
+                  type: object
+                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
+                  example:
+                    foo: bar
+                _check:
+                  type: boolean
+                  description: Send this attribute if you want to check the credentials against the payment gateway's APIs.
+                  example: true
+                secret_key:
+                  type: string
+                  description: The gateway secret key.
+                  example: sk_test_xxxx-yyyy-zzzz
+                public_key:
+                  type: string
+                  description: The gateway public key.
+                  example: pk_test_xxxx-yyyy-zzzz
+              required:
+              - name
+              - secret_key
+              - public_key
+            relationships:
+              type: object
+              properties:
+                checkout_com_payments:
+                  required:
+                  - data
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - checkout_com_payments
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+    checkoutComGatewayResponse:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            id:
+              type: string
+              description: Unique identifier for the resource (hash).
+              example: XAyRWNUzyN
+            type:
+              type: string
+              description: The resource's type
+              enum:
+              - checkout_com_gateways
+            links:
+              type: object
+              properties:
+                self:
+                  type: string
+                  description: URL
+            attributes:
+              $ref: '#/components/schemas/checkoutComGateway/properties/data/properties/attributes'
+            relationships:
+              type: object
+              properties:
+                payment_methods:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - payment_methods
+                        id:
+                          type: string
+                          description: The resource ID
+                event_stores:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - event_stores
+                        id:
+                          type: string
+                          description: The resource ID
+                checkout_com_payments:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - checkout_com_payments
+                        id:
+                          type: string
+                          description: The resource ID
+    checkoutComGatewayResponseList:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/checkoutComGatewayResponse/properties/data'
+    checkoutComGatewayUpdate:
+      required:
+      - data
+      type: object
+      properties:
+        data:
+          type: object
+          required:
+          - type
+          - id
+          - attributes
+          properties:
+            type:
+              type: string
+              description: The resource's type
+              enum:
+              - checkout_com_gateways
+            id:
+              type: string
+              description: Unique identifier for the resource (hash).
+              example: XAyRWNUzyN
+            attributes:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: The payment gateway's internal name.
+                  example: US payment gateway
+                  nullable: false
+                force_payments:
+                  type: boolean
+                  description: Indicates if the payment source is forced on the editable order upon receiving a successful event from the gateway.
+                  example: true
+                  nullable: false
+                _disable:
+                  type: boolean
+                  description: Send this attribute if you want to mark this resource as disabled.
+                  example: true
+                  nullable: false
+                _enable:
+                  type: boolean
+                  description: Send this attribute if you want to mark this resource as enabled.
+                  example: true
+                  nullable: false
+                reference:
+                  type: string
+                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
+                  example: ANY-EXTERNAL-REFEFERNCE
+                  nullable: true
+                reference_origin:
+                  type: string
+                  description: Any identifier of the third party system that defines the reference code.
+                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
+                  nullable: true
+                metadata:
+                  type: object
+                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
+                  example:
+                    foo: bar
+                  nullable: true
+                _check:
+                  type: boolean
+                  description: Send this attribute if you want to check the credentials against the payment gateway's APIs.
+                  example: true
+                  nullable: false
+                secret_key:
+                  type: string
+                  description: The gateway secret key.
+                  example: sk_test_xxxx-yyyy-zzzz
+                public_key:
+                  type: string
+                  description: The gateway public key.
+                  example: pk_test_xxxx-yyyy-zzzz
+            relationships:
+              type: object
+              properties:
+                checkout_com_payments:
+                  required:
+                  - data
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - checkout_com_payments
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+    checkoutComGateway:
+      properties:
+        data:
+          properties:
+            attributes:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: The payment gateway's internal name.
+                  example: US payment gateway
+                  nullable: false
+                force_payments:
+                  type: boolean
+                  description: Indicates if the payment source is forced on the editable order upon receiving a successful event from the gateway.
+                  example: true
+                  nullable: true
+                credential_keys:
+                  type: object
+                  description: The payment gateway's API credential keys last digits.
+                  example:
+                    api_key: '********BW989'
+                  nullable: true
+                disabled_at:
+                  type: string
+                  description: Time at which this resource was disabled.
+                  example: '2018-01-01T12:00:00.000Z'
+                  nullable: true
+                created_at:
+                  type: string
+                  description: Time at which the resource was created.
+                  example: '2018-01-01T12:00:00.000Z'
+                  nullable: false
+                updated_at:
+                  type: string
+                  description: Time at which the resource was last updated.
+                  example: '2018-01-01T12:00:00.000Z'
+                  nullable: false
+                reference:
+                  type: string
+                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
+                  example: ANY-EXTERNAL-REFEFERNCE
+                  nullable: true
+                reference_origin:
+                  type: string
+                  description: Any identifier of the third party system that defines the reference code.
+                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
+                  nullable: true
+                metadata:
+                  type: object
+                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
+                  example:
+                    foo: bar
+                  nullable: true
+                webhook_endpoint_id:
+                  type: string
+                  description: The gateway webhook endpoint ID, generated automatically.
+                  example: xxxx-yyyy-zzzz
+                  nullable: true
+                webhook_endpoint_secret:
+                  type: string
+                  description: The gateway webhook endpoint secret, generated automatically.
+                  example: xxxx-yyyy-zzzz
+                  nullable: true
+                webhook_endpoint_url:
+                  type: string
+                  description: The gateway webhook URL, generated automatically.
+                  example: https://core.commercelayer.co/webhook_callbacks/checkout_com_gateways/xxxxx
+                  nullable: true
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT

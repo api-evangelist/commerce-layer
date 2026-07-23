@@ -1,0 +1,1117 @@
+openapi: 3.1.0
+info:
+  title: Commerce Layer addresses customers API
+  version: 7.10.1
+  contact:
+    name: API Support
+    url: https://commercelayer.io
+    email: support@commercelayer.io
+  description: Headless Commerce for Global Brands.
+servers:
+- url: https://{your_organization_slug}.commercelayer.io/api
+  description: API
+- url: https://core.commercelayer.io/users/sign_in
+  description: Sign in
+- url: https://docs.commercelayer.io/api
+  description: API reference
+security:
+- bearerAuth: []
+tags:
+- name: customers
+  description: resource type
+paths:
+  /coupon_recipients/{couponRecipientId}/customer:
+    get:
+      operationId: GET/couponRecipientId/customer
+      summary: Retrieve the customer associated to the coupon recipient
+      description: Retrieve the customer associated to the coupon recipient
+      tags:
+      - customers
+      parameters:
+      - name: couponRecipientId
+        in: path
+        schema:
+          type: string
+        required: true
+        description: The resource's id
+      responses:
+        '200':
+          description: The customer associated to the coupon recipient
+  /customer_addresses/{customerAddressId}/customer:
+    get:
+      operationId: GET/customerAddressId/customer
+      summary: Retrieve the customer associated to the customer address
+      description: Retrieve the customer associated to the customer address
+      tags:
+      - customers
+      parameters:
+      - name: customerAddressId
+        in: path
+        schema:
+          type: string
+        required: true
+        description: The resource's id
+      responses:
+        '200':
+          description: The customer associated to the customer address
+  /customer_groups/{customerGroupId}/customers:
+    get:
+      operationId: GET/customerGroupId/customers
+      summary: Retrieve the customers associated to the customer group
+      description: Retrieve the customers associated to the customer group
+      tags:
+      - customers
+      parameters:
+      - name: customerGroupId
+        in: path
+        schema:
+          type: string
+        required: true
+        description: The resource's id
+      responses:
+        '200':
+          description: The customers associated to the customer group
+  /customer_password_resets/{customerPasswordResetId}/customer:
+    get:
+      operationId: GET/customerPasswordResetId/customer
+      summary: Retrieve the customer associated to the customer password reset
+      description: Retrieve the customer associated to the customer password reset
+      tags:
+      - customers
+      parameters:
+      - name: customerPasswordResetId
+        in: path
+        schema:
+          type: string
+        required: true
+        description: The resource's id
+      responses:
+        '200':
+          description: The customer associated to the customer password reset
+  /customer_payment_sources/{customerPaymentSourceId}/customer:
+    get:
+      operationId: GET/customerPaymentSourceId/customer
+      summary: Retrieve the customer associated to the customer payment source
+      description: Retrieve the customer associated to the customer payment source
+      tags:
+      - customers
+      parameters:
+      - name: customerPaymentSourceId
+        in: path
+        schema:
+          type: string
+        required: true
+        description: The resource's id
+      responses:
+        '200':
+          description: The customer associated to the customer payment source
+  /customer_subscriptions/{customerSubscriptionId}/customer:
+    get:
+      operationId: GET/customerSubscriptionId/customer
+      summary: Retrieve the customer associated to the customer subscription
+      description: Retrieve the customer associated to the customer subscription
+      tags:
+      - customers
+      parameters:
+      - name: customerSubscriptionId
+        in: path
+        schema:
+          type: string
+        required: true
+        description: The resource's id
+      responses:
+        '200':
+          description: The customer associated to the customer subscription
+  /customers:
+    get:
+      operationId: GET/customers
+      summary: List all customers
+      description: List all customers
+      tags:
+      - customers
+      responses:
+        '200':
+          description: A list of customer objects
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/customerResponseList'
+    post:
+      operationId: POST/customers
+      summary: Create a customer
+      description: Create a customer
+      tags:
+      - customers
+      requestBody:
+        required: true
+        content:
+          application/vnd.api+json:
+            schema:
+              $ref: '#/components/schemas/customerCreate'
+      responses:
+        '201':
+          description: The created customer object
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/customerResponse'
+  /customers/{customerId}:
+    get:
+      operationId: GET/customers/customerId
+      summary: Retrieve a customer
+      description: Retrieve a customer
+      tags:
+      - customers
+      parameters:
+      - name: customerId
+        in: path
+        schema:
+          type: string
+        required: true
+        description: The resource's id
+      responses:
+        '200':
+          description: The customer object
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/customerResponse'
+    patch:
+      operationId: PATCH/customers/customerId
+      summary: Update a customer
+      description: Update a customer
+      tags:
+      - customers
+      parameters:
+      - name: customerId
+        in: path
+        schema:
+          type: string
+        required: true
+        description: The resource's id
+      requestBody:
+        required: true
+        content:
+          application/vnd.api+json:
+            schema:
+              $ref: '#/components/schemas/customerUpdate'
+      responses:
+        '200':
+          description: The updated customer object
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/customerResponse'
+    delete:
+      operationId: DELETE/customers/customerId
+      summary: Delete a customer
+      description: Delete a customer
+      tags:
+      - customers
+      parameters:
+      - name: customerId
+        in: path
+        schema:
+          type: string
+        required: true
+        description: The resource's id
+      responses:
+        '204':
+          description: No content
+  /customers/{customerId}/jwt_customer:
+    get:
+      operationId: GET/customerId/jwt_customer
+      summary: Retrieve the jwt customer associated to the customer
+      description: Retrieve the jwt customer associated to the customer
+      tags:
+      - customers
+      parameters:
+      - name: customerId
+        in: path
+        schema:
+          type: string
+        required: true
+        description: The resource's id
+      responses:
+        '200':
+          description: The jwt_customer associated to the customer
+  /gift_card_recipients/{giftCardRecipientId}/customer:
+    get:
+      operationId: GET/giftCardRecipientId/customer
+      summary: Retrieve the customer associated to the gift card recipient
+      description: Retrieve the customer associated to the gift card recipient
+      tags:
+      - customers
+      parameters:
+      - name: giftCardRecipientId
+        in: path
+        schema:
+          type: string
+        required: true
+        description: The resource's id
+      responses:
+        '200':
+          description: The customer associated to the gift card recipient
+  /in_stock_subscriptions/{inStockSubscriptionId}/customer:
+    get:
+      operationId: GET/inStockSubscriptionId/customer
+      summary: Retrieve the customer associated to the in stock subscription
+      description: Retrieve the customer associated to the in stock subscription
+      tags:
+      - customers
+      parameters:
+      - name: inStockSubscriptionId
+        in: path
+        schema:
+          type: string
+        required: true
+        description: The resource's id
+      responses:
+        '200':
+          description: The customer associated to the in stock subscription
+  /order_subscriptions/{orderSubscriptionId}/customer:
+    get:
+      operationId: GET/orderSubscriptionId/customer
+      summary: Retrieve the customer associated to the order subscription
+      description: Retrieve the customer associated to the order subscription
+      tags:
+      - customers
+      parameters:
+      - name: orderSubscriptionId
+        in: path
+        schema:
+          type: string
+        required: true
+        description: The resource's id
+      responses:
+        '200':
+          description: The customer associated to the order subscription
+  /orders/{orderId}/customer:
+    get:
+      operationId: GET/orderId/customer
+      summary: Retrieve the customer associated to the order
+      description: Retrieve the customer associated to the order
+      tags:
+      - customers
+      parameters:
+      - name: orderId
+        in: path
+        schema:
+          type: string
+        required: true
+        description: The resource's id
+      responses:
+        '200':
+          description: The customer associated to the order
+  /prices/{priceId}/jwt_customer:
+    get:
+      operationId: GET/priceId/jwt_customer
+      summary: Retrieve the jwt customer associated to the price
+      description: Retrieve the jwt customer associated to the price
+      tags:
+      - customers
+      parameters:
+      - name: priceId
+        in: path
+        schema:
+          type: string
+        required: true
+        description: The resource's id
+      responses:
+        '200':
+          description: The jwt_customer associated to the price
+  /returns/{returnId}/customer:
+    get:
+      operationId: GET/returnId/customer
+      summary: Retrieve the customer associated to the return
+      description: Retrieve the customer associated to the return
+      tags:
+      - customers
+      parameters:
+      - name: returnId
+        in: path
+        schema:
+          type: string
+        required: true
+        description: The resource's id
+      responses:
+        '200':
+          description: The customer associated to the return
+  /sku_lists/{skuListId}/customer:
+    get:
+      operationId: GET/skuListId/customer
+      summary: Retrieve the customer associated to the SKU list
+      description: Retrieve the customer associated to the SKU list
+      tags:
+      - customers
+      parameters:
+      - name: skuListId
+        in: path
+        schema:
+          type: string
+        required: true
+        description: The resource's id
+      responses:
+        '200':
+          description: The customer associated to the SKU list
+  /skus/{skuId}/jwt_customer:
+    get:
+      operationId: GET/skuId/jwt_customer
+      summary: Retrieve the jwt customer associated to the SKU
+      description: Retrieve the jwt customer associated to the SKU
+      tags:
+      - customers
+      parameters:
+      - name: skuId
+        in: path
+        schema:
+          type: string
+        required: true
+        description: The resource's id
+      responses:
+        '200':
+          description: The jwt_customer associated to the SKU
+components:
+  schemas:
+    customerResponseList:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/customerResponse/properties/data'
+    customerResponse:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            id:
+              type: string
+              description: Unique identifier for the resource (hash).
+              example: XAyRWNUzyN
+            type:
+              type: string
+              description: The resource's type
+              enum:
+              - customers
+            links:
+              type: object
+              properties:
+                self:
+                  type: string
+                  description: URL
+            attributes:
+              $ref: '#/components/schemas/customer/properties/data/properties/attributes'
+            relationships:
+              type: object
+              properties:
+                customer_group:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - customer_group
+                        id:
+                          type: string
+                          description: The resource ID
+                customer_addresses:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - customer_addresses
+                        id:
+                          type: string
+                          description: The resource ID
+                customer_payment_sources:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - customer_payment_sources
+                        id:
+                          type: string
+                          description: The resource ID
+                customer_subscriptions:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - customer_subscriptions
+                        id:
+                          type: string
+                          description: The resource ID
+                orders:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - orders
+                        id:
+                          type: string
+                          description: The resource ID
+                order_subscriptions:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - order_subscriptions
+                        id:
+                          type: string
+                          description: The resource ID
+                returns:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - returns
+                        id:
+                          type: string
+                          description: The resource ID
+                sku_lists:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - sku_lists
+                        id:
+                          type: string
+                          description: The resource ID
+                attachments:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - attachments
+                        id:
+                          type: string
+                          description: The resource ID
+                events:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - events
+                        id:
+                          type: string
+                          description: The resource ID
+                tags:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - tags
+                        id:
+                          type: string
+                          description: The resource ID
+                jwt_customer:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - jwt_customer
+                        id:
+                          type: string
+                          description: The resource ID
+                jwt_markets:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - jwt_markets
+                        id:
+                          type: string
+                          description: The resource ID
+                jwt_stock_locations:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - jwt_stock_locations
+                        id:
+                          type: string
+                          description: The resource ID
+                event_stores:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - event_stores
+                        id:
+                          type: string
+                          description: The resource ID
+    customerCreate:
+      required:
+      - data
+      type: object
+      properties:
+        data:
+          type: object
+          required:
+          - type
+          - attributes
+          properties:
+            type:
+              type: string
+              description: The resource's type
+              enum:
+              - customers
+            attributes:
+              type: object
+              properties:
+                email:
+                  type: string
+                  description: The customer's email address.
+                  example: john@example.com
+                password:
+                  type: string
+                  description: The customer's password. Initiate a customer password reset flow if you need to change it.
+                  example: secret
+                shopper_reference:
+                  type: string
+                  description: A reference to uniquely identify the shopper during payment sessions.
+                  example: xxx-yyy-zzz
+                profile_id:
+                  type: string
+                  description: A reference to uniquely identify the customer on any connected external services.
+                  example: xxx-yyy-zzz
+                tax_exemption_code:
+                  type: string
+                  description: A specific code to identify the tax exemption reason for this customer.
+                  example: xxx-yyy-zzz
+                reference:
+                  type: string
+                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
+                  example: ANY-EXTERNAL-REFEFERNCE
+                reference_origin:
+                  type: string
+                  description: Any identifier of the third party system that defines the reference code.
+                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
+                metadata:
+                  type: object
+                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
+                  example:
+                    foo: bar
+              required:
+              - email
+            relationships:
+              type: object
+              properties:
+                customer_group:
+                  required:
+                  - data
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - customer_groups
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+                tags:
+                  required:
+                  - data
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - tags
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+    customerUpdate:
+      required:
+      - data
+      type: object
+      properties:
+        data:
+          type: object
+          required:
+          - type
+          - id
+          - attributes
+          properties:
+            type:
+              type: string
+              description: The resource's type
+              enum:
+              - customers
+            id:
+              type: string
+              description: Unique identifier for the resource (hash).
+              example: XAyRWNUzyN
+            attributes:
+              type: object
+              properties:
+                email:
+                  type: string
+                  description: The customer's email address.
+                  example: john@example.com
+                  nullable: false
+                password:
+                  type: string
+                  description: The customer's password. Initiate a customer password reset flow if you need to change it.
+                  example: secret
+                shopper_reference:
+                  type: string
+                  description: A reference to uniquely identify the shopper during payment sessions.
+                  example: xxx-yyy-zzz
+                  nullable: true
+                profile_id:
+                  type: string
+                  description: A reference to uniquely identify the customer on any connected external services.
+                  example: xxx-yyy-zzz
+                  nullable: true
+                tax_exemption_code:
+                  type: string
+                  description: A specific code to identify the tax exemption reason for this customer.
+                  example: xxx-yyy-zzz
+                  nullable: true
+                _add_tags:
+                  type: string
+                  description: Comma separated list of tags to be added. Duplicates, invalid and non existing ones are discarded. Cannot be passed by sales channels.
+                _remove_tags:
+                  type: string
+                  description: Comma separated list of tags to be removed. Duplicates, invalid and non existing ones are discarded. Cannot be passed by sales channels.
+                reference:
+                  type: string
+                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
+                  example: ANY-EXTERNAL-REFEFERNCE
+                  nullable: true
+                reference_origin:
+                  type: string
+                  description: Any identifier of the third party system that defines the reference code.
+                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
+                  nullable: true
+                metadata:
+                  type: object
+                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
+                  example:
+                    foo: bar
+                  nullable: true
+                _request_anonymization:
+                  type: boolean
+                  description: Send this attribute if you want to trigger anonymization. Cannot be passed by sales channels.
+                  example: true
+                  nullable: false
+                _cancel_anonymization:
+                  type: boolean
+                  description: Send this attribute if you want to trigger a cancellation of anonymization. Cannot be passed by sales channels.
+                  example: true
+                  nullable: false
+            relationships:
+              type: object
+              properties:
+                customer_group:
+                  required:
+                  - data
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - customer_groups
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+                tags:
+                  required:
+                  - data
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - tags
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+    customer:
+      properties:
+        data:
+          properties:
+            attributes:
+              type: object
+              properties:
+                email:
+                  type: string
+                  description: The customer's email address.
+                  example: john@example.com
+                  nullable: false
+                status:
+                  type: string
+                  description: The customer's status. One of 'prospect' (default), 'acquired', or 'repeat'.
+                  example: prospect
+                  nullable: false
+                  enum:
+                  - prospect
+                  - acquired
+                  - repeat
+                has_password:
+                  type: boolean
+                  description: Indicates if the customer has a password.
+                  example: false
+                  nullable: true
+                total_orders_count:
+                  type: integer
+                  description: The total number of orders for the customer.
+                  example: 6
+                  nullable: true
+                shopper_reference:
+                  type: string
+                  description: A reference to uniquely identify the shopper during payment sessions.
+                  example: xxx-yyy-zzz
+                  nullable: true
+                profile_id:
+                  type: string
+                  description: A reference to uniquely identify the customer on any connected external services.
+                  example: xxx-yyy-zzz
+                  nullable: true
+                tax_exemption_code:
+                  type: string
+                  description: A specific code to identify the tax exemption reason for this customer.
+                  example: xxx-yyy-zzz
+                  nullable: true
+                created_at:
+                  type: string
+                  description: Time at which the resource was created.
+                  example: '2018-01-01T12:00:00.000Z'
+                  nullable: false
+                updated_at:
+                  type: string
+                  description: Time at which the resource was last updated.
+                  example: '2018-01-01T12:00:00.000Z'
+                  nullable: false
+                reference:
+                  type: string
+                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
+                  example: ANY-EXTERNAL-REFEFERNCE
+                  nullable: true
+                reference_origin:
+                  type: string
+                  description: Any identifier of the third party system that defines the reference code.
+                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
+                  nullable: true
+                jwt_custom_claim:
+                  type: object
+                  description: The custom_claim attached to the current JWT (if any).
+                  example: {}
+                  nullable: true
+                metadata:
+                  type: object
+                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
+                  example:
+                    foo: bar
+                  nullable: true
+                anonymization_info:
+                  type: object
+                  description: The anonymization info object.
+                  example:
+                    status: requested
+                    requested_at: 2025-03-15 11:39:21 UTC
+                    requester:
+                      id: fdgt56hh
+                      first_name: Travis
+                      last_name: Muller
+                      email: test@labadie.test
+                  properties:
+                    status:
+                      type: string
+                      description: The status of the anonymization.
+                    requested_at:
+                      type: string
+                      description: The time when the anonymization was requested.
+                    started_at:
+                      type: string
+                      description: The time when the anonymization request was started.
+                    completed_at:
+                      type: string
+                      description: The time when the anonymization request was completed.
+                    failed_at:
+                      type: string
+                      description: The time when the anonymization request failed.
+                    cancelled_at:
+                      type: string
+                      description: The time when the anonymization request was cancelled.
+                    requester:
+                      type: object
+                      description: The user who requested the anonymization.
+                      properties:
+                        id:
+                          type: string
+                          description: The ID of the user.
+                        first_name:
+                          type: string
+                          description: First name of the user.
+                        last_name:
+                          type: string
+                          description: Last name of the user.
+                        email:
+                          type: string
+                          description: Email of the user.
+                    cancellation_requester:
+                      type: object
+                      description: The user who requested the cancellation of the anonymization.
+                      properties:
+                        id:
+                          type: string
+                          description: The ID of the user.
+                        first_name:
+                          type: string
+                          description: First name of the user.
+                        last_name:
+                          type: string
+                          description: Last name of the user.
+                        email:
+                          type: string
+                          description: Email of the user.
+                  nullable: true
+                anonymization_status:
+                  type: string
+                  description: Status of the current anonymization request (if any). One of 'requested', 'started', 'completed', 'failed', or 'cancelled'.
+                  example: requested
+                  nullable: true
+                  enum:
+                  - requested
+                  - started
+                  - completed
+                  - failed
+                  - cancelled
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT

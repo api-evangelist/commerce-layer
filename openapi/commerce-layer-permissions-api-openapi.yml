@@ -1,0 +1,452 @@
+openapi: 3.1.0
+info:
+  title: Commerce Layer addresses permissions API
+  version: 7.10.1
+  contact:
+    name: API Support
+    url: https://commercelayer.io
+    email: support@commercelayer.io
+  description: Headless Commerce for Global Brands.
+servers:
+- url: https://{your_organization_slug}.commercelayer.io/api
+  description: API
+- url: https://core.commercelayer.io/users/sign_in
+  description: Sign in
+- url: https://docs.commercelayer.io/api
+  description: API reference
+security:
+- bearerAuth: []
+tags:
+- name: permissions
+  description: resource type
+paths:
+  /organizations/{organizationId}/permissions:
+    get:
+      operationId: GET/organizationId/permissions
+      summary: Related organization
+      description: Related organization
+      tags:
+      - permissions
+      parameters:
+      - name: organizationId
+        in: path
+        schema:
+          type: string
+        required: true
+        description: The ID of the resource.
+      responses:
+        '200':
+          description: The permissions associated to the organization
+  /permissions:
+    post:
+      operationId: POST/permissions
+      summary: Creates an permission
+      description: Creates an permission
+      tags:
+      - permissions
+      requestBody:
+        required: true
+        content:
+          application/vnd.api+json:
+            schema:
+              $ref: '#/components/schemas/permissionCreate'
+      responses:
+        '201':
+          description: The created permission object
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/permissionResponse'
+    get:
+      operationId: GET/permissions
+      summary: List all permissions
+      description: List all permissions
+      tags:
+      - permissions
+      responses:
+        '200':
+          description: A list of permission objects
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/permissionResponseList'
+  /permissions/{permissionId}:
+    get:
+      operationId: GET/permissions/permissionId
+      summary: Retrieve an permission
+      description: Retrieve an permission
+      parameters:
+      - name: permissionId
+        in: path
+        schema:
+          type: string
+        required: true
+        description: The ID of the resource.
+      tags:
+      - permissions
+      responses:
+        '200':
+          description: The permission object
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/permissionResponse'
+    patch:
+      operationId: PATCH/permissions/permissionId
+      summary: Updates an permission
+      description: Updates an permission
+      tags:
+      - permissions
+      parameters:
+      - name: permissionId
+        in: path
+        schema:
+          type: string
+        required: true
+        description: The ID of the resource.
+      requestBody:
+        required: true
+        content:
+          application/vnd.api+json:
+            schema:
+              $ref: '#/components/schemas/permissionUpdate'
+      responses:
+        '200':
+          description: The updated permission object
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/permissionResponse'
+  /roles/{roleId}/permissions:
+    get:
+      operationId: GET/roleId/permissions
+      summary: Related role
+      description: Related role
+      tags:
+      - permissions
+      parameters:
+      - name: roleId
+        in: path
+        schema:
+          type: string
+        required: true
+        description: The ID of the resource.
+      responses:
+        '200':
+          description: The permissions associated to the role
+components:
+  schemas:
+    permissionResponse:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            id:
+              type: string
+              description: The ID of the resource.
+              example: XGZwpOSrWL
+            type:
+              type: string
+              description: The resource's type.
+              enum:
+              - permissions
+            links:
+              type: object
+              properties:
+                self:
+                  type: string
+                  description: URL
+            attributes:
+              $ref: '#/components/schemas/permission/properties/data/properties/attributes'
+            relationships:
+              type: object
+              properties:
+                organization:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type.
+                          enum:
+                          - organization
+                        id:
+                          type: string
+                          description: The ID of the resource.
+                role:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type.
+                          enum:
+                          - role
+                        id:
+                          type: string
+                          description: The ID of the resource.
+                versions:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type.
+                          enum:
+                          - versions
+                        id:
+                          type: string
+                          description: The ID of the resource.
+    permissionResponseList:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/permissionResponse/properties/data'
+    permissionCreate:
+      required:
+      - data
+      type: object
+      properties:
+        data:
+          type: object
+          required:
+          - type
+          - attributes
+          properties:
+            type:
+              type: string
+              description: The resource's type.
+              enum:
+              - permissions
+            attributes:
+              type: object
+              properties:
+                can_create:
+                  type: boolean
+                  description: Determines if the permission have access to create rights.
+                  example: false
+                can_read:
+                  type: boolean
+                  description: Determines if the permission have access to read rights.
+                  example: false
+                can_update:
+                  type: boolean
+                  description: Determines if the permission have access to update rights.
+                  example: false
+                can_destroy:
+                  type: boolean
+                  description: Determines if the permission have access to destroy rights.
+                  example: false
+                subject:
+                  type: string
+                  description: The resource where this permission is applied.
+                  example: ''
+                reference:
+                  type: string
+                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
+                  example: ANY-EXTERNAL-REFEFERNCE
+                reference_origin:
+                  type: string
+                  description: Any identifier of the third party system that defines the reference code.
+                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
+                metadata:
+                  type: object
+                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
+                  example:
+                    foo: bar
+              required:
+              - can_create
+              - can_read
+              - can_update
+              - can_destroy
+              - subject
+            relationships:
+              type: object
+              properties:
+                role:
+                  required:
+                  - data
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type.
+                          enum:
+                          - roles
+                        id:
+                          type: string
+                          description: The ID of the resource.
+                          example: XGZwpOSrWL
+              required:
+              - role
+    permissionUpdate:
+      required:
+      - data
+      type: object
+      properties:
+        data:
+          type: object
+          required:
+          - type
+          - id
+          - attributes
+          properties:
+            type:
+              type: string
+              description: The resource's type.
+              enum:
+              - permissions
+            id:
+              type: string
+              description: The ID of the resource.
+              example: XGZwpOSrWL
+            attributes:
+              type: object
+              properties:
+                can_create:
+                  type: boolean
+                  description: Determines if the permission have access to create rights.
+                  example: false
+                  nullable: false
+                can_read:
+                  type: boolean
+                  description: Determines if the permission have access to read rights.
+                  example: false
+                  nullable: false
+                can_update:
+                  type: boolean
+                  description: Determines if the permission have access to update rights.
+                  example: false
+                  nullable: false
+                can_destroy:
+                  type: boolean
+                  description: Determines if the permission have access to destroy rights.
+                  example: false
+                  nullable: false
+                reference:
+                  type: string
+                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
+                  example: ANY-EXTERNAL-REFEFERNCE
+                  nullable: true
+                reference_origin:
+                  type: string
+                  description: Any identifier of the third party system that defines the reference code.
+                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
+                  nullable: true
+                metadata:
+                  type: object
+                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
+                  example:
+                    foo: bar
+                  nullable: true
+            relationships:
+              type: object
+              properties: {}
+    permission:
+      properties:
+        data:
+          properties:
+            attributes:
+              type: object
+              properties:
+                can_create:
+                  type: boolean
+                  description: Determines if the permission have access to create rights.
+                  example: false
+                  nullable: false
+                can_read:
+                  type: boolean
+                  description: Determines if the permission have access to read rights.
+                  example: false
+                  nullable: false
+                can_update:
+                  type: boolean
+                  description: Determines if the permission have access to update rights.
+                  example: false
+                  nullable: false
+                can_destroy:
+                  type: boolean
+                  description: Determines if the permission have access to destroy rights.
+                  example: false
+                  nullable: false
+                subject:
+                  type: string
+                  description: The resource where this permission is applied.
+                  example: ''
+                  nullable: false
+                restrictions:
+                  type: object
+                  description: An object that contains additional restrictions.
+                  example:
+                    foo: bar
+                  readOnly: true
+                created_at:
+                  type: string
+                  description: Time at which the resource was created.
+                  example: '2018-01-01T12:00:00.000Z'
+                  readOnly: true
+                updated_at:
+                  type: string
+                  description: Time at which the resource was last updated.
+                  example: '2018-01-01T12:00:00.000Z'
+                  readOnly: true
+                reference:
+                  type: string
+                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
+                  example: ANY-EXTERNAL-REFEFERNCE
+                  nullable: true
+                reference_origin:
+                  type: string
+                  description: Any identifier of the third party system that defines the reference code.
+                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
+                  nullable: true
+                metadata:
+                  type: object
+                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
+                  example:
+                    foo: bar
+                  nullable: true
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT

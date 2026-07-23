@@ -1,0 +1,519 @@
+openapi: 3.1.0
+info:
+  title: Commerce Layer addresses recurring_order_copies API
+  version: 7.10.1
+  contact:
+    name: API Support
+    url: https://commercelayer.io
+    email: support@commercelayer.io
+  description: Headless Commerce for Global Brands.
+servers:
+- url: https://{your_organization_slug}.commercelayer.io/api
+  description: API
+- url: https://core.commercelayer.io/users/sign_in
+  description: Sign in
+- url: https://docs.commercelayer.io/api
+  description: API reference
+security:
+- bearerAuth: []
+tags:
+- name: recurring_order_copies
+  description: resource type
+paths:
+  /order_subscriptions/{orderSubscriptionId}/recurring_order_copies:
+    get:
+      operationId: GET/orderSubscriptionId/recurring_order_copies
+      summary: Retrieve the recurring order copies associated to the order subscription
+      description: Retrieve the recurring order copies associated to the order subscription
+      tags:
+      - recurring_order_copies
+      parameters:
+      - name: orderSubscriptionId
+        in: path
+        schema:
+          type: string
+        required: true
+        description: The resource's id
+      responses:
+        '200':
+          description: The recurring_order_copies associated to the order subscription
+  /orders/{orderId}/recurring_order_copies:
+    get:
+      operationId: GET/orderId/recurring_order_copies
+      summary: Retrieve the recurring order copies associated to the order
+      description: Retrieve the recurring order copies associated to the order
+      tags:
+      - recurring_order_copies
+      parameters:
+      - name: orderId
+        in: path
+        schema:
+          type: string
+        required: true
+        description: The resource's id
+      responses:
+        '200':
+          description: The recurring_order_copies associated to the order
+  /recurring_order_copies:
+    get:
+      operationId: GET/recurring_order_copies
+      summary: List all recurring order copies
+      description: List all recurring order copies
+      tags:
+      - recurring_order_copies
+      responses:
+        '200':
+          description: A list of recurring order copy objects
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/recurringOrderCopyResponseList'
+    post:
+      operationId: POST/recurring_order_copies
+      summary: Create a recurring order copy
+      description: Create a recurring order copy
+      tags:
+      - recurring_order_copies
+      requestBody:
+        required: true
+        content:
+          application/vnd.api+json:
+            schema:
+              $ref: '#/components/schemas/recurringOrderCopyCreate'
+      responses:
+        '201':
+          description: The created recurring order copy object
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/recurringOrderCopyResponse'
+  /recurring_order_copies/{recurringOrderCopyId}:
+    get:
+      operationId: GET/recurring_order_copies/recurringOrderCopyId
+      summary: Retrieve a recurring order copy
+      description: Retrieve a recurring order copy
+      tags:
+      - recurring_order_copies
+      parameters:
+      - name: recurringOrderCopyId
+        in: path
+        schema:
+          type: string
+        required: true
+        description: The resource's id
+      responses:
+        '200':
+          description: The recurring order copy object
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/recurringOrderCopyResponse'
+    patch:
+      operationId: PATCH/recurring_order_copies/recurringOrderCopyId
+      summary: Update a recurring order copy
+      description: Update a recurring order copy
+      tags:
+      - recurring_order_copies
+      parameters:
+      - name: recurringOrderCopyId
+        in: path
+        schema:
+          type: string
+        required: true
+        description: The resource's id
+      requestBody:
+        required: true
+        content:
+          application/vnd.api+json:
+            schema:
+              $ref: '#/components/schemas/recurringOrderCopyUpdate'
+      responses:
+        '200':
+          description: The updated recurring order copy object
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/recurringOrderCopyResponse'
+    delete:
+      operationId: DELETE/recurring_order_copies/recurringOrderCopyId
+      summary: Delete a recurring order copy
+      description: Delete a recurring order copy
+      tags:
+      - recurring_order_copies
+      parameters:
+      - name: recurringOrderCopyId
+        in: path
+        schema:
+          type: string
+        required: true
+        description: The resource's id
+      responses:
+        '204':
+          description: No content
+components:
+  schemas:
+    recurringOrderCopyResponseList:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/recurringOrderCopyResponse/properties/data'
+    recurringOrderCopy:
+      properties:
+        data:
+          properties:
+            attributes:
+              type: object
+              properties:
+                type:
+                  type: string
+                  description: The order factory's type.
+                  example: recurring_order_copies
+                  nullable: false
+                  enum:
+                  - order_copies
+                  - recurring_order_copies
+                status:
+                  type: string
+                  description: The order factory status. One of 'pending' (default), 'in_progress', 'aborted', 'failed', or 'completed'.
+                  example: in_progress
+                  nullable: false
+                  enum:
+                  - pending
+                  - in_progress
+                  - aborted
+                  - failed
+                  - completed
+                started_at:
+                  type: string
+                  description: Time at which the order copy was started.
+                  example: '2018-01-01T12:00:00.000Z'
+                  nullable: true
+                completed_at:
+                  type: string
+                  description: Time at which the order copy was completed.
+                  example: '2018-01-01T12:00:00.000Z'
+                  nullable: true
+                failed_at:
+                  type: string
+                  description: Time at which the order copy has failed.
+                  example: '2018-01-01T12:00:00.000Z'
+                  nullable: true
+                errors_log:
+                  type: object
+                  description: Contains the order copy errors, if any.
+                  example:
+                    status:
+                    - cannot transition from draft to placed
+                  nullable: true
+                errors_count:
+                  type: integer
+                  description: Indicates the number of copy errors, if any.
+                  example: 2
+                  nullable: true
+                place_target_order:
+                  type: boolean
+                  description: Indicates if the target order must be placed upon copy.
+                  example: true
+                  nullable: true
+                reuse_wallet:
+                  type: boolean
+                  description: Indicates if the payment source within the source order customer's wallet must be copied.
+                  example: true
+                  nullable: true
+                created_at:
+                  type: string
+                  description: Time at which the resource was created.
+                  example: '2018-01-01T12:00:00.000Z'
+                  nullable: false
+                updated_at:
+                  type: string
+                  description: Time at which the resource was last updated.
+                  example: '2018-01-01T12:00:00.000Z'
+                  nullable: false
+                reference:
+                  type: string
+                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
+                  example: ANY-EXTERNAL-REFEFERNCE
+                  nullable: true
+                reference_origin:
+                  type: string
+                  description: Any identifier of the third party system that defines the reference code.
+                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
+                  nullable: true
+                metadata:
+                  type: object
+                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
+                  example:
+                    foo: bar
+                  nullable: true
+    recurringOrderCopyResponse:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            id:
+              type: string
+              description: Unique identifier for the resource (hash).
+              example: XAyRWNUzyN
+            type:
+              type: string
+              description: The resource's type
+              enum:
+              - recurring_order_copies
+            links:
+              type: object
+              properties:
+                self:
+                  type: string
+                  description: URL
+            attributes:
+              $ref: '#/components/schemas/recurringOrderCopy/properties/data/properties/attributes'
+            relationships:
+              type: object
+              properties:
+                source_order:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - source_order
+                        id:
+                          type: string
+                          description: The resource ID
+                target_order:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - target_order
+                        id:
+                          type: string
+                          description: The resource ID
+                events:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - events
+                        id:
+                          type: string
+                          description: The resource ID
+                event_stores:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - event_stores
+                        id:
+                          type: string
+                          description: The resource ID
+                order_subscription:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - order_subscription
+                        id:
+                          type: string
+                          description: The resource ID
+    recurringOrderCopyUpdate:
+      required:
+      - data
+      type: object
+      properties:
+        data:
+          type: object
+          required:
+          - type
+          - id
+          - attributes
+          properties:
+            type:
+              type: string
+              description: The resource's type
+              enum:
+              - recurring_order_copies
+            id:
+              type: string
+              description: Unique identifier for the resource (hash).
+              example: XAyRWNUzyN
+            attributes:
+              type: object
+              properties:
+                reference:
+                  type: string
+                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
+                  example: ANY-EXTERNAL-REFEFERNCE
+                  nullable: true
+                reference_origin:
+                  type: string
+                  description: Any identifier of the third party system that defines the reference code.
+                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
+                  nullable: true
+                metadata:
+                  type: object
+                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
+                  example:
+                    foo: bar
+                  nullable: true
+            relationships:
+              type: object
+              properties: {}
+    recurringOrderCopyCreate:
+      required:
+      - data
+      type: object
+      properties:
+        data:
+          type: object
+          required:
+          - type
+          - attributes
+          properties:
+            type:
+              type: string
+              description: The resource's type
+              enum:
+              - recurring_order_copies
+            attributes:
+              type: object
+              properties:
+                place_target_order:
+                  type: boolean
+                  description: Indicates if the target order must be placed upon copy.
+                  example: true
+                reuse_wallet:
+                  type: boolean
+                  description: Indicates if the payment source within the source order customer's wallet must be copied.
+                  example: true
+                reference:
+                  type: string
+                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
+                  example: ANY-EXTERNAL-REFEFERNCE
+                reference_origin:
+                  type: string
+                  description: Any identifier of the third party system that defines the reference code.
+                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
+                metadata:
+                  type: object
+                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
+                  example:
+                    foo: bar
+            relationships:
+              type: object
+              properties:
+                source_order:
+                  required:
+                  - data
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - orders
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+                order_subscription:
+                  required:
+                  - data
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - order_subscriptions
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+              required:
+              - source_order
+              - order_subscription
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT

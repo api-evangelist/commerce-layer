@@ -1,0 +1,423 @@
+openapi: 3.1.0
+info:
+  title: Commerce Layer addresses parcel_line_items API
+  version: 7.10.1
+  contact:
+    name: API Support
+    url: https://commercelayer.io
+    email: support@commercelayer.io
+  description: Headless Commerce for Global Brands.
+servers:
+- url: https://{your_organization_slug}.commercelayer.io/api
+  description: API
+- url: https://core.commercelayer.io/users/sign_in
+  description: Sign in
+- url: https://docs.commercelayer.io/api
+  description: API reference
+security:
+- bearerAuth: []
+tags:
+- name: parcel_line_items
+  description: resource type
+paths:
+  /parcel_line_items:
+    get:
+      operationId: GET/parcel_line_items
+      summary: List all parcel line items
+      description: List all parcel line items
+      tags:
+      - parcel_line_items
+      responses:
+        '200':
+          description: A list of parcel line item objects
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/parcelLineItemResponseList'
+    post:
+      operationId: POST/parcel_line_items
+      summary: Create a parcel line item
+      description: Create a parcel line item
+      tags:
+      - parcel_line_items
+      requestBody:
+        required: true
+        content:
+          application/vnd.api+json:
+            schema:
+              $ref: '#/components/schemas/parcelLineItemCreate'
+      responses:
+        '201':
+          description: The created parcel line item object
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/parcelLineItemResponse'
+  /parcel_line_items/{parcelLineItemId}:
+    get:
+      operationId: GET/parcel_line_items/parcelLineItemId
+      summary: Retrieve a parcel line item
+      description: Retrieve a parcel line item
+      tags:
+      - parcel_line_items
+      parameters:
+      - name: parcelLineItemId
+        in: path
+        schema:
+          type: string
+        required: true
+        description: The resource's id
+      responses:
+        '200':
+          description: The parcel line item object
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/parcelLineItemResponse'
+    patch:
+      operationId: PATCH/parcel_line_items/parcelLineItemId
+      summary: Update a parcel line item
+      description: Update a parcel line item
+      tags:
+      - parcel_line_items
+      parameters:
+      - name: parcelLineItemId
+        in: path
+        schema:
+          type: string
+        required: true
+        description: The resource's id
+      requestBody:
+        required: true
+        content:
+          application/vnd.api+json:
+            schema:
+              $ref: '#/components/schemas/parcelLineItemUpdate'
+      responses:
+        '200':
+          description: The updated parcel line item object
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/parcelLineItemResponse'
+    delete:
+      operationId: DELETE/parcel_line_items/parcelLineItemId
+      summary: Delete a parcel line item
+      description: Delete a parcel line item
+      tags:
+      - parcel_line_items
+      parameters:
+      - name: parcelLineItemId
+        in: path
+        schema:
+          type: string
+        required: true
+        description: The resource's id
+      responses:
+        '204':
+          description: No content
+  /parcels/{parcelId}/parcel_line_items:
+    get:
+      operationId: GET/parcelId/parcel_line_items
+      summary: Retrieve the parcel line items associated to the parcel
+      description: Retrieve the parcel line items associated to the parcel
+      tags:
+      - parcel_line_items
+      parameters:
+      - name: parcelId
+        in: path
+        schema:
+          type: string
+        required: true
+        description: The resource's id
+      responses:
+        '200':
+          description: The parcel_line_items associated to the parcel
+components:
+  schemas:
+    parcelLineItemResponseList:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/parcelLineItemResponse/properties/data'
+    parcelLineItemCreate:
+      required:
+      - data
+      type: object
+      properties:
+        data:
+          type: object
+          required:
+          - type
+          - attributes
+          properties:
+            type:
+              type: string
+              description: The resource's type
+              enum:
+              - parcel_line_items
+            attributes:
+              type: object
+              properties:
+                quantity:
+                  type: integer
+                  description: The parcel line item quantity.
+                  example: 4
+                reference:
+                  type: string
+                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
+                  example: ANY-EXTERNAL-REFEFERNCE
+                reference_origin:
+                  type: string
+                  description: Any identifier of the third party system that defines the reference code.
+                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
+                metadata:
+                  type: object
+                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
+                  example:
+                    foo: bar
+              required:
+              - quantity
+            relationships:
+              type: object
+              properties:
+                parcel:
+                  required:
+                  - data
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - parcels
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+                stock_line_item:
+                  required:
+                  - data
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - stock_line_items
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+              required:
+              - parcel
+              - stock_line_item
+    parcelLineItemUpdate:
+      required:
+      - data
+      type: object
+      properties:
+        data:
+          type: object
+          required:
+          - type
+          - id
+          - attributes
+          properties:
+            type:
+              type: string
+              description: The resource's type
+              enum:
+              - parcel_line_items
+            id:
+              type: string
+              description: Unique identifier for the resource (hash).
+              example: XAyRWNUzyN
+            attributes:
+              type: object
+              properties:
+                reference:
+                  type: string
+                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
+                  example: ANY-EXTERNAL-REFEFERNCE
+                  nullable: true
+                reference_origin:
+                  type: string
+                  description: Any identifier of the third party system that defines the reference code.
+                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
+                  nullable: true
+                metadata:
+                  type: object
+                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
+                  example:
+                    foo: bar
+                  nullable: true
+            relationships:
+              type: object
+              properties: {}
+    parcelLineItem:
+      properties:
+        data:
+          properties:
+            attributes:
+              type: object
+              properties:
+                sku_code:
+                  type: string
+                  description: The code of the associated SKU.
+                  example: TSHIRTMM000000FFFFFFXLXX
+                  nullable: true
+                bundle_code:
+                  type: string
+                  description: The code of the associated bundle.
+                  example: BUNDLEMM000000FFFFFFXLXX
+                  nullable: true
+                quantity:
+                  type: integer
+                  description: The parcel line item quantity.
+                  example: 4
+                  nullable: false
+                name:
+                  type: string
+                  description: The internal name of the associated line item.
+                  example: Men's Black T-shirt with White Logo (XL)
+                  nullable: true
+                image_url:
+                  type: string
+                  description: The image_url of the associated line item.
+                  example: https://img.yourdomain.com/skus/xYZkjABcde.png
+                  nullable: true
+                created_at:
+                  type: string
+                  description: Time at which the resource was created.
+                  example: '2018-01-01T12:00:00.000Z'
+                  nullable: false
+                updated_at:
+                  type: string
+                  description: Time at which the resource was last updated.
+                  example: '2018-01-01T12:00:00.000Z'
+                  nullable: false
+                reference:
+                  type: string
+                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
+                  example: ANY-EXTERNAL-REFEFERNCE
+                  nullable: true
+                reference_origin:
+                  type: string
+                  description: Any identifier of the third party system that defines the reference code.
+                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
+                  nullable: true
+                metadata:
+                  type: object
+                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
+                  example:
+                    foo: bar
+                  nullable: true
+    parcelLineItemResponse:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            id:
+              type: string
+              description: Unique identifier for the resource (hash).
+              example: XAyRWNUzyN
+            type:
+              type: string
+              description: The resource's type
+              enum:
+              - parcel_line_items
+            links:
+              type: object
+              properties:
+                self:
+                  type: string
+                  description: URL
+            attributes:
+              $ref: '#/components/schemas/parcelLineItem/properties/data/properties/attributes'
+            relationships:
+              type: object
+              properties:
+                parcel:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - parcel
+                        id:
+                          type: string
+                          description: The resource ID
+                stock_line_item:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - stock_line_item
+                        id:
+                          type: string
+                          description: The resource ID
+                event_stores:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - event_stores
+                        id:
+                          type: string
+                          description: The resource ID
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT

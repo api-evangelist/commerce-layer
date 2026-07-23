@@ -1,0 +1,463 @@
+openapi: 3.1.0
+info:
+  title: Commerce Layer addresses manual_tax_calculators API
+  version: 7.10.1
+  contact:
+    name: API Support
+    url: https://commercelayer.io
+    email: support@commercelayer.io
+  description: Headless Commerce for Global Brands.
+servers:
+- url: https://{your_organization_slug}.commercelayer.io/api
+  description: API
+- url: https://core.commercelayer.io/users/sign_in
+  description: Sign in
+- url: https://docs.commercelayer.io/api
+  description: API reference
+security:
+- bearerAuth: []
+tags:
+- name: manual_tax_calculators
+  description: resource type
+paths:
+  /manual_tax_calculators:
+    get:
+      operationId: GET/manual_tax_calculators
+      summary: List all manual tax calculators
+      description: List all manual tax calculators
+      tags:
+      - manual_tax_calculators
+      responses:
+        '200':
+          description: A list of manual tax calculator objects
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/manualTaxCalculatorResponseList'
+    post:
+      operationId: POST/manual_tax_calculators
+      summary: Create a manual tax calculator
+      description: Create a manual tax calculator
+      tags:
+      - manual_tax_calculators
+      requestBody:
+        required: true
+        content:
+          application/vnd.api+json:
+            schema:
+              $ref: '#/components/schemas/manualTaxCalculatorCreate'
+      responses:
+        '201':
+          description: The created manual tax calculator object
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/manualTaxCalculatorResponse'
+  /manual_tax_calculators/{manualTaxCalculatorId}:
+    get:
+      operationId: GET/manual_tax_calculators/manualTaxCalculatorId
+      summary: Retrieve a manual tax calculator
+      description: Retrieve a manual tax calculator
+      tags:
+      - manual_tax_calculators
+      parameters:
+      - name: manualTaxCalculatorId
+        in: path
+        schema:
+          type: string
+        required: true
+        description: The resource's id
+      responses:
+        '200':
+          description: The manual tax calculator object
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/manualTaxCalculatorResponse'
+    patch:
+      operationId: PATCH/manual_tax_calculators/manualTaxCalculatorId
+      summary: Update a manual tax calculator
+      description: Update a manual tax calculator
+      tags:
+      - manual_tax_calculators
+      parameters:
+      - name: manualTaxCalculatorId
+        in: path
+        schema:
+          type: string
+        required: true
+        description: The resource's id
+      requestBody:
+        required: true
+        content:
+          application/vnd.api+json:
+            schema:
+              $ref: '#/components/schemas/manualTaxCalculatorUpdate'
+      responses:
+        '200':
+          description: The updated manual tax calculator object
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/manualTaxCalculatorResponse'
+    delete:
+      operationId: DELETE/manual_tax_calculators/manualTaxCalculatorId
+      summary: Delete a manual tax calculator
+      description: Delete a manual tax calculator
+      tags:
+      - manual_tax_calculators
+      parameters:
+      - name: manualTaxCalculatorId
+        in: path
+        schema:
+          type: string
+        required: true
+        description: The resource's id
+      responses:
+        '204':
+          description: No content
+  /tax_rules/{taxRuleId}/manual_tax_calculator:
+    get:
+      operationId: GET/taxRuleId/manual_tax_calculator
+      summary: Retrieve the manual tax calculator associated to the tax rule
+      description: Retrieve the manual tax calculator associated to the tax rule
+      tags:
+      - manual_tax_calculators
+      parameters:
+      - name: taxRuleId
+        in: path
+        schema:
+          type: string
+        required: true
+        description: The resource's id
+      responses:
+        '200':
+          description: The manual_tax_calculator associated to the tax rule
+components:
+  schemas:
+    manualTaxCalculatorResponse:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            id:
+              type: string
+              description: Unique identifier for the resource (hash).
+              example: XAyRWNUzyN
+            type:
+              type: string
+              description: The resource's type
+              enum:
+              - manual_tax_calculators
+            links:
+              type: object
+              properties:
+                self:
+                  type: string
+                  description: URL
+            attributes:
+              $ref: '#/components/schemas/manualTaxCalculator/properties/data/properties/attributes'
+            relationships:
+              type: object
+              properties:
+                markets:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - markets
+                        id:
+                          type: string
+                          description: The resource ID
+                attachments:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - attachments
+                        id:
+                          type: string
+                          description: The resource ID
+                events:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - events
+                        id:
+                          type: string
+                          description: The resource ID
+                event_stores:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - event_stores
+                        id:
+                          type: string
+                          description: The resource ID
+                tax_rules:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - tax_rules
+                        id:
+                          type: string
+                          description: The resource ID
+    manualTaxCalculatorUpdate:
+      required:
+      - data
+      type: object
+      properties:
+        data:
+          type: object
+          required:
+          - type
+          - id
+          - attributes
+          properties:
+            type:
+              type: string
+              description: The resource's type
+              enum:
+              - manual_tax_calculators
+            id:
+              type: string
+              description: Unique identifier for the resource (hash).
+              example: XAyRWNUzyN
+            attributes:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: The tax calculator's internal name.
+                  example: Personal tax calculator
+                  nullable: false
+                reference:
+                  type: string
+                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
+                  example: ANY-EXTERNAL-REFEFERNCE
+                  nullable: true
+                reference_origin:
+                  type: string
+                  description: Any identifier of the third party system that defines the reference code.
+                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
+                  nullable: true
+                metadata:
+                  type: object
+                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
+                  example:
+                    foo: bar
+                  nullable: true
+            relationships:
+              type: object
+              properties:
+                tax_rules:
+                  required:
+                  - data
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - tax_rules
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+    manualTaxCalculator:
+      properties:
+        data:
+          properties:
+            attributes:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: The tax calculator's internal name.
+                  example: Personal tax calculator
+                  nullable: false
+                type:
+                  type: string
+                  description: The tax calculator's type.
+                  example: avalara_accounts
+                  nullable: false
+                  enum:
+                  - avalara_accounts
+                  - stripe_tax_accounts
+                  - vertex_accounts
+                  - taxjar_accounts
+                  - manual_tax_calculators
+                  - external_tax_calculators
+                created_at:
+                  type: string
+                  description: Time at which the resource was created.
+                  example: '2018-01-01T12:00:00.000Z'
+                  nullable: false
+                updated_at:
+                  type: string
+                  description: Time at which the resource was last updated.
+                  example: '2018-01-01T12:00:00.000Z'
+                  nullable: false
+                reference:
+                  type: string
+                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
+                  example: ANY-EXTERNAL-REFEFERNCE
+                  nullable: true
+                reference_origin:
+                  type: string
+                  description: Any identifier of the third party system that defines the reference code.
+                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
+                  nullable: true
+                metadata:
+                  type: object
+                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
+                  example:
+                    foo: bar
+                  nullable: true
+    manualTaxCalculatorResponseList:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/manualTaxCalculatorResponse/properties/data'
+    manualTaxCalculatorCreate:
+      required:
+      - data
+      type: object
+      properties:
+        data:
+          type: object
+          required:
+          - type
+          - attributes
+          properties:
+            type:
+              type: string
+              description: The resource's type
+              enum:
+              - manual_tax_calculators
+            attributes:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: The tax calculator's internal name.
+                  example: Personal tax calculator
+                reference:
+                  type: string
+                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
+                  example: ANY-EXTERNAL-REFEFERNCE
+                reference_origin:
+                  type: string
+                  description: Any identifier of the third party system that defines the reference code.
+                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
+                metadata:
+                  type: object
+                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
+                  example:
+                    foo: bar
+              required:
+              - name
+            relationships:
+              type: object
+              properties:
+                tax_rules:
+                  required:
+                  - data
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - tax_rules
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT

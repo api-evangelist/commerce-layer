@@ -1,0 +1,909 @@
+openapi: 3.1.0
+info:
+  title: Commerce Layer addresses order_subscriptions API
+  version: 7.10.1
+  contact:
+    name: API Support
+    url: https://commercelayer.io
+    email: support@commercelayer.io
+  description: Headless Commerce for Global Brands.
+servers:
+- url: https://{your_organization_slug}.commercelayer.io/api
+  description: API
+- url: https://core.commercelayer.io/users/sign_in
+  description: Sign in
+- url: https://docs.commercelayer.io/api
+  description: API reference
+security:
+- bearerAuth: []
+tags:
+- name: order_subscriptions
+  description: resource type
+paths:
+  /customers/{customerId}/order_subscriptions:
+    get:
+      operationId: GET/customerId/order_subscriptions
+      summary: Retrieve the order subscriptions associated to the customer
+      description: Retrieve the order subscriptions associated to the customer
+      tags:
+      - order_subscriptions
+      parameters:
+      - name: customerId
+        in: path
+        schema:
+          type: string
+        required: true
+        description: The resource's id
+      responses:
+        '200':
+          description: The order_subscriptions associated to the customer
+  /order_copies/{orderCopyId}/order_subscription:
+    get:
+      operationId: GET/orderCopyId/order_subscription
+      summary: Retrieve the order subscription associated to the order copy
+      description: Retrieve the order subscription associated to the order copy
+      tags:
+      - order_subscriptions
+      parameters:
+      - name: orderCopyId
+        in: path
+        schema:
+          type: string
+        required: true
+        description: The resource's id
+      responses:
+        '200':
+          description: The order_subscription associated to the order copy
+  /order_subscription_items/{orderSubscriptionItemId}/order_subscription:
+    get:
+      operationId: GET/orderSubscriptionItemId/order_subscription
+      summary: Retrieve the order subscription associated to the order subscription item
+      description: Retrieve the order subscription associated to the order subscription item
+      tags:
+      - order_subscriptions
+      parameters:
+      - name: orderSubscriptionItemId
+        in: path
+        schema:
+          type: string
+        required: true
+        description: The resource's id
+      responses:
+        '200':
+          description: The order_subscription associated to the order subscription item
+  /order_subscriptions:
+    get:
+      operationId: GET/order_subscriptions
+      summary: List all order subscriptions
+      description: List all order subscriptions
+      tags:
+      - order_subscriptions
+      responses:
+        '200':
+          description: A list of order subscription objects
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/orderSubscriptionResponseList'
+    post:
+      operationId: POST/order_subscriptions
+      summary: Create an order subscription
+      description: Create an order subscription
+      tags:
+      - order_subscriptions
+      requestBody:
+        required: true
+        content:
+          application/vnd.api+json:
+            schema:
+              $ref: '#/components/schemas/orderSubscriptionCreate'
+      responses:
+        '201':
+          description: The created order subscription object
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/orderSubscriptionResponse'
+  /order_subscriptions/{orderSubscriptionId}:
+    get:
+      operationId: GET/order_subscriptions/orderSubscriptionId
+      summary: Retrieve an order subscription
+      description: Retrieve an order subscription
+      tags:
+      - order_subscriptions
+      parameters:
+      - name: orderSubscriptionId
+        in: path
+        schema:
+          type: string
+        required: true
+        description: The resource's id
+      responses:
+        '200':
+          description: The order subscription object
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/orderSubscriptionResponse'
+    patch:
+      operationId: PATCH/order_subscriptions/orderSubscriptionId
+      summary: Update an order subscription
+      description: Update an order subscription
+      tags:
+      - order_subscriptions
+      parameters:
+      - name: orderSubscriptionId
+        in: path
+        schema:
+          type: string
+        required: true
+        description: The resource's id
+      requestBody:
+        required: true
+        content:
+          application/vnd.api+json:
+            schema:
+              $ref: '#/components/schemas/orderSubscriptionUpdate'
+      responses:
+        '200':
+          description: The updated order subscription object
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/orderSubscriptionResponse'
+    delete:
+      operationId: DELETE/order_subscriptions/orderSubscriptionId
+      summary: Delete an order subscription
+      description: Delete an order subscription
+      tags:
+      - order_subscriptions
+      parameters:
+      - name: orderSubscriptionId
+        in: path
+        schema:
+          type: string
+        required: true
+        description: The resource's id
+      responses:
+        '204':
+          description: No content
+  /orders/{orderId}/order_subscription:
+    get:
+      operationId: GET/orderId/order_subscription
+      summary: Retrieve the order subscription associated to the order
+      description: Retrieve the order subscription associated to the order
+      tags:
+      - order_subscriptions
+      parameters:
+      - name: orderId
+        in: path
+        schema:
+          type: string
+        required: true
+        description: The resource's id
+      responses:
+        '200':
+          description: The order_subscription associated to the order
+  /orders/{orderId}/order_subscriptions:
+    get:
+      operationId: GET/orderId/order_subscriptions
+      summary: Retrieve the order subscriptions associated to the order
+      description: Retrieve the order subscriptions associated to the order
+      tags:
+      - order_subscriptions
+      parameters:
+      - name: orderId
+        in: path
+        schema:
+          type: string
+        required: true
+        description: The resource's id
+      responses:
+        '200':
+          description: The order_subscriptions associated to the order
+  /recurring_order_copies/{recurringOrderCopyId}/order_subscription:
+    get:
+      operationId: GET/recurringOrderCopyId/order_subscription
+      summary: Retrieve the order subscription associated to the recurring order copy
+      description: Retrieve the order subscription associated to the recurring order copy
+      tags:
+      - order_subscriptions
+      parameters:
+      - name: recurringOrderCopyId
+        in: path
+        schema:
+          type: string
+        required: true
+        description: The resource's id
+      responses:
+        '200':
+          description: The order_subscription associated to the recurring order copy
+  /subscription_models/{subscriptionModelId}/order_subscriptions:
+    get:
+      operationId: GET/subscriptionModelId/order_subscriptions
+      summary: Retrieve the order subscriptions associated to the subscription model
+      description: Retrieve the order subscriptions associated to the subscription model
+      tags:
+      - order_subscriptions
+      parameters:
+      - name: subscriptionModelId
+        in: path
+        schema:
+          type: string
+        required: true
+        description: The resource's id
+      responses:
+        '200':
+          description: The order_subscriptions associated to the subscription model
+components:
+  schemas:
+    orderSubscription:
+      properties:
+        data:
+          properties:
+            attributes:
+              type: object
+              properties:
+                number:
+                  type: string
+                  description: Unique identifier for the subscription (numeric).
+                  example: '1234'
+                  nullable: true
+                status:
+                  type: string
+                  description: The subscription status. One of 'draft' (default), 'inactive', 'active', 'running', or 'cancelled'.
+                  example: draft
+                  nullable: false
+                  enum:
+                  - draft
+                  - inactive
+                  - active
+                  - running
+                  - cancelled
+                frequency:
+                  type: string
+                  description: The frequency of the subscription. Use one of the supported within 'hourly', 'daily', 'weekly', 'monthly', 'two-month', 'three-month', 'four-month', 'six-month', 'yearly', or provide your custom crontab expression (min unit is hour). Must be supported by existing associated subscription_model.
+                  example: monthly
+                  nullable: false
+                activate_by_source_order:
+                  type: boolean
+                  description: Indicates if the subscription will be activated considering the placed source order as its first run.
+                  example: true
+                  nullable: true
+                place_target_order:
+                  type: boolean
+                  description: Indicates if the subscription created orders are automatically placed at the end of the copy.
+                  example: true
+                  nullable: true
+                renewal_alert_period:
+                  type: integer
+                  description: Indicates the number of hours the renewal alert will be triggered before the subscription next run. Must be included between 1 and 720 hours.
+                  example: 1
+                  nullable: true
+                customer_email:
+                  type: string
+                  description: The email address of the customer, if any, associated to the source order.
+                  example: john@example.com
+                  nullable: true
+                starts_at:
+                  type: string
+                  description: The activation date/time of this subscription.
+                  example: '2018-01-01T12:00:00.000Z'
+                  nullable: true
+                expires_at:
+                  type: string
+                  description: The expiration date/time of this subscription (must be after starts_at).
+                  example: '2018-01-02T12:00:00.000Z'
+                  nullable: true
+                last_run_at:
+                  type: string
+                  description: The date/time of the subscription last run.
+                  example: '2018-01-01T12:00:00.000Z'
+                  nullable: true
+                next_run_at:
+                  type: string
+                  description: The date/time of the subscription next run. Can be updated but only in the future, to copy with frequency changes.
+                  example: '2018-01-01T12:00:00.000Z'
+                  nullable: true
+                occurrencies:
+                  type: integer
+                  description: The number of times this subscription has run.
+                  example: 2
+                  nullable: true
+                errors_count:
+                  type: integer
+                  description: Indicates the number of subscription errors, if any.
+                  example: 3
+                  nullable: true
+                succeeded_on_last_run:
+                  type: boolean
+                  description: Indicates if the subscription has succeeded on its last run.
+                  example: true
+                  nullable: true
+                created_at:
+                  type: string
+                  description: Time at which the resource was created.
+                  example: '2018-01-01T12:00:00.000Z'
+                  nullable: false
+                updated_at:
+                  type: string
+                  description: Time at which the resource was last updated.
+                  example: '2018-01-01T12:00:00.000Z'
+                  nullable: false
+                reference:
+                  type: string
+                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
+                  example: ANY-EXTERNAL-REFEFERNCE
+                  nullable: true
+                reference_origin:
+                  type: string
+                  description: Any identifier of the third party system that defines the reference code.
+                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
+                  nullable: true
+                metadata:
+                  type: object
+                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
+                  example:
+                    foo: bar
+                  nullable: true
+    orderSubscriptionResponse:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            id:
+              type: string
+              description: Unique identifier for the resource (hash).
+              example: XAyRWNUzyN
+            type:
+              type: string
+              description: The resource's type
+              enum:
+              - order_subscriptions
+            links:
+              type: object
+              properties:
+                self:
+                  type: string
+                  description: URL
+            attributes:
+              $ref: '#/components/schemas/orderSubscription/properties/data/properties/attributes'
+            relationships:
+              type: object
+              properties:
+                market:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - market
+                        id:
+                          type: string
+                          description: The resource ID
+                subscription_model:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - subscription_model
+                        id:
+                          type: string
+                          description: The resource ID
+                source_order:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - source_order
+                        id:
+                          type: string
+                          description: The resource ID
+                customer:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - customer
+                        id:
+                          type: string
+                          description: The resource ID
+                customer_payment_source:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - customer_payment_source
+                        id:
+                          type: string
+                          description: The resource ID
+                order_subscription_items:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - order_subscription_items
+                        id:
+                          type: string
+                          description: The resource ID
+                order_factories:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - order_factories
+                        id:
+                          type: string
+                          description: The resource ID
+                recurring_order_copies:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - recurring_order_copies
+                        id:
+                          type: string
+                          description: The resource ID
+                orders:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - orders
+                        id:
+                          type: string
+                          description: The resource ID
+                events:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - events
+                        id:
+                          type: string
+                          description: The resource ID
+                tags:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - tags
+                        id:
+                          type: string
+                          description: The resource ID
+                event_stores:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - event_stores
+                        id:
+                          type: string
+                          description: The resource ID
+    orderSubscriptionCreate:
+      required:
+      - data
+      type: object
+      properties:
+        data:
+          type: object
+          required:
+          - type
+          - attributes
+          properties:
+            type:
+              type: string
+              description: The resource's type
+              enum:
+              - order_subscriptions
+            attributes:
+              type: object
+              properties:
+                frequency:
+                  type: string
+                  description: The frequency of the subscription. Use one of the supported within 'hourly', 'daily', 'weekly', 'monthly', 'two-month', 'three-month', 'four-month', 'six-month', 'yearly', or provide your custom crontab expression (min unit is hour). Must be supported by existing associated subscription_model.
+                  example: monthly
+                activate_by_source_order:
+                  type: boolean
+                  description: Indicates if the subscription will be activated considering the placed source order as its first run.
+                  example: true
+                place_target_order:
+                  type: boolean
+                  description: Indicates if the subscription created orders are automatically placed at the end of the copy.
+                  example: true
+                renewal_alert_period:
+                  type: integer
+                  description: Indicates the number of hours the renewal alert will be triggered before the subscription next run. Must be included between 1 and 720 hours.
+                  example: 1
+                starts_at:
+                  type: string
+                  description: The activation date/time of this subscription.
+                  example: '2018-01-01T12:00:00.000Z'
+                expires_at:
+                  type: string
+                  description: The expiration date/time of this subscription (must be after starts_at).
+                  example: '2018-01-02T12:00:00.000Z'
+                reference:
+                  type: string
+                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
+                  example: ANY-EXTERNAL-REFEFERNCE
+                reference_origin:
+                  type: string
+                  description: Any identifier of the third party system that defines the reference code.
+                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
+                metadata:
+                  type: object
+                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
+                  example:
+                    foo: bar
+              required:
+              - frequency
+            relationships:
+              type: object
+              properties:
+                market:
+                  required:
+                  - data
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - markets
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+                source_order:
+                  required:
+                  - data
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - orders
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+                tags:
+                  required:
+                  - data
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - tags
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+              required:
+              - source_order
+    orderSubscriptionResponseList:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/orderSubscriptionResponse/properties/data'
+    orderSubscriptionUpdate:
+      required:
+      - data
+      type: object
+      properties:
+        data:
+          type: object
+          required:
+          - type
+          - id
+          - attributes
+          properties:
+            type:
+              type: string
+              description: The resource's type
+              enum:
+              - order_subscriptions
+            id:
+              type: string
+              description: Unique identifier for the resource (hash).
+              example: XAyRWNUzyN
+            attributes:
+              type: object
+              properties:
+                frequency:
+                  type: string
+                  description: The frequency of the subscription. Use one of the supported within 'hourly', 'daily', 'weekly', 'monthly', 'two-month', 'three-month', 'four-month', 'six-month', 'yearly', or provide your custom crontab expression (min unit is hour). Must be supported by existing associated subscription_model.
+                  example: monthly
+                  nullable: false
+                activate_by_source_order:
+                  type: boolean
+                  description: Indicates if the subscription will be activated considering the placed source order as its first run.
+                  example: true
+                  nullable: false
+                place_target_order:
+                  type: boolean
+                  description: Indicates if the subscription created orders are automatically placed at the end of the copy.
+                  example: true
+                  nullable: false
+                renewal_alert_period:
+                  type: integer
+                  description: Indicates the number of hours the renewal alert will be triggered before the subscription next run. Must be included between 1 and 720 hours.
+                  example: 1
+                  nullable: true
+                expires_at:
+                  type: string
+                  description: The expiration date/time of this subscription (must be after starts_at).
+                  example: '2018-01-02T12:00:00.000Z'
+                  nullable: true
+                next_run_at:
+                  type: string
+                  description: The date/time of the subscription next run. Can be updated but only in the future, to copy with frequency changes.
+                  example: '2018-01-01T12:00:00.000Z'
+                  nullable: true
+                _activate:
+                  type: boolean
+                  description: Send this attribute if you want to mark this subscription as active.
+                  example: true
+                  nullable: false
+                _deactivate:
+                  type: boolean
+                  description: Send this attribute if you want to mark this subscription as inactive.
+                  example: true
+                  nullable: false
+                _cancel:
+                  type: boolean
+                  description: Send this attribute if you want to mark this subscription as cancelled.
+                  example: true
+                  nullable: false
+                _convert:
+                  type: boolean
+                  description: Send this attribute if you want to convert a manual subscription to an automatic one. A subscription model is required before conversion.
+                  example: true
+                  nullable: false
+                _add_tags:
+                  type: string
+                  description: Comma separated list of tags to be added. Duplicates, invalid and non existing ones are discarded. Cannot be passed by sales channels.
+                _remove_tags:
+                  type: string
+                  description: Comma separated list of tags to be removed. Duplicates, invalid and non existing ones are discarded. Cannot be passed by sales channels.
+                reference:
+                  type: string
+                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
+                  example: ANY-EXTERNAL-REFEFERNCE
+                  nullable: true
+                reference_origin:
+                  type: string
+                  description: Any identifier of the third party system that defines the reference code.
+                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
+                  nullable: true
+                metadata:
+                  type: object
+                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
+                  example:
+                    foo: bar
+                  nullable: true
+            relationships:
+              type: object
+              properties:
+                customer_payment_source:
+                  required:
+                  - data
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - customer_payment_sources
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+                tags:
+                  required:
+                  - data
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - tags
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT

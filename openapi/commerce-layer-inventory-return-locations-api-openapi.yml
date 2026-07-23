@@ -1,0 +1,459 @@
+openapi: 3.1.0
+info:
+  title: Commerce Layer addresses inventory_return_locations API
+  version: 7.10.1
+  contact:
+    name: API Support
+    url: https://commercelayer.io
+    email: support@commercelayer.io
+  description: Headless Commerce for Global Brands.
+servers:
+- url: https://{your_organization_slug}.commercelayer.io/api
+  description: API
+- url: https://core.commercelayer.io/users/sign_in
+  description: Sign in
+- url: https://docs.commercelayer.io/api
+  description: API reference
+security:
+- bearerAuth: []
+tags:
+- name: inventory_return_locations
+  description: resource type
+paths:
+  /inventory_models/{inventoryModelId}/inventory_return_locations:
+    get:
+      operationId: GET/inventoryModelId/inventory_return_locations
+      summary: Retrieve the inventory return locations associated to the inventory model
+      description: Retrieve the inventory return locations associated to the inventory model
+      tags:
+      - inventory_return_locations
+      parameters:
+      - name: inventoryModelId
+        in: path
+        schema:
+          type: string
+        required: true
+        description: The resource's id
+      responses:
+        '200':
+          description: The inventory_return_locations associated to the inventory model
+  /inventory_return_locations:
+    get:
+      operationId: GET/inventory_return_locations
+      summary: List all inventory return locations
+      description: List all inventory return locations
+      tags:
+      - inventory_return_locations
+      responses:
+        '200':
+          description: A list of inventory return location objects
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/inventoryReturnLocationResponseList'
+    post:
+      operationId: POST/inventory_return_locations
+      summary: Create an inventory return location
+      description: Create an inventory return location
+      tags:
+      - inventory_return_locations
+      requestBody:
+        required: true
+        content:
+          application/vnd.api+json:
+            schema:
+              $ref: '#/components/schemas/inventoryReturnLocationCreate'
+      responses:
+        '201':
+          description: The created inventory return location object
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/inventoryReturnLocationResponse'
+  /inventory_return_locations/{inventoryReturnLocationId}:
+    get:
+      operationId: GET/inventory_return_locations/inventoryReturnLocationId
+      summary: Retrieve an inventory return location
+      description: Retrieve an inventory return location
+      tags:
+      - inventory_return_locations
+      parameters:
+      - name: inventoryReturnLocationId
+        in: path
+        schema:
+          type: string
+        required: true
+        description: The resource's id
+      responses:
+        '200':
+          description: The inventory return location object
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/inventoryReturnLocationResponse'
+    patch:
+      operationId: PATCH/inventory_return_locations/inventoryReturnLocationId
+      summary: Update an inventory return location
+      description: Update an inventory return location
+      tags:
+      - inventory_return_locations
+      parameters:
+      - name: inventoryReturnLocationId
+        in: path
+        schema:
+          type: string
+        required: true
+        description: The resource's id
+      requestBody:
+        required: true
+        content:
+          application/vnd.api+json:
+            schema:
+              $ref: '#/components/schemas/inventoryReturnLocationUpdate'
+      responses:
+        '200':
+          description: The updated inventory return location object
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/inventoryReturnLocationResponse'
+    delete:
+      operationId: DELETE/inventory_return_locations/inventoryReturnLocationId
+      summary: Delete an inventory return location
+      description: Delete an inventory return location
+      tags:
+      - inventory_return_locations
+      parameters:
+      - name: inventoryReturnLocationId
+        in: path
+        schema:
+          type: string
+        required: true
+        description: The resource's id
+      responses:
+        '204':
+          description: No content
+  /stock_locations/{stockLocationId}/inventory_return_locations:
+    get:
+      operationId: GET/stockLocationId/inventory_return_locations
+      summary: Retrieve the inventory return locations associated to the stock location
+      description: Retrieve the inventory return locations associated to the stock location
+      tags:
+      - inventory_return_locations
+      parameters:
+      - name: stockLocationId
+        in: path
+        schema:
+          type: string
+        required: true
+        description: The resource's id
+      responses:
+        '200':
+          description: The inventory_return_locations associated to the stock location
+components:
+  schemas:
+    inventoryReturnLocationResponse:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            id:
+              type: string
+              description: Unique identifier for the resource (hash).
+              example: XAyRWNUzyN
+            type:
+              type: string
+              description: The resource's type
+              enum:
+              - inventory_return_locations
+            links:
+              type: object
+              properties:
+                self:
+                  type: string
+                  description: URL
+            attributes:
+              $ref: '#/components/schemas/inventoryReturnLocation/properties/data/properties/attributes'
+            relationships:
+              type: object
+              properties:
+                stock_location:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - stock_location
+                        id:
+                          type: string
+                          description: The resource ID
+                inventory_model:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - inventory_model
+                        id:
+                          type: string
+                          description: The resource ID
+                event_stores:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - event_stores
+                        id:
+                          type: string
+                          description: The resource ID
+    inventoryReturnLocation:
+      properties:
+        data:
+          properties:
+            attributes:
+              type: object
+              properties:
+                priority:
+                  type: integer
+                  description: The inventory return location priority within the associated invetory model.
+                  example: 1
+                  nullable: false
+                created_at:
+                  type: string
+                  description: Time at which the resource was created.
+                  example: '2018-01-01T12:00:00.000Z'
+                  nullable: false
+                updated_at:
+                  type: string
+                  description: Time at which the resource was last updated.
+                  example: '2018-01-01T12:00:00.000Z'
+                  nullable: false
+                reference:
+                  type: string
+                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
+                  example: ANY-EXTERNAL-REFEFERNCE
+                  nullable: true
+                reference_origin:
+                  type: string
+                  description: Any identifier of the third party system that defines the reference code.
+                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
+                  nullable: true
+                metadata:
+                  type: object
+                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
+                  example:
+                    foo: bar
+                  nullable: true
+    inventoryReturnLocationResponseList:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/inventoryReturnLocationResponse/properties/data'
+    inventoryReturnLocationUpdate:
+      required:
+      - data
+      type: object
+      properties:
+        data:
+          type: object
+          required:
+          - type
+          - id
+          - attributes
+          properties:
+            type:
+              type: string
+              description: The resource's type
+              enum:
+              - inventory_return_locations
+            id:
+              type: string
+              description: Unique identifier for the resource (hash).
+              example: XAyRWNUzyN
+            attributes:
+              type: object
+              properties:
+                priority:
+                  type: integer
+                  description: The inventory return location priority within the associated invetory model.
+                  example: 1
+                  nullable: false
+                reference:
+                  type: string
+                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
+                  example: ANY-EXTERNAL-REFEFERNCE
+                  nullable: true
+                reference_origin:
+                  type: string
+                  description: Any identifier of the third party system that defines the reference code.
+                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
+                  nullable: true
+                metadata:
+                  type: object
+                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
+                  example:
+                    foo: bar
+                  nullable: true
+            relationships:
+              type: object
+              properties:
+                stock_location:
+                  required:
+                  - data
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - stock_locations
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+                inventory_model:
+                  required:
+                  - data
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - inventory_models
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+    inventoryReturnLocationCreate:
+      required:
+      - data
+      type: object
+      properties:
+        data:
+          type: object
+          required:
+          - type
+          - attributes
+          properties:
+            type:
+              type: string
+              description: The resource's type
+              enum:
+              - inventory_return_locations
+            attributes:
+              type: object
+              properties:
+                priority:
+                  type: integer
+                  description: The inventory return location priority within the associated invetory model.
+                  example: 1
+                reference:
+                  type: string
+                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
+                  example: ANY-EXTERNAL-REFEFERNCE
+                reference_origin:
+                  type: string
+                  description: Any identifier of the third party system that defines the reference code.
+                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
+                metadata:
+                  type: object
+                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
+                  example:
+                    foo: bar
+              required:
+              - priority
+            relationships:
+              type: object
+              properties:
+                stock_location:
+                  required:
+                  - data
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - stock_locations
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+                inventory_model:
+                  required:
+                  - data
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - inventory_models
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+              required:
+              - stock_location
+              - inventory_model
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT

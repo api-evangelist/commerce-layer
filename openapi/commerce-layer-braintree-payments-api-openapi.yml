@@ -1,0 +1,458 @@
+openapi: 3.1.0
+info:
+  title: Commerce Layer addresses braintree_payments API
+  version: 7.10.1
+  contact:
+    name: API Support
+    url: https://commercelayer.io
+    email: support@commercelayer.io
+  description: Headless Commerce for Global Brands.
+servers:
+- url: https://{your_organization_slug}.commercelayer.io/api
+  description: API
+- url: https://core.commercelayer.io/users/sign_in
+  description: Sign in
+- url: https://docs.commercelayer.io/api
+  description: API reference
+security:
+- bearerAuth: []
+tags:
+- name: braintree_payments
+  description: resource type
+paths:
+  /braintree_gateways/{braintreeGatewayId}/braintree_payments:
+    get:
+      operationId: GET/braintreeGatewayId/braintree_payments
+      summary: Retrieve the braintree payments associated to the braintree gateway
+      description: Retrieve the braintree payments associated to the braintree gateway
+      tags:
+      - braintree_payments
+      parameters:
+      - name: braintreeGatewayId
+        in: path
+        schema:
+          type: string
+        required: true
+        description: The resource's id
+      responses:
+        '200':
+          description: The braintree_payments associated to the braintree gateway
+  /braintree_payments:
+    get:
+      operationId: GET/braintree_payments
+      summary: List all braintree payments
+      description: List all braintree payments
+      tags:
+      - braintree_payments
+      responses:
+        '200':
+          description: A list of braintree payment objects
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/braintreePaymentResponseList'
+    post:
+      operationId: POST/braintree_payments
+      summary: Create a braintree payment
+      description: Create a braintree payment
+      tags:
+      - braintree_payments
+      requestBody:
+        required: true
+        content:
+          application/vnd.api+json:
+            schema:
+              $ref: '#/components/schemas/braintreePaymentCreate'
+      responses:
+        '201':
+          description: The created braintree payment object
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/braintreePaymentResponse'
+  /braintree_payments/{braintreePaymentId}:
+    get:
+      operationId: GET/braintree_payments/braintreePaymentId
+      summary: Retrieve a braintree payment
+      description: Retrieve a braintree payment
+      tags:
+      - braintree_payments
+      parameters:
+      - name: braintreePaymentId
+        in: path
+        schema:
+          type: string
+        required: true
+        description: The resource's id
+      responses:
+        '200':
+          description: The braintree payment object
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/braintreePaymentResponse'
+    patch:
+      operationId: PATCH/braintree_payments/braintreePaymentId
+      summary: Update a braintree payment
+      description: Update a braintree payment
+      tags:
+      - braintree_payments
+      parameters:
+      - name: braintreePaymentId
+        in: path
+        schema:
+          type: string
+        required: true
+        description: The resource's id
+      requestBody:
+        required: true
+        content:
+          application/vnd.api+json:
+            schema:
+              $ref: '#/components/schemas/braintreePaymentUpdate'
+      responses:
+        '200':
+          description: The updated braintree payment object
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/braintreePaymentResponse'
+    delete:
+      operationId: DELETE/braintree_payments/braintreePaymentId
+      summary: Delete a braintree payment
+      description: Delete a braintree payment
+      tags:
+      - braintree_payments
+      parameters:
+      - name: braintreePaymentId
+        in: path
+        schema:
+          type: string
+        required: true
+        description: The resource's id
+      responses:
+        '204':
+          description: No content
+components:
+  schemas:
+    braintreePaymentCreate:
+      required:
+      - data
+      type: object
+      properties:
+        data:
+          type: object
+          required:
+          - type
+          - attributes
+          properties:
+            type:
+              type: string
+              description: The resource's type
+              enum:
+              - braintree_payments
+            attributes:
+              type: object
+              properties:
+                payment_id:
+                  type: string
+                  description: The Braintree payment ID used by local payment and sent by the Braintree JS SDK.
+                  example: xxxx.yyyy.zzzz
+                local:
+                  type: boolean
+                  description: Indicates if the payment is local, in such case Braintree will trigger a webhook call passing the "payment_id" and "payment_method_nonce" in order to complete the transaction.
+                  example: true
+                options:
+                  type: object
+                  description: Braintree payment options, 'customer_id' and 'payment_method_token'.
+                  example:
+                    customer_id: '1234567890'
+                reference:
+                  type: string
+                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
+                  example: ANY-EXTERNAL-REFEFERNCE
+                reference_origin:
+                  type: string
+                  description: Any identifier of the third party system that defines the reference code.
+                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
+                metadata:
+                  type: object
+                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
+                  example:
+                    foo: bar
+            relationships:
+              type: object
+              properties:
+                order:
+                  required:
+                  - data
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - orders
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+              required:
+              - order
+    braintreePaymentResponseList:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/braintreePaymentResponse/properties/data'
+    braintreePayment:
+      properties:
+        data:
+          properties:
+            attributes:
+              type: object
+              properties:
+                client_token:
+                  type: string
+                  description: The Braintree payment client token. Required by the Braintree JS SDK.
+                  example: xxxx.yyyy.zzzz
+                  nullable: false
+                payment_method_nonce:
+                  type: string
+                  description: The Braintree payment method nonce. Sent by the Braintree JS SDK.
+                  example: xxxx.yyyy.zzzz
+                  nullable: true
+                payment_id:
+                  type: string
+                  description: The Braintree payment ID used by local payment and sent by the Braintree JS SDK.
+                  example: xxxx.yyyy.zzzz
+                  nullable: true
+                local:
+                  type: boolean
+                  description: Indicates if the payment is local, in such case Braintree will trigger a webhook call passing the "payment_id" and "payment_method_nonce" in order to complete the transaction.
+                  example: true
+                  nullable: true
+                options:
+                  type: object
+                  description: Braintree payment options, 'customer_id' and 'payment_method_token'.
+                  example:
+                    customer_id: '1234567890'
+                  nullable: true
+                payment_instrument:
+                  type: object
+                  description: Information about the payment instrument used in the transaction.
+                  example:
+                    issuer: cl bank
+                    card_type: visa
+                  nullable: true
+                created_at:
+                  type: string
+                  description: Time at which the resource was created.
+                  example: '2018-01-01T12:00:00.000Z'
+                  nullable: false
+                updated_at:
+                  type: string
+                  description: Time at which the resource was last updated.
+                  example: '2018-01-01T12:00:00.000Z'
+                  nullable: false
+                reference:
+                  type: string
+                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
+                  example: ANY-EXTERNAL-REFEFERNCE
+                  nullable: true
+                reference_origin:
+                  type: string
+                  description: Any identifier of the third party system that defines the reference code.
+                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
+                  nullable: true
+                metadata:
+                  type: object
+                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
+                  example:
+                    foo: bar
+                  nullable: true
+    braintreePaymentResponse:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            id:
+              type: string
+              description: Unique identifier for the resource (hash).
+              example: XAyRWNUzyN
+            type:
+              type: string
+              description: The resource's type
+              enum:
+              - braintree_payments
+            links:
+              type: object
+              properties:
+                self:
+                  type: string
+                  description: URL
+            attributes:
+              $ref: '#/components/schemas/braintreePayment/properties/data/properties/attributes'
+            relationships:
+              type: object
+              properties:
+                order:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - order
+                        id:
+                          type: string
+                          description: The resource ID
+                payment_gateway:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - payment_gateway
+                        id:
+                          type: string
+                          description: The resource ID
+                event_stores:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - event_stores
+                        id:
+                          type: string
+                          description: The resource ID
+    braintreePaymentUpdate:
+      required:
+      - data
+      type: object
+      properties:
+        data:
+          type: object
+          required:
+          - type
+          - id
+          - attributes
+          properties:
+            type:
+              type: string
+              description: The resource's type
+              enum:
+              - braintree_payments
+            id:
+              type: string
+              description: Unique identifier for the resource (hash).
+              example: XAyRWNUzyN
+            attributes:
+              type: object
+              properties:
+                payment_method_nonce:
+                  type: string
+                  description: The Braintree payment method nonce. Sent by the Braintree JS SDK.
+                  example: xxxx.yyyy.zzzz
+                  nullable: true
+                payment_id:
+                  type: string
+                  description: The Braintree payment ID used by local payment and sent by the Braintree JS SDK.
+                  example: xxxx.yyyy.zzzz
+                  nullable: true
+                local:
+                  type: boolean
+                  description: Indicates if the payment is local, in such case Braintree will trigger a webhook call passing the "payment_id" and "payment_method_nonce" in order to complete the transaction.
+                  example: true
+                  nullable: false
+                options:
+                  type: object
+                  description: Braintree payment options, 'customer_id' and 'payment_method_token'.
+                  example:
+                    customer_id: '1234567890'
+                  nullable: true
+                reference:
+                  type: string
+                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
+                  example: ANY-EXTERNAL-REFEFERNCE
+                  nullable: true
+                reference_origin:
+                  type: string
+                  description: Any identifier of the third party system that defines the reference code.
+                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
+                  nullable: true
+                metadata:
+                  type: object
+                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
+                  example:
+                    foo: bar
+                  nullable: true
+            relationships:
+              type: object
+              properties:
+                order:
+                  required:
+                  - data
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - orders
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT

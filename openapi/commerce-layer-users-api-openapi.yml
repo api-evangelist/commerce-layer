@@ -1,0 +1,45 @@
+openapi: 3.1.0
+info:
+  title: Commerce Layer addresses users API
+  version: 7.10.1
+  contact:
+    name: API Support
+    url: https://commercelayer.io
+    email: support@commercelayer.io
+  description: Headless Commerce for Global Brands.
+servers:
+- url: https://{your_organization_slug}.commercelayer.io/api
+  description: API
+- url: https://core.commercelayer.io/users/sign_in
+  description: Sign in
+- url: https://docs.commercelayer.io/api
+  description: API reference
+security:
+- bearerAuth: []
+tags:
+- name: users
+  description: resource type
+paths:
+  /identity_providers/{identityProviderId}/user:
+    get:
+      operationId: GET/identityProviderId/user
+      summary: Related identity provider
+      description: Related identity provider
+      tags:
+      - users
+      parameters:
+      - name: identityProviderId
+        in: path
+        schema:
+          type: string
+        required: true
+        description: The ID of the resource.
+      responses:
+        '200':
+          description: The user associated to the identity provider
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT

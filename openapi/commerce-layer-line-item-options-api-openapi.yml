@@ -1,0 +1,614 @@
+openapi: 3.1.0
+info:
+  title: Commerce Layer addresses line_item_options API
+  version: 7.10.1
+  contact:
+    name: API Support
+    url: https://commercelayer.io
+    email: support@commercelayer.io
+  description: Headless Commerce for Global Brands.
+servers:
+- url: https://{your_organization_slug}.commercelayer.io/api
+  description: API
+- url: https://core.commercelayer.io/users/sign_in
+  description: Sign in
+- url: https://docs.commercelayer.io/api
+  description: API reference
+security:
+- bearerAuth: []
+tags:
+- name: line_item_options
+  description: resource type
+paths:
+  /line_item_options:
+    get:
+      operationId: GET/line_item_options
+      summary: List all line item options
+      description: List all line item options
+      tags:
+      - line_item_options
+      responses:
+        '200':
+          description: A list of line item option objects
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/lineItemOptionResponseList'
+    post:
+      operationId: POST/line_item_options
+      summary: Create a line item option
+      description: Create a line item option
+      tags:
+      - line_item_options
+      requestBody:
+        required: true
+        content:
+          application/vnd.api+json:
+            schema:
+              $ref: '#/components/schemas/lineItemOptionCreate'
+      responses:
+        '201':
+          description: The created line item option object
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/lineItemOptionResponse'
+  /line_item_options/{lineItemOptionId}:
+    get:
+      operationId: GET/line_item_options/lineItemOptionId
+      summary: Retrieve a line item option
+      description: Retrieve a line item option
+      tags:
+      - line_item_options
+      parameters:
+      - name: lineItemOptionId
+        in: path
+        schema:
+          type: string
+        required: true
+        description: The resource's id
+      responses:
+        '200':
+          description: The line item option object
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/lineItemOptionResponse'
+    patch:
+      operationId: PATCH/line_item_options/lineItemOptionId
+      summary: Update a line item option
+      description: Update a line item option
+      tags:
+      - line_item_options
+      parameters:
+      - name: lineItemOptionId
+        in: path
+        schema:
+          type: string
+        required: true
+        description: The resource's id
+      requestBody:
+        required: true
+        content:
+          application/vnd.api+json:
+            schema:
+              $ref: '#/components/schemas/lineItemOptionUpdate'
+      responses:
+        '200':
+          description: The updated line item option object
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/lineItemOptionResponse'
+    delete:
+      operationId: DELETE/line_item_options/lineItemOptionId
+      summary: Delete a line item option
+      description: Delete a line item option
+      tags:
+      - line_item_options
+      parameters:
+      - name: lineItemOptionId
+        in: path
+        schema:
+          type: string
+        required: true
+        description: The resource's id
+      responses:
+        '204':
+          description: No content
+  /line_items/{lineItemId}/line_item_options:
+    get:
+      operationId: GET/lineItemId/line_item_options
+      summary: Retrieve the line item options associated to the line item
+      description: Retrieve the line item options associated to the line item
+      tags:
+      - line_item_options
+      parameters:
+      - name: lineItemId
+        in: path
+        schema:
+          type: string
+        required: true
+        description: The resource's id
+      responses:
+        '200':
+          description: The line_item_options associated to the line item
+  /orders/{orderId}/line_item_options:
+    get:
+      operationId: GET/orderId/line_item_options
+      summary: Retrieve the line item options associated to the order
+      description: Retrieve the line item options associated to the order
+      tags:
+      - line_item_options
+      parameters:
+      - name: orderId
+        in: path
+        schema:
+          type: string
+        required: true
+        description: The resource's id
+      responses:
+        '200':
+          description: The line_item_options associated to the order
+components:
+  schemas:
+    lineItemOptionCreate:
+      required:
+      - data
+      type: object
+      properties:
+        data:
+          type: object
+          required:
+          - type
+          - attributes
+          properties:
+            type:
+              type: string
+              description: The resource's type
+              enum:
+              - line_item_options
+            attributes:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: The name of the line item option. When blank, it gets populated with the name of the associated SKU option.
+                  example: Embossing
+                quantity:
+                  type: integer
+                  description: The line item option's quantity.
+                  example: 2
+                unit_amount_cents:
+                  type: integer
+                  description: The unit amount of the line item option, in cents. When you add a line item option to an order, this is automatically populated from associated SKU option's price. Cannot be passed by sales channels.
+                  example: 990
+                options:
+                  type: object
+                  description: Set of key-value pairs that represent the selected options.
+                  example:
+                    embossing_text: Happy Birthday!
+                reference:
+                  type: string
+                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
+                  example: ANY-EXTERNAL-REFEFERNCE
+                reference_origin:
+                  type: string
+                  description: Any identifier of the third party system that defines the reference code.
+                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
+                metadata:
+                  type: object
+                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
+                  example:
+                    foo: bar
+              required:
+              - quantity
+              - options
+            relationships:
+              type: object
+              properties:
+                line_item:
+                  required:
+                  - data
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - line_items
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+                sku_option:
+                  required:
+                  - data
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - sku_options
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+                tags:
+                  required:
+                  - data
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - tags
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+              required:
+              - line_item
+              - sku_option
+    lineItemOptionResponseList:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/lineItemOptionResponse/properties/data'
+    lineItemOptionUpdate:
+      required:
+      - data
+      type: object
+      properties:
+        data:
+          type: object
+          required:
+          - type
+          - id
+          - attributes
+          properties:
+            type:
+              type: string
+              description: The resource's type
+              enum:
+              - line_item_options
+            id:
+              type: string
+              description: Unique identifier for the resource (hash).
+              example: XAyRWNUzyN
+            attributes:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: The name of the line item option. When blank, it gets populated with the name of the associated SKU option.
+                  example: Embossing
+                  nullable: true
+                quantity:
+                  type: integer
+                  description: The line item option's quantity.
+                  example: 2
+                  nullable: false
+                unit_amount_cents:
+                  type: integer
+                  description: The unit amount of the line item option, in cents. When you add a line item option to an order, this is automatically populated from associated SKU option's price. Cannot be passed by sales channels.
+                  example: 990
+                  nullable: true
+                options:
+                  type: object
+                  description: Set of key-value pairs that represent the selected options.
+                  example:
+                    embossing_text: Happy Birthday!
+                  nullable: false
+                _add_tags:
+                  type: string
+                  description: Comma separated list of tags to be added. Duplicates, invalid and non existing ones are discarded. Cannot be passed by sales channels.
+                _remove_tags:
+                  type: string
+                  description: Comma separated list of tags to be removed. Duplicates, invalid and non existing ones are discarded. Cannot be passed by sales channels.
+                reference:
+                  type: string
+                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
+                  example: ANY-EXTERNAL-REFEFERNCE
+                  nullable: true
+                reference_origin:
+                  type: string
+                  description: Any identifier of the third party system that defines the reference code.
+                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
+                  nullable: true
+                metadata:
+                  type: object
+                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
+                  example:
+                    foo: bar
+                  nullable: true
+            relationships:
+              type: object
+              properties:
+                sku_option:
+                  required:
+                  - data
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - sku_options
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+                tags:
+                  required:
+                  - data
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - tags
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+    lineItemOption:
+      properties:
+        data:
+          properties:
+            attributes:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: The name of the line item option. When blank, it gets populated with the name of the associated SKU option.
+                  example: Embossing
+                  nullable: true
+                quantity:
+                  type: integer
+                  description: The line item option's quantity.
+                  example: 2
+                  nullable: false
+                currency_code:
+                  type: string
+                  description: The international 3-letter currency code as defined by the ISO 4217 standard, automatically inherited from the order's market.
+                  example: EUR
+                  nullable: true
+                unit_amount_cents:
+                  type: integer
+                  description: The unit amount of the line item option, in cents. When you add a line item option to an order, this is automatically populated from associated SKU option's price. Cannot be passed by sales channels.
+                  example: 990
+                  nullable: true
+                unit_amount_float:
+                  type: number
+                  description: The unit amount of the line item option, float. This can be useful to track the purchase on thrid party systems, e.g Google Analyitcs Enhanced Ecommerce.
+                  example: 9.9
+                  nullable: true
+                formatted_unit_amount:
+                  type: string
+                  description: The unit amount of the line item option, formatted. This can be useful to display the amount with currency in you views.
+                  example: €9,90
+                  nullable: true
+                total_amount_cents:
+                  type: integer
+                  description: The unit amount x quantity, in cents.
+                  example: 1880
+                  nullable: true
+                total_amount_float:
+                  type: number
+                  description: The unit amount x quantity, float. This can be useful to track the purchase on thrid party systems, e.g Google Analyitcs Enhanced Ecommerce.
+                  example: 18.8
+                  nullable: false
+                formatted_total_amount:
+                  type: string
+                  description: The unit amount x quantity, formatted. This can be useful to display the amount with currency in you views.
+                  example: €18,80
+                  nullable: true
+                delay_hours:
+                  type: integer
+                  description: The shipping delay that the customer can expect when adding this option (hours). Inherited from the associated SKU option.
+                  example: 48
+                  nullable: true
+                delay_days:
+                  type: integer
+                  description: The shipping delay that the customer can expect when adding this option (days, rounded).
+                  example: 2
+                  nullable: true
+                options:
+                  type: object
+                  description: Set of key-value pairs that represent the selected options.
+                  example:
+                    embossing_text: Happy Birthday!
+                  nullable: false
+                created_at:
+                  type: string
+                  description: Time at which the resource was created.
+                  example: '2018-01-01T12:00:00.000Z'
+                  nullable: false
+                updated_at:
+                  type: string
+                  description: Time at which the resource was last updated.
+                  example: '2018-01-01T12:00:00.000Z'
+                  nullable: false
+                reference:
+                  type: string
+                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
+                  example: ANY-EXTERNAL-REFEFERNCE
+                  nullable: true
+                reference_origin:
+                  type: string
+                  description: Any identifier of the third party system that defines the reference code.
+                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
+                  nullable: true
+                metadata:
+                  type: object
+                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
+                  example:
+                    foo: bar
+                  nullable: true
+    lineItemOptionResponse:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            id:
+              type: string
+              description: Unique identifier for the resource (hash).
+              example: XAyRWNUzyN
+            type:
+              type: string
+              description: The resource's type
+              enum:
+              - line_item_options
+            links:
+              type: object
+              properties:
+                self:
+                  type: string
+                  description: URL
+            attributes:
+              $ref: '#/components/schemas/lineItemOption/properties/data/properties/attributes'
+            relationships:
+              type: object
+              properties:
+                line_item:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - line_item
+                        id:
+                          type: string
+                          description: The resource ID
+                sku_option:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - sku_option
+                        id:
+                          type: string
+                          description: The resource ID
+                events:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - events
+                        id:
+                          type: string
+                          description: The resource ID
+                tags:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - tags
+                        id:
+                          type: string
+                          description: The resource ID
+                event_stores:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - event_stores
+                        id:
+                          type: string
+                          description: The resource ID
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT

@@ -1,0 +1,505 @@
+openapi: 3.1.0
+info:
+  title: Commerce Layer addresses stripe_payments API
+  version: 7.10.1
+  contact:
+    name: API Support
+    url: https://commercelayer.io
+    email: support@commercelayer.io
+  description: Headless Commerce for Global Brands.
+servers:
+- url: https://{your_organization_slug}.commercelayer.io/api
+  description: API
+- url: https://core.commercelayer.io/users/sign_in
+  description: Sign in
+- url: https://docs.commercelayer.io/api
+  description: API reference
+security:
+- bearerAuth: []
+tags:
+- name: stripe_payments
+  description: resource type
+paths:
+  /stripe_gateways/{stripeGatewayId}/stripe_payments:
+    get:
+      operationId: GET/stripeGatewayId/stripe_payments
+      summary: Retrieve the stripe payments associated to the stripe gateway
+      description: Retrieve the stripe payments associated to the stripe gateway
+      tags:
+      - stripe_payments
+      parameters:
+      - name: stripeGatewayId
+        in: path
+        schema:
+          type: string
+        required: true
+        description: The resource's id
+      responses:
+        '200':
+          description: The stripe_payments associated to the stripe gateway
+  /stripe_payments:
+    get:
+      operationId: GET/stripe_payments
+      summary: List all stripe payments
+      description: List all stripe payments
+      tags:
+      - stripe_payments
+      responses:
+        '200':
+          description: A list of stripe payment objects
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/stripePaymentResponseList'
+    post:
+      operationId: POST/stripe_payments
+      summary: Create a stripe payment
+      description: Create a stripe payment
+      tags:
+      - stripe_payments
+      requestBody:
+        required: true
+        content:
+          application/vnd.api+json:
+            schema:
+              $ref: '#/components/schemas/stripePaymentCreate'
+      responses:
+        '201':
+          description: The created stripe payment object
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/stripePaymentResponse'
+  /stripe_payments/{stripePaymentId}:
+    get:
+      operationId: GET/stripe_payments/stripePaymentId
+      summary: Retrieve a stripe payment
+      description: Retrieve a stripe payment
+      tags:
+      - stripe_payments
+      parameters:
+      - name: stripePaymentId
+        in: path
+        schema:
+          type: string
+        required: true
+        description: The resource's id
+      responses:
+        '200':
+          description: The stripe payment object
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/stripePaymentResponse'
+    patch:
+      operationId: PATCH/stripe_payments/stripePaymentId
+      summary: Update a stripe payment
+      description: Update a stripe payment
+      tags:
+      - stripe_payments
+      parameters:
+      - name: stripePaymentId
+        in: path
+        schema:
+          type: string
+        required: true
+        description: The resource's id
+      requestBody:
+        required: true
+        content:
+          application/vnd.api+json:
+            schema:
+              $ref: '#/components/schemas/stripePaymentUpdate'
+      responses:
+        '200':
+          description: The updated stripe payment object
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/stripePaymentResponse'
+    delete:
+      operationId: DELETE/stripe_payments/stripePaymentId
+      summary: Delete a stripe payment
+      description: Delete a stripe payment
+      tags:
+      - stripe_payments
+      parameters:
+      - name: stripePaymentId
+        in: path
+        schema:
+          type: string
+        required: true
+        description: The resource's id
+      responses:
+        '204':
+          description: No content
+components:
+  schemas:
+    stripePaymentResponse:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            id:
+              type: string
+              description: Unique identifier for the resource (hash).
+              example: XAyRWNUzyN
+            type:
+              type: string
+              description: The resource's type
+              enum:
+              - stripe_payments
+            links:
+              type: object
+              properties:
+                self:
+                  type: string
+                  description: URL
+            attributes:
+              $ref: '#/components/schemas/stripePayment/properties/data/properties/attributes'
+            relationships:
+              type: object
+              properties:
+                order:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - order
+                        id:
+                          type: string
+                          description: The resource ID
+                payment_gateway:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - payment_gateway
+                        id:
+                          type: string
+                          description: The resource ID
+                event_stores:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - event_stores
+                        id:
+                          type: string
+                          description: The resource ID
+    stripePayment:
+      properties:
+        data:
+          properties:
+            attributes:
+              type: object
+              properties:
+                stripe_id:
+                  type: string
+                  description: The Stripe payment intent ID. Required to identify a payment session on stripe.
+                  example: pi_1234XXX
+                  nullable: true
+                client_secret:
+                  type: string
+                  description: The Stripe payment intent client secret. Required to create a charge through Stripe.js.
+                  example: pi_1234XXX_secret_5678YYY
+                  nullable: true
+                connected_account:
+                  type: string
+                  description: The account (if any) for which the funds of the PaymentIntent are intended.
+                  example: acct_xxxx-yyyy-zzzz
+                  nullable: true
+                charge_id:
+                  type: string
+                  description: The Stripe charge ID. Identifies money movement upon the payment intent confirmation.
+                  example: ch_1234XXX
+                  nullable: true
+                publishable_key:
+                  type: string
+                  description: The Stripe publishable API key.
+                  example: pk_live_xxxx-yyyy-zzzz
+                  nullable: true
+                on_behalf_of:
+                  type: string
+                  description: The Stripe account ID that these funds are intended for.
+                  example: xxxx-yyyy-zzzz
+                  nullable: true
+                transfer_group:
+                  type: string
+                  description: A string that identifies the resulting payment as part of a group.
+                  example: xxxx-yyyy-zzzz
+                  nullable: true
+                options:
+                  type: object
+                  description: 'Stripe payment options: ''customer'', ''payment_method'', ''return_url'', etc. Check Stripe payment intent API for more details.'
+                  example:
+                    customer: cus_xxx
+                    payment_method: pm_xxx
+                  nullable: true
+                payment_method:
+                  type: object
+                  description: Stripe 'payment_method', set by webhook.
+                  example:
+                    id: pm_xxx
+                  nullable: true
+                mismatched_amounts:
+                  type: boolean
+                  description: Indicates if the order current amount differs form the one of the created payment intent.
+                  example: false
+                  nullable: true
+                return_url:
+                  type: string
+                  description: The URL to return to when a redirect payment is completed.
+                  example: https://yourdomain.com/thankyou
+                  nullable: true
+                receipt_email:
+                  type: string
+                  description: The email address to send the receipt to.
+                  example: john@example.com
+                  nullable: true
+                payment_instrument:
+                  type: object
+                  description: Information about the payment instrument used in the transaction.
+                  example:
+                    issuer: cl bank
+                    card_type: visa
+                  nullable: true
+                created_at:
+                  type: string
+                  description: Time at which the resource was created.
+                  example: '2018-01-01T12:00:00.000Z'
+                  nullable: false
+                updated_at:
+                  type: string
+                  description: Time at which the resource was last updated.
+                  example: '2018-01-01T12:00:00.000Z'
+                  nullable: false
+                reference:
+                  type: string
+                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
+                  example: ANY-EXTERNAL-REFEFERNCE
+                  nullable: true
+                reference_origin:
+                  type: string
+                  description: Any identifier of the third party system that defines the reference code.
+                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
+                  nullable: true
+                metadata:
+                  type: object
+                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
+                  example:
+                    foo: bar
+                  nullable: true
+    stripePaymentUpdate:
+      required:
+      - data
+      type: object
+      properties:
+        data:
+          type: object
+          required:
+          - type
+          - id
+          - attributes
+          properties:
+            type:
+              type: string
+              description: The resource's type
+              enum:
+              - stripe_payments
+            id:
+              type: string
+              description: Unique identifier for the resource (hash).
+              example: XAyRWNUzyN
+            attributes:
+              type: object
+              properties:
+                options:
+                  type: object
+                  description: 'Stripe payment options: ''customer'', ''payment_method'', ''return_url'', etc. Check Stripe payment intent API for more details.'
+                  example:
+                    customer: cus_xxx
+                    payment_method: pm_xxx
+                  nullable: true
+                return_url:
+                  type: string
+                  description: The URL to return to when a redirect payment is completed.
+                  example: https://yourdomain.com/thankyou
+                  nullable: true
+                _update:
+                  type: boolean
+                  description: Send this attribute if you want to update the created payment intent with fresh order data.
+                  example: true
+                  nullable: false
+                _refresh:
+                  type: boolean
+                  description: Send this attribute if you want to refresh the payment status, can be used as webhooks fallback logic.
+                  example: true
+                  nullable: false
+                reference:
+                  type: string
+                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
+                  example: ANY-EXTERNAL-REFEFERNCE
+                  nullable: true
+                reference_origin:
+                  type: string
+                  description: Any identifier of the third party system that defines the reference code.
+                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
+                  nullable: true
+                metadata:
+                  type: object
+                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
+                  example:
+                    foo: bar
+                  nullable: true
+            relationships:
+              type: object
+              properties:
+                order:
+                  required:
+                  - data
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - orders
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+    stripePaymentResponseList:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/stripePaymentResponse/properties/data'
+    stripePaymentCreate:
+      required:
+      - data
+      type: object
+      properties:
+        data:
+          type: object
+          required:
+          - type
+          - attributes
+          properties:
+            type:
+              type: string
+              description: The resource's type
+              enum:
+              - stripe_payments
+            attributes:
+              type: object
+              properties:
+                stripe_id:
+                  type: string
+                  description: The Stripe payment intent ID. Required to identify a payment session on stripe.
+                  example: pi_1234XXX
+                client_secret:
+                  type: string
+                  description: The Stripe payment intent client secret. Required to create a charge through Stripe.js.
+                  example: pi_1234XXX_secret_5678YYY
+                options:
+                  type: object
+                  description: 'Stripe payment options: ''customer'', ''payment_method'', ''return_url'', etc. Check Stripe payment intent API for more details.'
+                  example:
+                    customer: cus_xxx
+                    payment_method: pm_xxx
+                return_url:
+                  type: string
+                  description: The URL to return to when a redirect payment is completed.
+                  example: https://yourdomain.com/thankyou
+                receipt_email:
+                  type: string
+                  description: The email address to send the receipt to.
+                  example: john@example.com
+                reference:
+                  type: string
+                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
+                  example: ANY-EXTERNAL-REFEFERNCE
+                reference_origin:
+                  type: string
+                  description: Any identifier of the third party system that defines the reference code.
+                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
+                metadata:
+                  type: object
+                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
+                  example:
+                    foo: bar
+            relationships:
+              type: object
+              properties:
+                order:
+                  required:
+                  - data
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - orders
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+              required:
+              - order
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT

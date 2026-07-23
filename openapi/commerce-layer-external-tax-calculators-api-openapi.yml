@@ -1,0 +1,447 @@
+openapi: 3.1.0
+info:
+  title: Commerce Layer addresses external_tax_calculators API
+  version: 7.10.1
+  contact:
+    name: API Support
+    url: https://commercelayer.io
+    email: support@commercelayer.io
+  description: Headless Commerce for Global Brands.
+servers:
+- url: https://{your_organization_slug}.commercelayer.io/api
+  description: API
+- url: https://core.commercelayer.io/users/sign_in
+  description: Sign in
+- url: https://docs.commercelayer.io/api
+  description: API reference
+security:
+- bearerAuth: []
+tags:
+- name: external_tax_calculators
+  description: resource type
+paths:
+  /external_tax_calculators:
+    get:
+      operationId: GET/external_tax_calculators
+      summary: List all external tax calculators
+      description: List all external tax calculators
+      tags:
+      - external_tax_calculators
+      responses:
+        '200':
+          description: A list of external tax calculator objects
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/externalTaxCalculatorResponseList'
+    post:
+      operationId: POST/external_tax_calculators
+      summary: Create an external tax calculator
+      description: Create an external tax calculator
+      tags:
+      - external_tax_calculators
+      requestBody:
+        required: true
+        content:
+          application/vnd.api+json:
+            schema:
+              $ref: '#/components/schemas/externalTaxCalculatorCreate'
+      responses:
+        '201':
+          description: The created external tax calculator object
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/externalTaxCalculatorResponse'
+  /external_tax_calculators/{externalTaxCalculatorId}:
+    get:
+      operationId: GET/external_tax_calculators/externalTaxCalculatorId
+      summary: Retrieve an external tax calculator
+      description: Retrieve an external tax calculator
+      tags:
+      - external_tax_calculators
+      parameters:
+      - name: externalTaxCalculatorId
+        in: path
+        schema:
+          type: string
+        required: true
+        description: The resource's id
+      responses:
+        '200':
+          description: The external tax calculator object
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/externalTaxCalculatorResponse'
+    patch:
+      operationId: PATCH/external_tax_calculators/externalTaxCalculatorId
+      summary: Update an external tax calculator
+      description: Update an external tax calculator
+      tags:
+      - external_tax_calculators
+      parameters:
+      - name: externalTaxCalculatorId
+        in: path
+        schema:
+          type: string
+        required: true
+        description: The resource's id
+      requestBody:
+        required: true
+        content:
+          application/vnd.api+json:
+            schema:
+              $ref: '#/components/schemas/externalTaxCalculatorUpdate'
+      responses:
+        '200':
+          description: The updated external tax calculator object
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/externalTaxCalculatorResponse'
+    delete:
+      operationId: DELETE/external_tax_calculators/externalTaxCalculatorId
+      summary: Delete an external tax calculator
+      description: Delete an external tax calculator
+      tags:
+      - external_tax_calculators
+      parameters:
+      - name: externalTaxCalculatorId
+        in: path
+        schema:
+          type: string
+        required: true
+        description: The resource's id
+      responses:
+        '204':
+          description: No content
+components:
+  schemas:
+    externalTaxCalculatorResponseList:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/externalTaxCalculatorResponse/properties/data'
+    externalTaxCalculatorUpdate:
+      required:
+      - data
+      type: object
+      properties:
+        data:
+          type: object
+          required:
+          - type
+          - id
+          - attributes
+          properties:
+            type:
+              type: string
+              description: The resource's type
+              enum:
+              - external_tax_calculators
+            id:
+              type: string
+              description: Unique identifier for the resource (hash).
+              example: XAyRWNUzyN
+            attributes:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: The tax calculator's internal name.
+                  example: Personal tax calculator
+                  nullable: false
+                reference:
+                  type: string
+                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
+                  example: ANY-EXTERNAL-REFEFERNCE
+                  nullable: true
+                reference_origin:
+                  type: string
+                  description: Any identifier of the third party system that defines the reference code.
+                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
+                  nullable: true
+                metadata:
+                  type: object
+                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
+                  example:
+                    foo: bar
+                  nullable: true
+                _reset_circuit:
+                  type: boolean
+                  description: Send this attribute if you want to reset the circuit breaker associated to this resource to 'closed' state and zero failures count. Cannot be passed by sales channels.
+                  example: true
+                  nullable: false
+                external_includes:
+                  type: array
+                  description: List of related resources that will be included in the request to the external callback. Please do consult the documentation to check on which resource the includes are related (i.e. the order) and the defaults in case no list is provided.
+                  example:
+                  - order.line_item_options
+                  nullable: true
+                  items:
+                    type: string
+                tax_calculator_url:
+                  type: string
+                  description: The URL to the service that will compute the taxes.
+                  example: https://external_calculator.yourbrand.com
+                  nullable: false
+            relationships:
+              type: object
+              properties: {}
+    externalTaxCalculatorResponse:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            id:
+              type: string
+              description: Unique identifier for the resource (hash).
+              example: XAyRWNUzyN
+            type:
+              type: string
+              description: The resource's type
+              enum:
+              - external_tax_calculators
+            links:
+              type: object
+              properties:
+                self:
+                  type: string
+                  description: URL
+            attributes:
+              $ref: '#/components/schemas/externalTaxCalculator/properties/data/properties/attributes'
+            relationships:
+              type: object
+              properties:
+                markets:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - markets
+                        id:
+                          type: string
+                          description: The resource ID
+                attachments:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - attachments
+                        id:
+                          type: string
+                          description: The resource ID
+                events:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - events
+                        id:
+                          type: string
+                          description: The resource ID
+                event_stores:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - event_stores
+                        id:
+                          type: string
+                          description: The resource ID
+    externalTaxCalculatorCreate:
+      required:
+      - data
+      type: object
+      properties:
+        data:
+          type: object
+          required:
+          - type
+          - attributes
+          properties:
+            type:
+              type: string
+              description: The resource's type
+              enum:
+              - external_tax_calculators
+            attributes:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: The tax calculator's internal name.
+                  example: Personal tax calculator
+                reference:
+                  type: string
+                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
+                  example: ANY-EXTERNAL-REFEFERNCE
+                reference_origin:
+                  type: string
+                  description: Any identifier of the third party system that defines the reference code.
+                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
+                metadata:
+                  type: object
+                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
+                  example:
+                    foo: bar
+                external_includes:
+                  type: array
+                  description: List of related resources that will be included in the request to the external callback. Please do consult the documentation to check on which resource the includes are related (i.e. the order) and the defaults in case no list is provided.
+                  example:
+                  - order.line_item_options
+                  items:
+                    type: string
+                tax_calculator_url:
+                  type: string
+                  description: The URL to the service that will compute the taxes.
+                  example: https://external_calculator.yourbrand.com
+              required:
+              - name
+              - tax_calculator_url
+            relationships:
+              type: object
+              properties: {}
+    externalTaxCalculator:
+      properties:
+        data:
+          properties:
+            attributes:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: The tax calculator's internal name.
+                  example: Personal tax calculator
+                  nullable: false
+                type:
+                  type: string
+                  description: The tax calculator's type.
+                  example: avalara_accounts
+                  nullable: false
+                  enum:
+                  - avalara_accounts
+                  - stripe_tax_accounts
+                  - vertex_accounts
+                  - taxjar_accounts
+                  - manual_tax_calculators
+                  - external_tax_calculators
+                created_at:
+                  type: string
+                  description: Time at which the resource was created.
+                  example: '2018-01-01T12:00:00.000Z'
+                  nullable: false
+                updated_at:
+                  type: string
+                  description: Time at which the resource was last updated.
+                  example: '2018-01-01T12:00:00.000Z'
+                  nullable: false
+                reference:
+                  type: string
+                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
+                  example: ANY-EXTERNAL-REFEFERNCE
+                  nullable: true
+                reference_origin:
+                  type: string
+                  description: Any identifier of the third party system that defines the reference code.
+                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
+                  nullable: true
+                metadata:
+                  type: object
+                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
+                  example:
+                    foo: bar
+                  nullable: true
+                circuit_state:
+                  type: string
+                  description: The circuit breaker state, by default it is 'closed'. It can become 'open' once the number of consecutive failures overlaps the specified threshold, in such case no further calls to the failing callback are made.
+                  example: closed
+                  nullable: true
+                circuit_failure_count:
+                  type: integer
+                  description: The number of consecutive failures recorded by the circuit breaker associated to this resource, will be reset on first successful call to callback.
+                  example: 5
+                  nullable: true
+                shared_secret:
+                  type: string
+                  description: The shared secret used to sign the external request payload.
+                  example: 1c0994cc4e996e8c6ee56a2198f66f3c
+                  nullable: false
+                external_includes:
+                  type: array
+                  description: List of related resources that will be included in the request to the external callback. Please do consult the documentation to check on which resource the includes are related (i.e. the order) and the defaults in case no list is provided.
+                  example:
+                  - order.line_item_options
+                  nullable: true
+                  items:
+                    type: string
+                tax_calculator_url:
+                  type: string
+                  description: The URL to the service that will compute the taxes.
+                  example: https://external_calculator.yourbrand.com
+                  nullable: false
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT

@@ -1,0 +1,273 @@
+openapi: 3.1.0
+info:
+  title: Commerce Layer addresses discount_engines API
+  version: 7.10.1
+  contact:
+    name: API Support
+    url: https://commercelayer.io
+    email: support@commercelayer.io
+  description: Headless Commerce for Global Brands.
+servers:
+- url: https://{your_organization_slug}.commercelayer.io/api
+  description: API
+- url: https://core.commercelayer.io/users/sign_in
+  description: Sign in
+- url: https://docs.commercelayer.io/api
+  description: API reference
+security:
+- bearerAuth: []
+tags:
+- name: discount_engines
+  description: resource type
+paths:
+  /discount_engine_items/{discountEngineItemId}/discount_engine:
+    get:
+      operationId: GET/discountEngineItemId/discount_engine
+      summary: Retrieve the discount engine associated to the discount engine item
+      description: Retrieve the discount engine associated to the discount engine item
+      tags:
+      - discount_engines
+      parameters:
+      - name: discountEngineItemId
+        in: path
+        schema:
+          type: string
+        required: true
+        description: The resource's id
+      responses:
+        '200':
+          description: The discount_engine associated to the discount engine item
+  /discount_engines:
+    get:
+      operationId: GET/discount_engines
+      summary: List all discount engines
+      description: List all discount engines
+      tags:
+      - discount_engines
+      responses:
+        '200':
+          description: A list of discount engine objects
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/discountEngineResponseList'
+  /discount_engines/{discountEngineId}:
+    get:
+      operationId: GET/discount_engines/discountEngineId
+      summary: Retrieve a discount engine
+      description: Retrieve a discount engine
+      tags:
+      - discount_engines
+      parameters:
+      - name: discountEngineId
+        in: path
+        schema:
+          type: string
+        required: true
+        description: The resource's id
+      responses:
+        '200':
+          description: The discount engine object
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/discountEngineResponse'
+  /markets/{marketId}/discount_engine:
+    get:
+      operationId: GET/marketId/discount_engine
+      summary: Retrieve the discount engine associated to the market
+      description: Retrieve the discount engine associated to the market
+      tags:
+      - discount_engines
+      parameters:
+      - name: marketId
+        in: path
+        schema:
+          type: string
+        required: true
+        description: The resource's id
+      responses:
+        '200':
+          description: The discount_engine associated to the market
+components:
+  schemas:
+    discountEngineResponse:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            id:
+              type: string
+              description: Unique identifier for the resource (hash).
+              example: XAyRWNUzyN
+            type:
+              type: string
+              description: The resource's type
+              enum:
+              - discount_engines
+            links:
+              type: object
+              properties:
+                self:
+                  type: string
+                  description: URL
+            attributes:
+              $ref: '#/components/schemas/discountEngine/properties/data/properties/attributes'
+            relationships:
+              type: object
+              properties:
+                markets:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - markets
+                        id:
+                          type: string
+                          description: The resource ID
+                discount_engine_items:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - discount_engine_items
+                        id:
+                          type: string
+                          description: The resource ID
+                attachments:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - attachments
+                        id:
+                          type: string
+                          description: The resource ID
+                event_stores:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - event_stores
+                        id:
+                          type: string
+                          description: The resource ID
+    discountEngine:
+      properties:
+        data:
+          properties:
+            attributes:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: The discount engine's internal name.
+                  example: Personal discount engine
+                  nullable: false
+                type:
+                  type: string
+                  description: The discount engine's type.
+                  example: talon_one_accounts
+                  nullable: false
+                  enum:
+                  - talon_one_accounts
+                manage_gift_cards:
+                  type: boolean
+                  description: Indicates if the discount engine manages both promotions and gift cards application at once.
+                  example: false
+                  nullable: true
+                created_at:
+                  type: string
+                  description: Time at which the resource was created.
+                  example: '2018-01-01T12:00:00.000Z'
+                  nullable: false
+                updated_at:
+                  type: string
+                  description: Time at which the resource was last updated.
+                  example: '2018-01-01T12:00:00.000Z'
+                  nullable: false
+                reference:
+                  type: string
+                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
+                  example: ANY-EXTERNAL-REFEFERNCE
+                  nullable: true
+                reference_origin:
+                  type: string
+                  description: Any identifier of the third party system that defines the reference code.
+                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
+                  nullable: true
+                metadata:
+                  type: object
+                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
+                  example:
+                    foo: bar
+                  nullable: true
+    discountEngineResponseList:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/discountEngineResponse/properties/data'
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT

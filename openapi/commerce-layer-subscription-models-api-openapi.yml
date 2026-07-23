@@ -1,0 +1,489 @@
+openapi: 3.1.0
+info:
+  title: Commerce Layer addresses subscription_models API
+  version: 7.10.1
+  contact:
+    name: API Support
+    url: https://commercelayer.io
+    email: support@commercelayer.io
+  description: Headless Commerce for Global Brands.
+servers:
+- url: https://{your_organization_slug}.commercelayer.io/api
+  description: API
+- url: https://core.commercelayer.io/users/sign_in
+  description: Sign in
+- url: https://docs.commercelayer.io/api
+  description: API reference
+security:
+- bearerAuth: []
+tags:
+- name: subscription_models
+  description: resource type
+paths:
+  /markets/{marketId}/subscription_model:
+    get:
+      operationId: GET/marketId/subscription_model
+      summary: Retrieve the subscription model associated to the market
+      description: Retrieve the subscription model associated to the market
+      tags:
+      - subscription_models
+      parameters:
+      - name: marketId
+        in: path
+        schema:
+          type: string
+        required: true
+        description: The resource's id
+      responses:
+        '200':
+          description: The subscription_model associated to the market
+  /order_subscriptions/{orderSubscriptionId}/subscription_model:
+    get:
+      operationId: GET/orderSubscriptionId/subscription_model
+      summary: Retrieve the subscription model associated to the order subscription
+      description: Retrieve the subscription model associated to the order subscription
+      tags:
+      - subscription_models
+      parameters:
+      - name: orderSubscriptionId
+        in: path
+        schema:
+          type: string
+        required: true
+        description: The resource's id
+      responses:
+        '200':
+          description: The subscription_model associated to the order subscription
+  /subscription_models:
+    get:
+      operationId: GET/subscription_models
+      summary: List all subscription models
+      description: List all subscription models
+      tags:
+      - subscription_models
+      responses:
+        '200':
+          description: A list of subscription model objects
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/subscriptionModelResponseList'
+    post:
+      operationId: POST/subscription_models
+      summary: Create a subscription model
+      description: Create a subscription model
+      tags:
+      - subscription_models
+      requestBody:
+        required: true
+        content:
+          application/vnd.api+json:
+            schema:
+              $ref: '#/components/schemas/subscriptionModelCreate'
+      responses:
+        '201':
+          description: The created subscription model object
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/subscriptionModelResponse'
+  /subscription_models/{subscriptionModelId}:
+    get:
+      operationId: GET/subscription_models/subscriptionModelId
+      summary: Retrieve a subscription model
+      description: Retrieve a subscription model
+      tags:
+      - subscription_models
+      parameters:
+      - name: subscriptionModelId
+        in: path
+        schema:
+          type: string
+        required: true
+        description: The resource's id
+      responses:
+        '200':
+          description: The subscription model object
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/subscriptionModelResponse'
+    patch:
+      operationId: PATCH/subscription_models/subscriptionModelId
+      summary: Update a subscription model
+      description: Update a subscription model
+      tags:
+      - subscription_models
+      parameters:
+      - name: subscriptionModelId
+        in: path
+        schema:
+          type: string
+        required: true
+        description: The resource's id
+      requestBody:
+        required: true
+        content:
+          application/vnd.api+json:
+            schema:
+              $ref: '#/components/schemas/subscriptionModelUpdate'
+      responses:
+        '200':
+          description: The updated subscription model object
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/subscriptionModelResponse'
+    delete:
+      operationId: DELETE/subscription_models/subscriptionModelId
+      summary: Delete a subscription model
+      description: Delete a subscription model
+      tags:
+      - subscription_models
+      parameters:
+      - name: subscriptionModelId
+        in: path
+        schema:
+          type: string
+        required: true
+        description: The resource's id
+      responses:
+        '204':
+          description: No content
+components:
+  schemas:
+    subscriptionModel:
+      properties:
+        data:
+          properties:
+            attributes:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: The subscription model's internal name.
+                  example: EU Subscription Model
+                  nullable: false
+                strategy:
+                  type: string
+                  description: 'The subscription model''s strategy used to generate order subscriptions: one between ''by_frequency'' (default) and ''by_line_items''.'
+                  example: by_frequency
+                  nullable: true
+                frequencies:
+                  type: array
+                  description: An object that contains the frequencies available for this subscription model. Supported ones are 'hourly', 'daily', 'weekly', 'monthly', 'two-month', 'three-month', 'four-month', 'six-month', 'yearly', or your custom crontab expression (min unit is hour).
+                  example:
+                  - hourly
+                  - 10 * * * *
+                  - weekly
+                  - monthly
+                  - two-month
+                  nullable: false
+                  items:
+                    type: string
+                auto_activate:
+                  type: boolean
+                  description: Indicates if the created subscriptions will be activated considering the placed source order as its first run, default to true.
+                  example: true
+                  nullable: true
+                auto_cancel:
+                  type: boolean
+                  description: Indicates if the created subscriptions will be cancelled in case the source order is cancelled, default to false.
+                  example: false
+                  nullable: true
+                created_at:
+                  type: string
+                  description: Time at which the resource was created.
+                  example: '2018-01-01T12:00:00.000Z'
+                  nullable: false
+                updated_at:
+                  type: string
+                  description: Time at which the resource was last updated.
+                  example: '2018-01-01T12:00:00.000Z'
+                  nullable: false
+                reference:
+                  type: string
+                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
+                  example: ANY-EXTERNAL-REFEFERNCE
+                  nullable: true
+                reference_origin:
+                  type: string
+                  description: Any identifier of the third party system that defines the reference code.
+                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
+                  nullable: true
+                metadata:
+                  type: object
+                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
+                  example:
+                    foo: bar
+                  nullable: true
+    subscriptionModelUpdate:
+      required:
+      - data
+      type: object
+      properties:
+        data:
+          type: object
+          required:
+          - type
+          - id
+          - attributes
+          properties:
+            type:
+              type: string
+              description: The resource's type
+              enum:
+              - subscription_models
+            id:
+              type: string
+              description: Unique identifier for the resource (hash).
+              example: XAyRWNUzyN
+            attributes:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: The subscription model's internal name.
+                  example: EU Subscription Model
+                  nullable: false
+                strategy:
+                  type: string
+                  description: 'The subscription model''s strategy used to generate order subscriptions: one between ''by_frequency'' (default) and ''by_line_items''.'
+                  example: by_frequency
+                  nullable: true
+                frequencies:
+                  type: array
+                  description: An object that contains the frequencies available for this subscription model. Supported ones are 'hourly', 'daily', 'weekly', 'monthly', 'two-month', 'three-month', 'four-month', 'six-month', 'yearly', or your custom crontab expression (min unit is hour).
+                  example:
+                  - hourly
+                  - 10 * * * *
+                  - weekly
+                  - monthly
+                  - two-month
+                  nullable: false
+                  items:
+                    type: string
+                auto_activate:
+                  type: boolean
+                  description: Indicates if the created subscriptions will be activated considering the placed source order as its first run, default to true.
+                  example: true
+                  nullable: false
+                auto_cancel:
+                  type: boolean
+                  description: Indicates if the created subscriptions will be cancelled in case the source order is cancelled, default to false.
+                  example: false
+                  nullable: false
+                reference:
+                  type: string
+                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
+                  example: ANY-EXTERNAL-REFEFERNCE
+                  nullable: true
+                reference_origin:
+                  type: string
+                  description: Any identifier of the third party system that defines the reference code.
+                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
+                  nullable: true
+                metadata:
+                  type: object
+                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
+                  example:
+                    foo: bar
+                  nullable: true
+            relationships:
+              type: object
+              properties: {}
+    subscriptionModelResponseList:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/subscriptionModelResponse/properties/data'
+    subscriptionModelResponse:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            id:
+              type: string
+              description: Unique identifier for the resource (hash).
+              example: XAyRWNUzyN
+            type:
+              type: string
+              description: The resource's type
+              enum:
+              - subscription_models
+            links:
+              type: object
+              properties:
+                self:
+                  type: string
+                  description: URL
+            attributes:
+              $ref: '#/components/schemas/subscriptionModel/properties/data/properties/attributes'
+            relationships:
+              type: object
+              properties:
+                markets:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - markets
+                        id:
+                          type: string
+                          description: The resource ID
+                order_subscriptions:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - order_subscriptions
+                        id:
+                          type: string
+                          description: The resource ID
+                attachments:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - attachments
+                        id:
+                          type: string
+                          description: The resource ID
+                event_stores:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - event_stores
+                        id:
+                          type: string
+                          description: The resource ID
+    subscriptionModelCreate:
+      required:
+      - data
+      type: object
+      properties:
+        data:
+          type: object
+          required:
+          - type
+          - attributes
+          properties:
+            type:
+              type: string
+              description: The resource's type
+              enum:
+              - subscription_models
+            attributes:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: The subscription model's internal name.
+                  example: EU Subscription Model
+                strategy:
+                  type: string
+                  description: 'The subscription model''s strategy used to generate order subscriptions: one between ''by_frequency'' (default) and ''by_line_items''.'
+                  example: by_frequency
+                frequencies:
+                  type: array
+                  description: An object that contains the frequencies available for this subscription model. Supported ones are 'hourly', 'daily', 'weekly', 'monthly', 'two-month', 'three-month', 'four-month', 'six-month', 'yearly', or your custom crontab expression (min unit is hour).
+                  example:
+                  - hourly
+                  - 10 * * * *
+                  - weekly
+                  - monthly
+                  - two-month
+                  items:
+                    type: string
+                auto_activate:
+                  type: boolean
+                  description: Indicates if the created subscriptions will be activated considering the placed source order as its first run, default to true.
+                  example: true
+                auto_cancel:
+                  type: boolean
+                  description: Indicates if the created subscriptions will be cancelled in case the source order is cancelled, default to false.
+                  example: false
+                reference:
+                  type: string
+                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
+                  example: ANY-EXTERNAL-REFEFERNCE
+                reference_origin:
+                  type: string
+                  description: Any identifier of the third party system that defines the reference code.
+                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
+                metadata:
+                  type: object
+                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
+                  example:
+                    foo: bar
+              required:
+              - name
+              - frequencies
+            relationships:
+              type: object
+              properties: {}
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT

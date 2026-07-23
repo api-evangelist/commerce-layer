@@ -1,0 +1,433 @@
+openapi: 3.1.0
+info:
+  title: Commerce Layer addresses coupon_recipients API
+  version: 7.10.1
+  contact:
+    name: API Support
+    url: https://commercelayer.io
+    email: support@commercelayer.io
+  description: Headless Commerce for Global Brands.
+servers:
+- url: https://{your_organization_slug}.commercelayer.io/api
+  description: API
+- url: https://core.commercelayer.io/users/sign_in
+  description: Sign in
+- url: https://docs.commercelayer.io/api
+  description: API reference
+security:
+- bearerAuth: []
+tags:
+- name: coupon_recipients
+  description: resource type
+paths:
+  /coupon_recipients:
+    get:
+      operationId: GET/coupon_recipients
+      summary: List all coupon recipients
+      description: List all coupon recipients
+      tags:
+      - coupon_recipients
+      responses:
+        '200':
+          description: A list of coupon recipient objects
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/couponRecipientResponseList'
+    post:
+      operationId: POST/coupon_recipients
+      summary: Create a coupon recipient
+      description: Create a coupon recipient
+      tags:
+      - coupon_recipients
+      requestBody:
+        required: true
+        content:
+          application/vnd.api+json:
+            schema:
+              $ref: '#/components/schemas/couponRecipientCreate'
+      responses:
+        '201':
+          description: The created coupon recipient object
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/couponRecipientResponse'
+  /coupon_recipients/{couponRecipientId}:
+    get:
+      operationId: GET/coupon_recipients/couponRecipientId
+      summary: Retrieve a coupon recipient
+      description: Retrieve a coupon recipient
+      tags:
+      - coupon_recipients
+      parameters:
+      - name: couponRecipientId
+        in: path
+        schema:
+          type: string
+        required: true
+        description: The resource's id
+      responses:
+        '200':
+          description: The coupon recipient object
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/couponRecipientResponse'
+    patch:
+      operationId: PATCH/coupon_recipients/couponRecipientId
+      summary: Update a coupon recipient
+      description: Update a coupon recipient
+      tags:
+      - coupon_recipients
+      parameters:
+      - name: couponRecipientId
+        in: path
+        schema:
+          type: string
+        required: true
+        description: The resource's id
+      requestBody:
+        required: true
+        content:
+          application/vnd.api+json:
+            schema:
+              $ref: '#/components/schemas/couponRecipientUpdate'
+      responses:
+        '200':
+          description: The updated coupon recipient object
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/couponRecipientResponse'
+    delete:
+      operationId: DELETE/coupon_recipients/couponRecipientId
+      summary: Delete a coupon recipient
+      description: Delete a coupon recipient
+      tags:
+      - coupon_recipients
+      parameters:
+      - name: couponRecipientId
+        in: path
+        schema:
+          type: string
+        required: true
+        description: The resource's id
+      responses:
+        '204':
+          description: No content
+  /coupons/{couponId}/coupon_recipient:
+    get:
+      operationId: GET/couponId/coupon_recipient
+      summary: Retrieve the coupon recipient associated to the coupon
+      description: Retrieve the coupon recipient associated to the coupon
+      tags:
+      - coupon_recipients
+      parameters:
+      - name: couponId
+        in: path
+        schema:
+          type: string
+        required: true
+        description: The resource's id
+      responses:
+        '200':
+          description: The coupon_recipient associated to the coupon
+components:
+  schemas:
+    couponRecipientResponse:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            id:
+              type: string
+              description: Unique identifier for the resource (hash).
+              example: XAyRWNUzyN
+            type:
+              type: string
+              description: The resource's type
+              enum:
+              - coupon_recipients
+            links:
+              type: object
+              properties:
+                self:
+                  type: string
+                  description: URL
+            attributes:
+              $ref: '#/components/schemas/couponRecipient/properties/data/properties/attributes'
+            relationships:
+              type: object
+              properties:
+                customer:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - customer
+                        id:
+                          type: string
+                          description: The resource ID
+                event_stores:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - event_stores
+                        id:
+                          type: string
+                          description: The resource ID
+                attachments:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - attachments
+                        id:
+                          type: string
+                          description: The resource ID
+    couponRecipientCreate:
+      required:
+      - data
+      type: object
+      properties:
+        data:
+          type: object
+          required:
+          - type
+          - attributes
+          properties:
+            type:
+              type: string
+              description: The resource's type
+              enum:
+              - coupon_recipients
+            attributes:
+              type: object
+              properties:
+                email:
+                  type: string
+                  description: The recipient email address.
+                  example: john@example.com
+                first_name:
+                  type: string
+                  description: The recipient first name.
+                  example: John
+                last_name:
+                  type: string
+                  description: The recipient last name.
+                  example: Smith
+                reference:
+                  type: string
+                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
+                  example: ANY-EXTERNAL-REFEFERNCE
+                reference_origin:
+                  type: string
+                  description: Any identifier of the third party system that defines the reference code.
+                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
+                metadata:
+                  type: object
+                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
+                  example:
+                    foo: bar
+              required:
+              - email
+            relationships:
+              type: object
+              properties:
+                customer:
+                  required:
+                  - data
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - customers
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+    couponRecipientResponseList:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/couponRecipientResponse/properties/data'
+    couponRecipientUpdate:
+      required:
+      - data
+      type: object
+      properties:
+        data:
+          type: object
+          required:
+          - type
+          - id
+          - attributes
+          properties:
+            type:
+              type: string
+              description: The resource's type
+              enum:
+              - coupon_recipients
+            id:
+              type: string
+              description: Unique identifier for the resource (hash).
+              example: XAyRWNUzyN
+            attributes:
+              type: object
+              properties:
+                email:
+                  type: string
+                  description: The recipient email address.
+                  example: john@example.com
+                  nullable: false
+                first_name:
+                  type: string
+                  description: The recipient first name.
+                  example: John
+                  nullable: true
+                last_name:
+                  type: string
+                  description: The recipient last name.
+                  example: Smith
+                  nullable: true
+                reference:
+                  type: string
+                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
+                  example: ANY-EXTERNAL-REFEFERNCE
+                  nullable: true
+                reference_origin:
+                  type: string
+                  description: Any identifier of the third party system that defines the reference code.
+                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
+                  nullable: true
+                metadata:
+                  type: object
+                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
+                  example:
+                    foo: bar
+                  nullable: true
+            relationships:
+              type: object
+              properties:
+                customer:
+                  required:
+                  - data
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - customers
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+    couponRecipient:
+      properties:
+        data:
+          properties:
+            attributes:
+              type: object
+              properties:
+                email:
+                  type: string
+                  description: The recipient email address.
+                  example: john@example.com
+                  nullable: false
+                first_name:
+                  type: string
+                  description: The recipient first name.
+                  example: John
+                  nullable: true
+                last_name:
+                  type: string
+                  description: The recipient last name.
+                  example: Smith
+                  nullable: true
+                created_at:
+                  type: string
+                  description: Time at which the resource was created.
+                  example: '2018-01-01T12:00:00.000Z'
+                  nullable: false
+                updated_at:
+                  type: string
+                  description: Time at which the resource was last updated.
+                  example: '2018-01-01T12:00:00.000Z'
+                  nullable: false
+                reference:
+                  type: string
+                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
+                  example: ANY-EXTERNAL-REFEFERNCE
+                  nullable: true
+                reference_origin:
+                  type: string
+                  description: Any identifier of the third party system that defines the reference code.
+                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
+                  nullable: true
+                metadata:
+                  type: object
+                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
+                  example:
+                    foo: bar
+                  nullable: true
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT

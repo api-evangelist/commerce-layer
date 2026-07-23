@@ -1,0 +1,469 @@
+openapi: 3.1.0
+info:
+  title: Commerce Layer addresses adyen_payments API
+  version: 7.10.1
+  contact:
+    name: API Support
+    url: https://commercelayer.io
+    email: support@commercelayer.io
+  description: Headless Commerce for Global Brands.
+servers:
+- url: https://{your_organization_slug}.commercelayer.io/api
+  description: API
+- url: https://core.commercelayer.io/users/sign_in
+  description: Sign in
+- url: https://docs.commercelayer.io/api
+  description: API reference
+security:
+- bearerAuth: []
+tags:
+- name: adyen_payments
+  description: resource type
+paths:
+  /adyen_gateways/{adyenGatewayId}/adyen_payments:
+    get:
+      operationId: GET/adyenGatewayId/adyen_payments
+      summary: Retrieve the adyen payments associated to the adyen gateway
+      description: Retrieve the adyen payments associated to the adyen gateway
+      tags:
+      - adyen_payments
+      parameters:
+      - name: adyenGatewayId
+        in: path
+        schema:
+          type: string
+        required: true
+        description: The resource's id
+      responses:
+        '200':
+          description: The adyen_payments associated to the adyen gateway
+  /adyen_payments:
+    get:
+      operationId: GET/adyen_payments
+      summary: List all adyen payments
+      description: List all adyen payments
+      tags:
+      - adyen_payments
+      responses:
+        '200':
+          description: A list of adyen payment objects
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/adyenPaymentResponseList'
+    post:
+      operationId: POST/adyen_payments
+      summary: Create an adyen payment
+      description: Create an adyen payment
+      tags:
+      - adyen_payments
+      requestBody:
+        required: true
+        content:
+          application/vnd.api+json:
+            schema:
+              $ref: '#/components/schemas/adyenPaymentCreate'
+      responses:
+        '201':
+          description: The created adyen payment object
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/adyenPaymentResponse'
+  /adyen_payments/{adyenPaymentId}:
+    get:
+      operationId: GET/adyen_payments/adyenPaymentId
+      summary: Retrieve an adyen payment
+      description: Retrieve an adyen payment
+      tags:
+      - adyen_payments
+      parameters:
+      - name: adyenPaymentId
+        in: path
+        schema:
+          type: string
+        required: true
+        description: The resource's id
+      responses:
+        '200':
+          description: The adyen payment object
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/adyenPaymentResponse'
+    patch:
+      operationId: PATCH/adyen_payments/adyenPaymentId
+      summary: Update an adyen payment
+      description: Update an adyen payment
+      tags:
+      - adyen_payments
+      parameters:
+      - name: adyenPaymentId
+        in: path
+        schema:
+          type: string
+        required: true
+        description: The resource's id
+      requestBody:
+        required: true
+        content:
+          application/vnd.api+json:
+            schema:
+              $ref: '#/components/schemas/adyenPaymentUpdate'
+      responses:
+        '200':
+          description: The updated adyen payment object
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/adyenPaymentResponse'
+    delete:
+      operationId: DELETE/adyen_payments/adyenPaymentId
+      summary: Delete an adyen payment
+      description: Delete an adyen payment
+      tags:
+      - adyen_payments
+      parameters:
+      - name: adyenPaymentId
+        in: path
+        schema:
+          type: string
+        required: true
+        description: The resource's id
+      responses:
+        '204':
+          description: No content
+components:
+  schemas:
+    adyenPaymentResponse:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            id:
+              type: string
+              description: Unique identifier for the resource (hash).
+              example: XAyRWNUzyN
+            type:
+              type: string
+              description: The resource's type
+              enum:
+              - adyen_payments
+            links:
+              type: object
+              properties:
+                self:
+                  type: string
+                  description: URL
+            attributes:
+              $ref: '#/components/schemas/adyenPayment/properties/data/properties/attributes'
+            relationships:
+              type: object
+              properties:
+                order:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - order
+                        id:
+                          type: string
+                          description: The resource ID
+                payment_gateway:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - payment_gateway
+                        id:
+                          type: string
+                          description: The resource ID
+                event_stores:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - event_stores
+                        id:
+                          type: string
+                          description: The resource ID
+    adyenPayment:
+      properties:
+        data:
+          properties:
+            attributes:
+              type: object
+              properties:
+                public_key:
+                  type: string
+                  description: The public key linked to your API credential.
+                  example: xxxx-yyyy-zzzz
+                  nullable: true
+                payment_methods:
+                  type: object
+                  description: The merchant available payment methods for the assoiated order (i.e. country and amount). Required by the Adyen JS SDK.
+                  example:
+                    foo: bar
+                  nullable: false
+                payment_request_data:
+                  type: object
+                  description: The Adyen payment request data, collected by client.
+                  example:
+                    foo: bar
+                  nullable: true
+                payment_request_details:
+                  type: object
+                  description: The Adyen additional details request data, collected by client.
+                  example:
+                    foo: bar
+                  nullable: true
+                payment_response:
+                  type: object
+                  description: The Adyen payment response, used by client (includes 'resultCode' and 'action').
+                  example:
+                    foo: bar
+                  nullable: true
+                mismatched_amounts:
+                  type: boolean
+                  description: Indicates if the order current amount differs form the one of the associated authorization.
+                  example: false
+                  nullable: true
+                balance:
+                  type: integer
+                  description: The balance remaining on a shopper's gift card, must be computed by using its related trigger attribute.
+                  example: 1000
+                  nullable: true
+                expires_at:
+                  type: string
+                  description: The expiration date/time of this Adyen payment (valid for partial payments only).
+                  example: '2018-01-02T12:00:00.000Z'
+                  nullable: true
+                payment_instrument:
+                  type: object
+                  description: Information about the payment instrument used in the transaction.
+                  example:
+                    issuer: cl bank
+                    card_type: visa
+                  nullable: true
+                created_at:
+                  type: string
+                  description: Time at which the resource was created.
+                  example: '2018-01-01T12:00:00.000Z'
+                  nullable: false
+                updated_at:
+                  type: string
+                  description: Time at which the resource was last updated.
+                  example: '2018-01-01T12:00:00.000Z'
+                  nullable: false
+                reference:
+                  type: string
+                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
+                  example: ANY-EXTERNAL-REFEFERNCE
+                  nullable: true
+                reference_origin:
+                  type: string
+                  description: Any identifier of the third party system that defines the reference code.
+                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
+                  nullable: true
+                metadata:
+                  type: object
+                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
+                  example:
+                    foo: bar
+                  nullable: true
+    adyenPaymentUpdate:
+      required:
+      - data
+      type: object
+      properties:
+        data:
+          type: object
+          required:
+          - type
+          - id
+          - attributes
+          properties:
+            type:
+              type: string
+              description: The resource's type
+              enum:
+              - adyen_payments
+            id:
+              type: string
+              description: Unique identifier for the resource (hash).
+              example: XAyRWNUzyN
+            attributes:
+              type: object
+              properties:
+                payment_request_data:
+                  type: object
+                  description: The Adyen payment request data, collected by client.
+                  example:
+                    foo: bar
+                  nullable: true
+                payment_request_details:
+                  type: object
+                  description: The Adyen additional details request data, collected by client.
+                  example:
+                    foo: bar
+                  nullable: true
+                _authorize:
+                  type: boolean
+                  description: Send this attribute if you want to authorize the payment.
+                  example: true
+                  nullable: false
+                _details:
+                  type: boolean
+                  description: Send this attribute if you want to send additional details the payment request.
+                  example: true
+                  nullable: false
+                _balance:
+                  type: boolean
+                  description: Send this attribute if you want retrieve the balance remaining on a shopper's gift card.
+                  example: true
+                  nullable: false
+                reference:
+                  type: string
+                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
+                  example: ANY-EXTERNAL-REFEFERNCE
+                  nullable: true
+                reference_origin:
+                  type: string
+                  description: Any identifier of the third party system that defines the reference code.
+                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
+                  nullable: true
+                metadata:
+                  type: object
+                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
+                  example:
+                    foo: bar
+                  nullable: true
+            relationships:
+              type: object
+              properties:
+                order:
+                  required:
+                  - data
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - orders
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+    adyenPaymentCreate:
+      required:
+      - data
+      type: object
+      properties:
+        data:
+          type: object
+          required:
+          - type
+          - attributes
+          properties:
+            type:
+              type: string
+              description: The resource's type
+              enum:
+              - adyen_payments
+            attributes:
+              type: object
+              properties:
+                reference:
+                  type: string
+                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
+                  example: ANY-EXTERNAL-REFEFERNCE
+                reference_origin:
+                  type: string
+                  description: Any identifier of the third party system that defines the reference code.
+                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
+                metadata:
+                  type: object
+                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
+                  example:
+                    foo: bar
+            relationships:
+              type: object
+              properties:
+                order:
+                  required:
+                  - data
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - orders
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+              required:
+              - order
+    adyenPaymentResponseList:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/adyenPaymentResponse/properties/data'
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT

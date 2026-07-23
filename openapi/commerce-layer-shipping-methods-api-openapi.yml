@@ -1,0 +1,1156 @@
+openapi: 3.1.0
+info:
+  title: Commerce Layer addresses shipping_methods API
+  version: 7.10.1
+  contact:
+    name: API Support
+    url: https://commercelayer.io
+    email: support@commercelayer.io
+  description: Headless Commerce for Global Brands.
+servers:
+- url: https://{your_organization_slug}.commercelayer.io/api
+  description: API
+- url: https://core.commercelayer.io/users/sign_in
+  description: Sign in
+- url: https://docs.commercelayer.io/api
+  description: API reference
+security:
+- bearerAuth: []
+tags:
+- name: shipping_methods
+  description: resource type
+paths:
+  /delivery_lead_times/{deliveryLeadTimeId}/shipping_method:
+    get:
+      operationId: GET/deliveryLeadTimeId/shipping_method
+      summary: Retrieve the shipping method associated to the delivery lead time
+      description: Retrieve the shipping method associated to the delivery lead time
+      tags:
+      - shipping_methods
+      parameters:
+      - name: deliveryLeadTimeId
+        in: path
+        schema:
+          type: string
+        required: true
+        description: The resource's id
+      responses:
+        '200':
+          description: The shipping_method associated to the delivery lead time
+  /markets/{marketId}/default_shipping_method:
+    get:
+      operationId: GET/marketId/default_shipping_method
+      summary: Retrieve the default shipping method associated to the market
+      description: Retrieve the default shipping method associated to the market
+      tags:
+      - shipping_methods
+      parameters:
+      - name: marketId
+        in: path
+        schema:
+          type: string
+        required: true
+        description: The resource's id
+      responses:
+        '200':
+          description: The default_shipping_method associated to the market
+  /orders/{orderId}/default_shipping_method:
+    get:
+      operationId: GET/orderId/default_shipping_method
+      summary: Retrieve the default shipping method associated to the order
+      description: Retrieve the default shipping method associated to the order
+      tags:
+      - shipping_methods
+      parameters:
+      - name: orderId
+        in: path
+        schema:
+          type: string
+        required: true
+        description: The resource's id
+      responses:
+        '200':
+          description: The default_shipping_method associated to the order
+  /shipments/{shipmentId}/shipping_method:
+    get:
+      operationId: GET/shipmentId/shipping_method
+      summary: Retrieve the shipping method associated to the shipment
+      description: Retrieve the shipping method associated to the shipment
+      tags:
+      - shipping_methods
+      parameters:
+      - name: shipmentId
+        in: path
+        schema:
+          type: string
+        required: true
+        description: The resource's id
+      responses:
+        '200':
+          description: The shipping_method associated to the shipment
+  /shipments/{shipmentId}/available_shipping_methods:
+    get:
+      operationId: GET/shipmentId/available_shipping_methods
+      summary: Retrieve the available shipping methods associated to the shipment
+      description: Retrieve the available shipping methods associated to the shipment
+      tags:
+      - shipping_methods
+      parameters:
+      - name: shipmentId
+        in: path
+        schema:
+          type: string
+        required: true
+        description: The resource's id
+      responses:
+        '200':
+          description: The available_shipping_methods associated to the shipment
+  /shipping_method_tiers/{shippingMethodTierId}/shipping_method:
+    get:
+      operationId: GET/shippingMethodTierId/shipping_method
+      summary: Retrieve the shipping method associated to the shipping method tier
+      description: Retrieve the shipping method associated to the shipping method tier
+      tags:
+      - shipping_methods
+      parameters:
+      - name: shippingMethodTierId
+        in: path
+        schema:
+          type: string
+        required: true
+        description: The resource's id
+      responses:
+        '200':
+          description: The shipping_method associated to the shipping method tier
+  /shipping_methods:
+    get:
+      operationId: GET/shipping_methods
+      summary: List all shipping methods
+      description: List all shipping methods
+      tags:
+      - shipping_methods
+      responses:
+        '200':
+          description: A list of shipping method objects
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/shippingMethodResponseList'
+    post:
+      operationId: POST/shipping_methods
+      summary: Create a shipping method
+      description: Create a shipping method
+      tags:
+      - shipping_methods
+      requestBody:
+        required: true
+        content:
+          application/vnd.api+json:
+            schema:
+              $ref: '#/components/schemas/shippingMethodCreate'
+      responses:
+        '201':
+          description: The created shipping method object
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/shippingMethodResponse'
+  /shipping_methods/{shippingMethodId}:
+    get:
+      operationId: GET/shipping_methods/shippingMethodId
+      summary: Retrieve a shipping method
+      description: Retrieve a shipping method
+      tags:
+      - shipping_methods
+      parameters:
+      - name: shippingMethodId
+        in: path
+        schema:
+          type: string
+        required: true
+        description: The resource's id
+      responses:
+        '200':
+          description: The shipping method object
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/shippingMethodResponse'
+    patch:
+      operationId: PATCH/shipping_methods/shippingMethodId
+      summary: Update a shipping method
+      description: Update a shipping method
+      tags:
+      - shipping_methods
+      parameters:
+      - name: shippingMethodId
+        in: path
+        schema:
+          type: string
+        required: true
+        description: The resource's id
+      requestBody:
+        required: true
+        content:
+          application/vnd.api+json:
+            schema:
+              $ref: '#/components/schemas/shippingMethodUpdate'
+      responses:
+        '200':
+          description: The updated shipping method object
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/shippingMethodResponse'
+    delete:
+      operationId: DELETE/shipping_methods/shippingMethodId
+      summary: Delete a shipping method
+      description: Delete a shipping method
+      tags:
+      - shipping_methods
+      parameters:
+      - name: shippingMethodId
+        in: path
+        schema:
+          type: string
+        required: true
+        description: The resource's id
+      responses:
+        '204':
+          description: No content
+  /shipping_weight_tiers/{shippingWeightTierId}/shipping_method:
+    get:
+      operationId: GET/shippingWeightTierId/shipping_method
+      summary: Retrieve the shipping method associated to the shipping weight tier
+      description: Retrieve the shipping method associated to the shipping weight tier
+      tags:
+      - shipping_methods
+      parameters:
+      - name: shippingWeightTierId
+        in: path
+        schema:
+          type: string
+        required: true
+        description: The resource's id
+      responses:
+        '200':
+          description: The shipping_method associated to the shipping weight tier
+components:
+  schemas:
+    shippingMethodResponseList:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/shippingMethodResponse/properties/data'
+    shippingMethodResponse:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            id:
+              type: string
+              description: Unique identifier for the resource (hash).
+              example: XAyRWNUzyN
+            type:
+              type: string
+              description: The resource's type
+              enum:
+              - shipping_methods
+            links:
+              type: object
+              properties:
+                self:
+                  type: string
+                  description: URL
+            attributes:
+              $ref: '#/components/schemas/shippingMethod/properties/data/properties/attributes'
+            relationships:
+              type: object
+              properties:
+                market:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - market
+                        id:
+                          type: string
+                          description: The resource ID
+                shipping_zone:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - shipping_zone
+                        id:
+                          type: string
+                          description: The resource ID
+                shipping_category:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - shipping_category
+                        id:
+                          type: string
+                          description: The resource ID
+                stock_location:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - stock_location
+                        id:
+                          type: string
+                          description: The resource ID
+                delivery_lead_time_for_shipment:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - delivery_lead_time_for_shipment
+                        id:
+                          type: string
+                          description: The resource ID
+                shipping_method_tiers:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - shipping_method_tiers
+                        id:
+                          type: string
+                          description: The resource ID
+                shipping_weight_tiers:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - shipping_weight_tiers
+                        id:
+                          type: string
+                          description: The resource ID
+                attachments:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - attachments
+                        id:
+                          type: string
+                          description: The resource ID
+                notifications:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - notifications
+                        id:
+                          type: string
+                          description: The resource ID
+                events:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - events
+                        id:
+                          type: string
+                          description: The resource ID
+                tags:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - tags
+                        id:
+                          type: string
+                          description: The resource ID
+                event_stores:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - event_stores
+                        id:
+                          type: string
+                          description: The resource ID
+    shippingMethodCreate:
+      required:
+      - data
+      type: object
+      properties:
+        data:
+          type: object
+          required:
+          - type
+          - attributes
+          properties:
+            type:
+              type: string
+              description: The resource's type
+              enum:
+              - shipping_methods
+            attributes:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: The shipping method's name.
+                  example: Standard shipping
+                scheme:
+                  type: string
+                  description: The shipping method's scheme. One of 'flat', 'weight_tiered', or 'external'.
+                  example: flat
+                  enum:
+                  - flat
+                  - weight_tiered
+                  - external
+                currency_code:
+                  type: string
+                  description: The international 3-letter currency code as defined by the ISO 4217 standard.
+                  example: EUR
+                external_prices_url:
+                  type: string
+                  description: The URL used to overwrite prices by an external source.
+                  example: https://external_prices.yourbrand.com
+                price_amount_cents:
+                  type: integer
+                  description: The price of this shipping method, in cents.
+                  example: 1000
+                free_over_amount_cents:
+                  type: integer
+                  description: Apply free shipping if the order amount is over this value, in cents.
+                  example: 9900
+                use_subtotal:
+                  type: boolean
+                  description: Send this attribute if you want to compare the free over amount with order's subtotal (excluding discounts, if any).
+                  example: true
+                min_weight:
+                  type: number
+                  description: The minimum weight for which this shipping method is available.
+                  example: 3.0
+                max_weight:
+                  type: number
+                  description: The maximum weight for which this shipping method is available.
+                  example: 300.0
+                unit_of_weight:
+                  type: string
+                  description: The unit of weight. One of 'gr', 'oz', or 'lb'.
+                  example: gr
+                  enum:
+                  - gr
+                  - oz
+                  - lb
+                tax_code:
+                  type: string
+                  description: The freight tax identifier code, specific for a particular tax calculator.
+                  example: FR010000
+                _disable:
+                  type: boolean
+                  description: Send this attribute if you want to mark this resource as disabled.
+                  example: true
+                _enable:
+                  type: boolean
+                  description: Send this attribute if you want to mark this resource as enabled.
+                  example: true
+                external_includes:
+                  type: array
+                  description: List of related resources that will be included in the request to the external callback. Please do consult the documentation to check on which resource the includes are related (i.e. the order) and the defaults in case no list is provided.
+                  example:
+                  - order.line_item_options
+                  items:
+                    type: string
+                reference:
+                  type: string
+                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
+                  example: ANY-EXTERNAL-REFEFERNCE
+                reference_origin:
+                  type: string
+                  description: Any identifier of the third party system that defines the reference code.
+                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
+                metadata:
+                  type: object
+                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
+                  example:
+                    foo: bar
+              required:
+              - name
+              - price_amount_cents
+            relationships:
+              type: object
+              properties:
+                market:
+                  required:
+                  - data
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - markets
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+                shipping_zone:
+                  required:
+                  - data
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - shipping_zones
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+                shipping_category:
+                  required:
+                  - data
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - shipping_categories
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+                stock_location:
+                  required:
+                  - data
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - stock_locations
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+                shipping_method_tiers:
+                  required:
+                  - data
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - shipping_method_tiers
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+                tags:
+                  required:
+                  - data
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - tags
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+    shippingMethodUpdate:
+      required:
+      - data
+      type: object
+      properties:
+        data:
+          type: object
+          required:
+          - type
+          - id
+          - attributes
+          properties:
+            type:
+              type: string
+              description: The resource's type
+              enum:
+              - shipping_methods
+            id:
+              type: string
+              description: Unique identifier for the resource (hash).
+              example: XAyRWNUzyN
+            attributes:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: The shipping method's name.
+                  example: Standard shipping
+                  nullable: false
+                scheme:
+                  type: string
+                  description: The shipping method's scheme. One of 'flat', 'weight_tiered', or 'external'.
+                  example: flat
+                  nullable: true
+                  enum:
+                  - flat
+                  - weight_tiered
+                  - external
+                currency_code:
+                  type: string
+                  description: The international 3-letter currency code as defined by the ISO 4217 standard.
+                  example: EUR
+                  nullable: true
+                external_prices_url:
+                  type: string
+                  description: The URL used to overwrite prices by an external source.
+                  example: https://external_prices.yourbrand.com
+                  nullable: true
+                price_amount_cents:
+                  type: integer
+                  description: The price of this shipping method, in cents.
+                  example: 1000
+                  nullable: false
+                free_over_amount_cents:
+                  type: integer
+                  description: Apply free shipping if the order amount is over this value, in cents.
+                  example: 9900
+                  nullable: true
+                use_subtotal:
+                  type: boolean
+                  description: Send this attribute if you want to compare the free over amount with order's subtotal (excluding discounts, if any).
+                  example: true
+                  nullable: false
+                min_weight:
+                  type: number
+                  description: The minimum weight for which this shipping method is available.
+                  example: 3.0
+                  nullable: true
+                max_weight:
+                  type: number
+                  description: The maximum weight for which this shipping method is available.
+                  example: 300.0
+                  nullable: true
+                unit_of_weight:
+                  type: string
+                  description: The unit of weight. One of 'gr', 'oz', or 'lb'.
+                  example: gr
+                  nullable: true
+                  enum:
+                  - gr
+                  - oz
+                  - lb
+                tax_code:
+                  type: string
+                  description: The freight tax identifier code, specific for a particular tax calculator.
+                  example: FR010000
+                  nullable: true
+                _disable:
+                  type: boolean
+                  description: Send this attribute if you want to mark this resource as disabled.
+                  example: true
+                  nullable: false
+                _enable:
+                  type: boolean
+                  description: Send this attribute if you want to mark this resource as enabled.
+                  example: true
+                  nullable: false
+                _reset_circuit:
+                  type: boolean
+                  description: Send this attribute if you want to reset the circuit breaker associated to this resource to 'closed' state and zero failures count. Cannot be passed by sales channels.
+                  example: true
+                  nullable: false
+                external_includes:
+                  type: array
+                  description: List of related resources that will be included in the request to the external callback. Please do consult the documentation to check on which resource the includes are related (i.e. the order) and the defaults in case no list is provided.
+                  example:
+                  - order.line_item_options
+                  nullable: true
+                  items:
+                    type: string
+                _add_tags:
+                  type: string
+                  description: Comma separated list of tags to be added. Duplicates, invalid and non existing ones are discarded. Cannot be passed by sales channels.
+                _remove_tags:
+                  type: string
+                  description: Comma separated list of tags to be removed. Duplicates, invalid and non existing ones are discarded. Cannot be passed by sales channels.
+                reference:
+                  type: string
+                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
+                  example: ANY-EXTERNAL-REFEFERNCE
+                  nullable: true
+                reference_origin:
+                  type: string
+                  description: Any identifier of the third party system that defines the reference code.
+                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
+                  nullable: true
+                metadata:
+                  type: object
+                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
+                  example:
+                    foo: bar
+                  nullable: true
+            relationships:
+              type: object
+              properties:
+                market:
+                  required:
+                  - data
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - markets
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+                shipping_zone:
+                  required:
+                  - data
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - shipping_zones
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+                shipping_category:
+                  required:
+                  - data
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - shipping_categories
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+                stock_location:
+                  required:
+                  - data
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - stock_locations
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+                shipping_method_tiers:
+                  required:
+                  - data
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - shipping_method_tiers
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+                tags:
+                  required:
+                  - data
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - tags
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+    shippingMethod:
+      properties:
+        data:
+          properties:
+            attributes:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: The shipping method's name.
+                  example: Standard shipping
+                  nullable: false
+                scheme:
+                  type: string
+                  description: The shipping method's scheme. One of 'flat', 'weight_tiered', or 'external'.
+                  example: flat
+                  nullable: true
+                  enum:
+                  - flat
+                  - weight_tiered
+                  - external
+                currency_code:
+                  type: string
+                  description: The international 3-letter currency code as defined by the ISO 4217 standard.
+                  example: EUR
+                  nullable: true
+                external_prices_url:
+                  type: string
+                  description: The URL used to overwrite prices by an external source.
+                  example: https://external_prices.yourbrand.com
+                  nullable: true
+                price_amount_cents:
+                  type: integer
+                  description: The price of this shipping method, in cents.
+                  example: 1000
+                  nullable: false
+                price_amount_float:
+                  type: number
+                  description: The price of this shipping method, float.
+                  example: 10.0
+                  nullable: true
+                formatted_price_amount:
+                  type: string
+                  description: The price of this shipping method, formatted.
+                  example: €10,00
+                  nullable: true
+                free_over_amount_cents:
+                  type: integer
+                  description: Apply free shipping if the order amount is over this value, in cents.
+                  example: 9900
+                  nullable: true
+                free_over_amount_float:
+                  type: number
+                  description: Apply free shipping if the order amount is over this value, float.
+                  example: 99.0
+                  nullable: true
+                formatted_free_over_amount:
+                  type: string
+                  description: Apply free shipping if the order amount is over this value, formatted.
+                  example: €99,00
+                  nullable: true
+                use_subtotal:
+                  type: boolean
+                  description: Send this attribute if you want to compare the free over amount with order's subtotal (excluding discounts, if any).
+                  example: true
+                  nullable: true
+                price_amount_for_shipment_cents:
+                  type: integer
+                  description: The calculated price (zero or price amount) when associated to a shipment, in cents.
+                  example: 0
+                  nullable: true
+                price_amount_for_shipment_float:
+                  type: number
+                  description: The calculated price (zero or price amount) when associated to a shipment, float.
+                  example: 0.0
+                  nullable: true
+                formatted_price_amount_for_shipment:
+                  type: string
+                  description: The calculated price (zero or price amount) when associated to a shipment, formatted.
+                  example: €0,00
+                  nullable: true
+                min_weight:
+                  type: number
+                  description: The minimum weight for which this shipping method is available.
+                  example: 3.0
+                  nullable: true
+                max_weight:
+                  type: number
+                  description: The maximum weight for which this shipping method is available.
+                  example: 300.0
+                  nullable: true
+                unit_of_weight:
+                  type: string
+                  description: The unit of weight. One of 'gr', 'oz', or 'lb'.
+                  example: gr
+                  nullable: true
+                  enum:
+                  - gr
+                  - oz
+                  - lb
+                tax_code:
+                  type: string
+                  description: The freight tax identifier code, specific for a particular tax calculator.
+                  example: FR010000
+                  nullable: true
+                disabled_at:
+                  type: string
+                  description: Time at which this resource was disabled.
+                  example: '2018-01-01T12:00:00.000Z'
+                  nullable: true
+                circuit_state:
+                  type: string
+                  description: The circuit breaker state, by default it is 'closed'. It can become 'open' once the number of consecutive failures overlaps the specified threshold, in such case no further calls to the failing callback are made.
+                  example: closed
+                  nullable: true
+                circuit_failure_count:
+                  type: integer
+                  description: The number of consecutive failures recorded by the circuit breaker associated to this resource, will be reset on first successful call to callback.
+                  example: 5
+                  nullable: true
+                shared_secret:
+                  type: string
+                  description: The shared secret used to sign the external request payload.
+                  example: 1c0994cc4e996e8c6ee56a2198f66f3c
+                  nullable: false
+                external_includes:
+                  type: array
+                  description: List of related resources that will be included in the request to the external callback. Please do consult the documentation to check on which resource the includes are related (i.e. the order) and the defaults in case no list is provided.
+                  example:
+                  - order.line_item_options
+                  nullable: true
+                  items:
+                    type: string
+                created_at:
+                  type: string
+                  description: Time at which the resource was created.
+                  example: '2018-01-01T12:00:00.000Z'
+                  nullable: false
+                updated_at:
+                  type: string
+                  description: Time at which the resource was last updated.
+                  example: '2018-01-01T12:00:00.000Z'
+                  nullable: false
+                reference:
+                  type: string
+                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
+                  example: ANY-EXTERNAL-REFEFERNCE
+                  nullable: true
+                reference_origin:
+                  type: string
+                  description: Any identifier of the third party system that defines the reference code.
+                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
+                  nullable: true
+                metadata:
+                  type: object
+                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
+                  example:
+                    foo: bar
+                  nullable: true
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT

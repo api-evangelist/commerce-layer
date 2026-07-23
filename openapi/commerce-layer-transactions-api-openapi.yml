@@ -1,0 +1,315 @@
+openapi: 3.1.0
+info:
+  title: Commerce Layer addresses transactions API
+  version: 7.10.1
+  contact:
+    name: API Support
+    url: https://commercelayer.io
+    email: support@commercelayer.io
+  description: Headless Commerce for Global Brands.
+servers:
+- url: https://{your_organization_slug}.commercelayer.io/api
+  description: API
+- url: https://core.commercelayer.io/users/sign_in
+  description: Sign in
+- url: https://docs.commercelayer.io/api
+  description: API reference
+security:
+- bearerAuth: []
+tags:
+- name: transactions
+  description: resource type
+paths:
+  /transactions:
+    get:
+      operationId: GET/transactions
+      summary: List all transactions
+      description: List all transactions
+      tags:
+      - transactions
+      responses:
+        '200':
+          description: A list of transaction objects
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/transactionResponseList'
+  /transactions/{transactionId}:
+    get:
+      operationId: GET/transactions/transactionId
+      summary: Retrieve a transaction
+      description: Retrieve a transaction
+      tags:
+      - transactions
+      parameters:
+      - name: transactionId
+        in: path
+        schema:
+          type: string
+        required: true
+        description: The resource's id
+      responses:
+        '200':
+          description: The transaction object
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/transactionResponse'
+components:
+  schemas:
+    transactionResponse:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            id:
+              type: string
+              description: Unique identifier for the resource (hash).
+              example: XAyRWNUzyN
+            type:
+              type: string
+              description: The resource's type
+              enum:
+              - transactions
+            links:
+              type: object
+              properties:
+                self:
+                  type: string
+                  description: URL
+            attributes:
+              $ref: '#/components/schemas/transaction/properties/data/properties/attributes'
+            relationships:
+              type: object
+              properties:
+                order:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - order
+                        id:
+                          type: string
+                          description: The resource ID
+                payment_source:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - payment_source
+                        id:
+                          type: string
+                          description: The resource ID
+                attachments:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - attachments
+                        id:
+                          type: string
+                          description: The resource ID
+                events:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - events
+                        id:
+                          type: string
+                          description: The resource ID
+                event_stores:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - event_stores
+                        id:
+                          type: string
+                          description: The resource ID
+    transactionResponseList:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/transactionResponse/properties/data'
+    transaction:
+      properties:
+        data:
+          properties:
+            attributes:
+              type: object
+              properties:
+                number:
+                  type: string
+                  description: The transaction number, auto generated.
+                  example: 42/T/001
+                  nullable: false
+                type:
+                  type: string
+                  description: The transaction's type.
+                  example: authorizations
+                  nullable: false
+                  enum:
+                  - authorizations
+                  - voids
+                  - captures
+                  - refunds
+                payment_method_type:
+                  type: string
+                  description: Information about the payment method used in the transaction.
+                  example: credit card
+                  nullable: true
+                currency_code:
+                  type: string
+                  description: The international 3-letter currency code as defined by the ISO 4217 standard, inherited from the associated order.
+                  example: EUR
+                  nullable: false
+                amount_cents:
+                  type: integer
+                  description: The transaction amount, in cents.
+                  example: 1500
+                  nullable: false
+                amount_float:
+                  type: number
+                  description: The transaction amount, float.
+                  example: 15.0
+                  nullable: false
+                formatted_amount:
+                  type: string
+                  description: The transaction amount, formatted.
+                  example: €15,00
+                  nullable: false
+                succeeded:
+                  type: boolean
+                  description: Indicates if the transaction is successful.
+                  example: false
+                  nullable: false
+                message:
+                  type: string
+                  description: The message returned by the payment gateway.
+                  example: Accepted
+                  nullable: true
+                error_code:
+                  type: string
+                  description: The error code, if any, returned by the payment gateway.
+                  example: '00001'
+                  nullable: true
+                error_detail:
+                  type: string
+                  description: The error detail, if any, returned by the payment gateway.
+                  example: Already settled
+                  nullable: true
+                token:
+                  type: string
+                  description: The token identifying the transaction, returned by the payment gateway.
+                  example: xxxx-yyyy-zzzz
+                  nullable: true
+                gateway_transaction_id:
+                  type: string
+                  description: The ID identifying the transaction, returned by the payment gateway.
+                  example: xxxx-yyyy-zzzz
+                  nullable: true
+                created_at:
+                  type: string
+                  description: Time at which the resource was created.
+                  example: '2018-01-01T12:00:00.000Z'
+                  nullable: false
+                updated_at:
+                  type: string
+                  description: Time at which the resource was last updated.
+                  example: '2018-01-01T12:00:00.000Z'
+                  nullable: false
+                reference:
+                  type: string
+                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
+                  example: ANY-EXTERNAL-REFEFERNCE
+                  nullable: true
+                reference_origin:
+                  type: string
+                  description: Any identifier of the third party system that defines the reference code.
+                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
+                  nullable: true
+                metadata:
+                  type: object
+                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
+                  example:
+                    foo: bar
+                  nullable: true
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT

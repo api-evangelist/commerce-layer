@@ -1,0 +1,807 @@
+openapi: 3.1.0
+info:
+  title: Commerce Layer addresses prices API
+  version: 7.10.1
+  contact:
+    name: API Support
+    url: https://commercelayer.io
+    email: support@commercelayer.io
+  description: Headless Commerce for Global Brands.
+servers:
+- url: https://{your_organization_slug}.commercelayer.io/api
+  description: API
+- url: https://core.commercelayer.io/users/sign_in
+  description: Sign in
+- url: https://docs.commercelayer.io/api
+  description: API reference
+security:
+- bearerAuth: []
+tags:
+- name: prices
+  description: resource type
+paths:
+  /price_frequency_tiers/{priceFrequencyTierId}/price:
+    get:
+      operationId: GET/priceFrequencyTierId/price
+      summary: Retrieve the price associated to the price frequency tier
+      description: Retrieve the price associated to the price frequency tier
+      tags:
+      - prices
+      parameters:
+      - name: priceFrequencyTierId
+        in: path
+        schema:
+          type: string
+        required: true
+        description: The resource's id
+      responses:
+        '200':
+          description: The price associated to the price frequency tier
+  /price_lists/{priceListId}/prices:
+    get:
+      operationId: GET/priceListId/prices
+      summary: Retrieve the prices associated to the price list
+      description: Retrieve the prices associated to the price list
+      tags:
+      - prices
+      parameters:
+      - name: priceListId
+        in: path
+        schema:
+          type: string
+        required: true
+        description: The resource's id
+      responses:
+        '200':
+          description: The prices associated to the price list
+  /price_tiers/{priceTierId}/price:
+    get:
+      operationId: GET/priceTierId/price
+      summary: Retrieve the price associated to the price tier
+      description: Retrieve the price associated to the price tier
+      tags:
+      - prices
+      parameters:
+      - name: priceTierId
+        in: path
+        schema:
+          type: string
+        required: true
+        description: The resource's id
+      responses:
+        '200':
+          description: The price associated to the price tier
+  /price_volume_tiers/{priceVolumeTierId}/price:
+    get:
+      operationId: GET/priceVolumeTierId/price
+      summary: Retrieve the price associated to the price volume tier
+      description: Retrieve the price associated to the price volume tier
+      tags:
+      - prices
+      parameters:
+      - name: priceVolumeTierId
+        in: path
+        schema:
+          type: string
+        required: true
+        description: The resource's id
+      responses:
+        '200':
+          description: The price associated to the price volume tier
+  /prices:
+    get:
+      operationId: GET/prices
+      summary: List all prices
+      description: List all prices
+      tags:
+      - prices
+      responses:
+        '200':
+          description: A list of price objects
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/priceResponseList'
+    post:
+      operationId: POST/prices
+      summary: Create a price
+      description: Create a price
+      tags:
+      - prices
+      requestBody:
+        required: true
+        content:
+          application/vnd.api+json:
+            schema:
+              $ref: '#/components/schemas/priceCreate'
+      responses:
+        '201':
+          description: The created price object
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/priceResponse'
+  /prices/{priceId}:
+    get:
+      operationId: GET/prices/priceId
+      summary: Retrieve a price
+      description: Retrieve a price
+      tags:
+      - prices
+      parameters:
+      - name: priceId
+        in: path
+        schema:
+          type: string
+        required: true
+        description: The resource's id
+      responses:
+        '200':
+          description: The price object
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/priceResponse'
+    patch:
+      operationId: PATCH/prices/priceId
+      summary: Update a price
+      description: Update a price
+      tags:
+      - prices
+      parameters:
+      - name: priceId
+        in: path
+        schema:
+          type: string
+        required: true
+        description: The resource's id
+      requestBody:
+        required: true
+        content:
+          application/vnd.api+json:
+            schema:
+              $ref: '#/components/schemas/priceUpdate'
+      responses:
+        '200':
+          description: The updated price object
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/priceResponse'
+    delete:
+      operationId: DELETE/prices/priceId
+      summary: Delete a price
+      description: Delete a price
+      tags:
+      - prices
+      parameters:
+      - name: priceId
+        in: path
+        schema:
+          type: string
+        required: true
+        description: The resource's id
+      responses:
+        '204':
+          description: No content
+  /skus/{skuId}/prices:
+    get:
+      operationId: GET/skuId/prices
+      summary: Retrieve the prices associated to the SKU
+      description: Retrieve the prices associated to the SKU
+      tags:
+      - prices
+      parameters:
+      - name: skuId
+        in: path
+        schema:
+          type: string
+        required: true
+        description: The resource's id
+      responses:
+        '200':
+          description: The prices associated to the SKU
+components:
+  schemas:
+    priceCreate:
+      required:
+      - data
+      type: object
+      properties:
+        data:
+          type: object
+          required:
+          - type
+          - attributes
+          properties:
+            type:
+              type: string
+              description: The resource's type
+              enum:
+              - prices
+            attributes:
+              type: object
+              properties:
+                sku_code:
+                  type: string
+                  description: The code of the associated SKU. When creating a price, either a valid sku_code or a SKU relationship must be present.
+                  example: TSHIRTMM000000FFFFFFXLXX
+                amount_cents:
+                  type: integer
+                  description: The SKU price amount for the associated price list, in cents.
+                  example: 10000
+                compare_at_amount_cents:
+                  type: integer
+                  description: The compared price amount, in cents. Useful to display a percentage discount.
+                  example: 13000
+                reference:
+                  type: string
+                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
+                  example: ANY-EXTERNAL-REFEFERNCE
+                reference_origin:
+                  type: string
+                  description: Any identifier of the third party system that defines the reference code.
+                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
+                rules:
+                  type: object
+                  description: The rules (using Rules Engine) to be applied.
+                  example: {}
+                metadata:
+                  type: object
+                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
+                  example:
+                    foo: bar
+              required:
+              - amount_cents
+            relationships:
+              type: object
+              properties:
+                price_list:
+                  required:
+                  - data
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - price_lists
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+                sku:
+                  required:
+                  - data
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - skus
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+                price_tiers:
+                  required:
+                  - data
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - price_tiers
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+              required:
+              - price_list
+              - sku
+    priceResponse:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            id:
+              type: string
+              description: Unique identifier for the resource (hash).
+              example: XAyRWNUzyN
+            type:
+              type: string
+              description: The resource's type
+              enum:
+              - prices
+            links:
+              type: object
+              properties:
+                self:
+                  type: string
+                  description: URL
+            attributes:
+              $ref: '#/components/schemas/price/properties/data/properties/attributes'
+            relationships:
+              type: object
+              properties:
+                price_list:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - price_list
+                        id:
+                          type: string
+                          description: The resource ID
+                sku:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - sku
+                        id:
+                          type: string
+                          description: The resource ID
+                price_tiers:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - price_tiers
+                        id:
+                          type: string
+                          description: The resource ID
+                price_volume_tiers:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - price_volume_tiers
+                        id:
+                          type: string
+                          description: The resource ID
+                price_frequency_tiers:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - price_frequency_tiers
+                        id:
+                          type: string
+                          description: The resource ID
+                attachments:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - attachments
+                        id:
+                          type: string
+                          description: The resource ID
+                jwt_customer:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - jwt_customer
+                        id:
+                          type: string
+                          description: The resource ID
+                jwt_markets:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - jwt_markets
+                        id:
+                          type: string
+                          description: The resource ID
+                jwt_stock_locations:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - jwt_stock_locations
+                        id:
+                          type: string
+                          description: The resource ID
+                event_stores:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - event_stores
+                        id:
+                          type: string
+                          description: The resource ID
+    price:
+      properties:
+        data:
+          properties:
+            attributes:
+              type: object
+              properties:
+                currency_code:
+                  type: string
+                  description: The international 3-letter currency code as defined by the ISO 4217 standard, inherited from the associated price list.
+                  example: EUR
+                  nullable: true
+                sku_code:
+                  type: string
+                  description: The code of the associated SKU. When creating a price, either a valid sku_code or a SKU relationship must be present.
+                  example: TSHIRTMM000000FFFFFFXLXX
+                  nullable: true
+                amount_cents:
+                  type: integer
+                  description: The SKU price amount for the associated price list, in cents.
+                  example: 10000
+                  nullable: false
+                amount_float:
+                  type: number
+                  description: The SKU price amount for the associated price list, float.
+                  example: 100.0
+                  nullable: true
+                formatted_amount:
+                  type: string
+                  description: The SKU price amount for the associated price list, formatted.
+                  example: €100,00
+                  nullable: true
+                original_amount_cents:
+                  type: integer
+                  description: The SKU price amount for the associated price list, in cents before any applied rule.
+                  example: 10000
+                  nullable: true
+                formatted_original_amount:
+                  type: string
+                  description: The SKU price amount for the associated price list, in cents before any applied rule, formatted.
+                  example: €100,00
+                  nullable: true
+                compare_at_amount_cents:
+                  type: integer
+                  description: The compared price amount, in cents. Useful to display a percentage discount.
+                  example: 13000
+                  nullable: true
+                compare_at_amount_float:
+                  type: number
+                  description: The compared price amount, float.
+                  example: 130.0
+                  nullable: true
+                formatted_compare_at_amount:
+                  type: string
+                  description: The compared price amount, formatted.
+                  example: €130,00
+                  nullable: true
+                rule_outcomes:
+                  type: object
+                  description: The rule outcomes.
+                  example: []
+                  nullable: true
+                processed_at:
+                  type: string
+                  description: Time at which the resource was processed by API.
+                  example: '2018-01-01T12:00:00.000Z'
+                  nullable: true
+                created_at:
+                  type: string
+                  description: Time at which the resource was created.
+                  example: '2018-01-01T12:00:00.000Z'
+                  nullable: false
+                updated_at:
+                  type: string
+                  description: Time at which the resource was last updated.
+                  example: '2018-01-01T12:00:00.000Z'
+                  nullable: false
+                reference:
+                  type: string
+                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
+                  example: ANY-EXTERNAL-REFEFERNCE
+                  nullable: true
+                reference_origin:
+                  type: string
+                  description: Any identifier of the third party system that defines the reference code.
+                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
+                  nullable: true
+                rules:
+                  type: object
+                  description: The rules (using Rules Engine) to be applied.
+                  example: {}
+                  nullable: true
+                resource_payload:
+                  type: object
+                  description: The payload used to evaluate the rules.
+                  example: {}
+                  nullable: true
+                jwt_custom_claim:
+                  type: object
+                  description: The custom_claim attached to the current JWT (if any).
+                  example: {}
+                  nullable: true
+                metadata:
+                  type: object
+                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
+                  example:
+                    foo: bar
+                  nullable: true
+    priceResponseList:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/priceResponse/properties/data'
+    priceUpdate:
+      required:
+      - data
+      type: object
+      properties:
+        data:
+          type: object
+          required:
+          - type
+          - id
+          - attributes
+          properties:
+            type:
+              type: string
+              description: The resource's type
+              enum:
+              - prices
+            id:
+              type: string
+              description: Unique identifier for the resource (hash).
+              example: XAyRWNUzyN
+            attributes:
+              type: object
+              properties:
+                sku_code:
+                  type: string
+                  description: The code of the associated SKU. When creating a price, either a valid sku_code or a SKU relationship must be present.
+                  example: TSHIRTMM000000FFFFFFXLXX
+                  nullable: true
+                amount_cents:
+                  type: integer
+                  description: The SKU price amount for the associated price list, in cents.
+                  example: 10000
+                  nullable: false
+                compare_at_amount_cents:
+                  type: integer
+                  description: The compared price amount, in cents. Useful to display a percentage discount.
+                  example: 13000
+                  nullable: true
+                processed_at:
+                  type: string
+                  description: Time at which the resource was processed by API.
+                  example: '2018-01-01T12:00:00.000Z'
+                  nullable: true
+                reference:
+                  type: string
+                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
+                  example: ANY-EXTERNAL-REFEFERNCE
+                  nullable: true
+                reference_origin:
+                  type: string
+                  description: Any identifier of the third party system that defines the reference code.
+                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
+                  nullable: true
+                rules:
+                  type: object
+                  description: The rules (using Rules Engine) to be applied.
+                  example: {}
+                  nullable: true
+                metadata:
+                  type: object
+                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
+                  example:
+                    foo: bar
+                  nullable: true
+            relationships:
+              type: object
+              properties:
+                price_list:
+                  required:
+                  - data
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - price_lists
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+                sku:
+                  required:
+                  - data
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - skus
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+                price_tiers:
+                  required:
+                  - data
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - price_tiers
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
