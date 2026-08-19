@@ -1,0 +1,111 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Commerce Layer addresses discount_engine_items API",
+    "version": "7.10.1"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "discount_engine_items",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List all discount engine items",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{your_organization_slug}.commercelayer.io/api/discount_engine_items"
+          },
+          "docs": "List all discount engine items"
+        },
+        {
+          "info": {
+            "name": "Retrieve a discount engine item",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{your_organization_slug}.commercelayer.io/api/discount_engine_items/:discountEngineItemId",
+            "params": [
+              {
+                "name": "discountEngineItemId",
+                "value": "",
+                "type": "path",
+                "description": "The resource's id"
+              }
+            ]
+          },
+          "docs": "Retrieve a discount engine item"
+        },
+        {
+          "info": {
+            "name": "Retrieve the discount engine items associated to the discount engine",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{your_organization_slug}.commercelayer.io/api/discount_engines/:discountEngineId/discount_engine_items",
+            "params": [
+              {
+                "name": "discountEngineId",
+                "value": "",
+                "type": "path",
+                "description": "The resource's id"
+              }
+            ]
+          },
+          "docs": "Retrieve the discount engine items associated to the discount engine"
+        },
+        {
+          "info": {
+            "name": "Retrieve the discount engine item associated to the order",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{your_organization_slug}.commercelayer.io/api/orders/:orderId/discount_engine_item",
+            "params": [
+              {
+                "name": "orderId",
+                "value": "",
+                "type": "path",
+                "description": "The resource's id"
+              }
+            ]
+          },
+          "docs": "Retrieve the discount engine item associated to the order"
+        },
+        {
+          "info": {
+            "name": "Retrieve the discount engine items associated to the talon one account",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{your_organization_slug}.commercelayer.io/api/talon_one_accounts/:talonOneAccountId/discount_engine_items",
+            "params": [
+              {
+                "name": "talonOneAccountId",
+                "value": "",
+                "type": "path",
+                "description": "The resource's id"
+              }
+            ]
+          },
+          "docs": "Retrieve the discount engine items associated to the talon one account"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

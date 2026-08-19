@@ -1,0 +1,142 @@
+{
+  "item": [
+    {
+      "id": "d0dbafcf-b920-44f2-bc36-a099adaf57fc",
+      "name": "analysis",
+      "description": {
+        "content": "Operations with analysis resource",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "241d9baa-0c88-4bf3-b886-4c78f9493107",
+          "name": "Query fbt on analysis",
+          "request": {
+            "name": "Query fbt on analysis",
+            "description": {
+              "content": "Get fbt results from analysis",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "analysis",
+                "fbt"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/vnd.api+json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/vnd.api+json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"filter\": {\n    \"line_items\": {\n      \"item_ids\": {\n        \"in\": [\n          \"<string>\"\n        ]\n      }\n    }\n  },\n  \"fbt\": {},\n  \"meta\": {\n    \"payload\": \"<boolean>\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "5df2a3e8-3d23-4497-ba62-f93a46c98a73",
+              "name": "The fbt result from analysis",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "analysis",
+                    "fbt"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/vnd.api+json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"filter\": {\n    \"line_items\": {\n      \"item_ids\": {\n        \"in\": [\n          \"string\"\n        ]\n      }\n    }\n  },\n  \"fbt\": {},\n  \"meta\": {\n    \"payload\": \"<boolean>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/vnd.api+json"
+                }
+              ],
+              "body": "{\n  \"data\": {\n    \"item_id\": \"string\",\n    \"value\": 8,\n    \"type\": \"string\",\n    \"name\": \"string\"\n  },\n  \"meta\": {\n    \"type\": \"string\",\n    \"trace_id\": \"string\",\n    \"mode\": \"string\",\n    \"organization_id\": \"string\",\n    \"market_ids\": [\n      \"string\",\n      \"string\"\n    ],\n    \"payload\": {\n      \"filter\": {\n        \"line_items\": {\n          \"item_ids\": {\n            \"in\": [\n              \"string\"\n            ]\n          }\n        }\n      },\n      \"fbt\": {}\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://{{your_organization_slug}}.commercelayer.io/api",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "968204cf-d391-496b-91e5-871c76e2a17f",
+    "name": "Commerce Layer addresses analysis API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Headless Commerce for Global Brands.\n\nContact Support:\n Name: API Support\n Email: support@commercelayer.io",
+      "type": "text/plain"
+    }
+  }
+}

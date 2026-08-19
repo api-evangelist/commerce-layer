@@ -1,0 +1,130 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Commerce Layer addresses customer_addresses API",
+    "version": "7.10.1"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "customer_addresses",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List all customer addresses",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{your_organization_slug}.commercelayer.io/api/customer_addresses"
+          },
+          "docs": "List all customer addresses"
+        },
+        {
+          "info": {
+            "name": "Create a customer address",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{your_organization_slug}.commercelayer.io/api/customer_addresses",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a customer address"
+        },
+        {
+          "info": {
+            "name": "Retrieve a customer address",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{your_organization_slug}.commercelayer.io/api/customer_addresses/:customerAddressId",
+            "params": [
+              {
+                "name": "customerAddressId",
+                "value": "",
+                "type": "path",
+                "description": "The resource's id"
+              }
+            ]
+          },
+          "docs": "Retrieve a customer address"
+        },
+        {
+          "info": {
+            "name": "Update a customer address",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://{your_organization_slug}.commercelayer.io/api/customer_addresses/:customerAddressId",
+            "params": [
+              {
+                "name": "customerAddressId",
+                "value": "",
+                "type": "path",
+                "description": "The resource's id"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update a customer address"
+        },
+        {
+          "info": {
+            "name": "Delete a customer address",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://{your_organization_slug}.commercelayer.io/api/customer_addresses/:customerAddressId",
+            "params": [
+              {
+                "name": "customerAddressId",
+                "value": "",
+                "type": "path",
+                "description": "The resource's id"
+              }
+            ]
+          },
+          "docs": "Delete a customer address"
+        },
+        {
+          "info": {
+            "name": "Retrieve the customer addresses associated to the customer",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{your_organization_slug}.commercelayer.io/api/customers/:customerId/customer_addresses",
+            "params": [
+              {
+                "name": "customerId",
+                "value": "",
+                "type": "path",
+                "description": "The resource's id"
+              }
+            ]
+          },
+          "docs": "Retrieve the customer addresses associated to the customer"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

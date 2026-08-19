@@ -1,0 +1,693 @@
+{
+  "item": [
+    {
+      "id": "b3e9997c-22bd-4c99-b029-020fc17b7e05",
+      "name": "sku_options",
+      "description": {
+        "content": "resource type",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "d8f73484-36b8-460c-a58a-6ea3e33f4c0b",
+          "name": "Retrieve the sku option associated to the line item option",
+          "request": {
+            "name": "Retrieve the sku option associated to the line item option",
+            "description": {
+              "content": "Retrieve the sku option associated to the line item option",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "line_item_options",
+                ":lineItemOptionId",
+                "sku_option"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "lineItemOptionId",
+                  "description": "(Required) The resource's id"
+                }
+              ]
+            },
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "37253664-b841-4975-864f-c030ed068acd",
+              "name": "The sku_option associated to the line item option",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "line_item_options",
+                    ":lineItemOptionId",
+                    "sku_option"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "lineItemOptionId",
+                      "description": "(Required) The resource's id"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "7c7eebde-5d89-4505-a979-1b3900819273",
+          "name": "List all SKU options",
+          "request": {
+            "name": "List all SKU options",
+            "description": {
+              "content": "List all SKU options",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "sku_options"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/vnd.api+json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "635921c1-cd70-458a-9741-b7d1cd6fa14c",
+              "name": "A list of SKU option objects",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "sku_options"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/vnd.api+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/vnd.api+json"
+                }
+              ],
+              "body": "{\n  \"data\": [\n    {\n      \"id\": \"XAyRWNUzyN\",\n      \"type\": \"sku_options\",\n      \"links\": {\n        \"self\": \"string\"\n      },\n      \"attributes\": {\n        \"name\": \"Embossing\",\n        \"currency_code\": \"EUR\",\n        \"description\": \"Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.\",\n        \"price_amount_cents\": 1000,\n        \"price_amount_float\": 10,\n        \"formatted_price_amount\": \"€10,00\",\n        \"delay_hours\": 48,\n        \"delay_days\": 2,\n        \"sku_code_regex\": \"^(A|B).*$\",\n        \"created_at\": \"2018-01-01T12:00:00.000Z\",\n        \"updated_at\": \"2018-01-01T12:00:00.000Z\",\n        \"reference\": \"ANY-EXTERNAL-REFEFERNCE\",\n        \"reference_origin\": \"ANY-EXTERNAL-REFEFERNCE-ORIGIN\",\n        \"metadata\": {\n          \"foo\": \"bar\"\n        }\n      },\n      \"relationships\": {\n        \"market\": {\n          \"links\": {\n            \"self\": \"string\",\n            \"related\": \"string\"\n          },\n          \"data\": {\n            \"type\": \"market\",\n            \"id\": \"string\"\n          }\n        },\n        \"attachments\": {\n          \"links\": {\n            \"self\": \"string\",\n            \"related\": \"string\"\n          },\n          \"data\": {\n            \"type\": \"attachments\",\n            \"id\": \"string\"\n          }\n        },\n        \"events\": {\n          \"links\": {\n            \"self\": \"string\",\n            \"related\": \"string\"\n          },\n          \"data\": {\n            \"type\": \"events\",\n            \"id\": \"string\"\n          }\n        },\n        \"tags\": {\n          \"links\": {\n            \"self\": \"string\",\n            \"related\": \"string\"\n          },\n          \"data\": {\n            \"type\": \"tags\",\n            \"id\": \"string\"\n          }\n        },\n        \"event_stores\": {\n          \"links\": {\n            \"self\": \"string\",\n            \"related\": \"string\"\n          },\n          \"data\": {\n            \"type\": \"event_stores\",\n            \"id\": \"string\"\n          }\n        }\n      }\n    },\n    {\n      \"id\": \"XAyRWNUzyN\",\n      \"type\": \"sku_options\",\n      \"links\": {\n        \"self\": \"string\"\n      },\n      \"attributes\": {\n        \"name\": \"Embossing\",\n        \"currency_code\": \"EUR\",\n        \"description\": \"Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.\",\n        \"price_amount_cents\": 1000,\n        \"price_amount_float\": 10,\n        \"formatted_price_amount\": \"€10,00\",\n        \"delay_hours\": 48,\n        \"delay_days\": 2,\n        \"sku_code_regex\": \"^(A|B).*$\",\n        \"created_at\": \"2018-01-01T12:00:00.000Z\",\n        \"updated_at\": \"2018-01-01T12:00:00.000Z\",\n        \"reference\": \"ANY-EXTERNAL-REFEFERNCE\",\n        \"reference_origin\": \"ANY-EXTERNAL-REFEFERNCE-ORIGIN\",\n        \"metadata\": {\n          \"foo\": \"bar\"\n        }\n      },\n      \"relationships\": {\n        \"market\": {\n          \"links\": {\n            \"self\": \"string\",\n            \"related\": \"string\"\n          },\n          \"data\": {\n            \"type\": \"market\",\n            \"id\": \"string\"\n          }\n        },\n        \"attachments\": {\n          \"links\": {\n            \"self\": \"string\",\n            \"related\": \"string\"\n          },\n          \"data\": {\n            \"type\": \"attachments\",\n            \"id\": \"string\"\n          }\n        },\n        \"events\": {\n          \"links\": {\n            \"self\": \"string\",\n            \"related\": \"string\"\n          },\n          \"data\": {\n            \"type\": \"events\",\n            \"id\": \"string\"\n          }\n        },\n        \"tags\": {\n          \"links\": {\n            \"self\": \"string\",\n            \"related\": \"string\"\n          },\n          \"data\": {\n            \"type\": \"tags\",\n            \"id\": \"string\"\n          }\n        },\n        \"event_stores\": {\n          \"links\": {\n            \"self\": \"string\",\n            \"related\": \"string\"\n          },\n          \"data\": {\n            \"type\": \"event_stores\",\n            \"id\": \"string\"\n          }\n        }\n      }\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "62c6f1b7-5407-46d9-9232-ce6aa905e0a4",
+          "name": "Create a SKU option",
+          "request": {
+            "name": "Create a SKU option",
+            "description": {
+              "content": "Create a SKU option",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "sku_options"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/vnd.api+json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/vnd.api+json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"data\": {\n    \"type\": \"<string>\",\n    \"attributes\": {\n      \"name\": \"<string>\",\n      \"currency_code\": \"<string>\",\n      \"description\": \"<string>\",\n      \"price_amount_cents\": \"<integer>\",\n      \"delay_hours\": \"<integer>\",\n      \"sku_code_regex\": \"<string>\",\n      \"reference\": \"<string>\",\n      \"reference_origin\": \"<string>\",\n      \"metadata\": \"<object>\"\n    },\n    \"relationships\": {\n      \"market\": {\n        \"data\": {\n          \"type\": \"<string>\",\n          \"id\": \"<string>\"\n        }\n      },\n      \"tags\": {\n        \"data\": {\n          \"type\": \"<string>\",\n          \"id\": \"<string>\"\n        }\n      }\n    }\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "a86f1973-c507-4cb1-8d82-89660abba758",
+              "name": "The created SKU option object",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "sku_options"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/vnd.api+json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"data\": {\n    \"type\": \"<string>\",\n    \"attributes\": {\n      \"name\": \"Embossing\",\n      \"currency_code\": \"EUR\",\n      \"description\": \"Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.\",\n      \"price_amount_cents\": 1000,\n      \"delay_hours\": 48,\n      \"sku_code_regex\": \"^(A|B).*$\",\n      \"reference\": \"ANY-EXTERNAL-REFEFERNCE\",\n      \"reference_origin\": \"ANY-EXTERNAL-REFEFERNCE-ORIGIN\",\n      \"metadata\": {\n        \"foo\": \"bar\"\n      }\n    },\n    \"relationships\": {\n      \"market\": {\n        \"data\": {\n          \"type\": \"<string>\",\n          \"id\": \"XAyRWNUzyN\"\n        }\n      },\n      \"tags\": {\n        \"data\": {\n          \"type\": \"<string>\",\n          \"id\": \"XAyRWNUzyN\"\n        }\n      }\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/vnd.api+json"
+                }
+              ],
+              "body": "{\n  \"data\": {\n    \"id\": \"XAyRWNUzyN\",\n    \"type\": \"sku_options\",\n    \"links\": {\n      \"self\": \"string\"\n    },\n    \"attributes\": {\n      \"name\": \"Embossing\",\n      \"currency_code\": \"EUR\",\n      \"description\": \"Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.\",\n      \"price_amount_cents\": 1000,\n      \"price_amount_float\": 10,\n      \"formatted_price_amount\": \"€10,00\",\n      \"delay_hours\": 48,\n      \"delay_days\": 2,\n      \"sku_code_regex\": \"^(A|B).*$\",\n      \"created_at\": \"2018-01-01T12:00:00.000Z\",\n      \"updated_at\": \"2018-01-01T12:00:00.000Z\",\n      \"reference\": \"ANY-EXTERNAL-REFEFERNCE\",\n      \"reference_origin\": \"ANY-EXTERNAL-REFEFERNCE-ORIGIN\",\n      \"metadata\": {\n        \"foo\": \"bar\"\n      }\n    },\n    \"relationships\": {\n      \"market\": {\n        \"links\": {\n          \"self\": \"string\",\n          \"related\": \"string\"\n        },\n        \"data\": {\n          \"type\": \"market\",\n          \"id\": \"string\"\n        }\n      },\n      \"attachments\": {\n        \"links\": {\n          \"self\": \"string\",\n          \"related\": \"string\"\n        },\n        \"data\": {\n          \"type\": \"attachments\",\n          \"id\": \"string\"\n        }\n      },\n      \"events\": {\n        \"links\": {\n          \"self\": \"string\",\n          \"related\": \"string\"\n        },\n        \"data\": {\n          \"type\": \"events\",\n          \"id\": \"string\"\n        }\n      },\n      \"tags\": {\n        \"links\": {\n          \"self\": \"string\",\n          \"related\": \"string\"\n        },\n        \"data\": {\n          \"type\": \"tags\",\n          \"id\": \"string\"\n        }\n      },\n      \"event_stores\": {\n        \"links\": {\n          \"self\": \"string\",\n          \"related\": \"string\"\n        },\n        \"data\": {\n          \"type\": \"event_stores\",\n          \"id\": \"string\"\n        }\n      }\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "d774abc3-d4c2-4d13-9e08-92cdc1cc0ca8",
+          "name": "Retrieve a SKU option",
+          "request": {
+            "name": "Retrieve a SKU option",
+            "description": {
+              "content": "Retrieve a SKU option",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "sku_options",
+                ":skuOptionId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "skuOptionId",
+                  "description": "(Required) The resource's id"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/vnd.api+json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "cc147f15-68da-48cb-b58e-266a8413e1ca",
+              "name": "The SKU option object",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "sku_options",
+                    ":skuOptionId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "skuOptionId",
+                      "description": "(Required) The resource's id"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/vnd.api+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/vnd.api+json"
+                }
+              ],
+              "body": "{\n  \"data\": {\n    \"id\": \"XAyRWNUzyN\",\n    \"type\": \"sku_options\",\n    \"links\": {\n      \"self\": \"string\"\n    },\n    \"attributes\": {\n      \"name\": \"Embossing\",\n      \"currency_code\": \"EUR\",\n      \"description\": \"Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.\",\n      \"price_amount_cents\": 1000,\n      \"price_amount_float\": 10,\n      \"formatted_price_amount\": \"€10,00\",\n      \"delay_hours\": 48,\n      \"delay_days\": 2,\n      \"sku_code_regex\": \"^(A|B).*$\",\n      \"created_at\": \"2018-01-01T12:00:00.000Z\",\n      \"updated_at\": \"2018-01-01T12:00:00.000Z\",\n      \"reference\": \"ANY-EXTERNAL-REFEFERNCE\",\n      \"reference_origin\": \"ANY-EXTERNAL-REFEFERNCE-ORIGIN\",\n      \"metadata\": {\n        \"foo\": \"bar\"\n      }\n    },\n    \"relationships\": {\n      \"market\": {\n        \"links\": {\n          \"self\": \"string\",\n          \"related\": \"string\"\n        },\n        \"data\": {\n          \"type\": \"market\",\n          \"id\": \"string\"\n        }\n      },\n      \"attachments\": {\n        \"links\": {\n          \"self\": \"string\",\n          \"related\": \"string\"\n        },\n        \"data\": {\n          \"type\": \"attachments\",\n          \"id\": \"string\"\n        }\n      },\n      \"events\": {\n        \"links\": {\n          \"self\": \"string\",\n          \"related\": \"string\"\n        },\n        \"data\": {\n          \"type\": \"events\",\n          \"id\": \"string\"\n        }\n      },\n      \"tags\": {\n        \"links\": {\n          \"self\": \"string\",\n          \"related\": \"string\"\n        },\n        \"data\": {\n          \"type\": \"tags\",\n          \"id\": \"string\"\n        }\n      },\n      \"event_stores\": {\n        \"links\": {\n          \"self\": \"string\",\n          \"related\": \"string\"\n        },\n        \"data\": {\n          \"type\": \"event_stores\",\n          \"id\": \"string\"\n        }\n      }\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "089cd775-3f59-4fa2-ab63-4ff6217b95da",
+          "name": "Update a SKU option",
+          "request": {
+            "name": "Update a SKU option",
+            "description": {
+              "content": "Update a SKU option",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "sku_options",
+                ":skuOptionId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "skuOptionId",
+                  "description": "(Required) The resource's id"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/vnd.api+json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/vnd.api+json"
+              }
+            ],
+            "method": "PATCH",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"data\": {\n    \"type\": \"<string>\",\n    \"id\": \"<string>\",\n    \"attributes\": {\n      \"name\": \"<string>\",\n      \"currency_code\": \"<string>\",\n      \"description\": \"<string>\",\n      \"price_amount_cents\": \"<integer>\",\n      \"delay_hours\": \"<integer>\",\n      \"sku_code_regex\": \"<string>\",\n      \"_add_tags\": \"<string>\",\n      \"_remove_tags\": \"<string>\",\n      \"reference\": \"<string>\",\n      \"reference_origin\": \"<string>\",\n      \"metadata\": \"<object>\"\n    },\n    \"relationships\": {\n      \"market\": {\n        \"data\": {\n          \"type\": \"<string>\",\n          \"id\": \"<string>\"\n        }\n      },\n      \"tags\": {\n        \"data\": {\n          \"type\": \"<string>\",\n          \"id\": \"<string>\"\n        }\n      }\n    }\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "fa3336ad-eebd-4fbf-ae75-12934c141872",
+              "name": "The updated SKU option object",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "sku_options",
+                    ":skuOptionId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "skuOptionId",
+                      "description": "(Required) The resource's id"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/vnd.api+json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"data\": {\n    \"type\": \"<string>\",\n    \"id\": \"XAyRWNUzyN\",\n    \"attributes\": {\n      \"name\": \"Embossing\",\n      \"currency_code\": \"EUR\",\n      \"description\": \"Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.\",\n      \"price_amount_cents\": 1000,\n      \"delay_hours\": 48,\n      \"sku_code_regex\": \"^(A|B).*$\",\n      \"_add_tags\": \"<string>\",\n      \"_remove_tags\": \"<string>\",\n      \"reference\": \"ANY-EXTERNAL-REFEFERNCE\",\n      \"reference_origin\": \"ANY-EXTERNAL-REFEFERNCE-ORIGIN\",\n      \"metadata\": {\n        \"foo\": \"bar\"\n      }\n    },\n    \"relationships\": {\n      \"market\": {\n        \"data\": {\n          \"type\": \"<string>\",\n          \"id\": \"XAyRWNUzyN\"\n        }\n      },\n      \"tags\": {\n        \"data\": {\n          \"type\": \"<string>\",\n          \"id\": \"XAyRWNUzyN\"\n        }\n      }\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/vnd.api+json"
+                }
+              ],
+              "body": "{\n  \"data\": {\n    \"id\": \"XAyRWNUzyN\",\n    \"type\": \"sku_options\",\n    \"links\": {\n      \"self\": \"string\"\n    },\n    \"attributes\": {\n      \"name\": \"Embossing\",\n      \"currency_code\": \"EUR\",\n      \"description\": \"Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.\",\n      \"price_amount_cents\": 1000,\n      \"price_amount_float\": 10,\n      \"formatted_price_amount\": \"€10,00\",\n      \"delay_hours\": 48,\n      \"delay_days\": 2,\n      \"sku_code_regex\": \"^(A|B).*$\",\n      \"created_at\": \"2018-01-01T12:00:00.000Z\",\n      \"updated_at\": \"2018-01-01T12:00:00.000Z\",\n      \"reference\": \"ANY-EXTERNAL-REFEFERNCE\",\n      \"reference_origin\": \"ANY-EXTERNAL-REFEFERNCE-ORIGIN\",\n      \"metadata\": {\n        \"foo\": \"bar\"\n      }\n    },\n    \"relationships\": {\n      \"market\": {\n        \"links\": {\n          \"self\": \"string\",\n          \"related\": \"string\"\n        },\n        \"data\": {\n          \"type\": \"market\",\n          \"id\": \"string\"\n        }\n      },\n      \"attachments\": {\n        \"links\": {\n          \"self\": \"string\",\n          \"related\": \"string\"\n        },\n        \"data\": {\n          \"type\": \"attachments\",\n          \"id\": \"string\"\n        }\n      },\n      \"events\": {\n        \"links\": {\n          \"self\": \"string\",\n          \"related\": \"string\"\n        },\n        \"data\": {\n          \"type\": \"events\",\n          \"id\": \"string\"\n        }\n      },\n      \"tags\": {\n        \"links\": {\n          \"self\": \"string\",\n          \"related\": \"string\"\n        },\n        \"data\": {\n          \"type\": \"tags\",\n          \"id\": \"string\"\n        }\n      },\n      \"event_stores\": {\n        \"links\": {\n          \"self\": \"string\",\n          \"related\": \"string\"\n        },\n        \"data\": {\n          \"type\": \"event_stores\",\n          \"id\": \"string\"\n        }\n      }\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "5d7ac067-9f0c-452f-8574-4f7493f6e7c5",
+          "name": "Delete a SKU option",
+          "request": {
+            "name": "Delete a SKU option",
+            "description": {
+              "content": "Delete a SKU option",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "sku_options",
+                ":skuOptionId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "skuOptionId",
+                  "description": "(Required) The resource's id"
+                }
+              ]
+            },
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "61180792-0353-4aa7-9de8-e34def0f471e",
+              "name": "No content",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "sku_options",
+                    ":skuOptionId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "skuOptionId",
+                      "description": "(Required) The resource's id"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "4754a799-188c-4e28-a83f-428dbb5cc3ee",
+          "name": "Retrieve the sku options associated to the SKU",
+          "request": {
+            "name": "Retrieve the sku options associated to the SKU",
+            "description": {
+              "content": "Retrieve the sku options associated to the SKU",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "skus",
+                ":skuId",
+                "sku_options"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "skuId",
+                  "description": "(Required) The resource's id"
+                }
+              ]
+            },
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "daa5db54-779d-42a6-8998-89307c146043",
+              "name": "The sku_options associated to the SKU",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "skus",
+                    ":skuId",
+                    "sku_options"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "skuId",
+                      "description": "(Required) The resource's id"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://{{your_organization_slug}}.commercelayer.io/api",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "bb8d41e7-a8c5-4c17-a664-061727615470",
+    "name": "Commerce Layer addresses sku_options API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Headless Commerce for Global Brands.\n\nContact Support:\n Name: API Support\n Email: support@commercelayer.io",
+      "type": "text/plain"
+    }
+  }
+}

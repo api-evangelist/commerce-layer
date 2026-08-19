@@ -1,0 +1,517 @@
+{
+  "item": [
+    {
+      "id": "e86cbaf0-5dd0-4f6c-a801-f6df950f568d",
+      "name": "wire_transfers",
+      "description": {
+        "content": "resource type",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "c4cb7b8f-b2a9-435c-837c-38163aeaea1d",
+          "name": "List all wire transfers",
+          "request": {
+            "name": "List all wire transfers",
+            "description": {
+              "content": "List all wire transfers",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "wire_transfers"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/vnd.api+json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "57b965c6-bd46-4548-aa35-16cd86cd6d1e",
+              "name": "A list of wire transfer objects",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "wire_transfers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/vnd.api+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/vnd.api+json"
+                }
+              ],
+              "body": "{\n  \"data\": [\n    {\n      \"id\": \"XAyRWNUzyN\",\n      \"type\": \"wire_transfers\",\n      \"links\": {\n        \"self\": \"string\"\n      },\n      \"attributes\": {\n        \"payment_instrument\": {\n          \"issuer\": \"cl bank\",\n          \"card_type\": \"visa\"\n        },\n        \"created_at\": \"2018-01-01T12:00:00.000Z\",\n        \"updated_at\": \"2018-01-01T12:00:00.000Z\",\n        \"reference\": \"ANY-EXTERNAL-REFEFERNCE\",\n        \"reference_origin\": \"ANY-EXTERNAL-REFEFERNCE-ORIGIN\",\n        \"metadata\": {\n          \"foo\": \"bar\"\n        }\n      },\n      \"relationships\": {\n        \"order\": {\n          \"links\": {\n            \"self\": \"string\",\n            \"related\": \"string\"\n          },\n          \"data\": {\n            \"type\": \"order\",\n            \"id\": \"string\"\n          }\n        },\n        \"event_stores\": {\n          \"links\": {\n            \"self\": \"string\",\n            \"related\": \"string\"\n          },\n          \"data\": {\n            \"type\": \"event_stores\",\n            \"id\": \"string\"\n          }\n        }\n      }\n    },\n    {\n      \"id\": \"XAyRWNUzyN\",\n      \"type\": \"wire_transfers\",\n      \"links\": {\n        \"self\": \"string\"\n      },\n      \"attributes\": {\n        \"payment_instrument\": {\n          \"issuer\": \"cl bank\",\n          \"card_type\": \"visa\"\n        },\n        \"created_at\": \"2018-01-01T12:00:00.000Z\",\n        \"updated_at\": \"2018-01-01T12:00:00.000Z\",\n        \"reference\": \"ANY-EXTERNAL-REFEFERNCE\",\n        \"reference_origin\": \"ANY-EXTERNAL-REFEFERNCE-ORIGIN\",\n        \"metadata\": {\n          \"foo\": \"bar\"\n        }\n      },\n      \"relationships\": {\n        \"order\": {\n          \"links\": {\n            \"self\": \"string\",\n            \"related\": \"string\"\n          },\n          \"data\": {\n            \"type\": \"order\",\n            \"id\": \"string\"\n          }\n        },\n        \"event_stores\": {\n          \"links\": {\n            \"self\": \"string\",\n            \"related\": \"string\"\n          },\n          \"data\": {\n            \"type\": \"event_stores\",\n            \"id\": \"string\"\n          }\n        }\n      }\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "1145bc80-77ce-4905-9846-fd849842f80a",
+          "name": "Create a wire transfer",
+          "request": {
+            "name": "Create a wire transfer",
+            "description": {
+              "content": "Create a wire transfer",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "wire_transfers"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/vnd.api+json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/vnd.api+json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"data\": {\n    \"type\": \"<string>\",\n    \"attributes\": {\n      \"reference\": \"<string>\",\n      \"reference_origin\": \"<string>\",\n      \"metadata\": \"<object>\"\n    },\n    \"relationships\": {\n      \"order\": {\n        \"data\": {\n          \"type\": \"<string>\",\n          \"id\": \"<string>\"\n        }\n      }\n    }\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "35cabeb7-1ec7-434d-b557-df16051bfce4",
+              "name": "The created wire transfer object",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "wire_transfers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/vnd.api+json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"data\": {\n    \"type\": \"<string>\",\n    \"attributes\": {\n      \"reference\": \"ANY-EXTERNAL-REFEFERNCE\",\n      \"reference_origin\": \"ANY-EXTERNAL-REFEFERNCE-ORIGIN\",\n      \"metadata\": {\n        \"foo\": \"bar\"\n      }\n    },\n    \"relationships\": {\n      \"order\": {\n        \"data\": {\n          \"type\": \"<string>\",\n          \"id\": \"XAyRWNUzyN\"\n        }\n      }\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/vnd.api+json"
+                }
+              ],
+              "body": "{\n  \"data\": {\n    \"id\": \"XAyRWNUzyN\",\n    \"type\": \"wire_transfers\",\n    \"links\": {\n      \"self\": \"string\"\n    },\n    \"attributes\": {\n      \"payment_instrument\": {\n        \"issuer\": \"cl bank\",\n        \"card_type\": \"visa\"\n      },\n      \"created_at\": \"2018-01-01T12:00:00.000Z\",\n      \"updated_at\": \"2018-01-01T12:00:00.000Z\",\n      \"reference\": \"ANY-EXTERNAL-REFEFERNCE\",\n      \"reference_origin\": \"ANY-EXTERNAL-REFEFERNCE-ORIGIN\",\n      \"metadata\": {\n        \"foo\": \"bar\"\n      }\n    },\n    \"relationships\": {\n      \"order\": {\n        \"links\": {\n          \"self\": \"string\",\n          \"related\": \"string\"\n        },\n        \"data\": {\n          \"type\": \"order\",\n          \"id\": \"string\"\n        }\n      },\n      \"event_stores\": {\n        \"links\": {\n          \"self\": \"string\",\n          \"related\": \"string\"\n        },\n        \"data\": {\n          \"type\": \"event_stores\",\n          \"id\": \"string\"\n        }\n      }\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "9e757316-c82e-4371-81bc-14c772297e28",
+          "name": "Retrieve a wire transfer",
+          "request": {
+            "name": "Retrieve a wire transfer",
+            "description": {
+              "content": "Retrieve a wire transfer",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "wire_transfers",
+                ":wireTransferId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "wireTransferId",
+                  "description": "(Required) The resource's id"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/vnd.api+json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "2e580dfc-76b9-40ad-b03b-328af81de389",
+              "name": "The wire transfer object",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "wire_transfers",
+                    ":wireTransferId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "wireTransferId",
+                      "description": "(Required) The resource's id"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/vnd.api+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/vnd.api+json"
+                }
+              ],
+              "body": "{\n  \"data\": {\n    \"id\": \"XAyRWNUzyN\",\n    \"type\": \"wire_transfers\",\n    \"links\": {\n      \"self\": \"string\"\n    },\n    \"attributes\": {\n      \"payment_instrument\": {\n        \"issuer\": \"cl bank\",\n        \"card_type\": \"visa\"\n      },\n      \"created_at\": \"2018-01-01T12:00:00.000Z\",\n      \"updated_at\": \"2018-01-01T12:00:00.000Z\",\n      \"reference\": \"ANY-EXTERNAL-REFEFERNCE\",\n      \"reference_origin\": \"ANY-EXTERNAL-REFEFERNCE-ORIGIN\",\n      \"metadata\": {\n        \"foo\": \"bar\"\n      }\n    },\n    \"relationships\": {\n      \"order\": {\n        \"links\": {\n          \"self\": \"string\",\n          \"related\": \"string\"\n        },\n        \"data\": {\n          \"type\": \"order\",\n          \"id\": \"string\"\n        }\n      },\n      \"event_stores\": {\n        \"links\": {\n          \"self\": \"string\",\n          \"related\": \"string\"\n        },\n        \"data\": {\n          \"type\": \"event_stores\",\n          \"id\": \"string\"\n        }\n      }\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "9a1bc25c-5563-4e11-87b6-0d6df466f253",
+          "name": "Update a wire transfer",
+          "request": {
+            "name": "Update a wire transfer",
+            "description": {
+              "content": "Update a wire transfer",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "wire_transfers",
+                ":wireTransferId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "wireTransferId",
+                  "description": "(Required) The resource's id"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/vnd.api+json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/vnd.api+json"
+              }
+            ],
+            "method": "PATCH",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"data\": {\n    \"type\": \"<string>\",\n    \"id\": \"<string>\",\n    \"attributes\": {\n      \"reference\": \"<string>\",\n      \"reference_origin\": \"<string>\",\n      \"metadata\": \"<object>\"\n    },\n    \"relationships\": {\n      \"order\": {\n        \"data\": {\n          \"type\": \"<string>\",\n          \"id\": \"<string>\"\n        }\n      }\n    }\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "4ec5b0a5-a65b-4e03-8d33-7bdc1558a4a7",
+              "name": "The updated wire transfer object",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "wire_transfers",
+                    ":wireTransferId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "wireTransferId",
+                      "description": "(Required) The resource's id"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/vnd.api+json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"data\": {\n    \"type\": \"<string>\",\n    \"id\": \"XAyRWNUzyN\",\n    \"attributes\": {\n      \"reference\": \"ANY-EXTERNAL-REFEFERNCE\",\n      \"reference_origin\": \"ANY-EXTERNAL-REFEFERNCE-ORIGIN\",\n      \"metadata\": {\n        \"foo\": \"bar\"\n      }\n    },\n    \"relationships\": {\n      \"order\": {\n        \"data\": {\n          \"type\": \"<string>\",\n          \"id\": \"XAyRWNUzyN\"\n        }\n      }\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/vnd.api+json"
+                }
+              ],
+              "body": "{\n  \"data\": {\n    \"id\": \"XAyRWNUzyN\",\n    \"type\": \"wire_transfers\",\n    \"links\": {\n      \"self\": \"string\"\n    },\n    \"attributes\": {\n      \"payment_instrument\": {\n        \"issuer\": \"cl bank\",\n        \"card_type\": \"visa\"\n      },\n      \"created_at\": \"2018-01-01T12:00:00.000Z\",\n      \"updated_at\": \"2018-01-01T12:00:00.000Z\",\n      \"reference\": \"ANY-EXTERNAL-REFEFERNCE\",\n      \"reference_origin\": \"ANY-EXTERNAL-REFEFERNCE-ORIGIN\",\n      \"metadata\": {\n        \"foo\": \"bar\"\n      }\n    },\n    \"relationships\": {\n      \"order\": {\n        \"links\": {\n          \"self\": \"string\",\n          \"related\": \"string\"\n        },\n        \"data\": {\n          \"type\": \"order\",\n          \"id\": \"string\"\n        }\n      },\n      \"event_stores\": {\n        \"links\": {\n          \"self\": \"string\",\n          \"related\": \"string\"\n        },\n        \"data\": {\n          \"type\": \"event_stores\",\n          \"id\": \"string\"\n        }\n      }\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "f6179b80-e52d-4067-b627-c6d6d269a6fd",
+          "name": "Delete a wire transfer",
+          "request": {
+            "name": "Delete a wire transfer",
+            "description": {
+              "content": "Delete a wire transfer",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "wire_transfers",
+                ":wireTransferId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "wireTransferId",
+                  "description": "(Required) The resource's id"
+                }
+              ]
+            },
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "fb0db02f-cba8-49c0-afc7-6b91681c29c1",
+              "name": "No content",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "wire_transfers",
+                    ":wireTransferId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "wireTransferId",
+                      "description": "(Required) The resource's id"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://{{your_organization_slug}}.commercelayer.io/api",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "3f4bf467-2635-4c34-bb3f-f451bc1290bc",
+    "name": "Commerce Layer addresses wire_transfers API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Headless Commerce for Global Brands.\n\nContact Support:\n Name: API Support\n Email: support@commercelayer.io",
+      "type": "text/plain"
+    }
+  }
+}

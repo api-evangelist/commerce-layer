@@ -1,0 +1,605 @@
+{
+  "item": [
+    {
+      "id": "6cccb162-77ad-4017-9aa2-39d3ef3e1ec9",
+      "name": "external_payments",
+      "description": {
+        "content": "resource type",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "1a8270a2-4e8a-4222-b1f6-f20902ded5c0",
+          "name": "Retrieve the external payments associated to the external gateway",
+          "request": {
+            "name": "Retrieve the external payments associated to the external gateway",
+            "description": {
+              "content": "Retrieve the external payments associated to the external gateway",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "external_gateways",
+                ":externalGatewayId",
+                "external_payments"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "externalGatewayId",
+                  "description": "(Required) The resource's id"
+                }
+              ]
+            },
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "2a1b8f28-a910-4c8b-a54d-ba068cf2a780",
+              "name": "The external_payments associated to the external gateway",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "external_gateways",
+                    ":externalGatewayId",
+                    "external_payments"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "externalGatewayId",
+                      "description": "(Required) The resource's id"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "69864721-4c5c-4438-b1fa-322660ab7705",
+          "name": "List all external payments",
+          "request": {
+            "name": "List all external payments",
+            "description": {
+              "content": "List all external payments",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "external_payments"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/vnd.api+json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "69b2b33d-0a98-403b-9268-3c05496a3259",
+              "name": "A list of external payment objects",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "external_payments"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/vnd.api+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/vnd.api+json"
+                }
+              ],
+              "body": "{\n  \"data\": [\n    {\n      \"id\": \"XAyRWNUzyN\",\n      \"type\": \"external_payments\",\n      \"links\": {\n        \"self\": \"string\"\n      },\n      \"attributes\": {\n        \"payment_source_token\": \"xxxx.yyyy.zzzz\",\n        \"options\": {\n          \"foo\": \"bar\"\n        },\n        \"payment_instrument\": {\n          \"issuer\": \"cl bank\",\n          \"card_type\": \"visa\"\n        },\n        \"created_at\": \"2018-01-01T12:00:00.000Z\",\n        \"updated_at\": \"2018-01-01T12:00:00.000Z\",\n        \"reference\": \"ANY-EXTERNAL-REFEFERNCE\",\n        \"reference_origin\": \"ANY-EXTERNAL-REFEFERNCE-ORIGIN\",\n        \"metadata\": {\n          \"foo\": \"bar\"\n        }\n      },\n      \"relationships\": {\n        \"order\": {\n          \"links\": {\n            \"self\": \"string\",\n            \"related\": \"string\"\n          },\n          \"data\": {\n            \"type\": \"order\",\n            \"id\": \"string\"\n          }\n        },\n        \"payment_gateway\": {\n          \"links\": {\n            \"self\": \"string\",\n            \"related\": \"string\"\n          },\n          \"data\": {\n            \"type\": \"payment_gateway\",\n            \"id\": \"string\"\n          }\n        },\n        \"wallet\": {\n          \"links\": {\n            \"self\": \"string\",\n            \"related\": \"string\"\n          },\n          \"data\": {\n            \"type\": \"wallet\",\n            \"id\": \"string\"\n          }\n        },\n        \"event_stores\": {\n          \"links\": {\n            \"self\": \"string\",\n            \"related\": \"string\"\n          },\n          \"data\": {\n            \"type\": \"event_stores\",\n            \"id\": \"string\"\n          }\n        }\n      }\n    },\n    {\n      \"id\": \"XAyRWNUzyN\",\n      \"type\": \"external_payments\",\n      \"links\": {\n        \"self\": \"string\"\n      },\n      \"attributes\": {\n        \"payment_source_token\": \"xxxx.yyyy.zzzz\",\n        \"options\": {\n          \"foo\": \"bar\"\n        },\n        \"payment_instrument\": {\n          \"issuer\": \"cl bank\",\n          \"card_type\": \"visa\"\n        },\n        \"created_at\": \"2018-01-01T12:00:00.000Z\",\n        \"updated_at\": \"2018-01-01T12:00:00.000Z\",\n        \"reference\": \"ANY-EXTERNAL-REFEFERNCE\",\n        \"reference_origin\": \"ANY-EXTERNAL-REFEFERNCE-ORIGIN\",\n        \"metadata\": {\n          \"foo\": \"bar\"\n        }\n      },\n      \"relationships\": {\n        \"order\": {\n          \"links\": {\n            \"self\": \"string\",\n            \"related\": \"string\"\n          },\n          \"data\": {\n            \"type\": \"order\",\n            \"id\": \"string\"\n          }\n        },\n        \"payment_gateway\": {\n          \"links\": {\n            \"self\": \"string\",\n            \"related\": \"string\"\n          },\n          \"data\": {\n            \"type\": \"payment_gateway\",\n            \"id\": \"string\"\n          }\n        },\n        \"wallet\": {\n          \"links\": {\n            \"self\": \"string\",\n            \"related\": \"string\"\n          },\n          \"data\": {\n            \"type\": \"wallet\",\n            \"id\": \"string\"\n          }\n        },\n        \"event_stores\": {\n          \"links\": {\n            \"self\": \"string\",\n            \"related\": \"string\"\n          },\n          \"data\": {\n            \"type\": \"event_stores\",\n            \"id\": \"string\"\n          }\n        }\n      }\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "7eea12b5-2a58-43e7-929c-1571db725059",
+          "name": "Create an external payment",
+          "request": {
+            "name": "Create an external payment",
+            "description": {
+              "content": "Create an external payment",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "external_payments"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/vnd.api+json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/vnd.api+json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"data\": {\n    \"type\": \"<string>\",\n    \"attributes\": {\n      \"payment_source_token\": \"<string>\",\n      \"options\": \"<object>\",\n      \"reference\": \"<string>\",\n      \"reference_origin\": \"<string>\",\n      \"metadata\": \"<object>\"\n    },\n    \"relationships\": {\n      \"order\": {\n        \"data\": {\n          \"type\": \"<string>\",\n          \"id\": \"<string>\"\n        }\n      }\n    }\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "24b5a14b-ba6e-4571-8a82-a3de51b6f426",
+              "name": "The created external payment object",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "external_payments"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/vnd.api+json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"data\": {\n    \"type\": \"<string>\",\n    \"attributes\": {\n      \"payment_source_token\": \"xxxx.yyyy.zzzz\",\n      \"options\": {\n        \"foo\": \"bar\"\n      },\n      \"reference\": \"ANY-EXTERNAL-REFEFERNCE\",\n      \"reference_origin\": \"ANY-EXTERNAL-REFEFERNCE-ORIGIN\",\n      \"metadata\": {\n        \"foo\": \"bar\"\n      }\n    },\n    \"relationships\": {\n      \"order\": {\n        \"data\": {\n          \"type\": \"<string>\",\n          \"id\": \"XAyRWNUzyN\"\n        }\n      }\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/vnd.api+json"
+                }
+              ],
+              "body": "{\n  \"data\": {\n    \"id\": \"XAyRWNUzyN\",\n    \"type\": \"external_payments\",\n    \"links\": {\n      \"self\": \"string\"\n    },\n    \"attributes\": {\n      \"payment_source_token\": \"xxxx.yyyy.zzzz\",\n      \"options\": {\n        \"foo\": \"bar\"\n      },\n      \"payment_instrument\": {\n        \"issuer\": \"cl bank\",\n        \"card_type\": \"visa\"\n      },\n      \"created_at\": \"2018-01-01T12:00:00.000Z\",\n      \"updated_at\": \"2018-01-01T12:00:00.000Z\",\n      \"reference\": \"ANY-EXTERNAL-REFEFERNCE\",\n      \"reference_origin\": \"ANY-EXTERNAL-REFEFERNCE-ORIGIN\",\n      \"metadata\": {\n        \"foo\": \"bar\"\n      }\n    },\n    \"relationships\": {\n      \"order\": {\n        \"links\": {\n          \"self\": \"string\",\n          \"related\": \"string\"\n        },\n        \"data\": {\n          \"type\": \"order\",\n          \"id\": \"string\"\n        }\n      },\n      \"payment_gateway\": {\n        \"links\": {\n          \"self\": \"string\",\n          \"related\": \"string\"\n        },\n        \"data\": {\n          \"type\": \"payment_gateway\",\n          \"id\": \"string\"\n        }\n      },\n      \"wallet\": {\n        \"links\": {\n          \"self\": \"string\",\n          \"related\": \"string\"\n        },\n        \"data\": {\n          \"type\": \"wallet\",\n          \"id\": \"string\"\n        }\n      },\n      \"event_stores\": {\n        \"links\": {\n          \"self\": \"string\",\n          \"related\": \"string\"\n        },\n        \"data\": {\n          \"type\": \"event_stores\",\n          \"id\": \"string\"\n        }\n      }\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "bd43c3c9-98b6-4e35-b6a6-47de68b80c2c",
+          "name": "Retrieve an external payment",
+          "request": {
+            "name": "Retrieve an external payment",
+            "description": {
+              "content": "Retrieve an external payment",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "external_payments",
+                ":externalPaymentId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "externalPaymentId",
+                  "description": "(Required) The resource's id"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/vnd.api+json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "25d077c2-84b7-44fb-864c-810b4de29ef7",
+              "name": "The external payment object",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "external_payments",
+                    ":externalPaymentId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "externalPaymentId",
+                      "description": "(Required) The resource's id"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/vnd.api+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/vnd.api+json"
+                }
+              ],
+              "body": "{\n  \"data\": {\n    \"id\": \"XAyRWNUzyN\",\n    \"type\": \"external_payments\",\n    \"links\": {\n      \"self\": \"string\"\n    },\n    \"attributes\": {\n      \"payment_source_token\": \"xxxx.yyyy.zzzz\",\n      \"options\": {\n        \"foo\": \"bar\"\n      },\n      \"payment_instrument\": {\n        \"issuer\": \"cl bank\",\n        \"card_type\": \"visa\"\n      },\n      \"created_at\": \"2018-01-01T12:00:00.000Z\",\n      \"updated_at\": \"2018-01-01T12:00:00.000Z\",\n      \"reference\": \"ANY-EXTERNAL-REFEFERNCE\",\n      \"reference_origin\": \"ANY-EXTERNAL-REFEFERNCE-ORIGIN\",\n      \"metadata\": {\n        \"foo\": \"bar\"\n      }\n    },\n    \"relationships\": {\n      \"order\": {\n        \"links\": {\n          \"self\": \"string\",\n          \"related\": \"string\"\n        },\n        \"data\": {\n          \"type\": \"order\",\n          \"id\": \"string\"\n        }\n      },\n      \"payment_gateway\": {\n        \"links\": {\n          \"self\": \"string\",\n          \"related\": \"string\"\n        },\n        \"data\": {\n          \"type\": \"payment_gateway\",\n          \"id\": \"string\"\n        }\n      },\n      \"wallet\": {\n        \"links\": {\n          \"self\": \"string\",\n          \"related\": \"string\"\n        },\n        \"data\": {\n          \"type\": \"wallet\",\n          \"id\": \"string\"\n        }\n      },\n      \"event_stores\": {\n        \"links\": {\n          \"self\": \"string\",\n          \"related\": \"string\"\n        },\n        \"data\": {\n          \"type\": \"event_stores\",\n          \"id\": \"string\"\n        }\n      }\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "a28468b7-17bf-4887-b2bc-6bb4a76e7fd2",
+          "name": "Update an external payment",
+          "request": {
+            "name": "Update an external payment",
+            "description": {
+              "content": "Update an external payment",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "external_payments",
+                ":externalPaymentId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "externalPaymentId",
+                  "description": "(Required) The resource's id"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/vnd.api+json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/vnd.api+json"
+              }
+            ],
+            "method": "PATCH",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"data\": {\n    \"type\": \"<string>\",\n    \"id\": \"<string>\",\n    \"attributes\": {\n      \"options\": \"<object>\",\n      \"reference\": \"<string>\",\n      \"reference_origin\": \"<string>\",\n      \"metadata\": \"<object>\"\n    },\n    \"relationships\": {\n      \"order\": {\n        \"data\": {\n          \"type\": \"<string>\",\n          \"id\": \"<string>\"\n        }\n      }\n    }\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "ce865e7e-a10c-484d-ae81-4567375aa82d",
+              "name": "The updated external payment object",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "external_payments",
+                    ":externalPaymentId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "externalPaymentId",
+                      "description": "(Required) The resource's id"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/vnd.api+json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"data\": {\n    \"type\": \"<string>\",\n    \"id\": \"XAyRWNUzyN\",\n    \"attributes\": {\n      \"options\": {\n        \"foo\": \"bar\"\n      },\n      \"reference\": \"ANY-EXTERNAL-REFEFERNCE\",\n      \"reference_origin\": \"ANY-EXTERNAL-REFEFERNCE-ORIGIN\",\n      \"metadata\": {\n        \"foo\": \"bar\"\n      }\n    },\n    \"relationships\": {\n      \"order\": {\n        \"data\": {\n          \"type\": \"<string>\",\n          \"id\": \"XAyRWNUzyN\"\n        }\n      }\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/vnd.api+json"
+                }
+              ],
+              "body": "{\n  \"data\": {\n    \"id\": \"XAyRWNUzyN\",\n    \"type\": \"external_payments\",\n    \"links\": {\n      \"self\": \"string\"\n    },\n    \"attributes\": {\n      \"payment_source_token\": \"xxxx.yyyy.zzzz\",\n      \"options\": {\n        \"foo\": \"bar\"\n      },\n      \"payment_instrument\": {\n        \"issuer\": \"cl bank\",\n        \"card_type\": \"visa\"\n      },\n      \"created_at\": \"2018-01-01T12:00:00.000Z\",\n      \"updated_at\": \"2018-01-01T12:00:00.000Z\",\n      \"reference\": \"ANY-EXTERNAL-REFEFERNCE\",\n      \"reference_origin\": \"ANY-EXTERNAL-REFEFERNCE-ORIGIN\",\n      \"metadata\": {\n        \"foo\": \"bar\"\n      }\n    },\n    \"relationships\": {\n      \"order\": {\n        \"links\": {\n          \"self\": \"string\",\n          \"related\": \"string\"\n        },\n        \"data\": {\n          \"type\": \"order\",\n          \"id\": \"string\"\n        }\n      },\n      \"payment_gateway\": {\n        \"links\": {\n          \"self\": \"string\",\n          \"related\": \"string\"\n        },\n        \"data\": {\n          \"type\": \"payment_gateway\",\n          \"id\": \"string\"\n        }\n      },\n      \"wallet\": {\n        \"links\": {\n          \"self\": \"string\",\n          \"related\": \"string\"\n        },\n        \"data\": {\n          \"type\": \"wallet\",\n          \"id\": \"string\"\n        }\n      },\n      \"event_stores\": {\n        \"links\": {\n          \"self\": \"string\",\n          \"related\": \"string\"\n        },\n        \"data\": {\n          \"type\": \"event_stores\",\n          \"id\": \"string\"\n        }\n      }\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "15f65d18-8c83-4bd7-b9a6-87d6bfbb1913",
+          "name": "Delete an external payment",
+          "request": {
+            "name": "Delete an external payment",
+            "description": {
+              "content": "Delete an external payment",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "external_payments",
+                ":externalPaymentId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "externalPaymentId",
+                  "description": "(Required) The resource's id"
+                }
+              ]
+            },
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "753ece9d-9d4f-48c4-b8bd-0c04ada2f160",
+              "name": "No content",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "external_payments",
+                    ":externalPaymentId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "externalPaymentId",
+                      "description": "(Required) The resource's id"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://{{your_organization_slug}}.commercelayer.io/api",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "1fb8bc43-425b-463c-a95c-1c7e39f9105c",
+    "name": "Commerce Layer addresses external_payments API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Headless Commerce for Global Brands.\n\nContact Support:\n Name: API Support\n Email: support@commercelayer.io",
+      "type": "text/plain"
+    }
+  }
+}

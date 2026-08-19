@@ -1,0 +1,130 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Commerce Layer addresses klarna_payments API",
+    "version": "7.10.1"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "klarna_payments",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Retrieve the klarna payments associated to the klarna gateway",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{your_organization_slug}.commercelayer.io/api/klarna_gateways/:klarnaGatewayId/klarna_payments",
+            "params": [
+              {
+                "name": "klarnaGatewayId",
+                "value": "",
+                "type": "path",
+                "description": "The resource's id"
+              }
+            ]
+          },
+          "docs": "Retrieve the klarna payments associated to the klarna gateway"
+        },
+        {
+          "info": {
+            "name": "List all klarna payments",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{your_organization_slug}.commercelayer.io/api/klarna_payments"
+          },
+          "docs": "List all klarna payments"
+        },
+        {
+          "info": {
+            "name": "Create a klarna payment",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{your_organization_slug}.commercelayer.io/api/klarna_payments",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a klarna payment"
+        },
+        {
+          "info": {
+            "name": "Retrieve a klarna payment",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{your_organization_slug}.commercelayer.io/api/klarna_payments/:klarnaPaymentId",
+            "params": [
+              {
+                "name": "klarnaPaymentId",
+                "value": "",
+                "type": "path",
+                "description": "The resource's id"
+              }
+            ]
+          },
+          "docs": "Retrieve a klarna payment"
+        },
+        {
+          "info": {
+            "name": "Update a klarna payment",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://{your_organization_slug}.commercelayer.io/api/klarna_payments/:klarnaPaymentId",
+            "params": [
+              {
+                "name": "klarnaPaymentId",
+                "value": "",
+                "type": "path",
+                "description": "The resource's id"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update a klarna payment"
+        },
+        {
+          "info": {
+            "name": "Delete a klarna payment",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://{your_organization_slug}.commercelayer.io/api/klarna_payments/:klarnaPaymentId",
+            "params": [
+              {
+                "name": "klarnaPaymentId",
+                "value": "",
+                "type": "path",
+                "description": "The resource's id"
+              }
+            ]
+          },
+          "docs": "Delete a klarna payment"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

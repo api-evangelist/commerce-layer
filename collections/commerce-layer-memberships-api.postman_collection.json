@@ -1,0 +1,892 @@
+{
+  "item": [
+    {
+      "id": "c1c6d551-ae9e-41b0-b11a-24c303e2d396",
+      "name": "memberships",
+      "description": {
+        "content": "resource type",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "39a73532-3a54-49a8-97d8-43946c235151",
+          "name": "Related application membership",
+          "request": {
+            "name": "Related application membership",
+            "description": {
+              "content": "Related application membership",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "application_memberships",
+                ":applicationMembershipId",
+                "membership"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "applicationMembershipId",
+                  "description": "(Required) The ID of the resource."
+                }
+              ]
+            },
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "c69df75f-b2b1-4213-9e33-94d1e6b13c42",
+              "name": "The membership associated to the application membership",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "application_memberships",
+                    ":applicationMembershipId",
+                    "membership"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "applicationMembershipId",
+                      "description": "(Required) The ID of the resource."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "ef9e640c-7cda-440e-9755-01cd050b0c29",
+          "name": "Creates an membership",
+          "request": {
+            "name": "Creates an membership",
+            "description": {
+              "content": "Creates an membership",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "memberships"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/vnd.api+json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/vnd.api+json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"data\": {\n    \"type\": \"<string>\",\n    \"attributes\": {\n      \"user_email\": \"<string>\",\n      \"access_scope\": \"<string>\",\n      \"reference\": \"<string>\",\n      \"reference_origin\": \"<string>\",\n      \"metadata\": \"<object>\"\n    },\n    \"relationships\": {\n      \"organization\": {\n        \"data\": {\n          \"type\": \"<string>\",\n          \"id\": \"<string>\"\n        }\n      },\n      \"role\": {\n        \"data\": {\n          \"type\": \"<string>\",\n          \"id\": \"<string>\"\n        }\n      },\n      \"application_memberships\": {\n        \"data\": {\n          \"type\": \"<string>\",\n          \"id\": \"<string>\"\n        }\n      },\n      \"membership_profile\": {\n        \"data\": {\n          \"type\": \"<string>\",\n          \"id\": \"<string>\"\n        }\n      }\n    }\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "0ee97573-a302-478a-b482-35a3d40f016a",
+              "name": "The created membership object",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "memberships"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/vnd.api+json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"data\": {\n    \"type\": \"<string>\",\n    \"attributes\": {\n      \"user_email\": \"commercelayer@commercelayer.io\",\n      \"access_scope\": \"live_access\",\n      \"reference\": \"ANY-EXTERNAL-REFEFERNCE\",\n      \"reference_origin\": \"ANY-EXTERNAL-REFEFERNCE-ORIGIN\",\n      \"metadata\": {\n        \"foo\": \"bar\"\n      }\n    },\n    \"relationships\": {\n      \"organization\": {\n        \"data\": {\n          \"type\": \"<string>\",\n          \"id\": \"XGZwpOSrWL\"\n        }\n      },\n      \"role\": {\n        \"data\": {\n          \"type\": \"<string>\",\n          \"id\": \"XGZwpOSrWL\"\n        }\n      },\n      \"application_memberships\": {\n        \"data\": {\n          \"type\": \"<string>\",\n          \"id\": \"XGZwpOSrWL\"\n        }\n      },\n      \"membership_profile\": {\n        \"data\": {\n          \"type\": \"<string>\",\n          \"id\": \"XGZwpOSrWL\"\n        }\n      }\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/vnd.api+json"
+                }
+              ],
+              "body": "{\n  \"data\": {\n    \"id\": \"XGZwpOSrWL\",\n    \"type\": \"memberships\",\n    \"links\": {\n      \"self\": \"string\"\n    },\n    \"attributes\": {\n      \"user_email\": \"commercelayer@commercelayer.io\",\n      \"user_first_name\": \"John\",\n      \"user_last_name\": \"Doe\",\n      \"status\": \"pending\",\n      \"owner\": true,\n      \"test_enabled\": false,\n      \"access_scope\": \"live_access\",\n      \"created_at\": \"2018-01-01T12:00:00.000Z\",\n      \"updated_at\": \"2018-01-01T12:00:00.000Z\",\n      \"reference\": \"ANY-EXTERNAL-REFEFERNCE\",\n      \"reference_origin\": \"ANY-EXTERNAL-REFEFERNCE-ORIGIN\",\n      \"metadata\": {\n        \"foo\": \"bar\"\n      }\n    },\n    \"relationships\": {\n      \"organization\": {\n        \"links\": {\n          \"self\": \"string\",\n          \"related\": \"string\"\n        },\n        \"data\": {\n          \"type\": \"organization\",\n          \"id\": \"string\"\n        }\n      },\n      \"role\": {\n        \"links\": {\n          \"self\": \"string\",\n          \"related\": \"string\"\n        },\n        \"data\": {\n          \"type\": \"role\",\n          \"id\": \"string\"\n        }\n      },\n      \"application_memberships\": {\n        \"links\": {\n          \"self\": \"string\",\n          \"related\": \"string\"\n        },\n        \"data\": {\n          \"type\": \"application_memberships\",\n          \"id\": \"string\"\n        }\n      },\n      \"membership_profile\": {\n        \"links\": {\n          \"self\": \"string\",\n          \"related\": \"string\"\n        },\n        \"data\": {\n          \"type\": \"membership_profile\",\n          \"id\": \"string\"\n        }\n      },\n      \"versions\": {\n        \"links\": {\n          \"self\": \"string\",\n          \"related\": \"string\"\n        },\n        \"data\": {\n          \"type\": \"versions\",\n          \"id\": \"string\"\n        }\n      }\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "e5f86ff6-80c3-448e-9a5b-4e17f07a0cc1",
+          "name": "List all memberships",
+          "request": {
+            "name": "List all memberships",
+            "description": {
+              "content": "List all memberships",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "memberships"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/vnd.api+json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "d396e330-53fd-4013-973f-09f7b58c2c18",
+              "name": "A list of membership objects",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "memberships"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/vnd.api+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/vnd.api+json"
+                }
+              ],
+              "body": "{\n  \"data\": [\n    {\n      \"id\": \"XGZwpOSrWL\",\n      \"type\": \"memberships\",\n      \"links\": {\n        \"self\": \"string\"\n      },\n      \"attributes\": {\n        \"user_email\": \"commercelayer@commercelayer.io\",\n        \"user_first_name\": \"John\",\n        \"user_last_name\": \"Doe\",\n        \"status\": \"pending\",\n        \"owner\": true,\n        \"test_enabled\": false,\n        \"access_scope\": \"live_access\",\n        \"created_at\": \"2018-01-01T12:00:00.000Z\",\n        \"updated_at\": \"2018-01-01T12:00:00.000Z\",\n        \"reference\": \"ANY-EXTERNAL-REFEFERNCE\",\n        \"reference_origin\": \"ANY-EXTERNAL-REFEFERNCE-ORIGIN\",\n        \"metadata\": {\n          \"foo\": \"bar\"\n        }\n      },\n      \"relationships\": {\n        \"organization\": {\n          \"links\": {\n            \"self\": \"string\",\n            \"related\": \"string\"\n          },\n          \"data\": {\n            \"type\": \"organization\",\n            \"id\": \"string\"\n          }\n        },\n        \"role\": {\n          \"links\": {\n            \"self\": \"string\",\n            \"related\": \"string\"\n          },\n          \"data\": {\n            \"type\": \"role\",\n            \"id\": \"string\"\n          }\n        },\n        \"application_memberships\": {\n          \"links\": {\n            \"self\": \"string\",\n            \"related\": \"string\"\n          },\n          \"data\": {\n            \"type\": \"application_memberships\",\n            \"id\": \"string\"\n          }\n        },\n        \"membership_profile\": {\n          \"links\": {\n            \"self\": \"string\",\n            \"related\": \"string\"\n          },\n          \"data\": {\n            \"type\": \"membership_profile\",\n            \"id\": \"string\"\n          }\n        },\n        \"versions\": {\n          \"links\": {\n            \"self\": \"string\",\n            \"related\": \"string\"\n          },\n          \"data\": {\n            \"type\": \"versions\",\n            \"id\": \"string\"\n          }\n        }\n      }\n    },\n    {\n      \"id\": \"XGZwpOSrWL\",\n      \"type\": \"memberships\",\n      \"links\": {\n        \"self\": \"string\"\n      },\n      \"attributes\": {\n        \"user_email\": \"commercelayer@commercelayer.io\",\n        \"user_first_name\": \"John\",\n        \"user_last_name\": \"Doe\",\n        \"status\": \"pending\",\n        \"owner\": true,\n        \"test_enabled\": false,\n        \"access_scope\": \"live_access\",\n        \"created_at\": \"2018-01-01T12:00:00.000Z\",\n        \"updated_at\": \"2018-01-01T12:00:00.000Z\",\n        \"reference\": \"ANY-EXTERNAL-REFEFERNCE\",\n        \"reference_origin\": \"ANY-EXTERNAL-REFEFERNCE-ORIGIN\",\n        \"metadata\": {\n          \"foo\": \"bar\"\n        }\n      },\n      \"relationships\": {\n        \"organization\": {\n          \"links\": {\n            \"self\": \"string\",\n            \"related\": \"string\"\n          },\n          \"data\": {\n            \"type\": \"organization\",\n            \"id\": \"string\"\n          }\n        },\n        \"role\": {\n          \"links\": {\n            \"self\": \"string\",\n            \"related\": \"string\"\n          },\n          \"data\": {\n            \"type\": \"role\",\n            \"id\": \"string\"\n          }\n        },\n        \"application_memberships\": {\n          \"links\": {\n            \"self\": \"string\",\n            \"related\": \"string\"\n          },\n          \"data\": {\n            \"type\": \"application_memberships\",\n            \"id\": \"string\"\n          }\n        },\n        \"membership_profile\": {\n          \"links\": {\n            \"self\": \"string\",\n            \"related\": \"string\"\n          },\n          \"data\": {\n            \"type\": \"membership_profile\",\n            \"id\": \"string\"\n          }\n        },\n        \"versions\": {\n          \"links\": {\n            \"self\": \"string\",\n            \"related\": \"string\"\n          },\n          \"data\": {\n            \"type\": \"versions\",\n            \"id\": \"string\"\n          }\n        }\n      }\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "c394d398-2d9a-41c7-b6d2-73d35305e8c2",
+          "name": "Retrieve an membership",
+          "request": {
+            "name": "Retrieve an membership",
+            "description": {
+              "content": "Retrieve an membership",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "memberships",
+                ":membershipId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "membershipId",
+                  "description": "(Required) The ID of the resource."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/vnd.api+json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "899cb6a0-c71a-4c90-a50a-2ee3007fb0e6",
+              "name": "The membership object",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "memberships",
+                    ":membershipId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "membershipId",
+                      "description": "(Required) The ID of the resource."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/vnd.api+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/vnd.api+json"
+                }
+              ],
+              "body": "{\n  \"data\": {\n    \"id\": \"XGZwpOSrWL\",\n    \"type\": \"memberships\",\n    \"links\": {\n      \"self\": \"string\"\n    },\n    \"attributes\": {\n      \"user_email\": \"commercelayer@commercelayer.io\",\n      \"user_first_name\": \"John\",\n      \"user_last_name\": \"Doe\",\n      \"status\": \"pending\",\n      \"owner\": true,\n      \"test_enabled\": false,\n      \"access_scope\": \"live_access\",\n      \"created_at\": \"2018-01-01T12:00:00.000Z\",\n      \"updated_at\": \"2018-01-01T12:00:00.000Z\",\n      \"reference\": \"ANY-EXTERNAL-REFEFERNCE\",\n      \"reference_origin\": \"ANY-EXTERNAL-REFEFERNCE-ORIGIN\",\n      \"metadata\": {\n        \"foo\": \"bar\"\n      }\n    },\n    \"relationships\": {\n      \"organization\": {\n        \"links\": {\n          \"self\": \"string\",\n          \"related\": \"string\"\n        },\n        \"data\": {\n          \"type\": \"organization\",\n          \"id\": \"string\"\n        }\n      },\n      \"role\": {\n        \"links\": {\n          \"self\": \"string\",\n          \"related\": \"string\"\n        },\n        \"data\": {\n          \"type\": \"role\",\n          \"id\": \"string\"\n        }\n      },\n      \"application_memberships\": {\n        \"links\": {\n          \"self\": \"string\",\n          \"related\": \"string\"\n        },\n        \"data\": {\n          \"type\": \"application_memberships\",\n          \"id\": \"string\"\n        }\n      },\n      \"membership_profile\": {\n        \"links\": {\n          \"self\": \"string\",\n          \"related\": \"string\"\n        },\n        \"data\": {\n          \"type\": \"membership_profile\",\n          \"id\": \"string\"\n        }\n      },\n      \"versions\": {\n        \"links\": {\n          \"self\": \"string\",\n          \"related\": \"string\"\n        },\n        \"data\": {\n          \"type\": \"versions\",\n          \"id\": \"string\"\n        }\n      }\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "692c8353-97e8-4825-aec7-dd56daf39400",
+          "name": "Updates an membership",
+          "request": {
+            "name": "Updates an membership",
+            "description": {
+              "content": "Updates an membership",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "memberships",
+                ":membershipId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "membershipId",
+                  "description": "(Required) The ID of the resource."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/vnd.api+json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/vnd.api+json"
+              }
+            ],
+            "method": "PATCH",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"data\": {\n    \"type\": \"<string>\",\n    \"id\": \"<string>\",\n    \"attributes\": {\n      \"access_scope\": \"<string>\",\n      \"reference\": \"<string>\",\n      \"reference_origin\": \"<string>\",\n      \"metadata\": \"<object>\"\n    },\n    \"relationships\": {\n      \"role\": {\n        \"data\": {\n          \"type\": \"<string>\",\n          \"id\": \"<string>\"\n        }\n      },\n      \"application_memberships\": {\n        \"data\": {\n          \"type\": \"<string>\",\n          \"id\": \"<string>\"\n        }\n      },\n      \"membership_profile\": {\n        \"data\": {\n          \"type\": \"<string>\",\n          \"id\": \"<string>\"\n        }\n      }\n    }\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "69972141-40cd-474c-8e37-85b2b73f9a3b",
+              "name": "The updated membership object",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "memberships",
+                    ":membershipId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "membershipId",
+                      "description": "(Required) The ID of the resource."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/vnd.api+json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"data\": {\n    \"type\": \"<string>\",\n    \"id\": \"XGZwpOSrWL\",\n    \"attributes\": {\n      \"access_scope\": \"live_access\",\n      \"reference\": \"ANY-EXTERNAL-REFEFERNCE\",\n      \"reference_origin\": \"ANY-EXTERNAL-REFEFERNCE-ORIGIN\",\n      \"metadata\": {\n        \"foo\": \"bar\"\n      }\n    },\n    \"relationships\": {\n      \"role\": {\n        \"data\": {\n          \"type\": \"<string>\",\n          \"id\": \"XGZwpOSrWL\"\n        }\n      },\n      \"application_memberships\": {\n        \"data\": {\n          \"type\": \"<string>\",\n          \"id\": \"XGZwpOSrWL\"\n        }\n      },\n      \"membership_profile\": {\n        \"data\": {\n          \"type\": \"<string>\",\n          \"id\": \"XGZwpOSrWL\"\n        }\n      }\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/vnd.api+json"
+                }
+              ],
+              "body": "{\n  \"data\": {\n    \"id\": \"XGZwpOSrWL\",\n    \"type\": \"memberships\",\n    \"links\": {\n      \"self\": \"string\"\n    },\n    \"attributes\": {\n      \"user_email\": \"commercelayer@commercelayer.io\",\n      \"user_first_name\": \"John\",\n      \"user_last_name\": \"Doe\",\n      \"status\": \"pending\",\n      \"owner\": true,\n      \"test_enabled\": false,\n      \"access_scope\": \"live_access\",\n      \"created_at\": \"2018-01-01T12:00:00.000Z\",\n      \"updated_at\": \"2018-01-01T12:00:00.000Z\",\n      \"reference\": \"ANY-EXTERNAL-REFEFERNCE\",\n      \"reference_origin\": \"ANY-EXTERNAL-REFEFERNCE-ORIGIN\",\n      \"metadata\": {\n        \"foo\": \"bar\"\n      }\n    },\n    \"relationships\": {\n      \"organization\": {\n        \"links\": {\n          \"self\": \"string\",\n          \"related\": \"string\"\n        },\n        \"data\": {\n          \"type\": \"organization\",\n          \"id\": \"string\"\n        }\n      },\n      \"role\": {\n        \"links\": {\n          \"self\": \"string\",\n          \"related\": \"string\"\n        },\n        \"data\": {\n          \"type\": \"role\",\n          \"id\": \"string\"\n        }\n      },\n      \"application_memberships\": {\n        \"links\": {\n          \"self\": \"string\",\n          \"related\": \"string\"\n        },\n        \"data\": {\n          \"type\": \"application_memberships\",\n          \"id\": \"string\"\n        }\n      },\n      \"membership_profile\": {\n        \"links\": {\n          \"self\": \"string\",\n          \"related\": \"string\"\n        },\n        \"data\": {\n          \"type\": \"membership_profile\",\n          \"id\": \"string\"\n        }\n      },\n      \"versions\": {\n        \"links\": {\n          \"self\": \"string\",\n          \"related\": \"string\"\n        },\n        \"data\": {\n          \"type\": \"versions\",\n          \"id\": \"string\"\n        }\n      }\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "5f785c39-6c90-421f-8dc9-cafc96799913",
+          "name": "Delete an membership",
+          "request": {
+            "name": "Delete an membership",
+            "description": {
+              "content": "Delete an membership",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "memberships",
+                ":membershipId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "membershipId",
+                  "description": "(Required) The ID of the resource."
+                }
+              ]
+            },
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "c6eb3721-b538-4103-a44b-acb78c40f285",
+              "name": "No content",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "memberships",
+                    ":membershipId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "membershipId",
+                      "description": "(Required) The ID of the resource."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "00cf7c53-f50a-432c-8a0d-98c1ff6e2f0f",
+          "name": "Resend invitation",
+          "request": {
+            "name": "Resend invitation",
+            "description": {
+              "content": "Resend invitation for the given membership",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "memberships",
+                ":membershipId",
+                "resend"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "membershipId",
+                  "description": "(Required) The ID of the resource."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/vnd.api+json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "7551efdb-443a-4e63-8f8d-409ef4945f0a",
+              "name": "Confirmation that the invitation has been sent",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "memberships",
+                    ":membershipId",
+                    "resend"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "membershipId",
+                      "description": "(Required) The ID of the resource."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Accepted",
+              "code": 202,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "ac446832-cabb-4979-b403-f9779af7bc09",
+          "name": "Related organization",
+          "request": {
+            "name": "Related organization",
+            "description": {
+              "content": "Related organization",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "organizations",
+                ":organizationId",
+                "memberships"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "organizationId",
+                  "description": "(Required) The ID of the resource."
+                }
+              ]
+            },
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "d0aa95e5-7786-4629-9fb2-c7235d726a9e",
+              "name": "The memberships associated to the organization",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "organizations",
+                    ":organizationId",
+                    "memberships"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organizationId",
+                      "description": "(Required) The ID of the resource."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "22f82acf-e14b-4871-8240-259bd56a9bff",
+          "name": "Related role",
+          "request": {
+            "name": "Related role",
+            "description": {
+              "content": "Related role",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "roles",
+                ":roleId",
+                "memberships"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "roleId",
+                  "description": "(Required) The ID of the resource."
+                }
+              ]
+            },
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "80e9fe20-ee18-4b63-ae94-debbf2758a71",
+              "name": "The memberships associated to the role",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "roles",
+                    ":roleId",
+                    "memberships"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "roleId",
+                      "description": "(Required) The ID of the resource."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://{{your_organization_slug}}.commercelayer.io/api",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "d8744dc9-3dfa-4031-9525-70bfe0141a01",
+    "name": "Commerce Layer addresses memberships API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Headless Commerce for Global Brands.\n\nContact Support:\n Name: API Support\n Email: support@commercelayer.io",
+      "type": "text/plain"
+    }
+  }
+}

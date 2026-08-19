@@ -1,0 +1,168 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Commerce Layer addresses links API",
+    "version": "7.10.1"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "links",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List all links",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{your_organization_slug}.commercelayer.io/api/links"
+          },
+          "docs": "List all links"
+        },
+        {
+          "info": {
+            "name": "Create a link",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{your_organization_slug}.commercelayer.io/api/links",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a link"
+        },
+        {
+          "info": {
+            "name": "Retrieve a link",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{your_organization_slug}.commercelayer.io/api/links/:linkId",
+            "params": [
+              {
+                "name": "linkId",
+                "value": "",
+                "type": "path",
+                "description": "The resource's id"
+              }
+            ]
+          },
+          "docs": "Retrieve a link"
+        },
+        {
+          "info": {
+            "name": "Update a link",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://{your_organization_slug}.commercelayer.io/api/links/:linkId",
+            "params": [
+              {
+                "name": "linkId",
+                "value": "",
+                "type": "path",
+                "description": "The resource's id"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update a link"
+        },
+        {
+          "info": {
+            "name": "Delete a link",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://{your_organization_slug}.commercelayer.io/api/links/:linkId",
+            "params": [
+              {
+                "name": "linkId",
+                "value": "",
+                "type": "path",
+                "description": "The resource's id"
+              }
+            ]
+          },
+          "docs": "Delete a link"
+        },
+        {
+          "info": {
+            "name": "Retrieve the links associated to the order",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{your_organization_slug}.commercelayer.io/api/orders/:orderId/links",
+            "params": [
+              {
+                "name": "orderId",
+                "value": "",
+                "type": "path",
+                "description": "The resource's id"
+              }
+            ]
+          },
+          "docs": "Retrieve the links associated to the order"
+        },
+        {
+          "info": {
+            "name": "Retrieve the links associated to the SKU list",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{your_organization_slug}.commercelayer.io/api/sku_lists/:skuListId/links",
+            "params": [
+              {
+                "name": "skuListId",
+                "value": "",
+                "type": "path",
+                "description": "The resource's id"
+              }
+            ]
+          },
+          "docs": "Retrieve the links associated to the SKU list"
+        },
+        {
+          "info": {
+            "name": "Retrieve the links associated to the SKU",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{your_organization_slug}.commercelayer.io/api/skus/:skuId/links",
+            "params": [
+              {
+                "name": "skuId",
+                "value": "",
+                "type": "path",
+                "description": "The resource's id"
+              }
+            ]
+          },
+          "docs": "Retrieve the links associated to the SKU"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

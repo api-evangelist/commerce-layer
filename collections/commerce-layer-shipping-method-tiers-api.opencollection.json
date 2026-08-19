@@ -1,0 +1,73 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Commerce Layer addresses shipping_method_tiers API",
+    "version": "7.10.1"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "shipping_method_tiers",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List all shipping method tiers",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{your_organization_slug}.commercelayer.io/api/shipping_method_tiers"
+          },
+          "docs": "List all shipping method tiers"
+        },
+        {
+          "info": {
+            "name": "Retrieve a shipping method tier",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{your_organization_slug}.commercelayer.io/api/shipping_method_tiers/:shippingMethodTierId",
+            "params": [
+              {
+                "name": "shippingMethodTierId",
+                "value": "",
+                "type": "path",
+                "description": "The resource's id"
+              }
+            ]
+          },
+          "docs": "Retrieve a shipping method tier"
+        },
+        {
+          "info": {
+            "name": "Retrieve the shipping method tiers associated to the shipping method",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{your_organization_slug}.commercelayer.io/api/shipping_methods/:shippingMethodId/shipping_method_tiers",
+            "params": [
+              {
+                "name": "shippingMethodId",
+                "value": "",
+                "type": "path",
+                "description": "The resource's id"
+              }
+            ]
+          },
+          "docs": "Retrieve the shipping method tiers associated to the shipping method"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

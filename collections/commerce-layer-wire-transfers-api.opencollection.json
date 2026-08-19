@@ -1,0 +1,111 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Commerce Layer addresses wire_transfers API",
+    "version": "7.10.1"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "wire_transfers",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List all wire transfers",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{your_organization_slug}.commercelayer.io/api/wire_transfers"
+          },
+          "docs": "List all wire transfers"
+        },
+        {
+          "info": {
+            "name": "Create a wire transfer",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{your_organization_slug}.commercelayer.io/api/wire_transfers",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a wire transfer"
+        },
+        {
+          "info": {
+            "name": "Retrieve a wire transfer",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{your_organization_slug}.commercelayer.io/api/wire_transfers/:wireTransferId",
+            "params": [
+              {
+                "name": "wireTransferId",
+                "value": "",
+                "type": "path",
+                "description": "The resource's id"
+              }
+            ]
+          },
+          "docs": "Retrieve a wire transfer"
+        },
+        {
+          "info": {
+            "name": "Update a wire transfer",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://{your_organization_slug}.commercelayer.io/api/wire_transfers/:wireTransferId",
+            "params": [
+              {
+                "name": "wireTransferId",
+                "value": "",
+                "type": "path",
+                "description": "The resource's id"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update a wire transfer"
+        },
+        {
+          "info": {
+            "name": "Delete a wire transfer",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://{your_organization_slug}.commercelayer.io/api/wire_transfers/:wireTransferId",
+            "params": [
+              {
+                "name": "wireTransferId",
+                "value": "",
+                "type": "path",
+                "description": "The resource's id"
+              }
+            ]
+          },
+          "docs": "Delete a wire transfer"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

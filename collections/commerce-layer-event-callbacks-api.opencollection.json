@@ -1,0 +1,92 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Commerce Layer addresses event_callbacks API",
+    "version": "7.10.1"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "event_callbacks",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List all event callbacks",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{your_organization_slug}.commercelayer.io/api/event_callbacks"
+          },
+          "docs": "List all event callbacks"
+        },
+        {
+          "info": {
+            "name": "Retrieve an event callback",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{your_organization_slug}.commercelayer.io/api/event_callbacks/:eventCallbackId",
+            "params": [
+              {
+                "name": "eventCallbackId",
+                "value": "",
+                "type": "path",
+                "description": "The resource's id"
+              }
+            ]
+          },
+          "docs": "Retrieve an event callback"
+        },
+        {
+          "info": {
+            "name": "Retrieve the last event callbacks associated to the event",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{your_organization_slug}.commercelayer.io/api/events/:eventId/last_event_callbacks",
+            "params": [
+              {
+                "name": "eventId",
+                "value": "",
+                "type": "path",
+                "description": "The resource's id"
+              }
+            ]
+          },
+          "docs": "Retrieve the last event callbacks associated to the event"
+        },
+        {
+          "info": {
+            "name": "Retrieve the last event callbacks associated to the webhook",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{your_organization_slug}.commercelayer.io/api/webhooks/:webhookId/last_event_callbacks",
+            "params": [
+              {
+                "name": "webhookId",
+                "value": "",
+                "type": "path",
+                "description": "The resource's id"
+              }
+            ]
+          },
+          "docs": "Retrieve the last event callbacks associated to the webhook"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

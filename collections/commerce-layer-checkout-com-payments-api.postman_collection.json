@@ -1,0 +1,605 @@
+{
+  "item": [
+    {
+      "id": "b1d4223c-46ac-468d-baf2-1913f6dca180",
+      "name": "checkout_com_payments",
+      "description": {
+        "content": "resource type",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "1af9823e-20ee-4a04-8e3e-2e9a10a24207",
+          "name": "Retrieve the checkout com payments associated to the checkout.com gateway",
+          "request": {
+            "name": "Retrieve the checkout com payments associated to the checkout.com gateway",
+            "description": {
+              "content": "Retrieve the checkout com payments associated to the checkout.com gateway",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "checkout_com_gateways",
+                ":checkoutComGatewayId",
+                "checkout_com_payments"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "checkoutComGatewayId",
+                  "description": "(Required) The resource's id"
+                }
+              ]
+            },
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "06ddeda8-57c8-471a-958e-8fdd5adaee06",
+              "name": "The checkout_com_payments associated to the checkout.com gateway",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "checkout_com_gateways",
+                    ":checkoutComGatewayId",
+                    "checkout_com_payments"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "checkoutComGatewayId",
+                      "description": "(Required) The resource's id"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "c31a0035-4e88-473e-a3b2-4111edd6b05d",
+          "name": "List all checkout.com payments",
+          "request": {
+            "name": "List all checkout.com payments",
+            "description": {
+              "content": "List all checkout.com payments",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "checkout_com_payments"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/vnd.api+json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "56c8d156-32ab-4880-b42d-733170042199",
+              "name": "A list of checkout.com payment objects",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "checkout_com_payments"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/vnd.api+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/vnd.api+json"
+                }
+              ],
+              "body": "{\n  \"data\": [\n    {\n      \"id\": \"XAyRWNUzyN\",\n      \"type\": \"checkout_com_payments\",\n      \"links\": {\n        \"self\": \"string\"\n      },\n      \"attributes\": {\n        \"public_key\": \"pk_test_xxxx-yyyy-zzzz\",\n        \"token\": \"tok_4gzeau5o2uqubbk6fufs3m7p54\",\n        \"payment_session\": {\n          \"payment_session_secret\": \"pss_xxxx_yyy_zzzz\",\n          \"payment_session_token\": \"xxxxx_yyyyy_zzzzz\",\n          \"_links\": {\n            \"self\": {\n              \"href\": \"https://api.sandbox.checkout.com/payment-sessions/ps_xxxx_yyyy_zzzz\"\n            }\n          }\n        },\n        \"success_url\": \"http://commercelayer.dev/checkout_com/success\",\n        \"failure_url\": \"http://commercelayer.dev/checkout_com/failure\",\n        \"source_id\": \"src_nwd3m4in3hkuddfpjsaevunhdy\",\n        \"customer_token\": \"cus_udst2tfldj6upmye2reztkmm4i\",\n        \"redirect_uri\": \"https://api.checkout.com/3ds/pay_mbabizu24mvu3mela5njyhpit4\",\n        \"payment_response\": {\n          \"foo\": \"bar\"\n        },\n        \"mismatched_amounts\": false,\n        \"payment_instrument\": {\n          \"issuer\": \"cl bank\",\n          \"card_type\": \"visa\"\n        },\n        \"created_at\": \"2018-01-01T12:00:00.000Z\",\n        \"updated_at\": \"2018-01-01T12:00:00.000Z\",\n        \"reference\": \"ANY-EXTERNAL-REFEFERNCE\",\n        \"reference_origin\": \"ANY-EXTERNAL-REFEFERNCE-ORIGIN\",\n        \"metadata\": {\n          \"foo\": \"bar\"\n        }\n      },\n      \"relationships\": {\n        \"order\": {\n          \"links\": {\n            \"self\": \"string\",\n            \"related\": \"string\"\n          },\n          \"data\": {\n            \"type\": \"order\",\n            \"id\": \"string\"\n          }\n        },\n        \"payment_gateway\": {\n          \"links\": {\n            \"self\": \"string\",\n            \"related\": \"string\"\n          },\n          \"data\": {\n            \"type\": \"payment_gateway\",\n            \"id\": \"string\"\n          }\n        },\n        \"event_stores\": {\n          \"links\": {\n            \"self\": \"string\",\n            \"related\": \"string\"\n          },\n          \"data\": {\n            \"type\": \"event_stores\",\n            \"id\": \"string\"\n          }\n        }\n      }\n    },\n    {\n      \"id\": \"XAyRWNUzyN\",\n      \"type\": \"checkout_com_payments\",\n      \"links\": {\n        \"self\": \"string\"\n      },\n      \"attributes\": {\n        \"public_key\": \"pk_test_xxxx-yyyy-zzzz\",\n        \"token\": \"tok_4gzeau5o2uqubbk6fufs3m7p54\",\n        \"payment_session\": {\n          \"payment_session_secret\": \"pss_xxxx_yyy_zzzz\",\n          \"payment_session_token\": \"xxxxx_yyyyy_zzzzz\",\n          \"_links\": {\n            \"self\": {\n              \"href\": \"https://api.sandbox.checkout.com/payment-sessions/ps_xxxx_yyyy_zzzz\"\n            }\n          }\n        },\n        \"success_url\": \"http://commercelayer.dev/checkout_com/success\",\n        \"failure_url\": \"http://commercelayer.dev/checkout_com/failure\",\n        \"source_id\": \"src_nwd3m4in3hkuddfpjsaevunhdy\",\n        \"customer_token\": \"cus_udst2tfldj6upmye2reztkmm4i\",\n        \"redirect_uri\": \"https://api.checkout.com/3ds/pay_mbabizu24mvu3mela5njyhpit4\",\n        \"payment_response\": {\n          \"foo\": \"bar\"\n        },\n        \"mismatched_amounts\": false,\n        \"payment_instrument\": {\n          \"issuer\": \"cl bank\",\n          \"card_type\": \"visa\"\n        },\n        \"created_at\": \"2018-01-01T12:00:00.000Z\",\n        \"updated_at\": \"2018-01-01T12:00:00.000Z\",\n        \"reference\": \"ANY-EXTERNAL-REFEFERNCE\",\n        \"reference_origin\": \"ANY-EXTERNAL-REFEFERNCE-ORIGIN\",\n        \"metadata\": {\n          \"foo\": \"bar\"\n        }\n      },\n      \"relationships\": {\n        \"order\": {\n          \"links\": {\n            \"self\": \"string\",\n            \"related\": \"string\"\n          },\n          \"data\": {\n            \"type\": \"order\",\n            \"id\": \"string\"\n          }\n        },\n        \"payment_gateway\": {\n          \"links\": {\n            \"self\": \"string\",\n            \"related\": \"string\"\n          },\n          \"data\": {\n            \"type\": \"payment_gateway\",\n            \"id\": \"string\"\n          }\n        },\n        \"event_stores\": {\n          \"links\": {\n            \"self\": \"string\",\n            \"related\": \"string\"\n          },\n          \"data\": {\n            \"type\": \"event_stores\",\n            \"id\": \"string\"\n          }\n        }\n      }\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "6a11daf7-a371-4567-9885-3147f9165f10",
+          "name": "Create a checkout.com payment",
+          "request": {
+            "name": "Create a checkout.com payment",
+            "description": {
+              "content": "Create a checkout.com payment",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "checkout_com_payments"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/vnd.api+json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/vnd.api+json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"data\": {\n    \"type\": \"<string>\",\n    \"attributes\": {\n      \"token\": \"<string>\",\n      \"success_url\": \"<string>\",\n      \"failure_url\": \"<string>\",\n      \"reference\": \"<string>\",\n      \"reference_origin\": \"<string>\",\n      \"metadata\": \"<object>\"\n    },\n    \"relationships\": {\n      \"order\": {\n        \"data\": {\n          \"type\": \"<string>\",\n          \"id\": \"<string>\"\n        }\n      }\n    }\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "2fda2fb9-8905-4c57-99e7-a5ada127c927",
+              "name": "The created checkout.com payment object",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "checkout_com_payments"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/vnd.api+json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"data\": {\n    \"type\": \"<string>\",\n    \"attributes\": {\n      \"token\": \"tok_4gzeau5o2uqubbk6fufs3m7p54\",\n      \"success_url\": \"http://commercelayer.dev/checkout_com/success\",\n      \"failure_url\": \"http://commercelayer.dev/checkout_com/failure\",\n      \"reference\": \"ANY-EXTERNAL-REFEFERNCE\",\n      \"reference_origin\": \"ANY-EXTERNAL-REFEFERNCE-ORIGIN\",\n      \"metadata\": {\n        \"foo\": \"bar\"\n      }\n    },\n    \"relationships\": {\n      \"order\": {\n        \"data\": {\n          \"type\": \"<string>\",\n          \"id\": \"XAyRWNUzyN\"\n        }\n      }\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/vnd.api+json"
+                }
+              ],
+              "body": "{\n  \"data\": {\n    \"id\": \"XAyRWNUzyN\",\n    \"type\": \"checkout_com_payments\",\n    \"links\": {\n      \"self\": \"string\"\n    },\n    \"attributes\": {\n      \"public_key\": \"pk_test_xxxx-yyyy-zzzz\",\n      \"token\": \"tok_4gzeau5o2uqubbk6fufs3m7p54\",\n      \"payment_session\": {\n        \"payment_session_secret\": \"pss_xxxx_yyy_zzzz\",\n        \"payment_session_token\": \"xxxxx_yyyyy_zzzzz\",\n        \"_links\": {\n          \"self\": {\n            \"href\": \"https://api.sandbox.checkout.com/payment-sessions/ps_xxxx_yyyy_zzzz\"\n          }\n        }\n      },\n      \"success_url\": \"http://commercelayer.dev/checkout_com/success\",\n      \"failure_url\": \"http://commercelayer.dev/checkout_com/failure\",\n      \"source_id\": \"src_nwd3m4in3hkuddfpjsaevunhdy\",\n      \"customer_token\": \"cus_udst2tfldj6upmye2reztkmm4i\",\n      \"redirect_uri\": \"https://api.checkout.com/3ds/pay_mbabizu24mvu3mela5njyhpit4\",\n      \"payment_response\": {\n        \"foo\": \"bar\"\n      },\n      \"mismatched_amounts\": false,\n      \"payment_instrument\": {\n        \"issuer\": \"cl bank\",\n        \"card_type\": \"visa\"\n      },\n      \"created_at\": \"2018-01-01T12:00:00.000Z\",\n      \"updated_at\": \"2018-01-01T12:00:00.000Z\",\n      \"reference\": \"ANY-EXTERNAL-REFEFERNCE\",\n      \"reference_origin\": \"ANY-EXTERNAL-REFEFERNCE-ORIGIN\",\n      \"metadata\": {\n        \"foo\": \"bar\"\n      }\n    },\n    \"relationships\": {\n      \"order\": {\n        \"links\": {\n          \"self\": \"string\",\n          \"related\": \"string\"\n        },\n        \"data\": {\n          \"type\": \"order\",\n          \"id\": \"string\"\n        }\n      },\n      \"payment_gateway\": {\n        \"links\": {\n          \"self\": \"string\",\n          \"related\": \"string\"\n        },\n        \"data\": {\n          \"type\": \"payment_gateway\",\n          \"id\": \"string\"\n        }\n      },\n      \"event_stores\": {\n        \"links\": {\n          \"self\": \"string\",\n          \"related\": \"string\"\n        },\n        \"data\": {\n          \"type\": \"event_stores\",\n          \"id\": \"string\"\n        }\n      }\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "1fec97df-c87d-4805-b9fe-fe205965effb",
+          "name": "Retrieve a checkout.com payment",
+          "request": {
+            "name": "Retrieve a checkout.com payment",
+            "description": {
+              "content": "Retrieve a checkout.com payment",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "checkout_com_payments",
+                ":checkoutComPaymentId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "checkoutComPaymentId",
+                  "description": "(Required) The resource's id"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/vnd.api+json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "c8a156c9-cf8c-4291-a7b0-da0d204e685d",
+              "name": "The checkout.com payment object",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "checkout_com_payments",
+                    ":checkoutComPaymentId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "checkoutComPaymentId",
+                      "description": "(Required) The resource's id"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/vnd.api+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/vnd.api+json"
+                }
+              ],
+              "body": "{\n  \"data\": {\n    \"id\": \"XAyRWNUzyN\",\n    \"type\": \"checkout_com_payments\",\n    \"links\": {\n      \"self\": \"string\"\n    },\n    \"attributes\": {\n      \"public_key\": \"pk_test_xxxx-yyyy-zzzz\",\n      \"token\": \"tok_4gzeau5o2uqubbk6fufs3m7p54\",\n      \"payment_session\": {\n        \"payment_session_secret\": \"pss_xxxx_yyy_zzzz\",\n        \"payment_session_token\": \"xxxxx_yyyyy_zzzzz\",\n        \"_links\": {\n          \"self\": {\n            \"href\": \"https://api.sandbox.checkout.com/payment-sessions/ps_xxxx_yyyy_zzzz\"\n          }\n        }\n      },\n      \"success_url\": \"http://commercelayer.dev/checkout_com/success\",\n      \"failure_url\": \"http://commercelayer.dev/checkout_com/failure\",\n      \"source_id\": \"src_nwd3m4in3hkuddfpjsaevunhdy\",\n      \"customer_token\": \"cus_udst2tfldj6upmye2reztkmm4i\",\n      \"redirect_uri\": \"https://api.checkout.com/3ds/pay_mbabizu24mvu3mela5njyhpit4\",\n      \"payment_response\": {\n        \"foo\": \"bar\"\n      },\n      \"mismatched_amounts\": false,\n      \"payment_instrument\": {\n        \"issuer\": \"cl bank\",\n        \"card_type\": \"visa\"\n      },\n      \"created_at\": \"2018-01-01T12:00:00.000Z\",\n      \"updated_at\": \"2018-01-01T12:00:00.000Z\",\n      \"reference\": \"ANY-EXTERNAL-REFEFERNCE\",\n      \"reference_origin\": \"ANY-EXTERNAL-REFEFERNCE-ORIGIN\",\n      \"metadata\": {\n        \"foo\": \"bar\"\n      }\n    },\n    \"relationships\": {\n      \"order\": {\n        \"links\": {\n          \"self\": \"string\",\n          \"related\": \"string\"\n        },\n        \"data\": {\n          \"type\": \"order\",\n          \"id\": \"string\"\n        }\n      },\n      \"payment_gateway\": {\n        \"links\": {\n          \"self\": \"string\",\n          \"related\": \"string\"\n        },\n        \"data\": {\n          \"type\": \"payment_gateway\",\n          \"id\": \"string\"\n        }\n      },\n      \"event_stores\": {\n        \"links\": {\n          \"self\": \"string\",\n          \"related\": \"string\"\n        },\n        \"data\": {\n          \"type\": \"event_stores\",\n          \"id\": \"string\"\n        }\n      }\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "81c8febc-7736-4c90-9c58-0c808ca7071e",
+          "name": "Update a checkout.com payment",
+          "request": {
+            "name": "Update a checkout.com payment",
+            "description": {
+              "content": "Update a checkout.com payment",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "checkout_com_payments",
+                ":checkoutComPaymentId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "checkoutComPaymentId",
+                  "description": "(Required) The resource's id"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/vnd.api+json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/vnd.api+json"
+              }
+            ],
+            "method": "PATCH",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"data\": {\n    \"type\": \"<string>\",\n    \"id\": \"<string>\",\n    \"attributes\": {\n      \"token\": \"<string>\",\n      \"_details\": \"<boolean>\",\n      \"_refresh\": \"<boolean>\",\n      \"reference\": \"<string>\",\n      \"reference_origin\": \"<string>\",\n      \"metadata\": \"<object>\"\n    },\n    \"relationships\": {\n      \"order\": {\n        \"data\": {\n          \"type\": \"<string>\",\n          \"id\": \"<string>\"\n        }\n      }\n    }\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "5ade5f70-e797-440e-9009-b60b2e1f1c16",
+              "name": "The updated checkout.com payment object",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "checkout_com_payments",
+                    ":checkoutComPaymentId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "checkoutComPaymentId",
+                      "description": "(Required) The resource's id"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/vnd.api+json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"data\": {\n    \"type\": \"<string>\",\n    \"id\": \"XAyRWNUzyN\",\n    \"attributes\": {\n      \"token\": \"tok_4gzeau5o2uqubbk6fufs3m7p54\",\n      \"_details\": true,\n      \"_refresh\": true,\n      \"reference\": \"ANY-EXTERNAL-REFEFERNCE\",\n      \"reference_origin\": \"ANY-EXTERNAL-REFEFERNCE-ORIGIN\",\n      \"metadata\": {\n        \"foo\": \"bar\"\n      }\n    },\n    \"relationships\": {\n      \"order\": {\n        \"data\": {\n          \"type\": \"<string>\",\n          \"id\": \"XAyRWNUzyN\"\n        }\n      }\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/vnd.api+json"
+                }
+              ],
+              "body": "{\n  \"data\": {\n    \"id\": \"XAyRWNUzyN\",\n    \"type\": \"checkout_com_payments\",\n    \"links\": {\n      \"self\": \"string\"\n    },\n    \"attributes\": {\n      \"public_key\": \"pk_test_xxxx-yyyy-zzzz\",\n      \"token\": \"tok_4gzeau5o2uqubbk6fufs3m7p54\",\n      \"payment_session\": {\n        \"payment_session_secret\": \"pss_xxxx_yyy_zzzz\",\n        \"payment_session_token\": \"xxxxx_yyyyy_zzzzz\",\n        \"_links\": {\n          \"self\": {\n            \"href\": \"https://api.sandbox.checkout.com/payment-sessions/ps_xxxx_yyyy_zzzz\"\n          }\n        }\n      },\n      \"success_url\": \"http://commercelayer.dev/checkout_com/success\",\n      \"failure_url\": \"http://commercelayer.dev/checkout_com/failure\",\n      \"source_id\": \"src_nwd3m4in3hkuddfpjsaevunhdy\",\n      \"customer_token\": \"cus_udst2tfldj6upmye2reztkmm4i\",\n      \"redirect_uri\": \"https://api.checkout.com/3ds/pay_mbabizu24mvu3mela5njyhpit4\",\n      \"payment_response\": {\n        \"foo\": \"bar\"\n      },\n      \"mismatched_amounts\": false,\n      \"payment_instrument\": {\n        \"issuer\": \"cl bank\",\n        \"card_type\": \"visa\"\n      },\n      \"created_at\": \"2018-01-01T12:00:00.000Z\",\n      \"updated_at\": \"2018-01-01T12:00:00.000Z\",\n      \"reference\": \"ANY-EXTERNAL-REFEFERNCE\",\n      \"reference_origin\": \"ANY-EXTERNAL-REFEFERNCE-ORIGIN\",\n      \"metadata\": {\n        \"foo\": \"bar\"\n      }\n    },\n    \"relationships\": {\n      \"order\": {\n        \"links\": {\n          \"self\": \"string\",\n          \"related\": \"string\"\n        },\n        \"data\": {\n          \"type\": \"order\",\n          \"id\": \"string\"\n        }\n      },\n      \"payment_gateway\": {\n        \"links\": {\n          \"self\": \"string\",\n          \"related\": \"string\"\n        },\n        \"data\": {\n          \"type\": \"payment_gateway\",\n          \"id\": \"string\"\n        }\n      },\n      \"event_stores\": {\n        \"links\": {\n          \"self\": \"string\",\n          \"related\": \"string\"\n        },\n        \"data\": {\n          \"type\": \"event_stores\",\n          \"id\": \"string\"\n        }\n      }\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "7d21511d-fb3d-43d5-af78-0b5b4a285663",
+          "name": "Delete a checkout.com payment",
+          "request": {
+            "name": "Delete a checkout.com payment",
+            "description": {
+              "content": "Delete a checkout.com payment",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "checkout_com_payments",
+                ":checkoutComPaymentId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "checkoutComPaymentId",
+                  "description": "(Required) The resource's id"
+                }
+              ]
+            },
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "2426cf92-bfd1-4690-b4a6-a7d399b65900",
+              "name": "No content",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "checkout_com_payments",
+                    ":checkoutComPaymentId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "checkoutComPaymentId",
+                      "description": "(Required) The resource's id"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://{{your_organization_slug}}.commercelayer.io/api",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "401324ab-c0b3-4d2b-b3ee-2dbf6a04a82a",
+    "name": "Commerce Layer addresses checkout_com_payments API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Headless Commerce for Global Brands.\n\nContact Support:\n Name: API Support\n Email: support@commercelayer.io",
+      "type": "text/plain"
+    }
+  }
+}

@@ -1,0 +1,605 @@
+{
+  "item": [
+    {
+      "id": "20598453-d423-4a52-b4cb-8e15505de1c9",
+      "name": "satispay_payments",
+      "description": {
+        "content": "resource type",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "2fc83197-2356-41b0-8a5f-a7c22b8c98c3",
+          "name": "Retrieve the satispay payments associated to the satispay gateway",
+          "request": {
+            "name": "Retrieve the satispay payments associated to the satispay gateway",
+            "description": {
+              "content": "Retrieve the satispay payments associated to the satispay gateway",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "satispay_gateways",
+                ":satispayGatewayId",
+                "satispay_payments"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "satispayGatewayId",
+                  "description": "(Required) The resource's id"
+                }
+              ]
+            },
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "e060f718-6383-45f2-a9be-e807fd0813f6",
+              "name": "The satispay_payments associated to the satispay gateway",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "satispay_gateways",
+                    ":satispayGatewayId",
+                    "satispay_payments"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "satispayGatewayId",
+                      "description": "(Required) The resource's id"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "cb323236-c280-44bc-b0c9-a8caf8a30282",
+          "name": "List all satispay payments",
+          "request": {
+            "name": "List all satispay payments",
+            "description": {
+              "content": "List all satispay payments",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "satispay_payments"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/vnd.api+json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "fb210023-92b9-4c66-ba95-57b497a4a109",
+              "name": "A list of satispay payment objects",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "satispay_payments"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/vnd.api+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/vnd.api+json"
+                }
+              ],
+              "body": "{\n  \"data\": [\n    {\n      \"id\": \"XAyRWNUzyN\",\n      \"type\": \"satispay_payments\",\n      \"links\": {\n        \"self\": \"string\"\n      },\n      \"attributes\": {\n        \"payment_id\": \"xxxx-yyyy-zzzz\",\n        \"flow\": \"MATCH_CODE\",\n        \"status\": \"PENDING\",\n        \"redirect_url\": \"http://commercelayer.dev/satispay/redirect\",\n        \"payment_url\": \"https://online.satispay.com/pay/xxxx-yyyy-zzzz?redirect_url={redirect_url}\",\n        \"payment_response\": {\n          \"foo\": \"bar\"\n        },\n        \"payment_instrument\": {\n          \"issuer\": \"cl bank\",\n          \"card_type\": \"visa\"\n        },\n        \"created_at\": \"2018-01-01T12:00:00.000Z\",\n        \"updated_at\": \"2018-01-01T12:00:00.000Z\",\n        \"reference\": \"ANY-EXTERNAL-REFEFERNCE\",\n        \"reference_origin\": \"ANY-EXTERNAL-REFEFERNCE-ORIGIN\",\n        \"metadata\": {\n          \"foo\": \"bar\"\n        }\n      },\n      \"relationships\": {\n        \"order\": {\n          \"links\": {\n            \"self\": \"string\",\n            \"related\": \"string\"\n          },\n          \"data\": {\n            \"type\": \"order\",\n            \"id\": \"string\"\n          }\n        },\n        \"payment_gateway\": {\n          \"links\": {\n            \"self\": \"string\",\n            \"related\": \"string\"\n          },\n          \"data\": {\n            \"type\": \"payment_gateway\",\n            \"id\": \"string\"\n          }\n        },\n        \"event_stores\": {\n          \"links\": {\n            \"self\": \"string\",\n            \"related\": \"string\"\n          },\n          \"data\": {\n            \"type\": \"event_stores\",\n            \"id\": \"string\"\n          }\n        }\n      }\n    },\n    {\n      \"id\": \"XAyRWNUzyN\",\n      \"type\": \"satispay_payments\",\n      \"links\": {\n        \"self\": \"string\"\n      },\n      \"attributes\": {\n        \"payment_id\": \"xxxx-yyyy-zzzz\",\n        \"flow\": \"MATCH_CODE\",\n        \"status\": \"PENDING\",\n        \"redirect_url\": \"http://commercelayer.dev/satispay/redirect\",\n        \"payment_url\": \"https://online.satispay.com/pay/xxxx-yyyy-zzzz?redirect_url={redirect_url}\",\n        \"payment_response\": {\n          \"foo\": \"bar\"\n        },\n        \"payment_instrument\": {\n          \"issuer\": \"cl bank\",\n          \"card_type\": \"visa\"\n        },\n        \"created_at\": \"2018-01-01T12:00:00.000Z\",\n        \"updated_at\": \"2018-01-01T12:00:00.000Z\",\n        \"reference\": \"ANY-EXTERNAL-REFEFERNCE\",\n        \"reference_origin\": \"ANY-EXTERNAL-REFEFERNCE-ORIGIN\",\n        \"metadata\": {\n          \"foo\": \"bar\"\n        }\n      },\n      \"relationships\": {\n        \"order\": {\n          \"links\": {\n            \"self\": \"string\",\n            \"related\": \"string\"\n          },\n          \"data\": {\n            \"type\": \"order\",\n            \"id\": \"string\"\n          }\n        },\n        \"payment_gateway\": {\n          \"links\": {\n            \"self\": \"string\",\n            \"related\": \"string\"\n          },\n          \"data\": {\n            \"type\": \"payment_gateway\",\n            \"id\": \"string\"\n          }\n        },\n        \"event_stores\": {\n          \"links\": {\n            \"self\": \"string\",\n            \"related\": \"string\"\n          },\n          \"data\": {\n            \"type\": \"event_stores\",\n            \"id\": \"string\"\n          }\n        }\n      }\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "b39aef15-def0-4057-b7b4-d250d2b72b68",
+          "name": "Create a satispay payment",
+          "request": {
+            "name": "Create a satispay payment",
+            "description": {
+              "content": "Create a satispay payment",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "satispay_payments"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/vnd.api+json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/vnd.api+json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"data\": {\n    \"type\": \"<string>\",\n    \"attributes\": {\n      \"flow\": \"<string>\",\n      \"redirect_url\": \"<string>\",\n      \"reference\": \"<string>\",\n      \"reference_origin\": \"<string>\",\n      \"metadata\": \"<object>\"\n    },\n    \"relationships\": {\n      \"order\": {\n        \"data\": {\n          \"type\": \"<string>\",\n          \"id\": \"<string>\"\n        }\n      }\n    }\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "e11ff554-765b-4b08-8a04-df1bb611724c",
+              "name": "The created satispay payment object",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "satispay_payments"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/vnd.api+json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"data\": {\n    \"type\": \"<string>\",\n    \"attributes\": {\n      \"flow\": \"MATCH_CODE\",\n      \"redirect_url\": \"http://commercelayer.dev/satispay/redirect\",\n      \"reference\": \"ANY-EXTERNAL-REFEFERNCE\",\n      \"reference_origin\": \"ANY-EXTERNAL-REFEFERNCE-ORIGIN\",\n      \"metadata\": {\n        \"foo\": \"bar\"\n      }\n    },\n    \"relationships\": {\n      \"order\": {\n        \"data\": {\n          \"type\": \"<string>\",\n          \"id\": \"XAyRWNUzyN\"\n        }\n      }\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/vnd.api+json"
+                }
+              ],
+              "body": "{\n  \"data\": {\n    \"id\": \"XAyRWNUzyN\",\n    \"type\": \"satispay_payments\",\n    \"links\": {\n      \"self\": \"string\"\n    },\n    \"attributes\": {\n      \"payment_id\": \"xxxx-yyyy-zzzz\",\n      \"flow\": \"MATCH_CODE\",\n      \"status\": \"PENDING\",\n      \"redirect_url\": \"http://commercelayer.dev/satispay/redirect\",\n      \"payment_url\": \"https://online.satispay.com/pay/xxxx-yyyy-zzzz?redirect_url={redirect_url}\",\n      \"payment_response\": {\n        \"foo\": \"bar\"\n      },\n      \"payment_instrument\": {\n        \"issuer\": \"cl bank\",\n        \"card_type\": \"visa\"\n      },\n      \"created_at\": \"2018-01-01T12:00:00.000Z\",\n      \"updated_at\": \"2018-01-01T12:00:00.000Z\",\n      \"reference\": \"ANY-EXTERNAL-REFEFERNCE\",\n      \"reference_origin\": \"ANY-EXTERNAL-REFEFERNCE-ORIGIN\",\n      \"metadata\": {\n        \"foo\": \"bar\"\n      }\n    },\n    \"relationships\": {\n      \"order\": {\n        \"links\": {\n          \"self\": \"string\",\n          \"related\": \"string\"\n        },\n        \"data\": {\n          \"type\": \"order\",\n          \"id\": \"string\"\n        }\n      },\n      \"payment_gateway\": {\n        \"links\": {\n          \"self\": \"string\",\n          \"related\": \"string\"\n        },\n        \"data\": {\n          \"type\": \"payment_gateway\",\n          \"id\": \"string\"\n        }\n      },\n      \"event_stores\": {\n        \"links\": {\n          \"self\": \"string\",\n          \"related\": \"string\"\n        },\n        \"data\": {\n          \"type\": \"event_stores\",\n          \"id\": \"string\"\n        }\n      }\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "0b7834f5-7479-4798-8ea4-60b0d44d8448",
+          "name": "Retrieve a satispay payment",
+          "request": {
+            "name": "Retrieve a satispay payment",
+            "description": {
+              "content": "Retrieve a satispay payment",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "satispay_payments",
+                ":satispayPaymentId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "satispayPaymentId",
+                  "description": "(Required) The resource's id"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/vnd.api+json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "0d8e8d78-950c-40ec-a4bb-4205869fb43e",
+              "name": "The satispay payment object",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "satispay_payments",
+                    ":satispayPaymentId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "satispayPaymentId",
+                      "description": "(Required) The resource's id"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/vnd.api+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/vnd.api+json"
+                }
+              ],
+              "body": "{\n  \"data\": {\n    \"id\": \"XAyRWNUzyN\",\n    \"type\": \"satispay_payments\",\n    \"links\": {\n      \"self\": \"string\"\n    },\n    \"attributes\": {\n      \"payment_id\": \"xxxx-yyyy-zzzz\",\n      \"flow\": \"MATCH_CODE\",\n      \"status\": \"PENDING\",\n      \"redirect_url\": \"http://commercelayer.dev/satispay/redirect\",\n      \"payment_url\": \"https://online.satispay.com/pay/xxxx-yyyy-zzzz?redirect_url={redirect_url}\",\n      \"payment_response\": {\n        \"foo\": \"bar\"\n      },\n      \"payment_instrument\": {\n        \"issuer\": \"cl bank\",\n        \"card_type\": \"visa\"\n      },\n      \"created_at\": \"2018-01-01T12:00:00.000Z\",\n      \"updated_at\": \"2018-01-01T12:00:00.000Z\",\n      \"reference\": \"ANY-EXTERNAL-REFEFERNCE\",\n      \"reference_origin\": \"ANY-EXTERNAL-REFEFERNCE-ORIGIN\",\n      \"metadata\": {\n        \"foo\": \"bar\"\n      }\n    },\n    \"relationships\": {\n      \"order\": {\n        \"links\": {\n          \"self\": \"string\",\n          \"related\": \"string\"\n        },\n        \"data\": {\n          \"type\": \"order\",\n          \"id\": \"string\"\n        }\n      },\n      \"payment_gateway\": {\n        \"links\": {\n          \"self\": \"string\",\n          \"related\": \"string\"\n        },\n        \"data\": {\n          \"type\": \"payment_gateway\",\n          \"id\": \"string\"\n        }\n      },\n      \"event_stores\": {\n        \"links\": {\n          \"self\": \"string\",\n          \"related\": \"string\"\n        },\n        \"data\": {\n          \"type\": \"event_stores\",\n          \"id\": \"string\"\n        }\n      }\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "e4220ddf-95f8-4a5e-ab38-3ecc81d3e6de",
+          "name": "Update a satispay payment",
+          "request": {
+            "name": "Update a satispay payment",
+            "description": {
+              "content": "Update a satispay payment",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "satispay_payments",
+                ":satispayPaymentId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "satispayPaymentId",
+                  "description": "(Required) The resource's id"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/vnd.api+json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/vnd.api+json"
+              }
+            ],
+            "method": "PATCH",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"data\": {\n    \"type\": \"<string>\",\n    \"id\": \"<string>\",\n    \"attributes\": {\n      \"redirect_url\": \"<string>\",\n      \"_refresh\": \"<boolean>\",\n      \"reference\": \"<string>\",\n      \"reference_origin\": \"<string>\",\n      \"metadata\": \"<object>\"\n    },\n    \"relationships\": {\n      \"order\": {\n        \"data\": {\n          \"type\": \"<string>\",\n          \"id\": \"<string>\"\n        }\n      }\n    }\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "c304d304-5e77-4345-a21c-28d02bffae07",
+              "name": "The updated satispay payment object",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "satispay_payments",
+                    ":satispayPaymentId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "satispayPaymentId",
+                      "description": "(Required) The resource's id"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/vnd.api+json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"data\": {\n    \"type\": \"<string>\",\n    \"id\": \"XAyRWNUzyN\",\n    \"attributes\": {\n      \"redirect_url\": \"http://commercelayer.dev/satispay/redirect\",\n      \"_refresh\": true,\n      \"reference\": \"ANY-EXTERNAL-REFEFERNCE\",\n      \"reference_origin\": \"ANY-EXTERNAL-REFEFERNCE-ORIGIN\",\n      \"metadata\": {\n        \"foo\": \"bar\"\n      }\n    },\n    \"relationships\": {\n      \"order\": {\n        \"data\": {\n          \"type\": \"<string>\",\n          \"id\": \"XAyRWNUzyN\"\n        }\n      }\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/vnd.api+json"
+                }
+              ],
+              "body": "{\n  \"data\": {\n    \"id\": \"XAyRWNUzyN\",\n    \"type\": \"satispay_payments\",\n    \"links\": {\n      \"self\": \"string\"\n    },\n    \"attributes\": {\n      \"payment_id\": \"xxxx-yyyy-zzzz\",\n      \"flow\": \"MATCH_CODE\",\n      \"status\": \"PENDING\",\n      \"redirect_url\": \"http://commercelayer.dev/satispay/redirect\",\n      \"payment_url\": \"https://online.satispay.com/pay/xxxx-yyyy-zzzz?redirect_url={redirect_url}\",\n      \"payment_response\": {\n        \"foo\": \"bar\"\n      },\n      \"payment_instrument\": {\n        \"issuer\": \"cl bank\",\n        \"card_type\": \"visa\"\n      },\n      \"created_at\": \"2018-01-01T12:00:00.000Z\",\n      \"updated_at\": \"2018-01-01T12:00:00.000Z\",\n      \"reference\": \"ANY-EXTERNAL-REFEFERNCE\",\n      \"reference_origin\": \"ANY-EXTERNAL-REFEFERNCE-ORIGIN\",\n      \"metadata\": {\n        \"foo\": \"bar\"\n      }\n    },\n    \"relationships\": {\n      \"order\": {\n        \"links\": {\n          \"self\": \"string\",\n          \"related\": \"string\"\n        },\n        \"data\": {\n          \"type\": \"order\",\n          \"id\": \"string\"\n        }\n      },\n      \"payment_gateway\": {\n        \"links\": {\n          \"self\": \"string\",\n          \"related\": \"string\"\n        },\n        \"data\": {\n          \"type\": \"payment_gateway\",\n          \"id\": \"string\"\n        }\n      },\n      \"event_stores\": {\n        \"links\": {\n          \"self\": \"string\",\n          \"related\": \"string\"\n        },\n        \"data\": {\n          \"type\": \"event_stores\",\n          \"id\": \"string\"\n        }\n      }\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "3dd59481-891b-4e50-a83b-d0b125277879",
+          "name": "Delete a satispay payment",
+          "request": {
+            "name": "Delete a satispay payment",
+            "description": {
+              "content": "Delete a satispay payment",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "satispay_payments",
+                ":satispayPaymentId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "satispayPaymentId",
+                  "description": "(Required) The resource's id"
+                }
+              ]
+            },
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "13fccb36-cb55-4e2f-92f0-f4d859f42ec4",
+              "name": "No content",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "satispay_payments",
+                    ":satispayPaymentId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "satispayPaymentId",
+                      "description": "(Required) The resource's id"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://{{your_organization_slug}}.commercelayer.io/api",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "3179e94e-82f6-4aaa-ad8b-da3a3c7d273b",
+    "name": "Commerce Layer addresses satispay_payments API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Headless Commerce for Global Brands.\n\nContact Support:\n Name: API Support\n Email: support@commercelayer.io",
+      "type": "text/plain"
+    }
+  }
+}

@@ -1,0 +1,92 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Commerce Layer addresses reserved_stocks API",
+    "version": "7.10.1"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "reserved_stocks",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List all reserved stocks",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{your_organization_slug}.commercelayer.io/api/reserved_stocks"
+          },
+          "docs": "List all reserved stocks"
+        },
+        {
+          "info": {
+            "name": "Retrieve a reserved stock",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{your_organization_slug}.commercelayer.io/api/reserved_stocks/:reservedStockId",
+            "params": [
+              {
+                "name": "reservedStockId",
+                "value": "",
+                "type": "path",
+                "description": "The resource's id"
+              }
+            ]
+          },
+          "docs": "Retrieve a reserved stock"
+        },
+        {
+          "info": {
+            "name": "Retrieve the reserved stock associated to the stock item",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{your_organization_slug}.commercelayer.io/api/stock_items/:stockItemId/reserved_stock",
+            "params": [
+              {
+                "name": "stockItemId",
+                "value": "",
+                "type": "path",
+                "description": "The resource's id"
+              }
+            ]
+          },
+          "docs": "Retrieve the reserved stock associated to the stock item"
+        },
+        {
+          "info": {
+            "name": "Retrieve the reserved stock associated to the stock reservation",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{your_organization_slug}.commercelayer.io/api/stock_reservations/:stockReservationId/reserved_stock",
+            "params": [
+              {
+                "name": "stockReservationId",
+                "value": "",
+                "type": "path",
+                "description": "The resource's id"
+              }
+            ]
+          },
+          "docs": "Retrieve the reserved stock associated to the stock reservation"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

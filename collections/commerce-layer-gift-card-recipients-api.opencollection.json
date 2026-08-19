@@ -1,0 +1,130 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Commerce Layer addresses gift_card_recipients API",
+    "version": "7.10.1"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "gift_card_recipients",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List all gift card recipients",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{your_organization_slug}.commercelayer.io/api/gift_card_recipients"
+          },
+          "docs": "List all gift card recipients"
+        },
+        {
+          "info": {
+            "name": "Create a gift card recipient",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{your_organization_slug}.commercelayer.io/api/gift_card_recipients",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a gift card recipient"
+        },
+        {
+          "info": {
+            "name": "Retrieve a gift card recipient",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{your_organization_slug}.commercelayer.io/api/gift_card_recipients/:giftCardRecipientId",
+            "params": [
+              {
+                "name": "giftCardRecipientId",
+                "value": "",
+                "type": "path",
+                "description": "The resource's id"
+              }
+            ]
+          },
+          "docs": "Retrieve a gift card recipient"
+        },
+        {
+          "info": {
+            "name": "Update a gift card recipient",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://{your_organization_slug}.commercelayer.io/api/gift_card_recipients/:giftCardRecipientId",
+            "params": [
+              {
+                "name": "giftCardRecipientId",
+                "value": "",
+                "type": "path",
+                "description": "The resource's id"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update a gift card recipient"
+        },
+        {
+          "info": {
+            "name": "Delete a gift card recipient",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://{your_organization_slug}.commercelayer.io/api/gift_card_recipients/:giftCardRecipientId",
+            "params": [
+              {
+                "name": "giftCardRecipientId",
+                "value": "",
+                "type": "path",
+                "description": "The resource's id"
+              }
+            ]
+          },
+          "docs": "Delete a gift card recipient"
+        },
+        {
+          "info": {
+            "name": "Retrieve the gift card recipient associated to the gift card",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{your_organization_slug}.commercelayer.io/api/gift_cards/:giftCardId/gift_card_recipient",
+            "params": [
+              {
+                "name": "giftCardId",
+                "value": "",
+                "type": "path",
+                "description": "The resource's id"
+              }
+            ]
+          },
+          "docs": "Retrieve the gift card recipient associated to the gift card"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

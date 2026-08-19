@@ -1,0 +1,281 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Commerce Layer addresses returns API",
+    "version": "7.10.1"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "returns",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Retrieve the return associated to the capture",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{your_organization_slug}.commercelayer.io/api/captures/:captureId/return",
+            "params": [
+              {
+                "name": "captureId",
+                "value": "",
+                "type": "path",
+                "description": "The resource's id"
+              }
+            ]
+          },
+          "docs": "Retrieve the return associated to the capture"
+        },
+        {
+          "info": {
+            "name": "Retrieve the returns associated to the customer",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{your_organization_slug}.commercelayer.io/api/customers/:customerId/returns",
+            "params": [
+              {
+                "name": "customerId",
+                "value": "",
+                "type": "path",
+                "description": "The resource's id"
+              }
+            ]
+          },
+          "docs": "Retrieve the returns associated to the customer"
+        },
+        {
+          "info": {
+            "name": "Retrieve the returns associated to the order",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{your_organization_slug}.commercelayer.io/api/orders/:orderId/returns",
+            "params": [
+              {
+                "name": "orderId",
+                "value": "",
+                "type": "path",
+                "description": "The resource's id"
+              }
+            ]
+          },
+          "docs": "Retrieve the returns associated to the order"
+        },
+        {
+          "info": {
+            "name": "Retrieve the return associated to the refund",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{your_organization_slug}.commercelayer.io/api/refunds/:refundId/return",
+            "params": [
+              {
+                "name": "refundId",
+                "value": "",
+                "type": "path",
+                "description": "The resource's id"
+              }
+            ]
+          },
+          "docs": "Retrieve the return associated to the refund"
+        },
+        {
+          "info": {
+            "name": "Retrieve the return associated to the return line item",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{your_organization_slug}.commercelayer.io/api/return_line_items/:returnLineItemId/return",
+            "params": [
+              {
+                "name": "returnLineItemId",
+                "value": "",
+                "type": "path",
+                "description": "The resource's id"
+              }
+            ]
+          },
+          "docs": "Retrieve the return associated to the return line item"
+        },
+        {
+          "info": {
+            "name": "List all returns",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{your_organization_slug}.commercelayer.io/api/returns"
+          },
+          "docs": "List all returns"
+        },
+        {
+          "info": {
+            "name": "Create a return",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{your_organization_slug}.commercelayer.io/api/returns",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a return"
+        },
+        {
+          "info": {
+            "name": "Retrieve a return",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{your_organization_slug}.commercelayer.io/api/returns/:returnId",
+            "params": [
+              {
+                "name": "returnId",
+                "value": "",
+                "type": "path",
+                "description": "The resource's id"
+              }
+            ]
+          },
+          "docs": "Retrieve a return"
+        },
+        {
+          "info": {
+            "name": "Update a return",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://{your_organization_slug}.commercelayer.io/api/returns/:returnId",
+            "params": [
+              {
+                "name": "returnId",
+                "value": "",
+                "type": "path",
+                "description": "The resource's id"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update a return"
+        },
+        {
+          "info": {
+            "name": "Delete a return",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://{your_organization_slug}.commercelayer.io/api/returns/:returnId",
+            "params": [
+              {
+                "name": "returnId",
+                "value": "",
+                "type": "path",
+                "description": "The resource's id"
+              }
+            ]
+          },
+          "docs": "Delete a return"
+        },
+        {
+          "info": {
+            "name": "Query breakdown on returns",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{your_organization_slug}.commercelayer.io/api/returns/breakdown",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Breakdowns are aggregations that summarize your data as metrics (based on specific operators) or statistics, computed on field values. When performing a breakdown query on the Metrics API endpoint you get in the response the value of the computation (based on the selected operator) on the selected field, aggregated by another field.\r\n\r\n### Nesting breakdowns\r\nBreakdowns can be nested recursively one into the other, up to one level (see example). The valid values allowed for the by key of the nes"
+        },
+        {
+          "info": {
+            "name": "Query date_breakdown on returns",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{your_organization_slug}.commercelayer.io/api/returns/date_breakdown",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Date breakdowns summarizes metrics data grouped by time intervals on a defined time range. They also support support breakdowns over the main date breakdown query and also supports all breakdown queries capabilities through the \"breakdown\" key, this also includes the possibility of nesting the breakdown over the main breakdown. \r\n\r\n\r\nSingle date breakdown request (no breakdown)\r\n\r\n`{\r\n\t\"date_breakdown\": {\r\n        \"by\": \"return.created_at\",\r\n        \"field\": \"return_line_items.line_item_total_am"
+        },
+        {
+          "info": {
+            "name": "Query stats on returns",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{your_organization_slug}.commercelayer.io/api/returns/stats",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Stats are aggregations that summarize your data within an operator (depending of the field, some of them could not be available), such as: value_count, cardinality, avg, min, max, sum or stats (which returns avg, min, max, sum) computed on the field specificed. When performing a stats query on the Metrics API endpoint you get in the response the value of the computation (based on the selected operator) on the selected field.\r\n\r\nStats request\r\n\r\n`{\r\n\t \"stats\": {\r\n        \"field\": \"return_line_ite"
+        },
+        {
+          "info": {
+            "name": "Query search on returns",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{your_organization_slug}.commercelayer.io/api/returns/search",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Get search results from returns"
+        },
+        {
+          "info": {
+            "name": "Query export on returns",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{your_organization_slug}.commercelayer.io/api/returns/export",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Get export results from returns"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

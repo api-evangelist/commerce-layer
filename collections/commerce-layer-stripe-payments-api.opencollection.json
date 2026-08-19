@@ -1,0 +1,130 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Commerce Layer addresses stripe_payments API",
+    "version": "7.10.1"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "stripe_payments",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Retrieve the stripe payments associated to the stripe gateway",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{your_organization_slug}.commercelayer.io/api/stripe_gateways/:stripeGatewayId/stripe_payments",
+            "params": [
+              {
+                "name": "stripeGatewayId",
+                "value": "",
+                "type": "path",
+                "description": "The resource's id"
+              }
+            ]
+          },
+          "docs": "Retrieve the stripe payments associated to the stripe gateway"
+        },
+        {
+          "info": {
+            "name": "List all stripe payments",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{your_organization_slug}.commercelayer.io/api/stripe_payments"
+          },
+          "docs": "List all stripe payments"
+        },
+        {
+          "info": {
+            "name": "Create a stripe payment",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{your_organization_slug}.commercelayer.io/api/stripe_payments",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a stripe payment"
+        },
+        {
+          "info": {
+            "name": "Retrieve a stripe payment",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{your_organization_slug}.commercelayer.io/api/stripe_payments/:stripePaymentId",
+            "params": [
+              {
+                "name": "stripePaymentId",
+                "value": "",
+                "type": "path",
+                "description": "The resource's id"
+              }
+            ]
+          },
+          "docs": "Retrieve a stripe payment"
+        },
+        {
+          "info": {
+            "name": "Update a stripe payment",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://{your_organization_slug}.commercelayer.io/api/stripe_payments/:stripePaymentId",
+            "params": [
+              {
+                "name": "stripePaymentId",
+                "value": "",
+                "type": "path",
+                "description": "The resource's id"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update a stripe payment"
+        },
+        {
+          "info": {
+            "name": "Delete a stripe payment",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://{your_organization_slug}.commercelayer.io/api/stripe_payments/:stripePaymentId",
+            "params": [
+              {
+                "name": "stripePaymentId",
+                "value": "",
+                "type": "path",
+                "description": "The resource's id"
+              }
+            ]
+          },
+          "docs": "Delete a stripe payment"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

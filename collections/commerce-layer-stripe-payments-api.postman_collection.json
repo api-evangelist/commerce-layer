@@ -1,0 +1,605 @@
+{
+  "item": [
+    {
+      "id": "8ce8ad9e-cd81-420c-8d76-ca893abf01bb",
+      "name": "stripe_payments",
+      "description": {
+        "content": "resource type",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "2ea98c1b-e92a-4498-8381-d21efb2e7437",
+          "name": "Retrieve the stripe payments associated to the stripe gateway",
+          "request": {
+            "name": "Retrieve the stripe payments associated to the stripe gateway",
+            "description": {
+              "content": "Retrieve the stripe payments associated to the stripe gateway",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "stripe_gateways",
+                ":stripeGatewayId",
+                "stripe_payments"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "stripeGatewayId",
+                  "description": "(Required) The resource's id"
+                }
+              ]
+            },
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "5349de86-e0d0-4e97-89d8-9514ce617d1e",
+              "name": "The stripe_payments associated to the stripe gateway",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "stripe_gateways",
+                    ":stripeGatewayId",
+                    "stripe_payments"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "stripeGatewayId",
+                      "description": "(Required) The resource's id"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "73c414cb-fb9b-4bb4-80bf-52393155c58d",
+          "name": "List all stripe payments",
+          "request": {
+            "name": "List all stripe payments",
+            "description": {
+              "content": "List all stripe payments",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "stripe_payments"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/vnd.api+json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "daacb6d8-8ebe-4c8a-9416-620054f366ea",
+              "name": "A list of stripe payment objects",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "stripe_payments"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/vnd.api+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/vnd.api+json"
+                }
+              ],
+              "body": "{\n  \"data\": [\n    {\n      \"id\": \"XAyRWNUzyN\",\n      \"type\": \"stripe_payments\",\n      \"links\": {\n        \"self\": \"string\"\n      },\n      \"attributes\": {\n        \"stripe_id\": \"pi_1234XXX\",\n        \"client_secret\": \"pi_1234XXX_secret_5678YYY\",\n        \"connected_account\": \"acct_xxxx-yyyy-zzzz\",\n        \"charge_id\": \"ch_1234XXX\",\n        \"publishable_key\": \"pk_live_xxxx-yyyy-zzzz\",\n        \"on_behalf_of\": \"xxxx-yyyy-zzzz\",\n        \"transfer_group\": \"xxxx-yyyy-zzzz\",\n        \"options\": {\n          \"customer\": \"cus_xxx\",\n          \"payment_method\": \"pm_xxx\"\n        },\n        \"payment_method\": {},\n        \"mismatched_amounts\": false,\n        \"return_url\": \"https://yourdomain.com/thankyou\",\n        \"receipt_email\": \"john@example.com\",\n        \"payment_instrument\": {\n          \"issuer\": \"cl bank\",\n          \"card_type\": \"visa\"\n        },\n        \"created_at\": \"2018-01-01T12:00:00.000Z\",\n        \"updated_at\": \"2018-01-01T12:00:00.000Z\",\n        \"reference\": \"ANY-EXTERNAL-REFEFERNCE\",\n        \"reference_origin\": \"ANY-EXTERNAL-REFEFERNCE-ORIGIN\",\n        \"metadata\": {\n          \"foo\": \"bar\"\n        }\n      },\n      \"relationships\": {\n        \"order\": {\n          \"links\": {\n            \"self\": \"string\",\n            \"related\": \"string\"\n          },\n          \"data\": {\n            \"type\": \"order\",\n            \"id\": \"string\"\n          }\n        },\n        \"payment_gateway\": {\n          \"links\": {\n            \"self\": \"string\",\n            \"related\": \"string\"\n          },\n          \"data\": {\n            \"type\": \"payment_gateway\",\n            \"id\": \"string\"\n          }\n        },\n        \"event_stores\": {\n          \"links\": {\n            \"self\": \"string\",\n            \"related\": \"string\"\n          },\n          \"data\": {\n            \"type\": \"event_stores\",\n            \"id\": \"string\"\n          }\n        }\n      }\n    },\n    {\n      \"id\": \"XAyRWNUzyN\",\n      \"type\": \"stripe_payments\",\n      \"links\": {\n        \"self\": \"string\"\n      },\n      \"attributes\": {\n        \"stripe_id\": \"pi_1234XXX\",\n        \"client_secret\": \"pi_1234XXX_secret_5678YYY\",\n        \"connected_account\": \"acct_xxxx-yyyy-zzzz\",\n        \"charge_id\": \"ch_1234XXX\",\n        \"publishable_key\": \"pk_live_xxxx-yyyy-zzzz\",\n        \"on_behalf_of\": \"xxxx-yyyy-zzzz\",\n        \"transfer_group\": \"xxxx-yyyy-zzzz\",\n        \"options\": {\n          \"customer\": \"cus_xxx\",\n          \"payment_method\": \"pm_xxx\"\n        },\n        \"payment_method\": {},\n        \"mismatched_amounts\": false,\n        \"return_url\": \"https://yourdomain.com/thankyou\",\n        \"receipt_email\": \"john@example.com\",\n        \"payment_instrument\": {\n          \"issuer\": \"cl bank\",\n          \"card_type\": \"visa\"\n        },\n        \"created_at\": \"2018-01-01T12:00:00.000Z\",\n        \"updated_at\": \"2018-01-01T12:00:00.000Z\",\n        \"reference\": \"ANY-EXTERNAL-REFEFERNCE\",\n        \"reference_origin\": \"ANY-EXTERNAL-REFEFERNCE-ORIGIN\",\n        \"metadata\": {\n          \"foo\": \"bar\"\n        }\n      },\n      \"relationships\": {\n        \"order\": {\n          \"links\": {\n            \"self\": \"string\",\n            \"related\": \"string\"\n          },\n          \"data\": {\n            \"type\": \"order\",\n            \"id\": \"string\"\n          }\n        },\n        \"payment_gateway\": {\n          \"links\": {\n            \"self\": \"string\",\n            \"related\": \"string\"\n          },\n          \"data\": {\n            \"type\": \"payment_gateway\",\n            \"id\": \"string\"\n          }\n        },\n        \"event_stores\": {\n          \"links\": {\n            \"self\": \"string\",\n            \"related\": \"string\"\n          },\n          \"data\": {\n            \"type\": \"event_stores\",\n            \"id\": \"string\"\n          }\n        }\n      }\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "3f933687-bad4-4187-85f2-726f0fca0e7b",
+          "name": "Create a stripe payment",
+          "request": {
+            "name": "Create a stripe payment",
+            "description": {
+              "content": "Create a stripe payment",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "stripe_payments"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/vnd.api+json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/vnd.api+json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"data\": {\n    \"type\": \"<string>\",\n    \"attributes\": {\n      \"stripe_id\": \"<string>\",\n      \"client_secret\": \"<string>\",\n      \"options\": \"<object>\",\n      \"return_url\": \"<string>\",\n      \"receipt_email\": \"<string>\",\n      \"reference\": \"<string>\",\n      \"reference_origin\": \"<string>\",\n      \"metadata\": \"<object>\"\n    },\n    \"relationships\": {\n      \"order\": {\n        \"data\": {\n          \"type\": \"<string>\",\n          \"id\": \"<string>\"\n        }\n      }\n    }\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "69fee0f1-f8e4-4d9c-bdb8-be1796a397d2",
+              "name": "The created stripe payment object",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "stripe_payments"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/vnd.api+json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"data\": {\n    \"type\": \"<string>\",\n    \"attributes\": {\n      \"stripe_id\": \"pi_1234XXX\",\n      \"client_secret\": \"pi_1234XXX_secret_5678YYY\",\n      \"options\": {\n        \"customer\": \"cus_xxx\",\n        \"payment_method\": \"pm_xxx\"\n      },\n      \"return_url\": \"https://yourdomain.com/thankyou\",\n      \"receipt_email\": \"john@example.com\",\n      \"reference\": \"ANY-EXTERNAL-REFEFERNCE\",\n      \"reference_origin\": \"ANY-EXTERNAL-REFEFERNCE-ORIGIN\",\n      \"metadata\": {\n        \"foo\": \"bar\"\n      }\n    },\n    \"relationships\": {\n      \"order\": {\n        \"data\": {\n          \"type\": \"<string>\",\n          \"id\": \"XAyRWNUzyN\"\n        }\n      }\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/vnd.api+json"
+                }
+              ],
+              "body": "{\n  \"data\": {\n    \"id\": \"XAyRWNUzyN\",\n    \"type\": \"stripe_payments\",\n    \"links\": {\n      \"self\": \"string\"\n    },\n    \"attributes\": {\n      \"stripe_id\": \"pi_1234XXX\",\n      \"client_secret\": \"pi_1234XXX_secret_5678YYY\",\n      \"connected_account\": \"acct_xxxx-yyyy-zzzz\",\n      \"charge_id\": \"ch_1234XXX\",\n      \"publishable_key\": \"pk_live_xxxx-yyyy-zzzz\",\n      \"on_behalf_of\": \"xxxx-yyyy-zzzz\",\n      \"transfer_group\": \"xxxx-yyyy-zzzz\",\n      \"options\": {\n        \"customer\": \"cus_xxx\",\n        \"payment_method\": \"pm_xxx\"\n      },\n      \"payment_method\": {},\n      \"mismatched_amounts\": false,\n      \"return_url\": \"https://yourdomain.com/thankyou\",\n      \"receipt_email\": \"john@example.com\",\n      \"payment_instrument\": {\n        \"issuer\": \"cl bank\",\n        \"card_type\": \"visa\"\n      },\n      \"created_at\": \"2018-01-01T12:00:00.000Z\",\n      \"updated_at\": \"2018-01-01T12:00:00.000Z\",\n      \"reference\": \"ANY-EXTERNAL-REFEFERNCE\",\n      \"reference_origin\": \"ANY-EXTERNAL-REFEFERNCE-ORIGIN\",\n      \"metadata\": {\n        \"foo\": \"bar\"\n      }\n    },\n    \"relationships\": {\n      \"order\": {\n        \"links\": {\n          \"self\": \"string\",\n          \"related\": \"string\"\n        },\n        \"data\": {\n          \"type\": \"order\",\n          \"id\": \"string\"\n        }\n      },\n      \"payment_gateway\": {\n        \"links\": {\n          \"self\": \"string\",\n          \"related\": \"string\"\n        },\n        \"data\": {\n          \"type\": \"payment_gateway\",\n          \"id\": \"string\"\n        }\n      },\n      \"event_stores\": {\n        \"links\": {\n          \"self\": \"string\",\n          \"related\": \"string\"\n        },\n        \"data\": {\n          \"type\": \"event_stores\",\n          \"id\": \"string\"\n        }\n      }\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "0e7a8db1-c581-4d64-9103-22b4cb20d8d6",
+          "name": "Retrieve a stripe payment",
+          "request": {
+            "name": "Retrieve a stripe payment",
+            "description": {
+              "content": "Retrieve a stripe payment",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "stripe_payments",
+                ":stripePaymentId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "stripePaymentId",
+                  "description": "(Required) The resource's id"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/vnd.api+json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "ffdfd775-deee-4bb8-b5b5-6cb961da52ff",
+              "name": "The stripe payment object",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "stripe_payments",
+                    ":stripePaymentId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "stripePaymentId",
+                      "description": "(Required) The resource's id"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/vnd.api+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/vnd.api+json"
+                }
+              ],
+              "body": "{\n  \"data\": {\n    \"id\": \"XAyRWNUzyN\",\n    \"type\": \"stripe_payments\",\n    \"links\": {\n      \"self\": \"string\"\n    },\n    \"attributes\": {\n      \"stripe_id\": \"pi_1234XXX\",\n      \"client_secret\": \"pi_1234XXX_secret_5678YYY\",\n      \"connected_account\": \"acct_xxxx-yyyy-zzzz\",\n      \"charge_id\": \"ch_1234XXX\",\n      \"publishable_key\": \"pk_live_xxxx-yyyy-zzzz\",\n      \"on_behalf_of\": \"xxxx-yyyy-zzzz\",\n      \"transfer_group\": \"xxxx-yyyy-zzzz\",\n      \"options\": {\n        \"customer\": \"cus_xxx\",\n        \"payment_method\": \"pm_xxx\"\n      },\n      \"payment_method\": {},\n      \"mismatched_amounts\": false,\n      \"return_url\": \"https://yourdomain.com/thankyou\",\n      \"receipt_email\": \"john@example.com\",\n      \"payment_instrument\": {\n        \"issuer\": \"cl bank\",\n        \"card_type\": \"visa\"\n      },\n      \"created_at\": \"2018-01-01T12:00:00.000Z\",\n      \"updated_at\": \"2018-01-01T12:00:00.000Z\",\n      \"reference\": \"ANY-EXTERNAL-REFEFERNCE\",\n      \"reference_origin\": \"ANY-EXTERNAL-REFEFERNCE-ORIGIN\",\n      \"metadata\": {\n        \"foo\": \"bar\"\n      }\n    },\n    \"relationships\": {\n      \"order\": {\n        \"links\": {\n          \"self\": \"string\",\n          \"related\": \"string\"\n        },\n        \"data\": {\n          \"type\": \"order\",\n          \"id\": \"string\"\n        }\n      },\n      \"payment_gateway\": {\n        \"links\": {\n          \"self\": \"string\",\n          \"related\": \"string\"\n        },\n        \"data\": {\n          \"type\": \"payment_gateway\",\n          \"id\": \"string\"\n        }\n      },\n      \"event_stores\": {\n        \"links\": {\n          \"self\": \"string\",\n          \"related\": \"string\"\n        },\n        \"data\": {\n          \"type\": \"event_stores\",\n          \"id\": \"string\"\n        }\n      }\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "1f361713-7eaa-4715-a314-f50163c1df40",
+          "name": "Update a stripe payment",
+          "request": {
+            "name": "Update a stripe payment",
+            "description": {
+              "content": "Update a stripe payment",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "stripe_payments",
+                ":stripePaymentId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "stripePaymentId",
+                  "description": "(Required) The resource's id"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/vnd.api+json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/vnd.api+json"
+              }
+            ],
+            "method": "PATCH",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"data\": {\n    \"type\": \"<string>\",\n    \"id\": \"<string>\",\n    \"attributes\": {\n      \"options\": \"<object>\",\n      \"return_url\": \"<string>\",\n      \"_update\": \"<boolean>\",\n      \"_refresh\": \"<boolean>\",\n      \"reference\": \"<string>\",\n      \"reference_origin\": \"<string>\",\n      \"metadata\": \"<object>\"\n    },\n    \"relationships\": {\n      \"order\": {\n        \"data\": {\n          \"type\": \"<string>\",\n          \"id\": \"<string>\"\n        }\n      }\n    }\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "19cbe416-51bd-4064-b72b-6264a7f185b8",
+              "name": "The updated stripe payment object",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "stripe_payments",
+                    ":stripePaymentId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "stripePaymentId",
+                      "description": "(Required) The resource's id"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/vnd.api+json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"data\": {\n    \"type\": \"<string>\",\n    \"id\": \"XAyRWNUzyN\",\n    \"attributes\": {\n      \"options\": {\n        \"customer\": \"cus_xxx\",\n        \"payment_method\": \"pm_xxx\"\n      },\n      \"return_url\": \"https://yourdomain.com/thankyou\",\n      \"_update\": true,\n      \"_refresh\": true,\n      \"reference\": \"ANY-EXTERNAL-REFEFERNCE\",\n      \"reference_origin\": \"ANY-EXTERNAL-REFEFERNCE-ORIGIN\",\n      \"metadata\": {\n        \"foo\": \"bar\"\n      }\n    },\n    \"relationships\": {\n      \"order\": {\n        \"data\": {\n          \"type\": \"<string>\",\n          \"id\": \"XAyRWNUzyN\"\n        }\n      }\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/vnd.api+json"
+                }
+              ],
+              "body": "{\n  \"data\": {\n    \"id\": \"XAyRWNUzyN\",\n    \"type\": \"stripe_payments\",\n    \"links\": {\n      \"self\": \"string\"\n    },\n    \"attributes\": {\n      \"stripe_id\": \"pi_1234XXX\",\n      \"client_secret\": \"pi_1234XXX_secret_5678YYY\",\n      \"connected_account\": \"acct_xxxx-yyyy-zzzz\",\n      \"charge_id\": \"ch_1234XXX\",\n      \"publishable_key\": \"pk_live_xxxx-yyyy-zzzz\",\n      \"on_behalf_of\": \"xxxx-yyyy-zzzz\",\n      \"transfer_group\": \"xxxx-yyyy-zzzz\",\n      \"options\": {\n        \"customer\": \"cus_xxx\",\n        \"payment_method\": \"pm_xxx\"\n      },\n      \"payment_method\": {},\n      \"mismatched_amounts\": false,\n      \"return_url\": \"https://yourdomain.com/thankyou\",\n      \"receipt_email\": \"john@example.com\",\n      \"payment_instrument\": {\n        \"issuer\": \"cl bank\",\n        \"card_type\": \"visa\"\n      },\n      \"created_at\": \"2018-01-01T12:00:00.000Z\",\n      \"updated_at\": \"2018-01-01T12:00:00.000Z\",\n      \"reference\": \"ANY-EXTERNAL-REFEFERNCE\",\n      \"reference_origin\": \"ANY-EXTERNAL-REFEFERNCE-ORIGIN\",\n      \"metadata\": {\n        \"foo\": \"bar\"\n      }\n    },\n    \"relationships\": {\n      \"order\": {\n        \"links\": {\n          \"self\": \"string\",\n          \"related\": \"string\"\n        },\n        \"data\": {\n          \"type\": \"order\",\n          \"id\": \"string\"\n        }\n      },\n      \"payment_gateway\": {\n        \"links\": {\n          \"self\": \"string\",\n          \"related\": \"string\"\n        },\n        \"data\": {\n          \"type\": \"payment_gateway\",\n          \"id\": \"string\"\n        }\n      },\n      \"event_stores\": {\n        \"links\": {\n          \"self\": \"string\",\n          \"related\": \"string\"\n        },\n        \"data\": {\n          \"type\": \"event_stores\",\n          \"id\": \"string\"\n        }\n      }\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "14451128-0d04-47b6-a22d-d8fd3f5ff09a",
+          "name": "Delete a stripe payment",
+          "request": {
+            "name": "Delete a stripe payment",
+            "description": {
+              "content": "Delete a stripe payment",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "stripe_payments",
+                ":stripePaymentId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "stripePaymentId",
+                  "description": "(Required) The resource's id"
+                }
+              ]
+            },
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "a575f891-d698-40dc-b09a-3ea2b1bccc82",
+              "name": "No content",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "stripe_payments",
+                    ":stripePaymentId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "stripePaymentId",
+                      "description": "(Required) The resource's id"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://{{your_organization_slug}}.commercelayer.io/api",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "983c0e5d-8eeb-41c9-95fc-0da9530c47bb",
+    "name": "Commerce Layer addresses stripe_payments API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Headless Commerce for Global Brands.\n\nContact Support:\n Name: API Support\n Email: support@commercelayer.io",
+      "type": "text/plain"
+    }
+  }
+}

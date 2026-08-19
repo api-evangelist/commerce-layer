@@ -1,0 +1,168 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Commerce Layer addresses delivery_lead_times API",
+    "version": "7.10.1"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "delivery_lead_times",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List all delivery lead times",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{your_organization_slug}.commercelayer.io/api/delivery_lead_times"
+          },
+          "docs": "List all delivery lead times"
+        },
+        {
+          "info": {
+            "name": "Create a delivery lead time",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{your_organization_slug}.commercelayer.io/api/delivery_lead_times",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a delivery lead time"
+        },
+        {
+          "info": {
+            "name": "Retrieve a delivery lead time",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{your_organization_slug}.commercelayer.io/api/delivery_lead_times/:deliveryLeadTimeId",
+            "params": [
+              {
+                "name": "deliveryLeadTimeId",
+                "value": "",
+                "type": "path",
+                "description": "The resource's id"
+              }
+            ]
+          },
+          "docs": "Retrieve a delivery lead time"
+        },
+        {
+          "info": {
+            "name": "Update a delivery lead time",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://{your_organization_slug}.commercelayer.io/api/delivery_lead_times/:deliveryLeadTimeId",
+            "params": [
+              {
+                "name": "deliveryLeadTimeId",
+                "value": "",
+                "type": "path",
+                "description": "The resource's id"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update a delivery lead time"
+        },
+        {
+          "info": {
+            "name": "Delete a delivery lead time",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://{your_organization_slug}.commercelayer.io/api/delivery_lead_times/:deliveryLeadTimeId",
+            "params": [
+              {
+                "name": "deliveryLeadTimeId",
+                "value": "",
+                "type": "path",
+                "description": "The resource's id"
+              }
+            ]
+          },
+          "docs": "Delete a delivery lead time"
+        },
+        {
+          "info": {
+            "name": "Retrieve the delivery lead time associated to the shipment",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{your_organization_slug}.commercelayer.io/api/shipments/:shipmentId/delivery_lead_time",
+            "params": [
+              {
+                "name": "shipmentId",
+                "value": "",
+                "type": "path",
+                "description": "The resource's id"
+              }
+            ]
+          },
+          "docs": "Retrieve the delivery lead time associated to the shipment"
+        },
+        {
+          "info": {
+            "name": "Retrieve the delivery lead time for shipment associated to the shipping method",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{your_organization_slug}.commercelayer.io/api/shipping_methods/:shippingMethodId/delivery_lead_time_for_shipment",
+            "params": [
+              {
+                "name": "shippingMethodId",
+                "value": "",
+                "type": "path",
+                "description": "The resource's id"
+              }
+            ]
+          },
+          "docs": "Retrieve the delivery lead time for shipment associated to the shipping method"
+        },
+        {
+          "info": {
+            "name": "Retrieve the delivery lead times associated to the SKU",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{your_organization_slug}.commercelayer.io/api/skus/:skuId/delivery_lead_times",
+            "params": [
+              {
+                "name": "skuId",
+                "value": "",
+                "type": "path",
+                "description": "The resource's id"
+              }
+            ]
+          },
+          "docs": "Retrieve the delivery lead times associated to the SKU"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

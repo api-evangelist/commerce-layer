@@ -1,0 +1,149 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Commerce Layer addresses customer_groups API",
+    "version": "7.10.1"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "customer_groups",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List all customer groups",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{your_organization_slug}.commercelayer.io/api/customer_groups"
+          },
+          "docs": "List all customer groups"
+        },
+        {
+          "info": {
+            "name": "Create a customer group",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{your_organization_slug}.commercelayer.io/api/customer_groups",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a customer group"
+        },
+        {
+          "info": {
+            "name": "Retrieve a customer group",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{your_organization_slug}.commercelayer.io/api/customer_groups/:customerGroupId",
+            "params": [
+              {
+                "name": "customerGroupId",
+                "value": "",
+                "type": "path",
+                "description": "The resource's id"
+              }
+            ]
+          },
+          "docs": "Retrieve a customer group"
+        },
+        {
+          "info": {
+            "name": "Update a customer group",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://{your_organization_slug}.commercelayer.io/api/customer_groups/:customerGroupId",
+            "params": [
+              {
+                "name": "customerGroupId",
+                "value": "",
+                "type": "path",
+                "description": "The resource's id"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update a customer group"
+        },
+        {
+          "info": {
+            "name": "Delete a customer group",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://{your_organization_slug}.commercelayer.io/api/customer_groups/:customerGroupId",
+            "params": [
+              {
+                "name": "customerGroupId",
+                "value": "",
+                "type": "path",
+                "description": "The resource's id"
+              }
+            ]
+          },
+          "docs": "Delete a customer group"
+        },
+        {
+          "info": {
+            "name": "Retrieve the customer group associated to the customer",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{your_organization_slug}.commercelayer.io/api/customers/:customerId/customer_group",
+            "params": [
+              {
+                "name": "customerId",
+                "value": "",
+                "type": "path",
+                "description": "The resource's id"
+              }
+            ]
+          },
+          "docs": "Retrieve the customer group associated to the customer"
+        },
+        {
+          "info": {
+            "name": "Retrieve the customer group associated to the market",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{your_organization_slug}.commercelayer.io/api/markets/:marketId/customer_group",
+            "params": [
+              {
+                "name": "marketId",
+                "value": "",
+                "type": "path",
+                "description": "The resource's id"
+              }
+            ]
+          },
+          "docs": "Retrieve the customer group associated to the market"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

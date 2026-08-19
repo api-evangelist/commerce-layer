@@ -1,0 +1,73 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Commerce Layer addresses pickups API",
+    "version": "7.10.1"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "pickups",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List all pickups",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{your_organization_slug}.commercelayer.io/api/pickups"
+          },
+          "docs": "List all pickups"
+        },
+        {
+          "info": {
+            "name": "Retrieve a pickup",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{your_organization_slug}.commercelayer.io/api/pickups/:pickupId",
+            "params": [
+              {
+                "name": "pickupId",
+                "value": "",
+                "type": "path",
+                "description": "The resource's id"
+              }
+            ]
+          },
+          "docs": "Retrieve a pickup"
+        },
+        {
+          "info": {
+            "name": "Retrieve the pickup associated to the shipment",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{your_organization_slug}.commercelayer.io/api/shipments/:shipmentId/pickup",
+            "params": [
+              {
+                "name": "shipmentId",
+                "value": "",
+                "type": "path",
+                "description": "The resource's id"
+              }
+            ]
+          },
+          "docs": "Retrieve the pickup associated to the shipment"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

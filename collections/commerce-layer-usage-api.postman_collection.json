@@ -1,0 +1,243 @@
+{
+  "item": [
+    {
+      "id": "e189740d-33d1-4bc8-9bc4-5d3d7ea9ba07",
+      "name": "usage",
+      "description": {
+        "content": "Operations with usage resource",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "593fd4cf-7548-4c1d-87de-1ea1beb832c0",
+          "name": "Query date_breakdown on usage",
+          "request": {
+            "name": "Query date_breakdown on usage",
+            "description": {
+              "content": "Get date_breakdown results from usage",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "usage",
+                "date_breakdown"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/vnd.api+json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/vnd.api+json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"filter\": {\n    \"usage\": {\n      \"dimension\": {\n        \"in\": [\n          \"<string>\"\n        ]\n      },\n      \"date_from\": \"<%Y-%m-%dT%H:%M:%SZ>\",\n      \"date_to\": \"<%Y-%m-%dT%H:%M:%SZ>\",\n      \"mode\": \"<string>\",\n      \"types\": {\n        \"in\": [\n          \"<string>\"\n        ]\n      },\n      \"metadata\": \"<object>\",\n      \"timestamp\": \"<%Y-%m-%dT%H:%M:%SZ>\",\n      \"dimension_value_numeric\": \"<number>\"\n    },\n    \"organization\": {\n      \"ids\": {\n        \"in\": [\n          \"<string>\"\n        ]\n      }\n    }\n  },\n  \"date_breakdown\": {\n    \"interval\": \"<string>\",\n    \"by_dimension\": \"<boolean>\"\n  },\n  \"meta\": {\n    \"payload\": \"<boolean>\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "15ad46f8-16a1-4d98-9078-f9407faf7799",
+              "name": "The date_breakdown result from usage",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "usage",
+                    "date_breakdown"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/vnd.api+json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"filter\": {\n    \"usage\": {\n      \"dimension\": {\n        \"in\": [\n          \"string\"\n        ]\n      },\n      \"date_from\": \"2022-07-06T21:41:03Z\",\n      \"date_to\": \"2022-07-06T21:41:03Z\",\n      \"mode\": \"live\",\n      \"types\": {\n        \"in\": [\n          \"string\"\n        ]\n      },\n      \"metadata\": {},\n      \"timestamp\": \"2022-07-06T21:41:03Z\",\n      \"dimension_value_numeric\": 121\n    },\n    \"organization\": {\n      \"ids\": {\n        \"in\": [\n          \"string\"\n        ]\n      }\n    }\n  },\n  \"date_breakdown\": {\n    \"interval\": \"<string>\",\n    \"by_dimension\": \"<boolean>\"\n  },\n  \"meta\": {\n    \"payload\": \"<boolean>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/vnd.api+json"
+                }
+              ],
+              "body": "{\n  \"data\": [\n    {\n      \"date\": \"2022-07-06T21:41:03Z\",\n      \"value\": 8,\n      \"dimension\": {\n        \"dimension\": \"string\",\n        \"value\": 8\n      }\n    },\n    {\n      \"date\": \"2022-07-06T21:41:03Z\",\n      \"value\": 8,\n      \"dimension\": {\n        \"dimension\": \"string\",\n        \"value\": 8\n      }\n    }\n  ],\n  \"meta\": {\n    \"type\": \"string\",\n    \"trace_id\": \"string\",\n    \"mode\": \"string\",\n    \"organization_id\": \"string\",\n    \"market_ids\": [\n      \"string\",\n      \"string\"\n    ],\n    \"payload\": {\n      \"filter\": {\n        \"usage\": {\n          \"dimension\": {\n            \"in\": [\n              \"string\"\n            ]\n          },\n          \"date_from\": \"2022-07-06T21:41:03Z\",\n          \"date_to\": \"2022-07-06T21:41:03Z\",\n          \"mode\": \"live\",\n          \"types\": {\n            \"in\": [\n              \"string\"\n            ]\n          },\n          \"metadata\": {},\n          \"timestamp\": \"2022-07-06T21:41:03Z\",\n          \"dimension_value_numeric\": 121\n        },\n        \"organization\": {\n          \"ids\": {\n            \"in\": [\n              \"string\"\n            ]\n          }\n        }\n      },\n      \"date_breakdown\": {\n        \"interval\": \"year\",\n        \"by_dimension\": false\n      }\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "e2ccf12e-38bd-42b9-b0a4-bf72446e9b68",
+          "name": "Query search on usage",
+          "request": {
+            "name": "Query search on usage",
+            "description": {
+              "content": "Get search results from usage",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "usage",
+                "search"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/vnd.api+json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/vnd.api+json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"filter\": {\n    \"usage\": {\n      \"dimension\": {\n        \"in\": [\n          \"<string>\"\n        ]\n      },\n      \"date_from\": \"<%Y-%m-%dT%H:%M:%SZ>\",\n      \"date_to\": \"<%Y-%m-%dT%H:%M:%SZ>\",\n      \"mode\": \"<string>\",\n      \"types\": {\n        \"in\": [\n          \"<string>\"\n        ]\n      },\n      \"metadata\": \"<object>\",\n      \"timestamp\": \"<%Y-%m-%dT%H:%M:%SZ>\",\n      \"dimension_value_numeric\": \"<number>\"\n    },\n    \"organization\": {\n      \"ids\": {\n        \"in\": [\n          \"<string>\"\n        ]\n      }\n    }\n  },\n  \"search\": {\n    \"sort\": \"<string>\",\n    \"limit\": \"<integer>\"\n  },\n  \"meta\": {\n    \"payload\": \"<boolean>\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "d5115934-a720-4e12-bd4b-bce954b703e4",
+              "name": "The search result from usage",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "usage",
+                    "search"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/vnd.api+json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"filter\": {\n    \"usage\": {\n      \"dimension\": {\n        \"in\": [\n          \"string\"\n        ]\n      },\n      \"date_from\": \"2022-07-06T21:41:03Z\",\n      \"date_to\": \"2022-07-06T21:41:03Z\",\n      \"mode\": \"live\",\n      \"types\": {\n        \"in\": [\n          \"string\"\n        ]\n      },\n      \"metadata\": {},\n      \"timestamp\": \"2022-07-06T21:41:03Z\",\n      \"dimension_value_numeric\": 121\n    },\n    \"organization\": {\n      \"ids\": {\n        \"in\": [\n          \"string\"\n        ]\n      }\n    }\n  },\n  \"search\": {\n    \"sort\": \"<string>\",\n    \"limit\": \"<integer>\"\n  },\n  \"meta\": {\n    \"payload\": \"<boolean>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/vnd.api+json"
+                }
+              ],
+              "body": "{\n  \"data\": [\n    {\n      \"dimension\": \"string\",\n      \"date_from\": \"2022-07-06T21:41:03Z\",\n      \"date_to\": \"2022-07-06T21:41:03Z\",\n      \"mode\": \"live\",\n      \"types\": \"string\",\n      \"metadata\": {},\n      \"timestamp\": \"2022-07-06T21:41:03Z\",\n      \"dimension_value_numeric\": 121,\n      \"organization\": {\n        \"organization_id\": \"string\"\n      }\n    },\n    {\n      \"dimension\": \"string\",\n      \"date_from\": \"2022-07-06T21:41:03Z\",\n      \"date_to\": \"2022-07-06T21:41:03Z\",\n      \"mode\": \"test\",\n      \"types\": \"string\",\n      \"metadata\": {},\n      \"timestamp\": \"2022-07-06T21:41:03Z\",\n      \"dimension_value_numeric\": 121,\n      \"organization\": {\n        \"organization_id\": \"string\"\n      }\n    }\n  ],\n  \"meta\": {\n    \"type\": \"string\",\n    \"trace_id\": \"string\",\n    \"mode\": \"string\",\n    \"organization_id\": \"string\",\n    \"market_ids\": [\n      \"string\",\n      \"string\"\n    ],\n    \"payload\": {\n      \"filter\": {\n        \"usage\": {\n          \"dimension\": {\n            \"in\": [\n              \"string\"\n            ]\n          },\n          \"date_from\": \"2022-07-06T21:41:03Z\",\n          \"date_to\": \"2022-07-06T21:41:03Z\",\n          \"mode\": \"live\",\n          \"types\": {\n            \"in\": [\n              \"string\"\n            ]\n          },\n          \"metadata\": {},\n          \"timestamp\": \"2022-07-06T21:41:03Z\",\n          \"dimension_value_numeric\": 121\n        },\n        \"organization\": {\n          \"ids\": {\n            \"in\": [\n              \"string\"\n            ]\n          }\n        }\n      },\n      \"search\": {\n        \"sort\": \"desc\",\n        \"limit\": 5165\n      }\n    },\n    \"pagination\": {\n      \"record_count\": 8,\n      \"cursor\": \"LS0tCi0gJzIwMjEtMTEtMD\"\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://{{your_organization_slug}}.commercelayer.io/api",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "1bff00c9-c5fd-4a53-acca-2610f6bbf0f7",
+    "name": "Commerce Layer addresses usage API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Headless Commerce for Global Brands.\n\nContact Support:\n Name: API Support\n Email: support@commercelayer.io",
+      "type": "text/plain"
+    }
+  }
+}

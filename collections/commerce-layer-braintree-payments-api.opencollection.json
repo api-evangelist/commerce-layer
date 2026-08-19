@@ -1,0 +1,130 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Commerce Layer addresses braintree_payments API",
+    "version": "7.10.1"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "braintree_payments",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Retrieve the braintree payments associated to the braintree gateway",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{your_organization_slug}.commercelayer.io/api/braintree_gateways/:braintreeGatewayId/braintree_payments",
+            "params": [
+              {
+                "name": "braintreeGatewayId",
+                "value": "",
+                "type": "path",
+                "description": "The resource's id"
+              }
+            ]
+          },
+          "docs": "Retrieve the braintree payments associated to the braintree gateway"
+        },
+        {
+          "info": {
+            "name": "List all braintree payments",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{your_organization_slug}.commercelayer.io/api/braintree_payments"
+          },
+          "docs": "List all braintree payments"
+        },
+        {
+          "info": {
+            "name": "Create a braintree payment",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{your_organization_slug}.commercelayer.io/api/braintree_payments",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a braintree payment"
+        },
+        {
+          "info": {
+            "name": "Retrieve a braintree payment",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{your_organization_slug}.commercelayer.io/api/braintree_payments/:braintreePaymentId",
+            "params": [
+              {
+                "name": "braintreePaymentId",
+                "value": "",
+                "type": "path",
+                "description": "The resource's id"
+              }
+            ]
+          },
+          "docs": "Retrieve a braintree payment"
+        },
+        {
+          "info": {
+            "name": "Update a braintree payment",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://{your_organization_slug}.commercelayer.io/api/braintree_payments/:braintreePaymentId",
+            "params": [
+              {
+                "name": "braintreePaymentId",
+                "value": "",
+                "type": "path",
+                "description": "The resource's id"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update a braintree payment"
+        },
+        {
+          "info": {
+            "name": "Delete a braintree payment",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://{your_organization_slug}.commercelayer.io/api/braintree_payments/:braintreePaymentId",
+            "params": [
+              {
+                "name": "braintreePaymentId",
+                "value": "",
+                "type": "path",
+                "description": "The resource's id"
+              }
+            ]
+          },
+          "docs": "Delete a braintree payment"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,130 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Commerce Layer addresses order_subscription_items API",
+    "version": "7.10.1"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "order_subscription_items",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List all order subscription items",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{your_organization_slug}.commercelayer.io/api/order_subscription_items"
+          },
+          "docs": "List all order subscription items"
+        },
+        {
+          "info": {
+            "name": "Create an order subscription item",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{your_organization_slug}.commercelayer.io/api/order_subscription_items",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create an order subscription item"
+        },
+        {
+          "info": {
+            "name": "Retrieve an order subscription item",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{your_organization_slug}.commercelayer.io/api/order_subscription_items/:orderSubscriptionItemId",
+            "params": [
+              {
+                "name": "orderSubscriptionItemId",
+                "value": "",
+                "type": "path",
+                "description": "The resource's id"
+              }
+            ]
+          },
+          "docs": "Retrieve an order subscription item"
+        },
+        {
+          "info": {
+            "name": "Update an order subscription item",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://{your_organization_slug}.commercelayer.io/api/order_subscription_items/:orderSubscriptionItemId",
+            "params": [
+              {
+                "name": "orderSubscriptionItemId",
+                "value": "",
+                "type": "path",
+                "description": "The resource's id"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update an order subscription item"
+        },
+        {
+          "info": {
+            "name": "Delete an order subscription item",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://{your_organization_slug}.commercelayer.io/api/order_subscription_items/:orderSubscriptionItemId",
+            "params": [
+              {
+                "name": "orderSubscriptionItemId",
+                "value": "",
+                "type": "path",
+                "description": "The resource's id"
+              }
+            ]
+          },
+          "docs": "Delete an order subscription item"
+        },
+        {
+          "info": {
+            "name": "Retrieve the order subscription items associated to the order subscription",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{your_organization_slug}.commercelayer.io/api/order_subscriptions/:orderSubscriptionId/order_subscription_items",
+            "params": [
+              {
+                "name": "orderSubscriptionId",
+                "value": "",
+                "type": "path",
+                "description": "The resource's id"
+              }
+            ]
+          },
+          "docs": "Retrieve the order subscription items associated to the order subscription"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

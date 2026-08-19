@@ -1,0 +1,130 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Commerce Layer addresses satispay_payments API",
+    "version": "7.10.1"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "satispay_payments",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Retrieve the satispay payments associated to the satispay gateway",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{your_organization_slug}.commercelayer.io/api/satispay_gateways/:satispayGatewayId/satispay_payments",
+            "params": [
+              {
+                "name": "satispayGatewayId",
+                "value": "",
+                "type": "path",
+                "description": "The resource's id"
+              }
+            ]
+          },
+          "docs": "Retrieve the satispay payments associated to the satispay gateway"
+        },
+        {
+          "info": {
+            "name": "List all satispay payments",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{your_organization_slug}.commercelayer.io/api/satispay_payments"
+          },
+          "docs": "List all satispay payments"
+        },
+        {
+          "info": {
+            "name": "Create a satispay payment",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{your_organization_slug}.commercelayer.io/api/satispay_payments",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a satispay payment"
+        },
+        {
+          "info": {
+            "name": "Retrieve a satispay payment",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{your_organization_slug}.commercelayer.io/api/satispay_payments/:satispayPaymentId",
+            "params": [
+              {
+                "name": "satispayPaymentId",
+                "value": "",
+                "type": "path",
+                "description": "The resource's id"
+              }
+            ]
+          },
+          "docs": "Retrieve a satispay payment"
+        },
+        {
+          "info": {
+            "name": "Update a satispay payment",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://{your_organization_slug}.commercelayer.io/api/satispay_payments/:satispayPaymentId",
+            "params": [
+              {
+                "name": "satispayPaymentId",
+                "value": "",
+                "type": "path",
+                "description": "The resource's id"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update a satispay payment"
+        },
+        {
+          "info": {
+            "name": "Delete a satispay payment",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://{your_organization_slug}.commercelayer.io/api/satispay_payments/:satispayPaymentId",
+            "params": [
+              {
+                "name": "satispayPaymentId",
+                "value": "",
+                "type": "path",
+                "description": "The resource's id"
+              }
+            ]
+          },
+          "docs": "Delete a satispay payment"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,693 @@
+{
+  "item": [
+    {
+      "id": "1dc9a647-2a78-410d-8206-7581a5f6ef43",
+      "name": "return_line_items",
+      "description": {
+        "content": "resource type",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "bca1773e-4402-429a-a990-468647d95818",
+          "name": "Retrieve the return line items associated to the line item",
+          "request": {
+            "name": "Retrieve the return line items associated to the line item",
+            "description": {
+              "content": "Retrieve the return line items associated to the line item",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "line_items",
+                ":lineItemId",
+                "return_line_items"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "lineItemId",
+                  "description": "(Required) The resource's id"
+                }
+              ]
+            },
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "7625e91d-96bb-4d10-8af8-e2206a721f6e",
+              "name": "The return_line_items associated to the line item",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "line_items",
+                    ":lineItemId",
+                    "return_line_items"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "lineItemId",
+                      "description": "(Required) The resource's id"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "8d1e07bc-9e79-4618-af08-f7ad5f418fd9",
+          "name": "List all return line items",
+          "request": {
+            "name": "List all return line items",
+            "description": {
+              "content": "List all return line items",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "return_line_items"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/vnd.api+json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "30c1fc28-351c-4dea-a38b-bdc6a4c57980",
+              "name": "A list of return line item objects",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "return_line_items"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/vnd.api+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/vnd.api+json"
+                }
+              ],
+              "body": "{\n  \"data\": [\n    {\n      \"id\": \"XAyRWNUzyN\",\n      \"type\": \"return_line_items\",\n      \"links\": {\n        \"self\": \"string\"\n      },\n      \"attributes\": {\n        \"sku_code\": \"TSHIRTMM000000FFFFFFXLXX\",\n        \"bundle_code\": \"BUNDLEMM000000FFFFFFXLXX\",\n        \"quantity\": 4,\n        \"name\": \"Men's Black T-shirt with White Logo (XL)\",\n        \"image_url\": \"https://img.yourdomain.com/skus/xYZkjABcde.png\",\n        \"total_amount_cents\": 8800,\n        \"total_amount_float\": 88,\n        \"formatted_total_amount\": \"€88,00\",\n        \"return_reason\": {\n          \"size\": \"was wrong\"\n        },\n        \"restocked_at\": \"2018-01-01T12:00:00.000Z\",\n        \"created_at\": \"2018-01-01T12:00:00.000Z\",\n        \"updated_at\": \"2018-01-01T12:00:00.000Z\",\n        \"reference\": \"ANY-EXTERNAL-REFEFERNCE\",\n        \"reference_origin\": \"ANY-EXTERNAL-REFEFERNCE-ORIGIN\",\n        \"metadata\": {\n          \"foo\": \"bar\"\n        }\n      },\n      \"relationships\": {\n        \"return\": {\n          \"links\": {\n            \"self\": \"string\",\n            \"related\": \"string\"\n          },\n          \"data\": {\n            \"type\": \"return\",\n            \"id\": \"string\"\n          }\n        },\n        \"line_item\": {\n          \"links\": {\n            \"self\": \"string\",\n            \"related\": \"string\"\n          },\n          \"data\": {\n            \"type\": \"line_item\",\n            \"id\": \"string\"\n          }\n        },\n        \"event_stores\": {\n          \"links\": {\n            \"self\": \"string\",\n            \"related\": \"string\"\n          },\n          \"data\": {\n            \"type\": \"event_stores\",\n            \"id\": \"string\"\n          }\n        }\n      }\n    },\n    {\n      \"id\": \"XAyRWNUzyN\",\n      \"type\": \"return_line_items\",\n      \"links\": {\n        \"self\": \"string\"\n      },\n      \"attributes\": {\n        \"sku_code\": \"TSHIRTMM000000FFFFFFXLXX\",\n        \"bundle_code\": \"BUNDLEMM000000FFFFFFXLXX\",\n        \"quantity\": 4,\n        \"name\": \"Men's Black T-shirt with White Logo (XL)\",\n        \"image_url\": \"https://img.yourdomain.com/skus/xYZkjABcde.png\",\n        \"total_amount_cents\": 8800,\n        \"total_amount_float\": 88,\n        \"formatted_total_amount\": \"€88,00\",\n        \"return_reason\": {\n          \"size\": \"was wrong\"\n        },\n        \"restocked_at\": \"2018-01-01T12:00:00.000Z\",\n        \"created_at\": \"2018-01-01T12:00:00.000Z\",\n        \"updated_at\": \"2018-01-01T12:00:00.000Z\",\n        \"reference\": \"ANY-EXTERNAL-REFEFERNCE\",\n        \"reference_origin\": \"ANY-EXTERNAL-REFEFERNCE-ORIGIN\",\n        \"metadata\": {\n          \"foo\": \"bar\"\n        }\n      },\n      \"relationships\": {\n        \"return\": {\n          \"links\": {\n            \"self\": \"string\",\n            \"related\": \"string\"\n          },\n          \"data\": {\n            \"type\": \"return\",\n            \"id\": \"string\"\n          }\n        },\n        \"line_item\": {\n          \"links\": {\n            \"self\": \"string\",\n            \"related\": \"string\"\n          },\n          \"data\": {\n            \"type\": \"line_item\",\n            \"id\": \"string\"\n          }\n        },\n        \"event_stores\": {\n          \"links\": {\n            \"self\": \"string\",\n            \"related\": \"string\"\n          },\n          \"data\": {\n            \"type\": \"event_stores\",\n            \"id\": \"string\"\n          }\n        }\n      }\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "2a0aa863-1b0b-449b-9251-cf48bc14629f",
+          "name": "Create a return line item",
+          "request": {
+            "name": "Create a return line item",
+            "description": {
+              "content": "Create a return line item",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "return_line_items"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/vnd.api+json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/vnd.api+json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"data\": {\n    \"type\": \"<string>\",\n    \"attributes\": {\n      \"quantity\": \"<integer>\",\n      \"return_reason\": \"<object>\",\n      \"reference\": \"<string>\",\n      \"reference_origin\": \"<string>\",\n      \"metadata\": \"<object>\"\n    },\n    \"relationships\": {\n      \"return\": {\n        \"data\": {\n          \"type\": \"<string>\",\n          \"id\": \"<string>\"\n        }\n      },\n      \"line_item\": {\n        \"data\": {\n          \"type\": \"<string>\",\n          \"id\": \"<string>\"\n        }\n      }\n    }\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "fb0a22ea-5878-47f2-b87f-e4e324126508",
+              "name": "The created return line item object",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "return_line_items"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/vnd.api+json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"data\": {\n    \"type\": \"<string>\",\n    \"attributes\": {\n      \"quantity\": 4,\n      \"return_reason\": {\n        \"size\": \"was wrong\"\n      },\n      \"reference\": \"ANY-EXTERNAL-REFEFERNCE\",\n      \"reference_origin\": \"ANY-EXTERNAL-REFEFERNCE-ORIGIN\",\n      \"metadata\": {\n        \"foo\": \"bar\"\n      }\n    },\n    \"relationships\": {\n      \"return\": {\n        \"data\": {\n          \"type\": \"<string>\",\n          \"id\": \"XAyRWNUzyN\"\n        }\n      },\n      \"line_item\": {\n        \"data\": {\n          \"type\": \"<string>\",\n          \"id\": \"XAyRWNUzyN\"\n        }\n      }\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/vnd.api+json"
+                }
+              ],
+              "body": "{\n  \"data\": {\n    \"id\": \"XAyRWNUzyN\",\n    \"type\": \"return_line_items\",\n    \"links\": {\n      \"self\": \"string\"\n    },\n    \"attributes\": {\n      \"sku_code\": \"TSHIRTMM000000FFFFFFXLXX\",\n      \"bundle_code\": \"BUNDLEMM000000FFFFFFXLXX\",\n      \"quantity\": 4,\n      \"name\": \"Men's Black T-shirt with White Logo (XL)\",\n      \"image_url\": \"https://img.yourdomain.com/skus/xYZkjABcde.png\",\n      \"total_amount_cents\": 8800,\n      \"total_amount_float\": 88,\n      \"formatted_total_amount\": \"€88,00\",\n      \"return_reason\": {\n        \"size\": \"was wrong\"\n      },\n      \"restocked_at\": \"2018-01-01T12:00:00.000Z\",\n      \"created_at\": \"2018-01-01T12:00:00.000Z\",\n      \"updated_at\": \"2018-01-01T12:00:00.000Z\",\n      \"reference\": \"ANY-EXTERNAL-REFEFERNCE\",\n      \"reference_origin\": \"ANY-EXTERNAL-REFEFERNCE-ORIGIN\",\n      \"metadata\": {\n        \"foo\": \"bar\"\n      }\n    },\n    \"relationships\": {\n      \"return\": {\n        \"links\": {\n          \"self\": \"string\",\n          \"related\": \"string\"\n        },\n        \"data\": {\n          \"type\": \"return\",\n          \"id\": \"string\"\n        }\n      },\n      \"line_item\": {\n        \"links\": {\n          \"self\": \"string\",\n          \"related\": \"string\"\n        },\n        \"data\": {\n          \"type\": \"line_item\",\n          \"id\": \"string\"\n        }\n      },\n      \"event_stores\": {\n        \"links\": {\n          \"self\": \"string\",\n          \"related\": \"string\"\n        },\n        \"data\": {\n          \"type\": \"event_stores\",\n          \"id\": \"string\"\n        }\n      }\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "06895bbe-bf78-4f7e-bc78-52a5c2384aed",
+          "name": "Retrieve a return line item",
+          "request": {
+            "name": "Retrieve a return line item",
+            "description": {
+              "content": "Retrieve a return line item",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "return_line_items",
+                ":returnLineItemId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "returnLineItemId",
+                  "description": "(Required) The resource's id"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/vnd.api+json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "77aca769-e310-4061-a31a-54f5a18136ec",
+              "name": "The return line item object",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "return_line_items",
+                    ":returnLineItemId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "returnLineItemId",
+                      "description": "(Required) The resource's id"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/vnd.api+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/vnd.api+json"
+                }
+              ],
+              "body": "{\n  \"data\": {\n    \"id\": \"XAyRWNUzyN\",\n    \"type\": \"return_line_items\",\n    \"links\": {\n      \"self\": \"string\"\n    },\n    \"attributes\": {\n      \"sku_code\": \"TSHIRTMM000000FFFFFFXLXX\",\n      \"bundle_code\": \"BUNDLEMM000000FFFFFFXLXX\",\n      \"quantity\": 4,\n      \"name\": \"Men's Black T-shirt with White Logo (XL)\",\n      \"image_url\": \"https://img.yourdomain.com/skus/xYZkjABcde.png\",\n      \"total_amount_cents\": 8800,\n      \"total_amount_float\": 88,\n      \"formatted_total_amount\": \"€88,00\",\n      \"return_reason\": {\n        \"size\": \"was wrong\"\n      },\n      \"restocked_at\": \"2018-01-01T12:00:00.000Z\",\n      \"created_at\": \"2018-01-01T12:00:00.000Z\",\n      \"updated_at\": \"2018-01-01T12:00:00.000Z\",\n      \"reference\": \"ANY-EXTERNAL-REFEFERNCE\",\n      \"reference_origin\": \"ANY-EXTERNAL-REFEFERNCE-ORIGIN\",\n      \"metadata\": {\n        \"foo\": \"bar\"\n      }\n    },\n    \"relationships\": {\n      \"return\": {\n        \"links\": {\n          \"self\": \"string\",\n          \"related\": \"string\"\n        },\n        \"data\": {\n          \"type\": \"return\",\n          \"id\": \"string\"\n        }\n      },\n      \"line_item\": {\n        \"links\": {\n          \"self\": \"string\",\n          \"related\": \"string\"\n        },\n        \"data\": {\n          \"type\": \"line_item\",\n          \"id\": \"string\"\n        }\n      },\n      \"event_stores\": {\n        \"links\": {\n          \"self\": \"string\",\n          \"related\": \"string\"\n        },\n        \"data\": {\n          \"type\": \"event_stores\",\n          \"id\": \"string\"\n        }\n      }\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "f34fcf70-36f2-477f-8966-04957701f43b",
+          "name": "Update a return line item",
+          "request": {
+            "name": "Update a return line item",
+            "description": {
+              "content": "Update a return line item",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "return_line_items",
+                ":returnLineItemId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "returnLineItemId",
+                  "description": "(Required) The resource's id"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/vnd.api+json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/vnd.api+json"
+              }
+            ],
+            "method": "PATCH",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"data\": {\n    \"type\": \"<string>\",\n    \"id\": \"<string>\",\n    \"attributes\": {\n      \"quantity\": \"<integer>\",\n      \"_restock\": \"<boolean>\",\n      \"return_reason\": \"<object>\",\n      \"reference\": \"<string>\",\n      \"reference_origin\": \"<string>\",\n      \"metadata\": \"<object>\"\n    },\n    \"relationships\": {}\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "b20276ff-89e5-4c0e-a62b-9a7ed74424ff",
+              "name": "The updated return line item object",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "return_line_items",
+                    ":returnLineItemId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "returnLineItemId",
+                      "description": "(Required) The resource's id"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/vnd.api+json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"data\": {\n    \"type\": \"<string>\",\n    \"id\": \"XAyRWNUzyN\",\n    \"attributes\": {\n      \"quantity\": 4,\n      \"_restock\": true,\n      \"return_reason\": {\n        \"size\": \"was wrong\"\n      },\n      \"reference\": \"ANY-EXTERNAL-REFEFERNCE\",\n      \"reference_origin\": \"ANY-EXTERNAL-REFEFERNCE-ORIGIN\",\n      \"metadata\": {\n        \"foo\": \"bar\"\n      }\n    },\n    \"relationships\": {}\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/vnd.api+json"
+                }
+              ],
+              "body": "{\n  \"data\": {\n    \"id\": \"XAyRWNUzyN\",\n    \"type\": \"return_line_items\",\n    \"links\": {\n      \"self\": \"string\"\n    },\n    \"attributes\": {\n      \"sku_code\": \"TSHIRTMM000000FFFFFFXLXX\",\n      \"bundle_code\": \"BUNDLEMM000000FFFFFFXLXX\",\n      \"quantity\": 4,\n      \"name\": \"Men's Black T-shirt with White Logo (XL)\",\n      \"image_url\": \"https://img.yourdomain.com/skus/xYZkjABcde.png\",\n      \"total_amount_cents\": 8800,\n      \"total_amount_float\": 88,\n      \"formatted_total_amount\": \"€88,00\",\n      \"return_reason\": {\n        \"size\": \"was wrong\"\n      },\n      \"restocked_at\": \"2018-01-01T12:00:00.000Z\",\n      \"created_at\": \"2018-01-01T12:00:00.000Z\",\n      \"updated_at\": \"2018-01-01T12:00:00.000Z\",\n      \"reference\": \"ANY-EXTERNAL-REFEFERNCE\",\n      \"reference_origin\": \"ANY-EXTERNAL-REFEFERNCE-ORIGIN\",\n      \"metadata\": {\n        \"foo\": \"bar\"\n      }\n    },\n    \"relationships\": {\n      \"return\": {\n        \"links\": {\n          \"self\": \"string\",\n          \"related\": \"string\"\n        },\n        \"data\": {\n          \"type\": \"return\",\n          \"id\": \"string\"\n        }\n      },\n      \"line_item\": {\n        \"links\": {\n          \"self\": \"string\",\n          \"related\": \"string\"\n        },\n        \"data\": {\n          \"type\": \"line_item\",\n          \"id\": \"string\"\n        }\n      },\n      \"event_stores\": {\n        \"links\": {\n          \"self\": \"string\",\n          \"related\": \"string\"\n        },\n        \"data\": {\n          \"type\": \"event_stores\",\n          \"id\": \"string\"\n        }\n      }\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "1fc6f1a8-a607-4f40-93c2-2a35afd56b54",
+          "name": "Delete a return line item",
+          "request": {
+            "name": "Delete a return line item",
+            "description": {
+              "content": "Delete a return line item",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "return_line_items",
+                ":returnLineItemId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "returnLineItemId",
+                  "description": "(Required) The resource's id"
+                }
+              ]
+            },
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "a76ad59f-d59e-4b85-ad8a-4f9171f924f0",
+              "name": "No content",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "return_line_items",
+                    ":returnLineItemId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "returnLineItemId",
+                      "description": "(Required) The resource's id"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "e83017fe-32f2-4aa6-bd87-b684459ab631",
+          "name": "Retrieve the return line items associated to the return",
+          "request": {
+            "name": "Retrieve the return line items associated to the return",
+            "description": {
+              "content": "Retrieve the return line items associated to the return",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "returns",
+                ":returnId",
+                "return_line_items"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "returnId",
+                  "description": "(Required) The resource's id"
+                }
+              ]
+            },
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "90f66c0a-6bb4-4162-be6b-0765d5d3a7be",
+              "name": "The return_line_items associated to the return",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "returns",
+                    ":returnId",
+                    "return_line_items"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "returnId",
+                      "description": "(Required) The resource's id"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://{{your_organization_slug}}.commercelayer.io/api",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "e0705dd8-8c73-4fe6-912e-e3a65de58666",
+    "name": "Commerce Layer addresses return_line_items API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Headless Commerce for Global Brands.\n\nContact Support:\n Name: API Support\n Email: support@commercelayer.io",
+      "type": "text/plain"
+    }
+  }
+}

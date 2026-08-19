@@ -1,0 +1,339 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Commerce Layer addresses API",
+    "version": "7.10.1"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "addresses",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List all addresses",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{your_organization_slug}.commercelayer.io/api/addresses"
+          },
+          "docs": "List all addresses"
+        },
+        {
+          "info": {
+            "name": "Create an address",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{your_organization_slug}.commercelayer.io/api/addresses",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create an address"
+        },
+        {
+          "info": {
+            "name": "Retrieve an address",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{your_organization_slug}.commercelayer.io/api/addresses/:addressId",
+            "params": [
+              {
+                "name": "addressId",
+                "value": "",
+                "type": "path",
+                "description": "The resource's id"
+              }
+            ]
+          },
+          "docs": "Retrieve an address"
+        },
+        {
+          "info": {
+            "name": "Update an address",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://{your_organization_slug}.commercelayer.io/api/addresses/:addressId",
+            "params": [
+              {
+                "name": "addressId",
+                "value": "",
+                "type": "path",
+                "description": "The resource's id"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update an address"
+        },
+        {
+          "info": {
+            "name": "Delete an address",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://{your_organization_slug}.commercelayer.io/api/addresses/:addressId",
+            "params": [
+              {
+                "name": "addressId",
+                "value": "",
+                "type": "path",
+                "description": "The resource's id"
+              }
+            ]
+          },
+          "docs": "Delete an address"
+        },
+        {
+          "info": {
+            "name": "Retrieve the addresses associated to the bing geocoder",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{your_organization_slug}.commercelayer.io/api/bing_geocoders/:bingGeocoderId/addresses",
+            "params": [
+              {
+                "name": "bingGeocoderId",
+                "value": "",
+                "type": "path",
+                "description": "The resource's id"
+              }
+            ]
+          },
+          "docs": "Retrieve the addresses associated to the bing geocoder"
+        },
+        {
+          "info": {
+            "name": "Retrieve the address associated to the customer address",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{your_organization_slug}.commercelayer.io/api/customer_addresses/:customerAddressId/address",
+            "params": [
+              {
+                "name": "customerAddressId",
+                "value": "",
+                "type": "path",
+                "description": "The resource's id"
+              }
+            ]
+          },
+          "docs": "Retrieve the address associated to the customer address"
+        },
+        {
+          "info": {
+            "name": "Retrieve the addresses associated to the geocoder",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{your_organization_slug}.commercelayer.io/api/geocoders/:geocoderId/addresses",
+            "params": [
+              {
+                "name": "geocoderId",
+                "value": "",
+                "type": "path",
+                "description": "The resource's id"
+              }
+            ]
+          },
+          "docs": "Retrieve the addresses associated to the geocoder"
+        },
+        {
+          "info": {
+            "name": "Retrieve the addresses associated to the google geocoder",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{your_organization_slug}.commercelayer.io/api/google_geocoders/:googleGeocoderId/addresses",
+            "params": [
+              {
+                "name": "googleGeocoderId",
+                "value": "",
+                "type": "path",
+                "description": "The resource's id"
+              }
+            ]
+          },
+          "docs": "Retrieve the addresses associated to the google geocoder"
+        },
+        {
+          "info": {
+            "name": "Retrieve the address associated to the merchant",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{your_organization_slug}.commercelayer.io/api/merchants/:merchantId/address",
+            "params": [
+              {
+                "name": "merchantId",
+                "value": "",
+                "type": "path",
+                "description": "The resource's id"
+              }
+            ]
+          },
+          "docs": "Retrieve the address associated to the merchant"
+        },
+        {
+          "info": {
+            "name": "Retrieve the shipping address associated to the order",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{your_organization_slug}.commercelayer.io/api/orders/:orderId/shipping_address",
+            "params": [
+              {
+                "name": "orderId",
+                "value": "",
+                "type": "path",
+                "description": "The resource's id"
+              }
+            ]
+          },
+          "docs": "Retrieve the shipping address associated to the order"
+        },
+        {
+          "info": {
+            "name": "Retrieve the billing address associated to the order",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{your_organization_slug}.commercelayer.io/api/orders/:orderId/billing_address",
+            "params": [
+              {
+                "name": "orderId",
+                "value": "",
+                "type": "path",
+                "description": "The resource's id"
+              }
+            ]
+          },
+          "docs": "Retrieve the billing address associated to the order"
+        },
+        {
+          "info": {
+            "name": "Retrieve the origin address associated to the return",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{your_organization_slug}.commercelayer.io/api/returns/:returnId/origin_address",
+            "params": [
+              {
+                "name": "returnId",
+                "value": "",
+                "type": "path",
+                "description": "The resource's id"
+              }
+            ]
+          },
+          "docs": "Retrieve the origin address associated to the return"
+        },
+        {
+          "info": {
+            "name": "Retrieve the destination address associated to the return",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{your_organization_slug}.commercelayer.io/api/returns/:returnId/destination_address",
+            "params": [
+              {
+                "name": "returnId",
+                "value": "",
+                "type": "path",
+                "description": "The resource's id"
+              }
+            ]
+          },
+          "docs": "Retrieve the destination address associated to the return"
+        },
+        {
+          "info": {
+            "name": "Retrieve the origin address associated to the shipment",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{your_organization_slug}.commercelayer.io/api/shipments/:shipmentId/origin_address",
+            "params": [
+              {
+                "name": "shipmentId",
+                "value": "",
+                "type": "path",
+                "description": "The resource's id"
+              }
+            ]
+          },
+          "docs": "Retrieve the origin address associated to the shipment"
+        },
+        {
+          "info": {
+            "name": "Retrieve the shipping address associated to the shipment",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{your_organization_slug}.commercelayer.io/api/shipments/:shipmentId/shipping_address",
+            "params": [
+              {
+                "name": "shipmentId",
+                "value": "",
+                "type": "path",
+                "description": "The resource's id"
+              }
+            ]
+          },
+          "docs": "Retrieve the shipping address associated to the shipment"
+        },
+        {
+          "info": {
+            "name": "Retrieve the address associated to the stock location",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{your_organization_slug}.commercelayer.io/api/stock_locations/:stockLocationId/address",
+            "params": [
+              {
+                "name": "stockLocationId",
+                "value": "",
+                "type": "path",
+                "description": "The resource's id"
+              }
+            ]
+          },
+          "docs": "Retrieve the address associated to the stock location"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

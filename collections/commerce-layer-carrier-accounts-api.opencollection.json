@@ -1,0 +1,130 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Commerce Layer addresses carrier_accounts API",
+    "version": "7.10.1"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "carrier_accounts",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List all carrier accounts",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{your_organization_slug}.commercelayer.io/api/carrier_accounts"
+          },
+          "docs": "List all carrier accounts"
+        },
+        {
+          "info": {
+            "name": "Create a carrier account",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{your_organization_slug}.commercelayer.io/api/carrier_accounts",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a carrier account"
+        },
+        {
+          "info": {
+            "name": "Retrieve a carrier account",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{your_organization_slug}.commercelayer.io/api/carrier_accounts/:carrierAccountId",
+            "params": [
+              {
+                "name": "carrierAccountId",
+                "value": "",
+                "type": "path",
+                "description": "The resource's id"
+              }
+            ]
+          },
+          "docs": "Retrieve a carrier account"
+        },
+        {
+          "info": {
+            "name": "Update a carrier account",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://{your_organization_slug}.commercelayer.io/api/carrier_accounts/:carrierAccountId",
+            "params": [
+              {
+                "name": "carrierAccountId",
+                "value": "",
+                "type": "path",
+                "description": "The resource's id"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update a carrier account"
+        },
+        {
+          "info": {
+            "name": "Delete a carrier account",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://{your_organization_slug}.commercelayer.io/api/carrier_accounts/:carrierAccountId",
+            "params": [
+              {
+                "name": "carrierAccountId",
+                "value": "",
+                "type": "path",
+                "description": "The resource's id"
+              }
+            ]
+          },
+          "docs": "Delete a carrier account"
+        },
+        {
+          "info": {
+            "name": "Retrieve the carrier accounts associated to the shipment",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{your_organization_slug}.commercelayer.io/api/shipments/:shipmentId/carrier_accounts",
+            "params": [
+              {
+                "name": "shipmentId",
+                "value": "",
+                "type": "path",
+                "description": "The resource's id"
+              }
+            ]
+          },
+          "docs": "Retrieve the carrier accounts associated to the shipment"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

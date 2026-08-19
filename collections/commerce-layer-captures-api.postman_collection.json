@@ -1,0 +1,684 @@
+{
+  "item": [
+    {
+      "id": "f8e82cd9-05a5-4be6-9595-0e1d62ef68b0",
+      "name": "captures",
+      "description": {
+        "content": "resource type",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "79f393e9-159f-41f5-8eda-6e8e3b04193a",
+          "name": "Retrieve the captures associated to the authorization",
+          "request": {
+            "name": "Retrieve the captures associated to the authorization",
+            "description": {
+              "content": "Retrieve the captures associated to the authorization",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "authorizations",
+                ":authorizationId",
+                "captures"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "authorizationId",
+                  "description": "(Required) The resource's id"
+                }
+              ]
+            },
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "90f1eac3-de37-4fb5-b1a9-65f54773d0f3",
+              "name": "The captures associated to the authorization",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "authorizations",
+                    ":authorizationId",
+                    "captures"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "authorizationId",
+                      "description": "(Required) The resource's id"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "6244ef8d-abb5-4d60-9a5d-138684c09e16",
+          "name": "List all captures",
+          "request": {
+            "name": "List all captures",
+            "description": {
+              "content": "List all captures",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "captures"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/vnd.api+json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "f064d12b-6c00-41a2-bc67-7405756d8067",
+              "name": "A list of capture objects",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "captures"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/vnd.api+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/vnd.api+json"
+                }
+              ],
+              "body": "{\n  \"data\": [\n    {\n      \"id\": \"XAyRWNUzyN\",\n      \"type\": \"captures\",\n      \"links\": {\n        \"self\": \"string\"\n      },\n      \"attributes\": {\n        \"number\": \"42/T/001\",\n        \"type\": \"authorizations\",\n        \"payment_method_type\": \"credit card\",\n        \"currency_code\": \"EUR\",\n        \"amount_cents\": 1500,\n        \"amount_float\": 15,\n        \"formatted_amount\": \"€15,00\",\n        \"succeeded\": false,\n        \"message\": \"Accepted\",\n        \"error_code\": \"00001\",\n        \"error_detail\": \"Already settled\",\n        \"token\": \"xxxx-yyyy-zzzz\",\n        \"gateway_transaction_id\": \"xxxx-yyyy-zzzz\",\n        \"created_at\": \"2018-01-01T12:00:00.000Z\",\n        \"updated_at\": \"2018-01-01T12:00:00.000Z\",\n        \"reference\": \"ANY-EXTERNAL-REFEFERNCE\",\n        \"reference_origin\": \"ANY-EXTERNAL-REFEFERNCE-ORIGIN\",\n        \"metadata\": {\n          \"foo\": \"bar\"\n        },\n        \"refund_amount_cents\": 500,\n        \"refund_amount_float\": 5,\n        \"formatted_refund_amount\": \"€5,00\",\n        \"refund_balance_cents\": 1000,\n        \"refund_balance_float\": 10,\n        \"formatted_refund_balance\": \"€10,00\"\n      },\n      \"relationships\": {\n        \"order\": {\n          \"links\": {\n            \"self\": \"string\",\n            \"related\": \"string\"\n          },\n          \"data\": {\n            \"type\": \"order\",\n            \"id\": \"string\"\n          }\n        },\n        \"payment_source\": {\n          \"links\": {\n            \"self\": \"string\",\n            \"related\": \"string\"\n          },\n          \"data\": {\n            \"type\": \"payment_source\",\n            \"id\": \"string\"\n          }\n        },\n        \"attachments\": {\n          \"links\": {\n            \"self\": \"string\",\n            \"related\": \"string\"\n          },\n          \"data\": {\n            \"type\": \"attachments\",\n            \"id\": \"string\"\n          }\n        },\n        \"events\": {\n          \"links\": {\n            \"self\": \"string\",\n            \"related\": \"string\"\n          },\n          \"data\": {\n            \"type\": \"events\",\n            \"id\": \"string\"\n          }\n        },\n        \"event_stores\": {\n          \"links\": {\n            \"self\": \"string\",\n            \"related\": \"string\"\n          },\n          \"data\": {\n            \"type\": \"event_stores\",\n            \"id\": \"string\"\n          }\n        },\n        \"reference_authorization\": {\n          \"links\": {\n            \"self\": \"string\",\n            \"related\": \"string\"\n          },\n          \"data\": {\n            \"type\": \"reference_authorization\",\n            \"id\": \"string\"\n          }\n        },\n        \"refunds\": {\n          \"links\": {\n            \"self\": \"string\",\n            \"related\": \"string\"\n          },\n          \"data\": {\n            \"type\": \"refunds\",\n            \"id\": \"string\"\n          }\n        },\n        \"return\": {\n          \"links\": {\n            \"self\": \"string\",\n            \"related\": \"string\"\n          },\n          \"data\": {\n            \"type\": \"return\",\n            \"id\": \"string\"\n          }\n        }\n      }\n    },\n    {\n      \"id\": \"XAyRWNUzyN\",\n      \"type\": \"captures\",\n      \"links\": {\n        \"self\": \"string\"\n      },\n      \"attributes\": {\n        \"number\": \"42/T/001\",\n        \"type\": \"authorizations\",\n        \"payment_method_type\": \"credit card\",\n        \"currency_code\": \"EUR\",\n        \"amount_cents\": 1500,\n        \"amount_float\": 15,\n        \"formatted_amount\": \"€15,00\",\n        \"succeeded\": false,\n        \"message\": \"Accepted\",\n        \"error_code\": \"00001\",\n        \"error_detail\": \"Already settled\",\n        \"token\": \"xxxx-yyyy-zzzz\",\n        \"gateway_transaction_id\": \"xxxx-yyyy-zzzz\",\n        \"created_at\": \"2018-01-01T12:00:00.000Z\",\n        \"updated_at\": \"2018-01-01T12:00:00.000Z\",\n        \"reference\": \"ANY-EXTERNAL-REFEFERNCE\",\n        \"reference_origin\": \"ANY-EXTERNAL-REFEFERNCE-ORIGIN\",\n        \"metadata\": {\n          \"foo\": \"bar\"\n        },\n        \"refund_amount_cents\": 500,\n        \"refund_amount_float\": 5,\n        \"formatted_refund_amount\": \"€5,00\",\n        \"refund_balance_cents\": 1000,\n        \"refund_balance_float\": 10,\n        \"formatted_refund_balance\": \"€10,00\"\n      },\n      \"relationships\": {\n        \"order\": {\n          \"links\": {\n            \"self\": \"string\",\n            \"related\": \"string\"\n          },\n          \"data\": {\n            \"type\": \"order\",\n            \"id\": \"string\"\n          }\n        },\n        \"payment_source\": {\n          \"links\": {\n            \"self\": \"string\",\n            \"related\": \"string\"\n          },\n          \"data\": {\n            \"type\": \"payment_source\",\n            \"id\": \"string\"\n          }\n        },\n        \"attachments\": {\n          \"links\": {\n            \"self\": \"string\",\n            \"related\": \"string\"\n          },\n          \"data\": {\n            \"type\": \"attachments\",\n            \"id\": \"string\"\n          }\n        },\n        \"events\": {\n          \"links\": {\n            \"self\": \"string\",\n            \"related\": \"string\"\n          },\n          \"data\": {\n            \"type\": \"events\",\n            \"id\": \"string\"\n          }\n        },\n        \"event_stores\": {\n          \"links\": {\n            \"self\": \"string\",\n            \"related\": \"string\"\n          },\n          \"data\": {\n            \"type\": \"event_stores\",\n            \"id\": \"string\"\n          }\n        },\n        \"reference_authorization\": {\n          \"links\": {\n            \"self\": \"string\",\n            \"related\": \"string\"\n          },\n          \"data\": {\n            \"type\": \"reference_authorization\",\n            \"id\": \"string\"\n          }\n        },\n        \"refunds\": {\n          \"links\": {\n            \"self\": \"string\",\n            \"related\": \"string\"\n          },\n          \"data\": {\n            \"type\": \"refunds\",\n            \"id\": \"string\"\n          }\n        },\n        \"return\": {\n          \"links\": {\n            \"self\": \"string\",\n            \"related\": \"string\"\n          },\n          \"data\": {\n            \"type\": \"return\",\n            \"id\": \"string\"\n          }\n        }\n      }\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "3ebba51d-0684-4e8d-9f1f-151cc4a43f43",
+          "name": "Retrieve a capture",
+          "request": {
+            "name": "Retrieve a capture",
+            "description": {
+              "content": "Retrieve a capture",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "captures",
+                ":captureId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "captureId",
+                  "description": "(Required) The resource's id"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/vnd.api+json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "0467cd65-43b8-46a6-9c2e-d20ae37eedfc",
+              "name": "The capture object",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "captures",
+                    ":captureId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "captureId",
+                      "description": "(Required) The resource's id"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/vnd.api+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/vnd.api+json"
+                }
+              ],
+              "body": "{\n  \"data\": {\n    \"id\": \"XAyRWNUzyN\",\n    \"type\": \"captures\",\n    \"links\": {\n      \"self\": \"string\"\n    },\n    \"attributes\": {\n      \"number\": \"42/T/001\",\n      \"type\": \"authorizations\",\n      \"payment_method_type\": \"credit card\",\n      \"currency_code\": \"EUR\",\n      \"amount_cents\": 1500,\n      \"amount_float\": 15,\n      \"formatted_amount\": \"€15,00\",\n      \"succeeded\": false,\n      \"message\": \"Accepted\",\n      \"error_code\": \"00001\",\n      \"error_detail\": \"Already settled\",\n      \"token\": \"xxxx-yyyy-zzzz\",\n      \"gateway_transaction_id\": \"xxxx-yyyy-zzzz\",\n      \"created_at\": \"2018-01-01T12:00:00.000Z\",\n      \"updated_at\": \"2018-01-01T12:00:00.000Z\",\n      \"reference\": \"ANY-EXTERNAL-REFEFERNCE\",\n      \"reference_origin\": \"ANY-EXTERNAL-REFEFERNCE-ORIGIN\",\n      \"metadata\": {\n        \"foo\": \"bar\"\n      },\n      \"refund_amount_cents\": 500,\n      \"refund_amount_float\": 5,\n      \"formatted_refund_amount\": \"€5,00\",\n      \"refund_balance_cents\": 1000,\n      \"refund_balance_float\": 10,\n      \"formatted_refund_balance\": \"€10,00\"\n    },\n    \"relationships\": {\n      \"order\": {\n        \"links\": {\n          \"self\": \"string\",\n          \"related\": \"string\"\n        },\n        \"data\": {\n          \"type\": \"order\",\n          \"id\": \"string\"\n        }\n      },\n      \"payment_source\": {\n        \"links\": {\n          \"self\": \"string\",\n          \"related\": \"string\"\n        },\n        \"data\": {\n          \"type\": \"payment_source\",\n          \"id\": \"string\"\n        }\n      },\n      \"attachments\": {\n        \"links\": {\n          \"self\": \"string\",\n          \"related\": \"string\"\n        },\n        \"data\": {\n          \"type\": \"attachments\",\n          \"id\": \"string\"\n        }\n      },\n      \"events\": {\n        \"links\": {\n          \"self\": \"string\",\n          \"related\": \"string\"\n        },\n        \"data\": {\n          \"type\": \"events\",\n          \"id\": \"string\"\n        }\n      },\n      \"event_stores\": {\n        \"links\": {\n          \"self\": \"string\",\n          \"related\": \"string\"\n        },\n        \"data\": {\n          \"type\": \"event_stores\",\n          \"id\": \"string\"\n        }\n      },\n      \"reference_authorization\": {\n        \"links\": {\n          \"self\": \"string\",\n          \"related\": \"string\"\n        },\n        \"data\": {\n          \"type\": \"reference_authorization\",\n          \"id\": \"string\"\n        }\n      },\n      \"refunds\": {\n        \"links\": {\n          \"self\": \"string\",\n          \"related\": \"string\"\n        },\n        \"data\": {\n          \"type\": \"refunds\",\n          \"id\": \"string\"\n        }\n      },\n      \"return\": {\n        \"links\": {\n          \"self\": \"string\",\n          \"related\": \"string\"\n        },\n        \"data\": {\n          \"type\": \"return\",\n          \"id\": \"string\"\n        }\n      }\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "afb3ddd7-3fac-44e9-9291-0f8bc30df390",
+          "name": "Update a capture",
+          "request": {
+            "name": "Update a capture",
+            "description": {
+              "content": "Update a capture",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "captures",
+                ":captureId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "captureId",
+                  "description": "(Required) The resource's id"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/vnd.api+json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/vnd.api+json"
+              }
+            ],
+            "method": "PATCH",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"data\": {\n    \"type\": \"<string>\",\n    \"id\": \"<string>\",\n    \"attributes\": {\n      \"succeeded\": \"<boolean>\",\n      \"_forward\": \"<boolean>\",\n      \"reference\": \"<string>\",\n      \"reference_origin\": \"<string>\",\n      \"metadata\": \"<object>\",\n      \"_refund\": \"<boolean>\",\n      \"_refund_amount_cents\": \"<integer>\",\n      \"_cancel\": \"<boolean>\"\n    },\n    \"relationships\": {}\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "eb5980ca-b48f-4277-bccd-97349788bef9",
+              "name": "The updated capture object",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "captures",
+                    ":captureId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "captureId",
+                      "description": "(Required) The resource's id"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/vnd.api+json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"data\": {\n    \"type\": \"<string>\",\n    \"id\": \"XAyRWNUzyN\",\n    \"attributes\": {\n      \"succeeded\": false,\n      \"_forward\": true,\n      \"reference\": \"ANY-EXTERNAL-REFEFERNCE\",\n      \"reference_origin\": \"ANY-EXTERNAL-REFEFERNCE-ORIGIN\",\n      \"metadata\": {\n        \"foo\": \"bar\"\n      },\n      \"_refund\": true,\n      \"_refund_amount_cents\": 500,\n      \"_cancel\": true\n    },\n    \"relationships\": {}\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/vnd.api+json"
+                }
+              ],
+              "body": "{\n  \"data\": {\n    \"id\": \"XAyRWNUzyN\",\n    \"type\": \"captures\",\n    \"links\": {\n      \"self\": \"string\"\n    },\n    \"attributes\": {\n      \"number\": \"42/T/001\",\n      \"type\": \"authorizations\",\n      \"payment_method_type\": \"credit card\",\n      \"currency_code\": \"EUR\",\n      \"amount_cents\": 1500,\n      \"amount_float\": 15,\n      \"formatted_amount\": \"€15,00\",\n      \"succeeded\": false,\n      \"message\": \"Accepted\",\n      \"error_code\": \"00001\",\n      \"error_detail\": \"Already settled\",\n      \"token\": \"xxxx-yyyy-zzzz\",\n      \"gateway_transaction_id\": \"xxxx-yyyy-zzzz\",\n      \"created_at\": \"2018-01-01T12:00:00.000Z\",\n      \"updated_at\": \"2018-01-01T12:00:00.000Z\",\n      \"reference\": \"ANY-EXTERNAL-REFEFERNCE\",\n      \"reference_origin\": \"ANY-EXTERNAL-REFEFERNCE-ORIGIN\",\n      \"metadata\": {\n        \"foo\": \"bar\"\n      },\n      \"refund_amount_cents\": 500,\n      \"refund_amount_float\": 5,\n      \"formatted_refund_amount\": \"€5,00\",\n      \"refund_balance_cents\": 1000,\n      \"refund_balance_float\": 10,\n      \"formatted_refund_balance\": \"€10,00\"\n    },\n    \"relationships\": {\n      \"order\": {\n        \"links\": {\n          \"self\": \"string\",\n          \"related\": \"string\"\n        },\n        \"data\": {\n          \"type\": \"order\",\n          \"id\": \"string\"\n        }\n      },\n      \"payment_source\": {\n        \"links\": {\n          \"self\": \"string\",\n          \"related\": \"string\"\n        },\n        \"data\": {\n          \"type\": \"payment_source\",\n          \"id\": \"string\"\n        }\n      },\n      \"attachments\": {\n        \"links\": {\n          \"self\": \"string\",\n          \"related\": \"string\"\n        },\n        \"data\": {\n          \"type\": \"attachments\",\n          \"id\": \"string\"\n        }\n      },\n      \"events\": {\n        \"links\": {\n          \"self\": \"string\",\n          \"related\": \"string\"\n        },\n        \"data\": {\n          \"type\": \"events\",\n          \"id\": \"string\"\n        }\n      },\n      \"event_stores\": {\n        \"links\": {\n          \"self\": \"string\",\n          \"related\": \"string\"\n        },\n        \"data\": {\n          \"type\": \"event_stores\",\n          \"id\": \"string\"\n        }\n      },\n      \"reference_authorization\": {\n        \"links\": {\n          \"self\": \"string\",\n          \"related\": \"string\"\n        },\n        \"data\": {\n          \"type\": \"reference_authorization\",\n          \"id\": \"string\"\n        }\n      },\n      \"refunds\": {\n        \"links\": {\n          \"self\": \"string\",\n          \"related\": \"string\"\n        },\n        \"data\": {\n          \"type\": \"refunds\",\n          \"id\": \"string\"\n        }\n      },\n      \"return\": {\n        \"links\": {\n          \"self\": \"string\",\n          \"related\": \"string\"\n        },\n        \"data\": {\n          \"type\": \"return\",\n          \"id\": \"string\"\n        }\n      }\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "163380da-5a3c-45ba-85ed-79637fed2133",
+          "name": "Retrieve the captures associated to the order",
+          "request": {
+            "name": "Retrieve the captures associated to the order",
+            "description": {
+              "content": "Retrieve the captures associated to the order",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "orders",
+                ":orderId",
+                "captures"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "orderId",
+                  "description": "(Required) The resource's id"
+                }
+              ]
+            },
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "70944578-1017-4acb-8a1a-5cf830fb3862",
+              "name": "The captures associated to the order",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "orders",
+                    ":orderId",
+                    "captures"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "orderId",
+                      "description": "(Required) The resource's id"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "fd287b85-2daa-4f6f-b3aa-4324bf6757ce",
+          "name": "Retrieve the reference capture associated to the refund",
+          "request": {
+            "name": "Retrieve the reference capture associated to the refund",
+            "description": {
+              "content": "Retrieve the reference capture associated to the refund",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "refunds",
+                ":refundId",
+                "reference_capture"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "refundId",
+                  "description": "(Required) The resource's id"
+                }
+              ]
+            },
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "76df2a6c-5f01-48f7-8f07-4ecd42d4d409",
+              "name": "The reference_capture associated to the refund",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "refunds",
+                    ":refundId",
+                    "reference_capture"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "refundId",
+                      "description": "(Required) The resource's id"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "4ea04e32-4586-478e-9c70-68686ddd1017",
+          "name": "Retrieve the reference capture associated to the return",
+          "request": {
+            "name": "Retrieve the reference capture associated to the return",
+            "description": {
+              "content": "Retrieve the reference capture associated to the return",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "returns",
+                ":returnId",
+                "reference_capture"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "returnId",
+                  "description": "(Required) The resource's id"
+                }
+              ]
+            },
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "ac5e4a27-a9ac-46fd-92f3-801d705a2ada",
+              "name": "The reference_capture associated to the return",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "returns",
+                    ":returnId",
+                    "reference_capture"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "returnId",
+                      "description": "(Required) The resource's id"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://{{your_organization_slug}}.commercelayer.io/api",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "d3f43a79-83b8-4bdf-b999-fcfbdad86b4d",
+    "name": "Commerce Layer addresses captures API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Headless Commerce for Global Brands.\n\nContact Support:\n Name: API Support\n Email: support@commercelayer.io",
+      "type": "text/plain"
+    }
+  }
+}

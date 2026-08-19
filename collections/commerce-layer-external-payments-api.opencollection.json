@@ -1,0 +1,130 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Commerce Layer addresses external_payments API",
+    "version": "7.10.1"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "external_payments",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Retrieve the external payments associated to the external gateway",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{your_organization_slug}.commercelayer.io/api/external_gateways/:externalGatewayId/external_payments",
+            "params": [
+              {
+                "name": "externalGatewayId",
+                "value": "",
+                "type": "path",
+                "description": "The resource's id"
+              }
+            ]
+          },
+          "docs": "Retrieve the external payments associated to the external gateway"
+        },
+        {
+          "info": {
+            "name": "List all external payments",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{your_organization_slug}.commercelayer.io/api/external_payments"
+          },
+          "docs": "List all external payments"
+        },
+        {
+          "info": {
+            "name": "Create an external payment",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{your_organization_slug}.commercelayer.io/api/external_payments",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create an external payment"
+        },
+        {
+          "info": {
+            "name": "Retrieve an external payment",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{your_organization_slug}.commercelayer.io/api/external_payments/:externalPaymentId",
+            "params": [
+              {
+                "name": "externalPaymentId",
+                "value": "",
+                "type": "path",
+                "description": "The resource's id"
+              }
+            ]
+          },
+          "docs": "Retrieve an external payment"
+        },
+        {
+          "info": {
+            "name": "Update an external payment",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://{your_organization_slug}.commercelayer.io/api/external_payments/:externalPaymentId",
+            "params": [
+              {
+                "name": "externalPaymentId",
+                "value": "",
+                "type": "path",
+                "description": "The resource's id"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update an external payment"
+        },
+        {
+          "info": {
+            "name": "Delete an external payment",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://{your_organization_slug}.commercelayer.io/api/external_payments/:externalPaymentId",
+            "params": [
+              {
+                "name": "externalPaymentId",
+                "value": "",
+                "type": "path",
+                "description": "The resource's id"
+              }
+            ]
+          },
+          "docs": "Delete an external payment"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

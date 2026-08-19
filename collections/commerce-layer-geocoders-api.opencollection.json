@@ -1,0 +1,92 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Commerce Layer addresses geocoders API",
+    "version": "7.10.1"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "geocoders",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Retrieve the geocoder associated to the address",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{your_organization_slug}.commercelayer.io/api/addresses/:addressId/geocoder",
+            "params": [
+              {
+                "name": "addressId",
+                "value": "",
+                "type": "path",
+                "description": "The resource's id"
+              }
+            ]
+          },
+          "docs": "Retrieve the geocoder associated to the address"
+        },
+        {
+          "info": {
+            "name": "List all geocoders",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{your_organization_slug}.commercelayer.io/api/geocoders"
+          },
+          "docs": "List all geocoders"
+        },
+        {
+          "info": {
+            "name": "Retrieve a geocoder",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{your_organization_slug}.commercelayer.io/api/geocoders/:geocoderId",
+            "params": [
+              {
+                "name": "geocoderId",
+                "value": "",
+                "type": "path",
+                "description": "The resource's id"
+              }
+            ]
+          },
+          "docs": "Retrieve a geocoder"
+        },
+        {
+          "info": {
+            "name": "Retrieve the geocoder associated to the market",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{your_organization_slug}.commercelayer.io/api/markets/:marketId/geocoder",
+            "params": [
+              {
+                "name": "marketId",
+                "value": "",
+                "type": "path",
+                "description": "The resource's id"
+              }
+            ]
+          },
+          "docs": "Retrieve the geocoder associated to the market"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

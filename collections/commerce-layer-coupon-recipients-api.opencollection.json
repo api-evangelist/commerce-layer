@@ -1,0 +1,130 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Commerce Layer addresses coupon_recipients API",
+    "version": "7.10.1"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "coupon_recipients",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List all coupon recipients",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{your_organization_slug}.commercelayer.io/api/coupon_recipients"
+          },
+          "docs": "List all coupon recipients"
+        },
+        {
+          "info": {
+            "name": "Create a coupon recipient",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{your_organization_slug}.commercelayer.io/api/coupon_recipients",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a coupon recipient"
+        },
+        {
+          "info": {
+            "name": "Retrieve a coupon recipient",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{your_organization_slug}.commercelayer.io/api/coupon_recipients/:couponRecipientId",
+            "params": [
+              {
+                "name": "couponRecipientId",
+                "value": "",
+                "type": "path",
+                "description": "The resource's id"
+              }
+            ]
+          },
+          "docs": "Retrieve a coupon recipient"
+        },
+        {
+          "info": {
+            "name": "Update a coupon recipient",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://{your_organization_slug}.commercelayer.io/api/coupon_recipients/:couponRecipientId",
+            "params": [
+              {
+                "name": "couponRecipientId",
+                "value": "",
+                "type": "path",
+                "description": "The resource's id"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update a coupon recipient"
+        },
+        {
+          "info": {
+            "name": "Delete a coupon recipient",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://{your_organization_slug}.commercelayer.io/api/coupon_recipients/:couponRecipientId",
+            "params": [
+              {
+                "name": "couponRecipientId",
+                "value": "",
+                "type": "path",
+                "description": "The resource's id"
+              }
+            ]
+          },
+          "docs": "Delete a coupon recipient"
+        },
+        {
+          "info": {
+            "name": "Retrieve the coupon recipient associated to the coupon",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{your_organization_slug}.commercelayer.io/api/coupons/:couponId/coupon_recipient",
+            "params": [
+              {
+                "name": "couponId",
+                "value": "",
+                "type": "path",
+                "description": "The resource's id"
+              }
+            ]
+          },
+          "docs": "Retrieve the coupon recipient associated to the coupon"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

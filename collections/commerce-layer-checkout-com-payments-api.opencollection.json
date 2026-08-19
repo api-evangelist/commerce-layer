@@ -1,0 +1,130 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Commerce Layer addresses checkout_com_payments API",
+    "version": "7.10.1"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "checkout_com_payments",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Retrieve the checkout com payments associated to the checkout.com gateway",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{your_organization_slug}.commercelayer.io/api/checkout_com_gateways/:checkoutComGatewayId/checkout_com_payments",
+            "params": [
+              {
+                "name": "checkoutComGatewayId",
+                "value": "",
+                "type": "path",
+                "description": "The resource's id"
+              }
+            ]
+          },
+          "docs": "Retrieve the checkout com payments associated to the checkout.com gateway"
+        },
+        {
+          "info": {
+            "name": "List all checkout.com payments",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{your_organization_slug}.commercelayer.io/api/checkout_com_payments"
+          },
+          "docs": "List all checkout.com payments"
+        },
+        {
+          "info": {
+            "name": "Create a checkout.com payment",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{your_organization_slug}.commercelayer.io/api/checkout_com_payments",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a checkout.com payment"
+        },
+        {
+          "info": {
+            "name": "Retrieve a checkout.com payment",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{your_organization_slug}.commercelayer.io/api/checkout_com_payments/:checkoutComPaymentId",
+            "params": [
+              {
+                "name": "checkoutComPaymentId",
+                "value": "",
+                "type": "path",
+                "description": "The resource's id"
+              }
+            ]
+          },
+          "docs": "Retrieve a checkout.com payment"
+        },
+        {
+          "info": {
+            "name": "Update a checkout.com payment",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://{your_organization_slug}.commercelayer.io/api/checkout_com_payments/:checkoutComPaymentId",
+            "params": [
+              {
+                "name": "checkoutComPaymentId",
+                "value": "",
+                "type": "path",
+                "description": "The resource's id"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update a checkout.com payment"
+        },
+        {
+          "info": {
+            "name": "Delete a checkout.com payment",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://{your_organization_slug}.commercelayer.io/api/checkout_com_payments/:checkoutComPaymentId",
+            "params": [
+              {
+                "name": "checkoutComPaymentId",
+                "value": "",
+                "type": "path",
+                "description": "The resource's id"
+              }
+            ]
+          },
+          "docs": "Delete a checkout.com payment"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

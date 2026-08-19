@@ -1,0 +1,130 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Commerce Layer addresses adyen_payments API",
+    "version": "7.10.1"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "adyen_payments",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Retrieve the adyen payments associated to the adyen gateway",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{your_organization_slug}.commercelayer.io/api/adyen_gateways/:adyenGatewayId/adyen_payments",
+            "params": [
+              {
+                "name": "adyenGatewayId",
+                "value": "",
+                "type": "path",
+                "description": "The resource's id"
+              }
+            ]
+          },
+          "docs": "Retrieve the adyen payments associated to the adyen gateway"
+        },
+        {
+          "info": {
+            "name": "List all adyen payments",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{your_organization_slug}.commercelayer.io/api/adyen_payments"
+          },
+          "docs": "List all adyen payments"
+        },
+        {
+          "info": {
+            "name": "Create an adyen payment",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{your_organization_slug}.commercelayer.io/api/adyen_payments",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create an adyen payment"
+        },
+        {
+          "info": {
+            "name": "Retrieve an adyen payment",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{your_organization_slug}.commercelayer.io/api/adyen_payments/:adyenPaymentId",
+            "params": [
+              {
+                "name": "adyenPaymentId",
+                "value": "",
+                "type": "path",
+                "description": "The resource's id"
+              }
+            ]
+          },
+          "docs": "Retrieve an adyen payment"
+        },
+        {
+          "info": {
+            "name": "Update an adyen payment",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://{your_organization_slug}.commercelayer.io/api/adyen_payments/:adyenPaymentId",
+            "params": [
+              {
+                "name": "adyenPaymentId",
+                "value": "",
+                "type": "path",
+                "description": "The resource's id"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update an adyen payment"
+        },
+        {
+          "info": {
+            "name": "Delete an adyen payment",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://{your_organization_slug}.commercelayer.io/api/adyen_payments/:adyenPaymentId",
+            "params": [
+              {
+                "name": "adyenPaymentId",
+                "value": "",
+                "type": "path",
+                "description": "The resource's id"
+              }
+            ]
+          },
+          "docs": "Delete an adyen payment"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

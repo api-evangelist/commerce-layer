@@ -1,0 +1,92 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Commerce Layer addresses order_factories API",
+    "version": "7.10.1"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "order_factories",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List all order factories",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{your_organization_slug}.commercelayer.io/api/order_factories"
+          },
+          "docs": "List all order factories"
+        },
+        {
+          "info": {
+            "name": "Retrieve an order factory",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{your_organization_slug}.commercelayer.io/api/order_factories/:orderFactoryId",
+            "params": [
+              {
+                "name": "orderFactoryId",
+                "value": "",
+                "type": "path",
+                "description": "The resource's id"
+              }
+            ]
+          },
+          "docs": "Retrieve an order factory"
+        },
+        {
+          "info": {
+            "name": "Retrieve the order factories associated to the order subscription",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{your_organization_slug}.commercelayer.io/api/order_subscriptions/:orderSubscriptionId/order_factories",
+            "params": [
+              {
+                "name": "orderSubscriptionId",
+                "value": "",
+                "type": "path",
+                "description": "The resource's id"
+              }
+            ]
+          },
+          "docs": "Retrieve the order factories associated to the order subscription"
+        },
+        {
+          "info": {
+            "name": "Retrieve the order factories associated to the order",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{your_organization_slug}.commercelayer.io/api/orders/:orderId/order_factories",
+            "params": [
+              {
+                "name": "orderId",
+                "value": "",
+                "type": "path",
+                "description": "The resource's id"
+              }
+            ]
+          },
+          "docs": "Retrieve the order factories associated to the order"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,206 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Commerce Layer addresses parcels API",
+    "version": "7.10.1"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "parcels",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Retrieve the parcels associated to the easypost pickup",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{your_organization_slug}.commercelayer.io/api/easypost_pickups/:easypostPickupId/parcels",
+            "params": [
+              {
+                "name": "easypostPickupId",
+                "value": "",
+                "type": "path",
+                "description": "The resource's id"
+              }
+            ]
+          },
+          "docs": "Retrieve the parcels associated to the easypost pickup"
+        },
+        {
+          "info": {
+            "name": "Retrieve the parcels associated to the package",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{your_organization_slug}.commercelayer.io/api/packages/:packageId/parcels",
+            "params": [
+              {
+                "name": "packageId",
+                "value": "",
+                "type": "path",
+                "description": "The resource's id"
+              }
+            ]
+          },
+          "docs": "Retrieve the parcels associated to the package"
+        },
+        {
+          "info": {
+            "name": "Retrieve the parcel associated to the parcel line item",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{your_organization_slug}.commercelayer.io/api/parcel_line_items/:parcelLineItemId/parcel",
+            "params": [
+              {
+                "name": "parcelLineItemId",
+                "value": "",
+                "type": "path",
+                "description": "The resource's id"
+              }
+            ]
+          },
+          "docs": "Retrieve the parcel associated to the parcel line item"
+        },
+        {
+          "info": {
+            "name": "List all parcels",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{your_organization_slug}.commercelayer.io/api/parcels"
+          },
+          "docs": "List all parcels"
+        },
+        {
+          "info": {
+            "name": "Create a parcel",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{your_organization_slug}.commercelayer.io/api/parcels",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a parcel"
+        },
+        {
+          "info": {
+            "name": "Retrieve a parcel",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{your_organization_slug}.commercelayer.io/api/parcels/:parcelId",
+            "params": [
+              {
+                "name": "parcelId",
+                "value": "",
+                "type": "path",
+                "description": "The resource's id"
+              }
+            ]
+          },
+          "docs": "Retrieve a parcel"
+        },
+        {
+          "info": {
+            "name": "Update a parcel",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://{your_organization_slug}.commercelayer.io/api/parcels/:parcelId",
+            "params": [
+              {
+                "name": "parcelId",
+                "value": "",
+                "type": "path",
+                "description": "The resource's id"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update a parcel"
+        },
+        {
+          "info": {
+            "name": "Delete a parcel",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://{your_organization_slug}.commercelayer.io/api/parcels/:parcelId",
+            "params": [
+              {
+                "name": "parcelId",
+                "value": "",
+                "type": "path",
+                "description": "The resource's id"
+              }
+            ]
+          },
+          "docs": "Delete a parcel"
+        },
+        {
+          "info": {
+            "name": "Retrieve the parcels associated to the pickup",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{your_organization_slug}.commercelayer.io/api/pickups/:pickupId/parcels",
+            "params": [
+              {
+                "name": "pickupId",
+                "value": "",
+                "type": "path",
+                "description": "The resource's id"
+              }
+            ]
+          },
+          "docs": "Retrieve the parcels associated to the pickup"
+        },
+        {
+          "info": {
+            "name": "Retrieve the parcels associated to the shipment",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{your_organization_slug}.commercelayer.io/api/shipments/:shipmentId/parcels",
+            "params": [
+              {
+                "name": "shipmentId",
+                "value": "",
+                "type": "path",
+                "description": "The resource's id"
+              }
+            ]
+          },
+          "docs": "Retrieve the parcels associated to the shipment"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,130 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Commerce Layer addresses customer_subscriptions API",
+    "version": "7.10.1"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "customer_subscriptions",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List all customer subscriptions",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{your_organization_slug}.commercelayer.io/api/customer_subscriptions"
+          },
+          "docs": "List all customer subscriptions"
+        },
+        {
+          "info": {
+            "name": "Create a customer subscription",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{your_organization_slug}.commercelayer.io/api/customer_subscriptions",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a customer subscription"
+        },
+        {
+          "info": {
+            "name": "Retrieve a customer subscription",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{your_organization_slug}.commercelayer.io/api/customer_subscriptions/:customerSubscriptionId",
+            "params": [
+              {
+                "name": "customerSubscriptionId",
+                "value": "",
+                "type": "path",
+                "description": "The resource's id"
+              }
+            ]
+          },
+          "docs": "Retrieve a customer subscription"
+        },
+        {
+          "info": {
+            "name": "Update a customer subscription",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://{your_organization_slug}.commercelayer.io/api/customer_subscriptions/:customerSubscriptionId",
+            "params": [
+              {
+                "name": "customerSubscriptionId",
+                "value": "",
+                "type": "path",
+                "description": "The resource's id"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update a customer subscription"
+        },
+        {
+          "info": {
+            "name": "Delete a customer subscription",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://{your_organization_slug}.commercelayer.io/api/customer_subscriptions/:customerSubscriptionId",
+            "params": [
+              {
+                "name": "customerSubscriptionId",
+                "value": "",
+                "type": "path",
+                "description": "The resource's id"
+              }
+            ]
+          },
+          "docs": "Delete a customer subscription"
+        },
+        {
+          "info": {
+            "name": "Retrieve the customer subscriptions associated to the customer",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{your_organization_slug}.commercelayer.io/api/customers/:customerId/customer_subscriptions",
+            "params": [
+              {
+                "name": "customerId",
+                "value": "",
+                "type": "path",
+                "description": "The resource's id"
+              }
+            ]
+          },
+          "docs": "Retrieve the customer subscriptions associated to the customer"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

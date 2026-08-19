@@ -1,0 +1,111 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Commerce Layer addresses stripe_gateways API",
+    "version": "7.10.1"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "stripe_gateways",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List all stripe gateways",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{your_organization_slug}.commercelayer.io/api/stripe_gateways"
+          },
+          "docs": "List all stripe gateways"
+        },
+        {
+          "info": {
+            "name": "Create a stripe gateway",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{your_organization_slug}.commercelayer.io/api/stripe_gateways",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a stripe gateway"
+        },
+        {
+          "info": {
+            "name": "Retrieve a stripe gateway",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{your_organization_slug}.commercelayer.io/api/stripe_gateways/:stripeGatewayId",
+            "params": [
+              {
+                "name": "stripeGatewayId",
+                "value": "",
+                "type": "path",
+                "description": "The resource's id"
+              }
+            ]
+          },
+          "docs": "Retrieve a stripe gateway"
+        },
+        {
+          "info": {
+            "name": "Update a stripe gateway",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://{your_organization_slug}.commercelayer.io/api/stripe_gateways/:stripeGatewayId",
+            "params": [
+              {
+                "name": "stripeGatewayId",
+                "value": "",
+                "type": "path",
+                "description": "The resource's id"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update a stripe gateway"
+        },
+        {
+          "info": {
+            "name": "Delete a stripe gateway",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://{your_organization_slug}.commercelayer.io/api/stripe_gateways/:stripeGatewayId",
+            "params": [
+              {
+                "name": "stripeGatewayId",
+                "value": "",
+                "type": "path",
+                "description": "The resource's id"
+              }
+            ]
+          },
+          "docs": "Delete a stripe gateway"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

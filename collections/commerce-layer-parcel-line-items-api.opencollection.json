@@ -1,0 +1,130 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Commerce Layer addresses parcel_line_items API",
+    "version": "7.10.1"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "parcel_line_items",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List all parcel line items",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{your_organization_slug}.commercelayer.io/api/parcel_line_items"
+          },
+          "docs": "List all parcel line items"
+        },
+        {
+          "info": {
+            "name": "Create a parcel line item",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{your_organization_slug}.commercelayer.io/api/parcel_line_items",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a parcel line item"
+        },
+        {
+          "info": {
+            "name": "Retrieve a parcel line item",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{your_organization_slug}.commercelayer.io/api/parcel_line_items/:parcelLineItemId",
+            "params": [
+              {
+                "name": "parcelLineItemId",
+                "value": "",
+                "type": "path",
+                "description": "The resource's id"
+              }
+            ]
+          },
+          "docs": "Retrieve a parcel line item"
+        },
+        {
+          "info": {
+            "name": "Update a parcel line item",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://{your_organization_slug}.commercelayer.io/api/parcel_line_items/:parcelLineItemId",
+            "params": [
+              {
+                "name": "parcelLineItemId",
+                "value": "",
+                "type": "path",
+                "description": "The resource's id"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update a parcel line item"
+        },
+        {
+          "info": {
+            "name": "Delete a parcel line item",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://{your_organization_slug}.commercelayer.io/api/parcel_line_items/:parcelLineItemId",
+            "params": [
+              {
+                "name": "parcelLineItemId",
+                "value": "",
+                "type": "path",
+                "description": "The resource's id"
+              }
+            ]
+          },
+          "docs": "Delete a parcel line item"
+        },
+        {
+          "info": {
+            "name": "Retrieve the parcel line items associated to the parcel",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{your_organization_slug}.commercelayer.io/api/parcels/:parcelId/parcel_line_items",
+            "params": [
+              {
+                "name": "parcelId",
+                "value": "",
+                "type": "path",
+                "description": "The resource's id"
+              }
+            ]
+          },
+          "docs": "Retrieve the parcel line items associated to the parcel"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,130 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Commerce Layer addresses order_copies API",
+    "version": "7.10.1"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "order_copies",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List all order copies",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{your_organization_slug}.commercelayer.io/api/order_copies"
+          },
+          "docs": "List all order copies"
+        },
+        {
+          "info": {
+            "name": "Create an order copy",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{your_organization_slug}.commercelayer.io/api/order_copies",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create an order copy"
+        },
+        {
+          "info": {
+            "name": "Retrieve an order copy",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{your_organization_slug}.commercelayer.io/api/order_copies/:orderCopyId",
+            "params": [
+              {
+                "name": "orderCopyId",
+                "value": "",
+                "type": "path",
+                "description": "The resource's id"
+              }
+            ]
+          },
+          "docs": "Retrieve an order copy"
+        },
+        {
+          "info": {
+            "name": "Update an order copy",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://{your_organization_slug}.commercelayer.io/api/order_copies/:orderCopyId",
+            "params": [
+              {
+                "name": "orderCopyId",
+                "value": "",
+                "type": "path",
+                "description": "The resource's id"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update an order copy"
+        },
+        {
+          "info": {
+            "name": "Delete an order copy",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://{your_organization_slug}.commercelayer.io/api/order_copies/:orderCopyId",
+            "params": [
+              {
+                "name": "orderCopyId",
+                "value": "",
+                "type": "path",
+                "description": "The resource's id"
+              }
+            ]
+          },
+          "docs": "Delete an order copy"
+        },
+        {
+          "info": {
+            "name": "Retrieve the order copies associated to the order",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{your_organization_slug}.commercelayer.io/api/orders/:orderId/order_copies",
+            "params": [
+              {
+                "name": "orderId",
+                "value": "",
+                "type": "path",
+                "description": "The resource's id"
+              }
+            ]
+          },
+          "docs": "Retrieve the order copies associated to the order"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

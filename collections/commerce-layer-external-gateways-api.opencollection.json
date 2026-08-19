@@ -1,0 +1,111 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Commerce Layer addresses external_gateways API",
+    "version": "7.10.1"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "external_gateways",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List all external gateways",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{your_organization_slug}.commercelayer.io/api/external_gateways"
+          },
+          "docs": "List all external gateways"
+        },
+        {
+          "info": {
+            "name": "Create an external gateway",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{your_organization_slug}.commercelayer.io/api/external_gateways",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create an external gateway"
+        },
+        {
+          "info": {
+            "name": "Retrieve an external gateway",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{your_organization_slug}.commercelayer.io/api/external_gateways/:externalGatewayId",
+            "params": [
+              {
+                "name": "externalGatewayId",
+                "value": "",
+                "type": "path",
+                "description": "The resource's id"
+              }
+            ]
+          },
+          "docs": "Retrieve an external gateway"
+        },
+        {
+          "info": {
+            "name": "Update an external gateway",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://{your_organization_slug}.commercelayer.io/api/external_gateways/:externalGatewayId",
+            "params": [
+              {
+                "name": "externalGatewayId",
+                "value": "",
+                "type": "path",
+                "description": "The resource's id"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update an external gateway"
+        },
+        {
+          "info": {
+            "name": "Delete an external gateway",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://{your_organization_slug}.commercelayer.io/api/external_gateways/:externalGatewayId",
+            "params": [
+              {
+                "name": "externalGatewayId",
+                "value": "",
+                "type": "path",
+                "description": "The resource's id"
+              }
+            ]
+          },
+          "docs": "Delete an external gateway"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

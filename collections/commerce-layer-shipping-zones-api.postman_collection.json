@@ -1,0 +1,605 @@
+{
+  "item": [
+    {
+      "id": "3ccef14e-bbfe-410a-9382-439d69dcf05e",
+      "name": "shipping_zones",
+      "description": {
+        "content": "resource type",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "b60ef630-c028-492b-be05-e64db4ad24ef",
+          "name": "Retrieve the shipping zone associated to the shipping method",
+          "request": {
+            "name": "Retrieve the shipping zone associated to the shipping method",
+            "description": {
+              "content": "Retrieve the shipping zone associated to the shipping method",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "shipping_methods",
+                ":shippingMethodId",
+                "shipping_zone"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "shippingMethodId",
+                  "description": "(Required) The resource's id"
+                }
+              ]
+            },
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "bc74b935-335c-49dd-99a0-595c32c5ea10",
+              "name": "The shipping_zone associated to the shipping method",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "shipping_methods",
+                    ":shippingMethodId",
+                    "shipping_zone"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "shippingMethodId",
+                      "description": "(Required) The resource's id"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "5854c108-3d56-44a4-b3b7-25b3bed3807a",
+          "name": "List all shipping zones",
+          "request": {
+            "name": "List all shipping zones",
+            "description": {
+              "content": "List all shipping zones",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "shipping_zones"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/vnd.api+json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "0456a4cb-3fac-490e-b5df-54c45d080331",
+              "name": "A list of shipping zone objects",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "shipping_zones"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/vnd.api+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/vnd.api+json"
+                }
+              ],
+              "body": "{\n  \"data\": [\n    {\n      \"id\": \"XAyRWNUzyN\",\n      \"type\": \"shipping_zones\",\n      \"links\": {\n        \"self\": \"string\"\n      },\n      \"attributes\": {\n        \"name\": \"Europe (main countries)\",\n        \"country_code_regex\": \"AT|BE|BG|CZ|DK|EE|DE|HU|LV|LT\",\n        \"not_country_code_regex\": \"AT|BE|BG|CZ|DK|EE|DE\",\n        \"state_code_regex\": \"A[KLRZ]|C[AOT]|D[CE]|FL\",\n        \"not_state_code_regex\": \"A[KLRZ]|C[AOT]\",\n        \"zip_code_regex\": \"(?i)(JE1|JE2|JE3|JE4|JE5)\",\n        \"not_zip_code_regex\": \"(?i)(JE1|JE2|JE3)\",\n        \"created_at\": \"2018-01-01T12:00:00.000Z\",\n        \"updated_at\": \"2018-01-01T12:00:00.000Z\",\n        \"reference\": \"ANY-EXTERNAL-REFEFERNCE\",\n        \"reference_origin\": \"ANY-EXTERNAL-REFEFERNCE-ORIGIN\",\n        \"metadata\": {\n          \"foo\": \"bar\"\n        }\n      },\n      \"relationships\": {\n        \"attachments\": {\n          \"links\": {\n            \"self\": \"string\",\n            \"related\": \"string\"\n          },\n          \"data\": {\n            \"type\": \"attachments\",\n            \"id\": \"string\"\n          }\n        },\n        \"event_stores\": {\n          \"links\": {\n            \"self\": \"string\",\n            \"related\": \"string\"\n          },\n          \"data\": {\n            \"type\": \"event_stores\",\n            \"id\": \"string\"\n          }\n        }\n      }\n    },\n    {\n      \"id\": \"XAyRWNUzyN\",\n      \"type\": \"shipping_zones\",\n      \"links\": {\n        \"self\": \"string\"\n      },\n      \"attributes\": {\n        \"name\": \"Europe (main countries)\",\n        \"country_code_regex\": \"AT|BE|BG|CZ|DK|EE|DE|HU|LV|LT\",\n        \"not_country_code_regex\": \"AT|BE|BG|CZ|DK|EE|DE\",\n        \"state_code_regex\": \"A[KLRZ]|C[AOT]|D[CE]|FL\",\n        \"not_state_code_regex\": \"A[KLRZ]|C[AOT]\",\n        \"zip_code_regex\": \"(?i)(JE1|JE2|JE3|JE4|JE5)\",\n        \"not_zip_code_regex\": \"(?i)(JE1|JE2|JE3)\",\n        \"created_at\": \"2018-01-01T12:00:00.000Z\",\n        \"updated_at\": \"2018-01-01T12:00:00.000Z\",\n        \"reference\": \"ANY-EXTERNAL-REFEFERNCE\",\n        \"reference_origin\": \"ANY-EXTERNAL-REFEFERNCE-ORIGIN\",\n        \"metadata\": {\n          \"foo\": \"bar\"\n        }\n      },\n      \"relationships\": {\n        \"attachments\": {\n          \"links\": {\n            \"self\": \"string\",\n            \"related\": \"string\"\n          },\n          \"data\": {\n            \"type\": \"attachments\",\n            \"id\": \"string\"\n          }\n        },\n        \"event_stores\": {\n          \"links\": {\n            \"self\": \"string\",\n            \"related\": \"string\"\n          },\n          \"data\": {\n            \"type\": \"event_stores\",\n            \"id\": \"string\"\n          }\n        }\n      }\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "6f51b053-c690-4bf1-a08b-02cd9b80a18f",
+          "name": "Create a shipping zone",
+          "request": {
+            "name": "Create a shipping zone",
+            "description": {
+              "content": "Create a shipping zone",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "shipping_zones"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/vnd.api+json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/vnd.api+json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"data\": {\n    \"type\": \"<string>\",\n    \"attributes\": {\n      \"name\": \"<string>\",\n      \"country_code_regex\": \"<string>\",\n      \"not_country_code_regex\": \"<string>\",\n      \"state_code_regex\": \"<string>\",\n      \"not_state_code_regex\": \"<string>\",\n      \"zip_code_regex\": \"<string>\",\n      \"not_zip_code_regex\": \"<string>\",\n      \"reference\": \"<string>\",\n      \"reference_origin\": \"<string>\",\n      \"metadata\": \"<object>\"\n    },\n    \"relationships\": {}\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "9bba3fee-4513-4c48-8bdd-570446af0099",
+              "name": "The created shipping zone object",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "shipping_zones"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/vnd.api+json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"data\": {\n    \"type\": \"<string>\",\n    \"attributes\": {\n      \"name\": \"Europe (main countries)\",\n      \"country_code_regex\": \"AT|BE|BG|CZ|DK|EE|DE|HU|LV|LT\",\n      \"not_country_code_regex\": \"AT|BE|BG|CZ|DK|EE|DE\",\n      \"state_code_regex\": \"A[KLRZ]|C[AOT]|D[CE]|FL\",\n      \"not_state_code_regex\": \"A[KLRZ]|C[AOT]\",\n      \"zip_code_regex\": \"(?i)(JE1|JE2|JE3|JE4|JE5)\",\n      \"not_zip_code_regex\": \"(?i)(JE1|JE2|JE3)\",\n      \"reference\": \"ANY-EXTERNAL-REFEFERNCE\",\n      \"reference_origin\": \"ANY-EXTERNAL-REFEFERNCE-ORIGIN\",\n      \"metadata\": {\n        \"foo\": \"bar\"\n      }\n    },\n    \"relationships\": {}\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/vnd.api+json"
+                }
+              ],
+              "body": "{\n  \"data\": {\n    \"id\": \"XAyRWNUzyN\",\n    \"type\": \"shipping_zones\",\n    \"links\": {\n      \"self\": \"string\"\n    },\n    \"attributes\": {\n      \"name\": \"Europe (main countries)\",\n      \"country_code_regex\": \"AT|BE|BG|CZ|DK|EE|DE|HU|LV|LT\",\n      \"not_country_code_regex\": \"AT|BE|BG|CZ|DK|EE|DE\",\n      \"state_code_regex\": \"A[KLRZ]|C[AOT]|D[CE]|FL\",\n      \"not_state_code_regex\": \"A[KLRZ]|C[AOT]\",\n      \"zip_code_regex\": \"(?i)(JE1|JE2|JE3|JE4|JE5)\",\n      \"not_zip_code_regex\": \"(?i)(JE1|JE2|JE3)\",\n      \"created_at\": \"2018-01-01T12:00:00.000Z\",\n      \"updated_at\": \"2018-01-01T12:00:00.000Z\",\n      \"reference\": \"ANY-EXTERNAL-REFEFERNCE\",\n      \"reference_origin\": \"ANY-EXTERNAL-REFEFERNCE-ORIGIN\",\n      \"metadata\": {\n        \"foo\": \"bar\"\n      }\n    },\n    \"relationships\": {\n      \"attachments\": {\n        \"links\": {\n          \"self\": \"string\",\n          \"related\": \"string\"\n        },\n        \"data\": {\n          \"type\": \"attachments\",\n          \"id\": \"string\"\n        }\n      },\n      \"event_stores\": {\n        \"links\": {\n          \"self\": \"string\",\n          \"related\": \"string\"\n        },\n        \"data\": {\n          \"type\": \"event_stores\",\n          \"id\": \"string\"\n        }\n      }\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "4d55f47b-66a9-4d6c-979d-11aee03c4f2c",
+          "name": "Retrieve a shipping zone",
+          "request": {
+            "name": "Retrieve a shipping zone",
+            "description": {
+              "content": "Retrieve a shipping zone",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "shipping_zones",
+                ":shippingZoneId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "shippingZoneId",
+                  "description": "(Required) The resource's id"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/vnd.api+json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "b7d146e0-45f6-4148-a423-b012e9e05d4b",
+              "name": "The shipping zone object",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "shipping_zones",
+                    ":shippingZoneId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "shippingZoneId",
+                      "description": "(Required) The resource's id"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/vnd.api+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/vnd.api+json"
+                }
+              ],
+              "body": "{\n  \"data\": {\n    \"id\": \"XAyRWNUzyN\",\n    \"type\": \"shipping_zones\",\n    \"links\": {\n      \"self\": \"string\"\n    },\n    \"attributes\": {\n      \"name\": \"Europe (main countries)\",\n      \"country_code_regex\": \"AT|BE|BG|CZ|DK|EE|DE|HU|LV|LT\",\n      \"not_country_code_regex\": \"AT|BE|BG|CZ|DK|EE|DE\",\n      \"state_code_regex\": \"A[KLRZ]|C[AOT]|D[CE]|FL\",\n      \"not_state_code_regex\": \"A[KLRZ]|C[AOT]\",\n      \"zip_code_regex\": \"(?i)(JE1|JE2|JE3|JE4|JE5)\",\n      \"not_zip_code_regex\": \"(?i)(JE1|JE2|JE3)\",\n      \"created_at\": \"2018-01-01T12:00:00.000Z\",\n      \"updated_at\": \"2018-01-01T12:00:00.000Z\",\n      \"reference\": \"ANY-EXTERNAL-REFEFERNCE\",\n      \"reference_origin\": \"ANY-EXTERNAL-REFEFERNCE-ORIGIN\",\n      \"metadata\": {\n        \"foo\": \"bar\"\n      }\n    },\n    \"relationships\": {\n      \"attachments\": {\n        \"links\": {\n          \"self\": \"string\",\n          \"related\": \"string\"\n        },\n        \"data\": {\n          \"type\": \"attachments\",\n          \"id\": \"string\"\n        }\n      },\n      \"event_stores\": {\n        \"links\": {\n          \"self\": \"string\",\n          \"related\": \"string\"\n        },\n        \"data\": {\n          \"type\": \"event_stores\",\n          \"id\": \"string\"\n        }\n      }\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "c7d6d30a-8f4c-46d1-b567-c01ce7fa3c62",
+          "name": "Update a shipping zone",
+          "request": {
+            "name": "Update a shipping zone",
+            "description": {
+              "content": "Update a shipping zone",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "shipping_zones",
+                ":shippingZoneId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "shippingZoneId",
+                  "description": "(Required) The resource's id"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/vnd.api+json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/vnd.api+json"
+              }
+            ],
+            "method": "PATCH",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"data\": {\n    \"type\": \"<string>\",\n    \"id\": \"<string>\",\n    \"attributes\": {\n      \"name\": \"<string>\",\n      \"country_code_regex\": \"<string>\",\n      \"not_country_code_regex\": \"<string>\",\n      \"state_code_regex\": \"<string>\",\n      \"not_state_code_regex\": \"<string>\",\n      \"zip_code_regex\": \"<string>\",\n      \"not_zip_code_regex\": \"<string>\",\n      \"reference\": \"<string>\",\n      \"reference_origin\": \"<string>\",\n      \"metadata\": \"<object>\"\n    },\n    \"relationships\": {}\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "5299d7ca-85d1-4552-9b19-df4056159a34",
+              "name": "The updated shipping zone object",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "shipping_zones",
+                    ":shippingZoneId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "shippingZoneId",
+                      "description": "(Required) The resource's id"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/vnd.api+json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"data\": {\n    \"type\": \"<string>\",\n    \"id\": \"XAyRWNUzyN\",\n    \"attributes\": {\n      \"name\": \"Europe (main countries)\",\n      \"country_code_regex\": \"AT|BE|BG|CZ|DK|EE|DE|HU|LV|LT\",\n      \"not_country_code_regex\": \"AT|BE|BG|CZ|DK|EE|DE\",\n      \"state_code_regex\": \"A[KLRZ]|C[AOT]|D[CE]|FL\",\n      \"not_state_code_regex\": \"A[KLRZ]|C[AOT]\",\n      \"zip_code_regex\": \"(?i)(JE1|JE2|JE3|JE4|JE5)\",\n      \"not_zip_code_regex\": \"(?i)(JE1|JE2|JE3)\",\n      \"reference\": \"ANY-EXTERNAL-REFEFERNCE\",\n      \"reference_origin\": \"ANY-EXTERNAL-REFEFERNCE-ORIGIN\",\n      \"metadata\": {\n        \"foo\": \"bar\"\n      }\n    },\n    \"relationships\": {}\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/vnd.api+json"
+                }
+              ],
+              "body": "{\n  \"data\": {\n    \"id\": \"XAyRWNUzyN\",\n    \"type\": \"shipping_zones\",\n    \"links\": {\n      \"self\": \"string\"\n    },\n    \"attributes\": {\n      \"name\": \"Europe (main countries)\",\n      \"country_code_regex\": \"AT|BE|BG|CZ|DK|EE|DE|HU|LV|LT\",\n      \"not_country_code_regex\": \"AT|BE|BG|CZ|DK|EE|DE\",\n      \"state_code_regex\": \"A[KLRZ]|C[AOT]|D[CE]|FL\",\n      \"not_state_code_regex\": \"A[KLRZ]|C[AOT]\",\n      \"zip_code_regex\": \"(?i)(JE1|JE2|JE3|JE4|JE5)\",\n      \"not_zip_code_regex\": \"(?i)(JE1|JE2|JE3)\",\n      \"created_at\": \"2018-01-01T12:00:00.000Z\",\n      \"updated_at\": \"2018-01-01T12:00:00.000Z\",\n      \"reference\": \"ANY-EXTERNAL-REFEFERNCE\",\n      \"reference_origin\": \"ANY-EXTERNAL-REFEFERNCE-ORIGIN\",\n      \"metadata\": {\n        \"foo\": \"bar\"\n      }\n    },\n    \"relationships\": {\n      \"attachments\": {\n        \"links\": {\n          \"self\": \"string\",\n          \"related\": \"string\"\n        },\n        \"data\": {\n          \"type\": \"attachments\",\n          \"id\": \"string\"\n        }\n      },\n      \"event_stores\": {\n        \"links\": {\n          \"self\": \"string\",\n          \"related\": \"string\"\n        },\n        \"data\": {\n          \"type\": \"event_stores\",\n          \"id\": \"string\"\n        }\n      }\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "f7dd838a-afd9-4aea-a38c-f8a6838b63a1",
+          "name": "Delete a shipping zone",
+          "request": {
+            "name": "Delete a shipping zone",
+            "description": {
+              "content": "Delete a shipping zone",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "shipping_zones",
+                ":shippingZoneId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "shippingZoneId",
+                  "description": "(Required) The resource's id"
+                }
+              ]
+            },
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "0cafb43b-532b-4e81-86f9-b5284d0192d0",
+              "name": "No content",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "shipping_zones",
+                    ":shippingZoneId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "shippingZoneId",
+                      "description": "(Required) The resource's id"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://{{your_organization_slug}}.commercelayer.io/api",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "0c1384db-feb9-43a6-be59-3e2b0e396abc",
+    "name": "Commerce Layer addresses shipping_zones API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Headless Commerce for Global Brands.\n\nContact Support:\n Name: API Support\n Email: support@commercelayer.io",
+      "type": "text/plain"
+    }
+  }
+}

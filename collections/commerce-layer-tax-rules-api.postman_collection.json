@@ -1,0 +1,605 @@
+{
+  "item": [
+    {
+      "id": "16f6c8b0-b386-43d4-bf6a-1c660a13a3e1",
+      "name": "tax_rules",
+      "description": {
+        "content": "resource type",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "62e4c026-e89d-43da-ada0-dfedd1c47e34",
+          "name": "Retrieve the tax rules associated to the manual tax calculator",
+          "request": {
+            "name": "Retrieve the tax rules associated to the manual tax calculator",
+            "description": {
+              "content": "Retrieve the tax rules associated to the manual tax calculator",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "manual_tax_calculators",
+                ":manualTaxCalculatorId",
+                "tax_rules"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "manualTaxCalculatorId",
+                  "description": "(Required) The resource's id"
+                }
+              ]
+            },
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "6fd2f547-e84e-4939-a2a6-8a0c66f5cf20",
+              "name": "The tax_rules associated to the manual tax calculator",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "manual_tax_calculators",
+                    ":manualTaxCalculatorId",
+                    "tax_rules"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "manualTaxCalculatorId",
+                      "description": "(Required) The resource's id"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "5b29aaf2-4ab0-45d0-be50-7e2d9ed85820",
+          "name": "List all tax rules",
+          "request": {
+            "name": "List all tax rules",
+            "description": {
+              "content": "List all tax rules",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "tax_rules"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/vnd.api+json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "5e9043d9-4027-4226-b247-36ef3f2bbca2",
+              "name": "A list of tax rule objects",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "tax_rules"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/vnd.api+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/vnd.api+json"
+                }
+              ],
+              "body": "{\n  \"data\": [\n    {\n      \"id\": \"XAyRWNUzyN\",\n      \"type\": \"tax_rules\",\n      \"links\": {\n        \"self\": \"string\"\n      },\n      \"attributes\": {\n        \"name\": \"Fixed 22%\",\n        \"tax_rate\": 0.22,\n        \"freight_taxable\": false,\n        \"payment_method_taxable\": false,\n        \"gift_card_taxable\": false,\n        \"adjustment_taxable\": false,\n        \"breakdown\": {\n          \"41\": {\n            \"tax_rate\": 0.22\n          }\n        },\n        \"country_code_regex\": \"AT|BE|BG|CZ|DK|EE|DE|HU|LV|LT\",\n        \"not_country_code_regex\": \"AT|BE|BG|CZ|DK|EE|DE\",\n        \"state_code_regex\": \"A[KLRZ]|C[AOT]|D[CE]|FL\",\n        \"not_state_code_regex\": \"A[KLRZ]|C[AOT]\",\n        \"zip_code_regex\": \"(?i)(JE1|JE2|JE3|JE4|JE5)\",\n        \"not_zip_code_regex\": \"(?i)(JE1|JE2|JE3)\",\n        \"created_at\": \"2018-01-01T12:00:00.000Z\",\n        \"updated_at\": \"2018-01-01T12:00:00.000Z\",\n        \"reference\": \"ANY-EXTERNAL-REFEFERNCE\",\n        \"reference_origin\": \"ANY-EXTERNAL-REFEFERNCE-ORIGIN\",\n        \"metadata\": {\n          \"foo\": \"bar\"\n        }\n      },\n      \"relationships\": {\n        \"manual_tax_calculator\": {\n          \"links\": {\n            \"self\": \"string\",\n            \"related\": \"string\"\n          },\n          \"data\": {\n            \"type\": \"manual_tax_calculator\",\n            \"id\": \"string\"\n          }\n        },\n        \"event_stores\": {\n          \"links\": {\n            \"self\": \"string\",\n            \"related\": \"string\"\n          },\n          \"data\": {\n            \"type\": \"event_stores\",\n            \"id\": \"string\"\n          }\n        }\n      }\n    },\n    {\n      \"id\": \"XAyRWNUzyN\",\n      \"type\": \"tax_rules\",\n      \"links\": {\n        \"self\": \"string\"\n      },\n      \"attributes\": {\n        \"name\": \"Fixed 22%\",\n        \"tax_rate\": 0.22,\n        \"freight_taxable\": false,\n        \"payment_method_taxable\": false,\n        \"gift_card_taxable\": false,\n        \"adjustment_taxable\": false,\n        \"breakdown\": {\n          \"41\": {\n            \"tax_rate\": 0.22\n          }\n        },\n        \"country_code_regex\": \"AT|BE|BG|CZ|DK|EE|DE|HU|LV|LT\",\n        \"not_country_code_regex\": \"AT|BE|BG|CZ|DK|EE|DE\",\n        \"state_code_regex\": \"A[KLRZ]|C[AOT]|D[CE]|FL\",\n        \"not_state_code_regex\": \"A[KLRZ]|C[AOT]\",\n        \"zip_code_regex\": \"(?i)(JE1|JE2|JE3|JE4|JE5)\",\n        \"not_zip_code_regex\": \"(?i)(JE1|JE2|JE3)\",\n        \"created_at\": \"2018-01-01T12:00:00.000Z\",\n        \"updated_at\": \"2018-01-01T12:00:00.000Z\",\n        \"reference\": \"ANY-EXTERNAL-REFEFERNCE\",\n        \"reference_origin\": \"ANY-EXTERNAL-REFEFERNCE-ORIGIN\",\n        \"metadata\": {\n          \"foo\": \"bar\"\n        }\n      },\n      \"relationships\": {\n        \"manual_tax_calculator\": {\n          \"links\": {\n            \"self\": \"string\",\n            \"related\": \"string\"\n          },\n          \"data\": {\n            \"type\": \"manual_tax_calculator\",\n            \"id\": \"string\"\n          }\n        },\n        \"event_stores\": {\n          \"links\": {\n            \"self\": \"string\",\n            \"related\": \"string\"\n          },\n          \"data\": {\n            \"type\": \"event_stores\",\n            \"id\": \"string\"\n          }\n        }\n      }\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "96f60789-0363-49c2-9b28-9c2b2a74233a",
+          "name": "Create a tax rule",
+          "request": {
+            "name": "Create a tax rule",
+            "description": {
+              "content": "Create a tax rule",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "tax_rules"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/vnd.api+json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/vnd.api+json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"data\": {\n    \"type\": \"<string>\",\n    \"attributes\": {\n      \"name\": \"<string>\",\n      \"tax_rate\": \"<number>\",\n      \"freight_taxable\": \"<boolean>\",\n      \"payment_method_taxable\": \"<boolean>\",\n      \"gift_card_taxable\": \"<boolean>\",\n      \"adjustment_taxable\": \"<boolean>\",\n      \"country_code_regex\": \"<string>\",\n      \"not_country_code_regex\": \"<string>\",\n      \"state_code_regex\": \"<string>\",\n      \"not_state_code_regex\": \"<string>\",\n      \"zip_code_regex\": \"<string>\",\n      \"not_zip_code_regex\": \"<string>\",\n      \"reference\": \"<string>\",\n      \"reference_origin\": \"<string>\",\n      \"metadata\": \"<object>\"\n    },\n    \"relationships\": {\n      \"manual_tax_calculator\": {\n        \"data\": {\n          \"type\": \"<string>\",\n          \"id\": \"<string>\"\n        }\n      }\n    }\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "cfdafc74-9e12-4437-b43b-3aac24b767fe",
+              "name": "The created tax rule object",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "tax_rules"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/vnd.api+json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"data\": {\n    \"type\": \"<string>\",\n    \"attributes\": {\n      \"name\": \"Fixed 22%\",\n      \"tax_rate\": 0.22,\n      \"freight_taxable\": false,\n      \"payment_method_taxable\": false,\n      \"gift_card_taxable\": false,\n      \"adjustment_taxable\": false,\n      \"country_code_regex\": \"AT|BE|BG|CZ|DK|EE|DE|HU|LV|LT\",\n      \"not_country_code_regex\": \"AT|BE|BG|CZ|DK|EE|DE\",\n      \"state_code_regex\": \"A[KLRZ]|C[AOT]|D[CE]|FL\",\n      \"not_state_code_regex\": \"A[KLRZ]|C[AOT]\",\n      \"zip_code_regex\": \"(?i)(JE1|JE2|JE3|JE4|JE5)\",\n      \"not_zip_code_regex\": \"(?i)(JE1|JE2|JE3)\",\n      \"reference\": \"ANY-EXTERNAL-REFEFERNCE\",\n      \"reference_origin\": \"ANY-EXTERNAL-REFEFERNCE-ORIGIN\",\n      \"metadata\": {\n        \"foo\": \"bar\"\n      }\n    },\n    \"relationships\": {\n      \"manual_tax_calculator\": {\n        \"data\": {\n          \"type\": \"<string>\",\n          \"id\": \"XAyRWNUzyN\"\n        }\n      }\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/vnd.api+json"
+                }
+              ],
+              "body": "{\n  \"data\": {\n    \"id\": \"XAyRWNUzyN\",\n    \"type\": \"tax_rules\",\n    \"links\": {\n      \"self\": \"string\"\n    },\n    \"attributes\": {\n      \"name\": \"Fixed 22%\",\n      \"tax_rate\": 0.22,\n      \"freight_taxable\": false,\n      \"payment_method_taxable\": false,\n      \"gift_card_taxable\": false,\n      \"adjustment_taxable\": false,\n      \"breakdown\": {\n        \"41\": {\n          \"tax_rate\": 0.22\n        }\n      },\n      \"country_code_regex\": \"AT|BE|BG|CZ|DK|EE|DE|HU|LV|LT\",\n      \"not_country_code_regex\": \"AT|BE|BG|CZ|DK|EE|DE\",\n      \"state_code_regex\": \"A[KLRZ]|C[AOT]|D[CE]|FL\",\n      \"not_state_code_regex\": \"A[KLRZ]|C[AOT]\",\n      \"zip_code_regex\": \"(?i)(JE1|JE2|JE3|JE4|JE5)\",\n      \"not_zip_code_regex\": \"(?i)(JE1|JE2|JE3)\",\n      \"created_at\": \"2018-01-01T12:00:00.000Z\",\n      \"updated_at\": \"2018-01-01T12:00:00.000Z\",\n      \"reference\": \"ANY-EXTERNAL-REFEFERNCE\",\n      \"reference_origin\": \"ANY-EXTERNAL-REFEFERNCE-ORIGIN\",\n      \"metadata\": {\n        \"foo\": \"bar\"\n      }\n    },\n    \"relationships\": {\n      \"manual_tax_calculator\": {\n        \"links\": {\n          \"self\": \"string\",\n          \"related\": \"string\"\n        },\n        \"data\": {\n          \"type\": \"manual_tax_calculator\",\n          \"id\": \"string\"\n        }\n      },\n      \"event_stores\": {\n        \"links\": {\n          \"self\": \"string\",\n          \"related\": \"string\"\n        },\n        \"data\": {\n          \"type\": \"event_stores\",\n          \"id\": \"string\"\n        }\n      }\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "6890f362-01ac-4df4-90d2-7d81698b25bf",
+          "name": "Retrieve a tax rule",
+          "request": {
+            "name": "Retrieve a tax rule",
+            "description": {
+              "content": "Retrieve a tax rule",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "tax_rules",
+                ":taxRuleId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "taxRuleId",
+                  "description": "(Required) The resource's id"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/vnd.api+json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "3580a46b-0d5e-4c8b-b5da-691ebfb98c10",
+              "name": "The tax rule object",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "tax_rules",
+                    ":taxRuleId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "taxRuleId",
+                      "description": "(Required) The resource's id"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/vnd.api+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/vnd.api+json"
+                }
+              ],
+              "body": "{\n  \"data\": {\n    \"id\": \"XAyRWNUzyN\",\n    \"type\": \"tax_rules\",\n    \"links\": {\n      \"self\": \"string\"\n    },\n    \"attributes\": {\n      \"name\": \"Fixed 22%\",\n      \"tax_rate\": 0.22,\n      \"freight_taxable\": false,\n      \"payment_method_taxable\": false,\n      \"gift_card_taxable\": false,\n      \"adjustment_taxable\": false,\n      \"breakdown\": {\n        \"41\": {\n          \"tax_rate\": 0.22\n        }\n      },\n      \"country_code_regex\": \"AT|BE|BG|CZ|DK|EE|DE|HU|LV|LT\",\n      \"not_country_code_regex\": \"AT|BE|BG|CZ|DK|EE|DE\",\n      \"state_code_regex\": \"A[KLRZ]|C[AOT]|D[CE]|FL\",\n      \"not_state_code_regex\": \"A[KLRZ]|C[AOT]\",\n      \"zip_code_regex\": \"(?i)(JE1|JE2|JE3|JE4|JE5)\",\n      \"not_zip_code_regex\": \"(?i)(JE1|JE2|JE3)\",\n      \"created_at\": \"2018-01-01T12:00:00.000Z\",\n      \"updated_at\": \"2018-01-01T12:00:00.000Z\",\n      \"reference\": \"ANY-EXTERNAL-REFEFERNCE\",\n      \"reference_origin\": \"ANY-EXTERNAL-REFEFERNCE-ORIGIN\",\n      \"metadata\": {\n        \"foo\": \"bar\"\n      }\n    },\n    \"relationships\": {\n      \"manual_tax_calculator\": {\n        \"links\": {\n          \"self\": \"string\",\n          \"related\": \"string\"\n        },\n        \"data\": {\n          \"type\": \"manual_tax_calculator\",\n          \"id\": \"string\"\n        }\n      },\n      \"event_stores\": {\n        \"links\": {\n          \"self\": \"string\",\n          \"related\": \"string\"\n        },\n        \"data\": {\n          \"type\": \"event_stores\",\n          \"id\": \"string\"\n        }\n      }\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "9a5e5fb8-c614-4ae3-a02d-375c21024c75",
+          "name": "Update a tax rule",
+          "request": {
+            "name": "Update a tax rule",
+            "description": {
+              "content": "Update a tax rule",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "tax_rules",
+                ":taxRuleId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "taxRuleId",
+                  "description": "(Required) The resource's id"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/vnd.api+json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/vnd.api+json"
+              }
+            ],
+            "method": "PATCH",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"data\": {\n    \"type\": \"<string>\",\n    \"id\": \"<string>\",\n    \"attributes\": {\n      \"name\": \"<string>\",\n      \"tax_rate\": \"<number>\",\n      \"freight_taxable\": \"<boolean>\",\n      \"payment_method_taxable\": \"<boolean>\",\n      \"gift_card_taxable\": \"<boolean>\",\n      \"adjustment_taxable\": \"<boolean>\",\n      \"country_code_regex\": \"<string>\",\n      \"not_country_code_regex\": \"<string>\",\n      \"state_code_regex\": \"<string>\",\n      \"not_state_code_regex\": \"<string>\",\n      \"zip_code_regex\": \"<string>\",\n      \"not_zip_code_regex\": \"<string>\",\n      \"reference\": \"<string>\",\n      \"reference_origin\": \"<string>\",\n      \"metadata\": \"<object>\"\n    },\n    \"relationships\": {\n      \"manual_tax_calculator\": {\n        \"data\": {\n          \"type\": \"<string>\",\n          \"id\": \"<string>\"\n        }\n      }\n    }\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "75a020ea-30b5-43d6-a6ce-0df0b26922ac",
+              "name": "The updated tax rule object",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "tax_rules",
+                    ":taxRuleId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "taxRuleId",
+                      "description": "(Required) The resource's id"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/vnd.api+json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"data\": {\n    \"type\": \"<string>\",\n    \"id\": \"XAyRWNUzyN\",\n    \"attributes\": {\n      \"name\": \"Fixed 22%\",\n      \"tax_rate\": 0.22,\n      \"freight_taxable\": false,\n      \"payment_method_taxable\": false,\n      \"gift_card_taxable\": false,\n      \"adjustment_taxable\": false,\n      \"country_code_regex\": \"AT|BE|BG|CZ|DK|EE|DE|HU|LV|LT\",\n      \"not_country_code_regex\": \"AT|BE|BG|CZ|DK|EE|DE\",\n      \"state_code_regex\": \"A[KLRZ]|C[AOT]|D[CE]|FL\",\n      \"not_state_code_regex\": \"A[KLRZ]|C[AOT]\",\n      \"zip_code_regex\": \"(?i)(JE1|JE2|JE3|JE4|JE5)\",\n      \"not_zip_code_regex\": \"(?i)(JE1|JE2|JE3)\",\n      \"reference\": \"ANY-EXTERNAL-REFEFERNCE\",\n      \"reference_origin\": \"ANY-EXTERNAL-REFEFERNCE-ORIGIN\",\n      \"metadata\": {\n        \"foo\": \"bar\"\n      }\n    },\n    \"relationships\": {\n      \"manual_tax_calculator\": {\n        \"data\": {\n          \"type\": \"<string>\",\n          \"id\": \"XAyRWNUzyN\"\n        }\n      }\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/vnd.api+json"
+                }
+              ],
+              "body": "{\n  \"data\": {\n    \"id\": \"XAyRWNUzyN\",\n    \"type\": \"tax_rules\",\n    \"links\": {\n      \"self\": \"string\"\n    },\n    \"attributes\": {\n      \"name\": \"Fixed 22%\",\n      \"tax_rate\": 0.22,\n      \"freight_taxable\": false,\n      \"payment_method_taxable\": false,\n      \"gift_card_taxable\": false,\n      \"adjustment_taxable\": false,\n      \"breakdown\": {\n        \"41\": {\n          \"tax_rate\": 0.22\n        }\n      },\n      \"country_code_regex\": \"AT|BE|BG|CZ|DK|EE|DE|HU|LV|LT\",\n      \"not_country_code_regex\": \"AT|BE|BG|CZ|DK|EE|DE\",\n      \"state_code_regex\": \"A[KLRZ]|C[AOT]|D[CE]|FL\",\n      \"not_state_code_regex\": \"A[KLRZ]|C[AOT]\",\n      \"zip_code_regex\": \"(?i)(JE1|JE2|JE3|JE4|JE5)\",\n      \"not_zip_code_regex\": \"(?i)(JE1|JE2|JE3)\",\n      \"created_at\": \"2018-01-01T12:00:00.000Z\",\n      \"updated_at\": \"2018-01-01T12:00:00.000Z\",\n      \"reference\": \"ANY-EXTERNAL-REFEFERNCE\",\n      \"reference_origin\": \"ANY-EXTERNAL-REFEFERNCE-ORIGIN\",\n      \"metadata\": {\n        \"foo\": \"bar\"\n      }\n    },\n    \"relationships\": {\n      \"manual_tax_calculator\": {\n        \"links\": {\n          \"self\": \"string\",\n          \"related\": \"string\"\n        },\n        \"data\": {\n          \"type\": \"manual_tax_calculator\",\n          \"id\": \"string\"\n        }\n      },\n      \"event_stores\": {\n        \"links\": {\n          \"self\": \"string\",\n          \"related\": \"string\"\n        },\n        \"data\": {\n          \"type\": \"event_stores\",\n          \"id\": \"string\"\n        }\n      }\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "cee6cac6-02f6-4d9f-a3c9-831ddb94511e",
+          "name": "Delete a tax rule",
+          "request": {
+            "name": "Delete a tax rule",
+            "description": {
+              "content": "Delete a tax rule",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "tax_rules",
+                ":taxRuleId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "taxRuleId",
+                  "description": "(Required) The resource's id"
+                }
+              ]
+            },
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "c4476d96-6881-46d2-8802-00701b88406e",
+              "name": "No content",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "tax_rules",
+                    ":taxRuleId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "taxRuleId",
+                      "description": "(Required) The resource's id"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://{{your_organization_slug}}.commercelayer.io/api",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "bcf68d1b-d13c-451d-99b8-9fa70f07e326",
+    "name": "Commerce Layer addresses tax_rules API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Headless Commerce for Global Brands.\n\nContact Support:\n Name: API Support\n Email: support@commercelayer.io",
+      "type": "text/plain"
+    }
+  }
+}

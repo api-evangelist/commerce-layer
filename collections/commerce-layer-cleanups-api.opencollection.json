@@ -1,0 +1,111 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Commerce Layer addresses cleanups API",
+    "version": "7.10.1"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "cleanups",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List all cleanups",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{your_organization_slug}.commercelayer.io/api/cleanups"
+          },
+          "docs": "List all cleanups"
+        },
+        {
+          "info": {
+            "name": "Create a cleanup",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{your_organization_slug}.commercelayer.io/api/cleanups",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a cleanup"
+        },
+        {
+          "info": {
+            "name": "Retrieve a cleanup",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{your_organization_slug}.commercelayer.io/api/cleanups/:cleanupId",
+            "params": [
+              {
+                "name": "cleanupId",
+                "value": "",
+                "type": "path",
+                "description": "The resource's id"
+              }
+            ]
+          },
+          "docs": "Retrieve a cleanup"
+        },
+        {
+          "info": {
+            "name": "Update a cleanup",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://{your_organization_slug}.commercelayer.io/api/cleanups/:cleanupId",
+            "params": [
+              {
+                "name": "cleanupId",
+                "value": "",
+                "type": "path",
+                "description": "The resource's id"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update a cleanup"
+        },
+        {
+          "info": {
+            "name": "Delete a cleanup",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://{your_organization_slug}.commercelayer.io/api/cleanups/:cleanupId",
+            "params": [
+              {
+                "name": "cleanupId",
+                "value": "",
+                "type": "path",
+                "description": "The resource's id"
+              }
+            ]
+          },
+          "docs": "Delete a cleanup"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

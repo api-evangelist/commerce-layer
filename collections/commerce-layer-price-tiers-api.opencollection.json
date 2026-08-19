@@ -1,0 +1,73 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Commerce Layer addresses price_tiers API",
+    "version": "7.10.1"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "price_tiers",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List all price tiers",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{your_organization_slug}.commercelayer.io/api/price_tiers"
+          },
+          "docs": "List all price tiers"
+        },
+        {
+          "info": {
+            "name": "Retrieve a price tier",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{your_organization_slug}.commercelayer.io/api/price_tiers/:priceTierId",
+            "params": [
+              {
+                "name": "priceTierId",
+                "value": "",
+                "type": "path",
+                "description": "The resource's id"
+              }
+            ]
+          },
+          "docs": "Retrieve a price tier"
+        },
+        {
+          "info": {
+            "name": "Retrieve the price tiers associated to the price",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{your_organization_slug}.commercelayer.io/api/prices/:priceId/price_tiers",
+            "params": [
+              {
+                "name": "priceId",
+                "value": "",
+                "type": "path",
+                "description": "The resource's id"
+              }
+            ]
+          },
+          "docs": "Retrieve the price tiers associated to the price"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
