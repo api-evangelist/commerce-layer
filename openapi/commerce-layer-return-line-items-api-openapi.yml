@@ -1,6 +1,6 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: Commerce Layer addresses return_line_items API
+  title: Commerce Layer Return Line Items API
   version: 7.10.1
   contact:
     name: API Support
@@ -20,23 +20,6 @@ tags:
 - name: return_line_items
   description: resource type
 paths:
-  /line_items/{lineItemId}/return_line_items:
-    get:
-      operationId: GET/lineItemId/return_line_items
-      summary: Retrieve the return line items associated to the line item
-      description: Retrieve the return line items associated to the line item
-      tags:
-      - return_line_items
-      parameters:
-      - name: lineItemId
-        in: path
-        schema:
-          type: string
-        required: true
-        description: The resource's id
-      responses:
-        '200':
-          description: The return_line_items associated to the line item
   /return_line_items:
     get:
       operationId: GET/return_line_items
@@ -133,32 +116,8 @@ paths:
       responses:
         '204':
           description: No content
-  /returns/{returnId}/return_line_items:
-    get:
-      operationId: GET/returnId/return_line_items
-      summary: Retrieve the return line items associated to the return
-      description: Retrieve the return line items associated to the return
-      tags:
-      - return_line_items
-      parameters:
-      - name: returnId
-        in: path
-        schema:
-          type: string
-        required: true
-        description: The resource's id
-      responses:
-        '200':
-          description: The return_line_items associated to the return
 components:
   schemas:
-    returnLineItemResponseList:
-      type: object
-      properties:
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/returnLineItemResponse/properties/data'
     returnLineItemResponse:
       type: object
       properties:
@@ -254,90 +213,6 @@ components:
                         id:
                           type: string
                           description: The resource ID
-    returnLineItem:
-      properties:
-        data:
-          properties:
-            attributes:
-              type: object
-              properties:
-                sku_code:
-                  type: string
-                  description: The code of the associated SKU.
-                  example: TSHIRTMM000000FFFFFFXLXX
-                  nullable: true
-                bundle_code:
-                  type: string
-                  description: The code of the associated bundle.
-                  example: BUNDLEMM000000FFFFFFXLXX
-                  nullable: true
-                quantity:
-                  type: integer
-                  description: The return line item quantity.
-                  example: 4
-                  nullable: false
-                name:
-                  type: string
-                  description: The name of the line item.
-                  example: Men's Black T-shirt with White Logo (XL)
-                  nullable: true
-                image_url:
-                  type: string
-                  description: The image_url of the associated line item.
-                  example: https://img.yourdomain.com/skus/xYZkjABcde.png
-                  nullable: true
-                total_amount_cents:
-                  type: integer
-                  description: Calculated as line item unit amount x returned quantity and applied discounts, if any.
-                  example: 8800
-                  nullable: true
-                total_amount_float:
-                  type: number
-                  description: The return line item total amount, float. This can be useful to track the purchase on thrid party systems, e.g Google Analyitcs Enhanced Ecommerce.
-                  example: 88.0
-                  nullable: false
-                formatted_total_amount:
-                  type: string
-                  description: The return line item total amount, formatted. This can be useful to display the amount with currency in you views.
-                  example: €88,00
-                  nullable: true
-                return_reason:
-                  type: object
-                  description: Set of key-value pairs that you can use to add details about return reason.
-                  example:
-                    size: was wrong
-                  nullable: true
-                restocked_at:
-                  type: string
-                  description: Time at which the return line item was restocked.
-                  example: '2018-01-01T12:00:00.000Z'
-                  nullable: true
-                created_at:
-                  type: string
-                  description: Time at which the resource was created.
-                  example: '2018-01-01T12:00:00.000Z'
-                  nullable: false
-                updated_at:
-                  type: string
-                  description: Time at which the resource was last updated.
-                  example: '2018-01-01T12:00:00.000Z'
-                  nullable: false
-                reference:
-                  type: string
-                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
-                  example: ANY-EXTERNAL-REFEFERNCE
-                  nullable: true
-                reference_origin:
-                  type: string
-                  description: Any identifier of the third party system that defines the reference code.
-                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
-                  nullable: true
-                metadata:
-                  type: object
-                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
-                  example:
-                    foo: bar
-                  nullable: true
     returnLineItemUpdate:
       required:
       - data
@@ -480,6 +355,155 @@ components:
               required:
               - return
               - line_item
+    returnLineItemResponseList:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/returnLineItemResponse/properties/data'
+    returnLineItem:
+      type: object
+      properties:
+        data:
+          type: object
+          required:
+          - type
+          - attributes
+          properties:
+            type:
+              type: string
+              description: The resource's type
+              enum:
+              - return_line_items
+            attributes:
+              type: object
+              properties:
+                sku_code:
+                  type: string
+                  description: The code of the associated SKU.
+                  example: TSHIRTMM000000FFFFFFXLXX
+                  nullable: true
+                bundle_code:
+                  type: string
+                  description: The code of the associated bundle.
+                  example: BUNDLEMM000000FFFFFFXLXX
+                  nullable: true
+                quantity:
+                  type: integer
+                  description: The return line item quantity.
+                  example: 4
+                  nullable: false
+                name:
+                  type: string
+                  description: The name of the line item.
+                  example: Men's Black T-shirt with White Logo (XL)
+                  nullable: true
+                image_url:
+                  type: string
+                  description: The image_url of the associated line item.
+                  example: https://img.yourdomain.com/skus/xYZkjABcde.png
+                  nullable: true
+                total_amount_cents:
+                  type: integer
+                  description: Calculated as line item unit amount x returned quantity and applied discounts, if any.
+                  example: 8800
+                  nullable: true
+                total_amount_float:
+                  type: number
+                  description: The return line item total amount, float. This can be useful to track the purchase on thrid party systems, e.g Google Analyitcs Enhanced Ecommerce.
+                  example: 88.0
+                  nullable: false
+                formatted_total_amount:
+                  type: string
+                  description: The return line item total amount, formatted. This can be useful to display the amount with currency in you views.
+                  example: €88,00
+                  nullable: true
+                return_reason:
+                  type: object
+                  description: Set of key-value pairs that you can use to add details about return reason.
+                  example:
+                    size: was wrong
+                  nullable: true
+                restocked_at:
+                  type: string
+                  description: Time at which the return line item was restocked.
+                  example: '2018-01-01T12:00:00.000Z'
+                  nullable: true
+                created_at:
+                  type: string
+                  description: Time at which the resource was created.
+                  example: '2018-01-01T12:00:00.000Z'
+                  nullable: false
+                updated_at:
+                  type: string
+                  description: Time at which the resource was last updated.
+                  example: '2018-01-01T12:00:00.000Z'
+                  nullable: false
+                reference:
+                  type: string
+                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
+                  example: ANY-EXTERNAL-REFEFERNCE
+                  nullable: true
+                reference_origin:
+                  type: string
+                  description: Any identifier of the third party system that defines the reference code.
+                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
+                  nullable: true
+                metadata:
+                  type: object
+                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
+                  example:
+                    foo: bar
+                  nullable: true
+            relationships:
+              type: object
+              properties:
+                return:
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - returns
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+                line_item:
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - line_items
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+                event_stores:
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - event_stores
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
   securitySchemes:
     bearerAuth:
       type: http

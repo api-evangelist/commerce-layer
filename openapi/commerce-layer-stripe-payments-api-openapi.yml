@@ -1,6 +1,6 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: Commerce Layer addresses stripe_payments API
+  title: Commerce Layer Stripe Payments API
   version: 7.10.1
   contact:
     name: API Support
@@ -20,23 +20,6 @@ tags:
 - name: stripe_payments
   description: resource type
 paths:
-  /stripe_gateways/{stripeGatewayId}/stripe_payments:
-    get:
-      operationId: GET/stripeGatewayId/stripe_payments
-      summary: Retrieve the stripe payments associated to the stripe gateway
-      description: Retrieve the stripe payments associated to the stripe gateway
-      tags:
-      - stripe_payments
-      parameters:
-      - name: stripeGatewayId
-        in: path
-        schema:
-          type: string
-        required: true
-        description: The resource's id
-      responses:
-        '200':
-          description: The stripe_payments associated to the stripe gateway
   /stripe_payments:
     get:
       operationId: GET/stripe_payments
@@ -135,204 +118,6 @@ paths:
           description: No content
 components:
   schemas:
-    stripePaymentResponse:
-      type: object
-      properties:
-        data:
-          type: object
-          properties:
-            id:
-              type: string
-              description: Unique identifier for the resource (hash).
-              example: XAyRWNUzyN
-            type:
-              type: string
-              description: The resource's type
-              enum:
-              - stripe_payments
-            links:
-              type: object
-              properties:
-                self:
-                  type: string
-                  description: URL
-            attributes:
-              $ref: '#/components/schemas/stripePayment/properties/data/properties/attributes'
-            relationships:
-              type: object
-              properties:
-                order:
-                  type: object
-                  properties:
-                    links:
-                      type: object
-                      properties:
-                        self:
-                          type: string
-                          description: URL
-                        related:
-                          type: string
-                          description: URL
-                    data:
-                      type: object
-                      properties:
-                        type:
-                          type: string
-                          description: The resource's type
-                          enum:
-                          - order
-                        id:
-                          type: string
-                          description: The resource ID
-                payment_gateway:
-                  type: object
-                  properties:
-                    links:
-                      type: object
-                      properties:
-                        self:
-                          type: string
-                          description: URL
-                        related:
-                          type: string
-                          description: URL
-                    data:
-                      type: object
-                      properties:
-                        type:
-                          type: string
-                          description: The resource's type
-                          enum:
-                          - payment_gateway
-                        id:
-                          type: string
-                          description: The resource ID
-                event_stores:
-                  type: object
-                  properties:
-                    links:
-                      type: object
-                      properties:
-                        self:
-                          type: string
-                          description: URL
-                        related:
-                          type: string
-                          description: URL
-                    data:
-                      type: object
-                      properties:
-                        type:
-                          type: string
-                          description: The resource's type
-                          enum:
-                          - event_stores
-                        id:
-                          type: string
-                          description: The resource ID
-    stripePayment:
-      properties:
-        data:
-          properties:
-            attributes:
-              type: object
-              properties:
-                stripe_id:
-                  type: string
-                  description: The Stripe payment intent ID. Required to identify a payment session on stripe.
-                  example: pi_1234XXX
-                  nullable: true
-                client_secret:
-                  type: string
-                  description: The Stripe payment intent client secret. Required to create a charge through Stripe.js.
-                  example: pi_1234XXX_secret_5678YYY
-                  nullable: true
-                connected_account:
-                  type: string
-                  description: The account (if any) for which the funds of the PaymentIntent are intended.
-                  example: acct_xxxx-yyyy-zzzz
-                  nullable: true
-                charge_id:
-                  type: string
-                  description: The Stripe charge ID. Identifies money movement upon the payment intent confirmation.
-                  example: ch_1234XXX
-                  nullable: true
-                publishable_key:
-                  type: string
-                  description: The Stripe publishable API key.
-                  example: pk_live_xxxx-yyyy-zzzz
-                  nullable: true
-                on_behalf_of:
-                  type: string
-                  description: The Stripe account ID that these funds are intended for.
-                  example: xxxx-yyyy-zzzz
-                  nullable: true
-                transfer_group:
-                  type: string
-                  description: A string that identifies the resulting payment as part of a group.
-                  example: xxxx-yyyy-zzzz
-                  nullable: true
-                options:
-                  type: object
-                  description: 'Stripe payment options: ''customer'', ''payment_method'', ''return_url'', etc. Check Stripe payment intent API for more details.'
-                  example:
-                    customer: cus_xxx
-                    payment_method: pm_xxx
-                  nullable: true
-                payment_method:
-                  type: object
-                  description: Stripe 'payment_method', set by webhook.
-                  example:
-                    id: pm_xxx
-                  nullable: true
-                mismatched_amounts:
-                  type: boolean
-                  description: Indicates if the order current amount differs form the one of the created payment intent.
-                  example: false
-                  nullable: true
-                return_url:
-                  type: string
-                  description: The URL to return to when a redirect payment is completed.
-                  example: https://yourdomain.com/thankyou
-                  nullable: true
-                receipt_email:
-                  type: string
-                  description: The email address to send the receipt to.
-                  example: john@example.com
-                  nullable: true
-                payment_instrument:
-                  type: object
-                  description: Information about the payment instrument used in the transaction.
-                  example:
-                    issuer: cl bank
-                    card_type: visa
-                  nullable: true
-                created_at:
-                  type: string
-                  description: Time at which the resource was created.
-                  example: '2018-01-01T12:00:00.000Z'
-                  nullable: false
-                updated_at:
-                  type: string
-                  description: Time at which the resource was last updated.
-                  example: '2018-01-01T12:00:00.000Z'
-                  nullable: false
-                reference:
-                  type: string
-                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
-                  example: ANY-EXTERNAL-REFEFERNCE
-                  nullable: true
-                reference_origin:
-                  type: string
-                  description: Any identifier of the third party system that defines the reference code.
-                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
-                  nullable: true
-                metadata:
-                  type: object
-                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
-                  example:
-                    foo: bar
-                  nullable: true
     stripePaymentUpdate:
       required:
       - data
@@ -498,6 +283,262 @@ components:
                           example: XAyRWNUzyN
               required:
               - order
+    stripePaymentResponse:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            id:
+              type: string
+              description: Unique identifier for the resource (hash).
+              example: XAyRWNUzyN
+            type:
+              type: string
+              description: The resource's type
+              enum:
+              - stripe_payments
+            links:
+              type: object
+              properties:
+                self:
+                  type: string
+                  description: URL
+            attributes:
+              $ref: '#/components/schemas/stripePayment/properties/data/properties/attributes'
+            relationships:
+              type: object
+              properties:
+                order:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - order
+                        id:
+                          type: string
+                          description: The resource ID
+                payment_gateway:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - payment_gateway
+                        id:
+                          type: string
+                          description: The resource ID
+                event_stores:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - event_stores
+                        id:
+                          type: string
+                          description: The resource ID
+    stripePayment:
+      type: object
+      properties:
+        data:
+          type: object
+          required:
+          - type
+          - attributes
+          properties:
+            type:
+              type: string
+              description: The resource's type
+              enum:
+              - stripe_payments
+            attributes:
+              type: object
+              properties:
+                stripe_id:
+                  type: string
+                  description: The Stripe payment intent ID. Required to identify a payment session on stripe.
+                  example: pi_1234XXX
+                  nullable: true
+                client_secret:
+                  type: string
+                  description: The Stripe payment intent client secret. Required to create a charge through Stripe.js.
+                  example: pi_1234XXX_secret_5678YYY
+                  nullable: true
+                connected_account:
+                  type: string
+                  description: The account (if any) for which the funds of the PaymentIntent are intended.
+                  example: acct_xxxx-yyyy-zzzz
+                  nullable: true
+                charge_id:
+                  type: string
+                  description: The Stripe charge ID. Identifies money movement upon the payment intent confirmation.
+                  example: ch_1234XXX
+                  nullable: true
+                publishable_key:
+                  type: string
+                  description: The Stripe publishable API key.
+                  example: pk_live_xxxx-yyyy-zzzz
+                  nullable: true
+                on_behalf_of:
+                  type: string
+                  description: The Stripe account ID that these funds are intended for.
+                  example: xxxx-yyyy-zzzz
+                  nullable: true
+                transfer_group:
+                  type: string
+                  description: A string that identifies the resulting payment as part of a group.
+                  example: xxxx-yyyy-zzzz
+                  nullable: true
+                options:
+                  type: object
+                  description: 'Stripe payment options: ''customer'', ''payment_method'', ''return_url'', etc. Check Stripe payment intent API for more details.'
+                  example:
+                    customer: cus_xxx
+                    payment_method: pm_xxx
+                  nullable: true
+                payment_method:
+                  type: object
+                  description: Stripe 'payment_method', set by webhook.
+                  example:
+                    id: pm_xxx
+                  nullable: true
+                mismatched_amounts:
+                  type: boolean
+                  description: Indicates if the order current amount differs form the one of the created payment intent.
+                  example: false
+                  nullable: true
+                return_url:
+                  type: string
+                  description: The URL to return to when a redirect payment is completed.
+                  example: https://yourdomain.com/thankyou
+                  nullable: true
+                receipt_email:
+                  type: string
+                  description: The email address to send the receipt to.
+                  example: john@example.com
+                  nullable: true
+                payment_instrument:
+                  type: object
+                  description: Information about the payment instrument used in the transaction.
+                  example:
+                    issuer: cl bank
+                    card_type: visa
+                  nullable: true
+                created_at:
+                  type: string
+                  description: Time at which the resource was created.
+                  example: '2018-01-01T12:00:00.000Z'
+                  nullable: false
+                updated_at:
+                  type: string
+                  description: Time at which the resource was last updated.
+                  example: '2018-01-01T12:00:00.000Z'
+                  nullable: false
+                reference:
+                  type: string
+                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
+                  example: ANY-EXTERNAL-REFEFERNCE
+                  nullable: true
+                reference_origin:
+                  type: string
+                  description: Any identifier of the third party system that defines the reference code.
+                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
+                  nullable: true
+                metadata:
+                  type: object
+                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
+                  example:
+                    foo: bar
+                  nullable: true
+            relationships:
+              type: object
+              properties:
+                order:
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - orders
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+                payment_gateway:
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - payment_gateways
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+                event_stores:
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - event_stores
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
   securitySchemes:
     bearerAuth:
       type: http

@@ -1,6 +1,6 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: Commerce Layer addresses price_volume_tiers API
+  title: Commerce Layer Price Volume Tiers API
   version: 7.10.1
   contact:
     name: API Support
@@ -116,29 +116,22 @@ paths:
       responses:
         '204':
           description: No content
-  /prices/{priceId}/price_volume_tiers:
-    get:
-      operationId: GET/priceId/price_volume_tiers
-      summary: Retrieve the price volume tiers associated to the price
-      description: Retrieve the price volume tiers associated to the price
-      tags:
-      - price_volume_tiers
-      parameters:
-      - name: priceId
-        in: path
-        schema:
-          type: string
-        required: true
-        description: The resource's id
-      responses:
-        '200':
-          description: The price_volume_tiers associated to the price
 components:
   schemas:
     priceVolumeTier:
+      type: object
       properties:
         data:
+          type: object
+          required:
+          - type
+          - attributes
           properties:
+            type:
+              type: string
+              description: The resource's type
+              enum:
+              - price_volume_tiers
             attributes:
               type: object
               properties:
@@ -201,67 +194,10 @@ components:
                   example:
                     foo: bar
                   nullable: true
-    priceVolumeTierUpdate:
-      required:
-      - data
-      type: object
-      properties:
-        data:
-          type: object
-          required:
-          - type
-          - id
-          - attributes
-          properties:
-            type:
-              type: string
-              description: The resource's type
-              enum:
-              - price_volume_tiers
-            id:
-              type: string
-              description: Unique identifier for the resource (hash).
-              example: XAyRWNUzyN
-            attributes:
-              type: object
-              properties:
-                name:
-                  type: string
-                  description: The price tier's name.
-                  example: six pack
-                  nullable: false
-                up_to:
-                  type: integer
-                  description: The tier upper limit, expressed as the line item quantity. When 'null' it means infinity (useful to have an always matching tier).
-                  example: 15
-                  nullable: true
-                price_amount_cents:
-                  type: integer
-                  description: The price of this price tier, in cents.
-                  example: 1000
-                  nullable: false
-                reference:
-                  type: string
-                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
-                  example: ANY-EXTERNAL-REFEFERNCE
-                  nullable: true
-                reference_origin:
-                  type: string
-                  description: Any identifier of the third party system that defines the reference code.
-                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
-                  nullable: true
-                metadata:
-                  type: object
-                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
-                  example:
-                    foo: bar
-                  nullable: true
             relationships:
               type: object
               properties:
                 price:
-                  required:
-                  - data
                   type: object
                   properties:
                     data:
@@ -272,6 +208,51 @@ components:
                           description: The resource's type
                           enum:
                           - prices
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+                attachments:
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - attachments
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+                event_stores:
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - event_stores
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+                events:
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - events
                         id:
                           type: string
                           description: Unique identifier for the resource (hash).
@@ -470,6 +451,81 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/priceVolumeTierResponse/properties/data'
+    priceVolumeTierUpdate:
+      required:
+      - data
+      type: object
+      properties:
+        data:
+          type: object
+          required:
+          - type
+          - id
+          - attributes
+          properties:
+            type:
+              type: string
+              description: The resource's type
+              enum:
+              - price_volume_tiers
+            id:
+              type: string
+              description: Unique identifier for the resource (hash).
+              example: XAyRWNUzyN
+            attributes:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: The price tier's name.
+                  example: six pack
+                  nullable: false
+                up_to:
+                  type: integer
+                  description: The tier upper limit, expressed as the line item quantity. When 'null' it means infinity (useful to have an always matching tier).
+                  example: 15
+                  nullable: true
+                price_amount_cents:
+                  type: integer
+                  description: The price of this price tier, in cents.
+                  example: 1000
+                  nullable: false
+                reference:
+                  type: string
+                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
+                  example: ANY-EXTERNAL-REFEFERNCE
+                  nullable: true
+                reference_origin:
+                  type: string
+                  description: Any identifier of the third party system that defines the reference code.
+                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
+                  nullable: true
+                metadata:
+                  type: object
+                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
+                  example:
+                    foo: bar
+                  nullable: true
+            relationships:
+              type: object
+              properties:
+                price:
+                  required:
+                  - data
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - prices
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
   securitySchemes:
     bearerAuth:
       type: http

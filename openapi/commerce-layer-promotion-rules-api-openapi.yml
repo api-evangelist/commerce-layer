@@ -1,6 +1,6 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: Commerce Layer addresses promotion_rules API
+  title: Commerce Layer Promotion Rules API
   version: 7.10.1
   contact:
     name: API Support
@@ -57,17 +57,20 @@ paths:
                 $ref: '#/components/schemas/promotionRuleResponse'
 components:
   schemas:
-    promotionRuleResponseList:
+    promotionRule:
       type: object
       properties:
         data:
-          type: array
-          items:
-            $ref: '#/components/schemas/promotionRuleResponse/properties/data'
-    promotionRule:
-      properties:
-        data:
+          type: object
+          required:
+          - type
+          - attributes
           properties:
+            type:
+              type: string
+              description: The resource's type
+              enum:
+              - promotion_rules
             attributes:
               type: object
               properties:
@@ -107,6 +110,55 @@ components:
                   example:
                     foo: bar
                   nullable: true
+            relationships:
+              type: object
+              properties:
+                promotion:
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - percentage_discount_promotions
+                          - free_shipping_promotions
+                          - buy_x_pay_y_promotions
+                          - free_gift_promotions
+                          - fixed_price_promotions
+                          - external_promotions
+                          - fixed_amount_promotions
+                          - flex_promotions
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+                  oneOf:
+                  - $ref: '#/components/schemas/percentageDiscountPromotion'
+                  - $ref: '#/components/schemas/freeShippingPromotion'
+                  - $ref: '#/components/schemas/buyXPayYPromotion'
+                  - $ref: '#/components/schemas/freeGiftPromotion'
+                  - $ref: '#/components/schemas/fixedPricePromotion'
+                  - $ref: '#/components/schemas/externalPromotion'
+                  - $ref: '#/components/schemas/fixedAmountPromotion'
+                  - $ref: '#/components/schemas/flexPromotion'
+                event_stores:
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - event_stores
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
     promotionRuleResponse:
       type: object
       properties:
@@ -179,6 +231,13 @@ components:
                         id:
                           type: string
                           description: The resource ID
+    promotionRuleResponseList:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/promotionRuleResponse/properties/data'
   securitySchemes:
     bearerAuth:
       type: http

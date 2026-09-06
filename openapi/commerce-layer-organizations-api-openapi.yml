@@ -1,18 +1,16 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: Commerce Layer addresses organizations API
-  version: 7.10.1
+  title: Commerce Layer Provisioning Organizations API
+  version: 1.0.15
   contact:
     name: API Support
     url: https://commercelayer.io
     email: support@commercelayer.io
   description: Headless Commerce for Global Brands.
 servers:
-- url: https://{your_organization_slug}.commercelayer.io/api
-  description: API
-- url: https://core.commercelayer.io/users/sign_in
-  description: Sign in
-- url: https://docs.commercelayer.io/api
+- url: https://provisioning.commercelayer.io
+  description: Commerce Layer Provisioning API
+- url: https://docs.commercelayer.io/provisioning-api
   description: API reference
 security:
 - bearerAuth: []
@@ -214,7 +212,6 @@ paths:
                           type: string
                           description: The user email of the new owner of the organization.
                           example: test@commercelayer.io
-                          nullable: false
       responses:
         '202':
           description: The confirmation of the transfer ownership
@@ -373,7 +370,14 @@ components:
                         id:
                           type: string
                           description: The ID of the resource.
-    organizationUpdate:
+    organizationResponseList:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/organizationResponse/properties/data'
+    organizationCreate:
       required:
       - data
       type: object
@@ -382,7 +386,6 @@ components:
           type: object
           required:
           - type
-          - id
           - attributes
           properties:
             type:
@@ -390,10 +393,6 @@ components:
               description: The resource's type.
               enum:
               - organizations
-            id:
-              type: string
-              description: The ID of the resource.
-              example: XGZwpOSrWL
             attributes:
               type: object
               properties:
@@ -401,47 +400,42 @@ components:
                   type: string
                   description: The organization's internal name.
                   example: The Blue Brand
-                  nullable: false
                 support_phone:
                   type: string
                   description: The organization's support phone.
                   example: +01 30800857
-                  nullable: true
                 support_email:
                   type: string
                   description: The organization's support email.
                   example: support@bluebrand.com
-                  nullable: true
                 logo_url:
                   type: string
                   description: The URL to the organization's logo.
                   example: https://bluebrand.com/img/logo.svg
-                  nullable: true
                 favicon_url:
                   type: string
                   description: The URL to the organization's favicon.
                   example: https://bluebrand.com/img/favicon.ico
-                  nullable: true
                 primary_color:
                   type: string
                   description: The organization's primary color.
                   example: '#C8984E'
-                  nullable: true
                 contrast_color:
                   type: string
                   description: The organization's contrast color. Format is HEX (starts with `#` and is followed by six letters and/or numbers).
                   example: '#FFFFCC'
-                  nullable: true
                 gtm_id:
                   type: string
                   description: The organization's Google Tag Manager ID.
                   example: GTM-5FJXX6
-                  nullable: true
                 gtm_id_test:
                   type: string
                   description: The organization's Google Tag Manager ID for test.
                   example: GTM-5FJXX7
-                  nullable: true
+                region:
+                  type: string
+                  description: The region where the organization is located. The default value is `eu-west-1`.
+                  example: eu-west-1
                 config:
                   type: object
                   description: The organization's configuration.
@@ -505,30 +499,38 @@ components:
                           cart: https://example.com/custom-cart/:order_id?accessToken=:access_token
                         checkout:
                           thankyou_page: https://example.com/thanks/:order_id
-                  nullable: true
                 reference:
                   type: string
                   description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
                   example: ANY-EXTERNAL-REFEFERNCE
-                  nullable: true
                 reference_origin:
                   type: string
                   description: Any identifier of the third party system that defines the reference code.
                   example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
-                  nullable: true
                 metadata:
                   type: object
                   description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
                   example:
                     foo: bar
-                  nullable: true
+              required:
+              - name
             relationships:
               type: object
               properties: {}
     organization:
+      type: object
       properties:
         data:
+          type: object
+          required:
+          - type
+          - attributes
           properties:
+            type:
+              type: string
+              description: The resource's type.
+              enum:
+              - organizations
             attributes:
               type: object
               properties:
@@ -536,7 +538,6 @@ components:
                   type: string
                   description: The organization's internal name.
                   example: The Blue Brand
-                  nullable: false
                 slug:
                   type: string
                   description: The organization's slug name.
@@ -548,50 +549,59 @@ components:
                   example: the-blue-brand.commercelayer.io
                   readOnly: true
                 support_phone:
-                  type: string
+                  type:
+                  - string
+                  - 'null'
                   description: The organization's support phone.
                   example: +01 30800857
-                  nullable: true
                 support_email:
-                  type: string
+                  type:
+                  - string
+                  - 'null'
                   description: The organization's support email.
                   example: support@bluebrand.com
-                  nullable: true
                 logo_url:
-                  type: string
+                  type:
+                  - string
+                  - 'null'
                   description: The URL to the organization's logo.
                   example: https://bluebrand.com/img/logo.svg
-                  nullable: true
                 favicon_url:
-                  type: string
+                  type:
+                  - string
+                  - 'null'
                   description: The URL to the organization's favicon.
                   example: https://bluebrand.com/img/favicon.ico
-                  nullable: true
                 primary_color:
-                  type: string
+                  type:
+                  - string
+                  - 'null'
                   description: The organization's primary color.
                   example: '#C8984E'
-                  nullable: true
                 contrast_color:
-                  type: string
+                  type:
+                  - string
+                  - 'null'
                   description: The organization's contrast color. Format is HEX (starts with `#` and is followed by six letters and/or numbers).
                   example: '#FFFFCC'
-                  nullable: true
                 gtm_id:
-                  type: string
+                  type:
+                  - string
+                  - 'null'
                   description: The organization's Google Tag Manager ID.
                   example: GTM-5FJXX6
-                  nullable: true
                 gtm_id_test:
-                  type: string
+                  type:
+                  - string
+                  - 'null'
                   description: The organization's Google Tag Manager ID for test.
                   example: GTM-5FJXX7
-                  nullable: true
                 region:
-                  type: string
+                  type:
+                  - string
+                  - 'null'
                   description: The region where the organization is located. The default value is `eu-west-1`.
                   example: eu-west-1
-                  nullable: true
                 can_switch_live:
                   type: boolean
                   description: Indicates if the organization can switch to live mode.
@@ -614,7 +624,9 @@ components:
                       skus: 0
                   readOnly: true
                 config:
-                  type: object
+                  type:
+                  - object
+                  - 'null'
                   description: The organization's configuration.
                   example:
                     mfe:
@@ -676,7 +688,6 @@ components:
                           cart: https://example.com/custom-cart/:order_id?accessToken=:access_token
                         checkout:
                           thankyou_page: https://example.com/thanks/:order_id
-                  nullable: true
                 api_auth_redirect:
                   type: boolean
                   description: Enables the redirect on the new Auth API.
@@ -913,22 +924,88 @@ components:
                   example: '2018-01-01T12:00:00.000Z'
                   readOnly: true
                 reference:
-                  type: string
+                  type:
+                  - string
+                  - 'null'
                   description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
                   example: ANY-EXTERNAL-REFEFERNCE
-                  nullable: true
                 reference_origin:
-                  type: string
+                  type:
+                  - string
+                  - 'null'
                   description: Any identifier of the third party system that defines the reference code.
                   example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
-                  nullable: true
                 metadata:
-                  type: object
+                  type:
+                  - object
+                  - 'null'
                   description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
                   example:
                     foo: bar
-                  nullable: true
-    organizationCreate:
+            relationships:
+              type: object
+              properties:
+                memberships:
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type.
+                          enum:
+                          - memberships
+                        id:
+                          type: string
+                          description: The ID of the resource.
+                          example: XGZwpOSrWL
+                roles:
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type.
+                          enum:
+                          - roles
+                        id:
+                          type: string
+                          description: The ID of the resource.
+                          example: XGZwpOSrWL
+                permissions:
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type.
+                          enum:
+                          - permissions
+                        id:
+                          type: string
+                          description: The ID of the resource.
+                          example: XGZwpOSrWL
+                api_credentials:
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type.
+                          enum:
+                          - api_credentials
+                        id:
+                          type: string
+                          description: The ID of the resource.
+                          example: XGZwpOSrWL
+    organizationUpdate:
       required:
       - data
       type: object
@@ -937,6 +1014,7 @@ components:
           type: object
           required:
           - type
+          - id
           - attributes
           properties:
             type:
@@ -944,6 +1022,10 @@ components:
               description: The resource's type.
               enum:
               - organizations
+            id:
+              type: string
+              description: The ID of the resource.
+              example: XGZwpOSrWL
             attributes:
               type: object
               properties:
@@ -952,43 +1034,57 @@ components:
                   description: The organization's internal name.
                   example: The Blue Brand
                 support_phone:
-                  type: string
+                  type:
+                  - string
+                  - 'null'
                   description: The organization's support phone.
                   example: +01 30800857
                 support_email:
-                  type: string
+                  type:
+                  - string
+                  - 'null'
                   description: The organization's support email.
                   example: support@bluebrand.com
                 logo_url:
-                  type: string
+                  type:
+                  - string
+                  - 'null'
                   description: The URL to the organization's logo.
                   example: https://bluebrand.com/img/logo.svg
                 favicon_url:
-                  type: string
+                  type:
+                  - string
+                  - 'null'
                   description: The URL to the organization's favicon.
                   example: https://bluebrand.com/img/favicon.ico
                 primary_color:
-                  type: string
+                  type:
+                  - string
+                  - 'null'
                   description: The organization's primary color.
                   example: '#C8984E'
                 contrast_color:
-                  type: string
+                  type:
+                  - string
+                  - 'null'
                   description: The organization's contrast color. Format is HEX (starts with `#` and is followed by six letters and/or numbers).
                   example: '#FFFFCC'
                 gtm_id:
-                  type: string
+                  type:
+                  - string
+                  - 'null'
                   description: The organization's Google Tag Manager ID.
                   example: GTM-5FJXX6
                 gtm_id_test:
-                  type: string
+                  type:
+                  - string
+                  - 'null'
                   description: The organization's Google Tag Manager ID for test.
                   example: GTM-5FJXX7
-                region:
-                  type: string
-                  description: The region where the organization is located. The default value is `eu-west-1`.
-                  example: eu-west-1
                 config:
-                  type: object
+                  type:
+                  - object
+                  - 'null'
                   description: The organization's configuration.
                   example:
                     mfe:
@@ -1051,30 +1147,27 @@ components:
                         checkout:
                           thankyou_page: https://example.com/thanks/:order_id
                 reference:
-                  type: string
+                  type:
+                  - string
+                  - 'null'
                   description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
                   example: ANY-EXTERNAL-REFEFERNCE
                 reference_origin:
-                  type: string
+                  type:
+                  - string
+                  - 'null'
                   description: Any identifier of the third party system that defines the reference code.
                   example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
                 metadata:
-                  type: object
+                  type:
+                  - object
+                  - 'null'
                   description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
                   example:
                     foo: bar
-              required:
-              - name
             relationships:
               type: object
               properties: {}
-    organizationResponseList:
-      type: object
-      properties:
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/organizationResponse/properties/data'
   securitySchemes:
     bearerAuth:
       type: http

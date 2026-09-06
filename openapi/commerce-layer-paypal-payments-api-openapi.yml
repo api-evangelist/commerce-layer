@@ -1,6 +1,6 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: Commerce Layer addresses paypal_payments API
+  title: Commerce Layer Paypal Payments API
   version: 7.10.1
   contact:
     name: API Support
@@ -20,23 +20,6 @@ tags:
 - name: paypal_payments
   description: resource type
 paths:
-  /paypal_gateways/{paypalGatewayId}/paypal_payments:
-    get:
-      operationId: GET/paypalGatewayId/paypal_payments
-      summary: Retrieve the paypal payments associated to the paypal gateway
-      description: Retrieve the paypal payments associated to the paypal gateway
-      tags:
-      - paypal_payments
-      parameters:
-      - name: paypalGatewayId
-        in: path
-        schema:
-          type: string
-        required: true
-        description: The resource's id
-      responses:
-        '200':
-          description: The paypal_payments associated to the paypal gateway
   /paypal_payments:
     get:
       operationId: GET/paypal_payments
@@ -135,75 +118,6 @@ paths:
           description: No content
 components:
   schemas:
-    paypalPaymentCreate:
-      required:
-      - data
-      type: object
-      properties:
-        data:
-          type: object
-          required:
-          - type
-          - attributes
-          properties:
-            type:
-              type: string
-              description: The resource's type
-              enum:
-              - paypal_payments
-            attributes:
-              type: object
-              properties:
-                return_url:
-                  type: string
-                  description: The URL where the payer is redirected after they approve the payment.
-                  example: https://yourdomain.com/thankyou
-                cancel_url:
-                  type: string
-                  description: The URL where the payer is redirected after they cancel the payment.
-                  example: https://yourdomain.com/checkout/payment
-                note_to_payer:
-                  type: string
-                  description: A free-form field that you can use to send a note to the payer on PayPal.
-                  example: Thank you for shopping with us!
-                reference:
-                  type: string
-                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
-                  example: ANY-EXTERNAL-REFEFERNCE
-                reference_origin:
-                  type: string
-                  description: Any identifier of the third party system that defines the reference code.
-                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
-                metadata:
-                  type: object
-                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
-                  example:
-                    foo: bar
-              required:
-              - return_url
-              - cancel_url
-            relationships:
-              type: object
-              properties:
-                order:
-                  required:
-                  - data
-                  type: object
-                  properties:
-                    data:
-                      type: object
-                      properties:
-                        type:
-                          type: string
-                          description: The resource's type
-                          enum:
-                          - orders
-                        id:
-                          type: string
-                          description: Unique identifier for the resource (hash).
-                          example: XAyRWNUzyN
-              required:
-              - order
     paypalPaymentResponse:
       type: object
       properties:
@@ -299,10 +213,85 @@ components:
                         id:
                           type: string
                           description: The resource ID
-    paypalPayment:
+    paypalPaymentUpdate:
+      required:
+      - data
+      type: object
       properties:
         data:
+          type: object
+          required:
+          - type
+          - id
+          - attributes
           properties:
+            type:
+              type: string
+              description: The resource's type
+              enum:
+              - paypal_payments
+            id:
+              type: string
+              description: Unique identifier for the resource (hash).
+              example: XAyRWNUzyN
+            attributes:
+              type: object
+              properties:
+                paypal_payer_id:
+                  type: string
+                  description: The id of the payer that PayPal passes in the return_url.
+                  example: ABCDEFGHG123456
+                  nullable: true
+                reference:
+                  type: string
+                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
+                  example: ANY-EXTERNAL-REFEFERNCE
+                  nullable: true
+                reference_origin:
+                  type: string
+                  description: Any identifier of the third party system that defines the reference code.
+                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
+                  nullable: true
+                metadata:
+                  type: object
+                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
+                  example:
+                    foo: bar
+                  nullable: true
+            relationships:
+              type: object
+              properties:
+                order:
+                  required:
+                  - data
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - orders
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+    paypalPayment:
+      type: object
+      properties:
+        data:
+          type: object
+          required:
+          - type
+          - attributes
+          properties:
+            type:
+              type: string
+              description: The resource's type
+              enum:
+              - paypal_payments
             attributes:
               type: object
               properties:
@@ -387,7 +376,55 @@ components:
                   example:
                     foo: bar
                   nullable: true
-    paypalPaymentUpdate:
+            relationships:
+              type: object
+              properties:
+                order:
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - orders
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+                payment_gateway:
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - payment_gateways
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+                event_stores:
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - event_stores
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+    paypalPaymentCreate:
       required:
       - data
       type: object
@@ -396,7 +433,6 @@ components:
           type: object
           required:
           - type
-          - id
           - attributes
           properties:
             type:
@@ -404,34 +440,37 @@ components:
               description: The resource's type
               enum:
               - paypal_payments
-            id:
-              type: string
-              description: Unique identifier for the resource (hash).
-              example: XAyRWNUzyN
             attributes:
               type: object
               properties:
-                paypal_payer_id:
+                return_url:
                   type: string
-                  description: The id of the payer that PayPal passes in the return_url.
-                  example: ABCDEFGHG123456
-                  nullable: true
+                  description: The URL where the payer is redirected after they approve the payment.
+                  example: https://yourdomain.com/thankyou
+                cancel_url:
+                  type: string
+                  description: The URL where the payer is redirected after they cancel the payment.
+                  example: https://yourdomain.com/checkout/payment
+                note_to_payer:
+                  type: string
+                  description: A free-form field that you can use to send a note to the payer on PayPal.
+                  example: Thank you for shopping with us!
                 reference:
                   type: string
                   description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
                   example: ANY-EXTERNAL-REFEFERNCE
-                  nullable: true
                 reference_origin:
                   type: string
                   description: Any identifier of the third party system that defines the reference code.
                   example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
-                  nullable: true
                 metadata:
                   type: object
                   description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
                   example:
                     foo: bar
-                  nullable: true
+              required:
+              - return_url
+              - cancel_url
             relationships:
               type: object
               properties:
@@ -452,6 +491,8 @@ components:
                           type: string
                           description: Unique identifier for the resource (hash).
                           example: XAyRWNUzyN
+              required:
+              - order
     paypalPaymentResponseList:
       type: object
       properties:

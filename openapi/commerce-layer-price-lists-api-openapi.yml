@@ -1,6 +1,6 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: Commerce Layer addresses price_lists API
+  title: Commerce Layer Price Lists API
   version: 7.10.1
   contact:
     name: API Support
@@ -20,57 +20,6 @@ tags:
 - name: price_lists
   description: resource type
 paths:
-  /markets/{marketId}/price_list:
-    get:
-      operationId: GET/marketId/price_list
-      summary: Retrieve the price list associated to the market
-      description: Retrieve the price list associated to the market
-      tags:
-      - price_lists
-      parameters:
-      - name: marketId
-        in: path
-        schema:
-          type: string
-        required: true
-        description: The resource's id
-      responses:
-        '200':
-          description: The price_list associated to the market
-  /markets/{marketId}/base_price_list:
-    get:
-      operationId: GET/marketId/base_price_list
-      summary: Retrieve the base price list associated to the market
-      description: Retrieve the base price list associated to the market
-      tags:
-      - price_lists
-      parameters:
-      - name: marketId
-        in: path
-        schema:
-          type: string
-        required: true
-        description: The resource's id
-      responses:
-        '200':
-          description: The base_price_list associated to the market
-  /price_list_schedulers/{priceListSchedulerId}/price_list:
-    get:
-      operationId: GET/priceListSchedulerId/price_list
-      summary: Retrieve the price list associated to the price list scheduler
-      description: Retrieve the price list associated to the price list scheduler
-      tags:
-      - price_lists
-      parameters:
-      - name: priceListSchedulerId
-        in: path
-        schema:
-          type: string
-        required: true
-        description: The resource's id
-      responses:
-        '200':
-          description: The price_list associated to the price list scheduler
   /price_lists:
     get:
       operationId: GET/price_lists
@@ -167,25 +116,15 @@ paths:
       responses:
         '204':
           description: No content
-  /prices/{priceId}/price_list:
-    get:
-      operationId: GET/priceId/price_list
-      summary: Retrieve the price list associated to the price
-      description: Retrieve the price list associated to the price
-      tags:
-      - price_lists
-      parameters:
-      - name: priceId
-        in: path
-        schema:
-          type: string
-        required: true
-        description: The resource's id
-      responses:
-        '200':
-          description: The price_list associated to the price
 components:
   schemas:
+    priceListResponseList:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/priceListResponse/properties/data'
     priceListResponse:
       type: object
       properties:
@@ -431,9 +370,19 @@ components:
               type: object
               properties: {}
     priceList:
+      type: object
       properties:
         data:
+          type: object
+          required:
+          - type
+          - attributes
           properties:
+            type:
+              type: string
+              description: The resource's type
+              enum:
+              - price_lists
             attributes:
               type: object
               properties:
@@ -498,13 +447,69 @@ components:
                   example:
                     foo: bar
                   nullable: true
-    priceListResponseList:
-      type: object
-      properties:
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/priceListResponse/properties/data'
+            relationships:
+              type: object
+              properties:
+                prices:
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - prices
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+                price_list_schedulers:
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - price_list_schedulers
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+                attachments:
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - attachments
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+                event_stores:
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - event_stores
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
   securitySchemes:
     bearerAuth:
       type: http

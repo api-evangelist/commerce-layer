@@ -1,18 +1,16 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: Commerce Layer addresses permissions API
-  version: 7.10.1
+  title: Commerce Layer Provisioning Permissions API
+  version: 1.0.15
   contact:
     name: API Support
     url: https://commercelayer.io
     email: support@commercelayer.io
   description: Headless Commerce for Global Brands.
 servers:
-- url: https://{your_organization_slug}.commercelayer.io/api
-  description: API
-- url: https://core.commercelayer.io/users/sign_in
-  description: Sign in
-- url: https://docs.commercelayer.io/api
+- url: https://provisioning.commercelayer.io
+  description: Commerce Layer Provisioning API
+- url: https://docs.commercelayer.io/provisioning-api
   description: API reference
 security:
 - bearerAuth: []
@@ -238,6 +236,68 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/permissionResponse/properties/data'
+    permissionUpdate:
+      required:
+      - data
+      type: object
+      properties:
+        data:
+          type: object
+          required:
+          - type
+          - id
+          - attributes
+          properties:
+            type:
+              type: string
+              description: The resource's type.
+              enum:
+              - permissions
+            id:
+              type: string
+              description: The ID of the resource.
+              example: XGZwpOSrWL
+            attributes:
+              type: object
+              properties:
+                can_create:
+                  type: boolean
+                  description: Determines if the permission have access to create rights.
+                  example: false
+                can_read:
+                  type: boolean
+                  description: Determines if the permission have access to read rights.
+                  example: false
+                can_update:
+                  type: boolean
+                  description: Determines if the permission have access to update rights.
+                  example: false
+                can_destroy:
+                  type: boolean
+                  description: Determines if the permission have access to destroy rights.
+                  example: false
+                reference:
+                  type:
+                  - string
+                  - 'null'
+                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
+                  example: ANY-EXTERNAL-REFEFERNCE
+                reference_origin:
+                  type:
+                  - string
+                  - 'null'
+                  description: Any identifier of the third party system that defines the reference code.
+                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
+                metadata:
+                  type:
+                  - object
+                  - 'null'
+                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
+                  example:
+                    foo: bar
+            relationships:
+              type: object
+              properties: {}
     permissionCreate:
       required:
       - data
@@ -318,16 +378,13 @@ components:
                           example: XGZwpOSrWL
               required:
               - role
-    permissionUpdate:
-      required:
-      - data
+    permission:
       type: object
       properties:
         data:
           type: object
           required:
           - type
-          - id
           - attributes
           properties:
             type:
@@ -335,10 +392,6 @@ components:
               description: The resource's type.
               enum:
               - permissions
-            id:
-              type: string
-              description: The ID of the resource.
-              example: XGZwpOSrWL
             attributes:
               type: object
               properties:
@@ -346,73 +399,22 @@ components:
                   type: boolean
                   description: Determines if the permission have access to create rights.
                   example: false
-                  nullable: false
                 can_read:
                   type: boolean
                   description: Determines if the permission have access to read rights.
                   example: false
-                  nullable: false
                 can_update:
                   type: boolean
                   description: Determines if the permission have access to update rights.
                   example: false
-                  nullable: false
                 can_destroy:
                   type: boolean
                   description: Determines if the permission have access to destroy rights.
                   example: false
-                  nullable: false
-                reference:
-                  type: string
-                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
-                  example: ANY-EXTERNAL-REFEFERNCE
-                  nullable: true
-                reference_origin:
-                  type: string
-                  description: Any identifier of the third party system that defines the reference code.
-                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
-                  nullable: true
-                metadata:
-                  type: object
-                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
-                  example:
-                    foo: bar
-                  nullable: true
-            relationships:
-              type: object
-              properties: {}
-    permission:
-      properties:
-        data:
-          properties:
-            attributes:
-              type: object
-              properties:
-                can_create:
-                  type: boolean
-                  description: Determines if the permission have access to create rights.
-                  example: false
-                  nullable: false
-                can_read:
-                  type: boolean
-                  description: Determines if the permission have access to read rights.
-                  example: false
-                  nullable: false
-                can_update:
-                  type: boolean
-                  description: Determines if the permission have access to update rights.
-                  example: false
-                  nullable: false
-                can_destroy:
-                  type: boolean
-                  description: Determines if the permission have access to destroy rights.
-                  example: false
-                  nullable: false
                 subject:
                   type: string
                   description: The resource where this permission is applied.
                   example: ''
-                  nullable: false
                 restrictions:
                   type: object
                   description: An object that contains additional restrictions.
@@ -430,21 +432,72 @@ components:
                   example: '2018-01-01T12:00:00.000Z'
                   readOnly: true
                 reference:
-                  type: string
+                  type:
+                  - string
+                  - 'null'
                   description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
                   example: ANY-EXTERNAL-REFEFERNCE
-                  nullable: true
                 reference_origin:
-                  type: string
+                  type:
+                  - string
+                  - 'null'
                   description: Any identifier of the third party system that defines the reference code.
                   example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
-                  nullable: true
                 metadata:
-                  type: object
+                  type:
+                  - object
+                  - 'null'
                   description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
                   example:
                     foo: bar
-                  nullable: true
+            relationships:
+              type: object
+              properties:
+                organization:
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type.
+                          enum:
+                          - organizations
+                        id:
+                          type: string
+                          description: The ID of the resource.
+                          example: XGZwpOSrWL
+                role:
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type.
+                          enum:
+                          - roles
+                        id:
+                          type: string
+                          description: The ID of the resource.
+                          example: XGZwpOSrWL
+                versions:
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type.
+                          enum:
+                          - versions
+                        id:
+                          type: string
+                          description: The ID of the resource.
+                          example: XGZwpOSrWL
   securitySchemes:
     bearerAuth:
       type: http

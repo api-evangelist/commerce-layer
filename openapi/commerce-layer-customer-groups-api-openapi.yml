@@ -1,6 +1,6 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: Commerce Layer addresses customer_groups API
+  title: Commerce Layer Customer Groups API
   version: 7.10.1
   contact:
     name: API Support
@@ -116,42 +116,68 @@ paths:
       responses:
         '204':
           description: No content
-  /customers/{customerId}/customer_group:
-    get:
-      operationId: GET/customerId/customer_group
-      summary: Retrieve the customer group associated to the customer
-      description: Retrieve the customer group associated to the customer
-      tags:
-      - customer_groups
-      parameters:
-      - name: customerId
-        in: path
-        schema:
-          type: string
-        required: true
-        description: The resource's id
-      responses:
-        '200':
-          description: The customer_group associated to the customer
-  /markets/{marketId}/customer_group:
-    get:
-      operationId: GET/marketId/customer_group
-      summary: Retrieve the customer group associated to the market
-      description: Retrieve the customer group associated to the market
-      tags:
-      - customer_groups
-      parameters:
-      - name: marketId
-        in: path
-        schema:
-          type: string
-        required: true
-        description: The resource's id
-      responses:
-        '200':
-          description: The customer_group associated to the market
 components:
   schemas:
+    customerGroupResponseList:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/customerGroupResponse/properties/data'
+    customerGroupUpdate:
+      required:
+      - data
+      type: object
+      properties:
+        data:
+          type: object
+          required:
+          - type
+          - id
+          - attributes
+          properties:
+            type:
+              type: string
+              description: The resource's type
+              enum:
+              - customer_groups
+            id:
+              type: string
+              description: Unique identifier for the resource (hash).
+              example: XAyRWNUzyN
+            attributes:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: The customer group's internal name.
+                  example: VIP
+                  nullable: false
+                code:
+                  type: string
+                  description: A string that you can use to identify the customer group (must be unique within the environment).
+                  example: vip1
+                  nullable: true
+                reference:
+                  type: string
+                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
+                  example: ANY-EXTERNAL-REFEFERNCE
+                  nullable: true
+                reference_origin:
+                  type: string
+                  description: Any identifier of the third party system that defines the reference code.
+                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
+                  nullable: true
+                metadata:
+                  type: object
+                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
+                  example:
+                    foo: bar
+                  nullable: true
+            relationships:
+              type: object
+              properties: {}
     customerGroupCreate:
       required:
       - data
@@ -197,17 +223,20 @@ components:
             relationships:
               type: object
               properties: {}
-    customerGroupResponseList:
+    customerGroup:
       type: object
       properties:
         data:
-          type: array
-          items:
-            $ref: '#/components/schemas/customerGroupResponse/properties/data'
-    customerGroup:
-      properties:
-        data:
+          type: object
+          required:
+          - type
+          - attributes
           properties:
+            type:
+              type: string
+              description: The resource's type
+              enum:
+              - customer_groups
             attributes:
               type: object
               properties:
@@ -247,6 +276,69 @@ components:
                   example:
                     foo: bar
                   nullable: true
+            relationships:
+              type: object
+              properties:
+                customers:
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - customers
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+                markets:
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - markets
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+                attachments:
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - attachments
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+                event_stores:
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - event_stores
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
     customerGroupResponse:
       type: object
       properties:
@@ -365,59 +457,6 @@ components:
                         id:
                           type: string
                           description: The resource ID
-    customerGroupUpdate:
-      required:
-      - data
-      type: object
-      properties:
-        data:
-          type: object
-          required:
-          - type
-          - id
-          - attributes
-          properties:
-            type:
-              type: string
-              description: The resource's type
-              enum:
-              - customer_groups
-            id:
-              type: string
-              description: Unique identifier for the resource (hash).
-              example: XAyRWNUzyN
-            attributes:
-              type: object
-              properties:
-                name:
-                  type: string
-                  description: The customer group's internal name.
-                  example: VIP
-                  nullable: false
-                code:
-                  type: string
-                  description: A string that you can use to identify the customer group (must be unique within the environment).
-                  example: vip1
-                  nullable: true
-                reference:
-                  type: string
-                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
-                  example: ANY-EXTERNAL-REFEFERNCE
-                  nullable: true
-                reference_origin:
-                  type: string
-                  description: Any identifier of the third party system that defines the reference code.
-                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
-                  nullable: true
-                metadata:
-                  type: object
-                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
-                  example:
-                    foo: bar
-                  nullable: true
-            relationships:
-              type: object
-              properties: {}
   securitySchemes:
     bearerAuth:
       type: http

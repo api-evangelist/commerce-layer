@@ -1,6 +1,6 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: Commerce Layer addresses discount_engine_items API
+  title: Commerce Layer Discount Engine Items API
   version: 7.10.1
   contact:
     name: API Support
@@ -55,66 +55,8 @@ paths:
             application/vnd.api+json:
               schema:
                 $ref: '#/components/schemas/discountEngineItemResponse'
-  /discount_engines/{discountEngineId}/discount_engine_items:
-    get:
-      operationId: GET/discountEngineId/discount_engine_items
-      summary: Retrieve the discount engine items associated to the discount engine
-      description: Retrieve the discount engine items associated to the discount engine
-      tags:
-      - discount_engine_items
-      parameters:
-      - name: discountEngineId
-        in: path
-        schema:
-          type: string
-        required: true
-        description: The resource's id
-      responses:
-        '200':
-          description: The discount_engine_items associated to the discount engine
-  /orders/{orderId}/discount_engine_item:
-    get:
-      operationId: GET/orderId/discount_engine_item
-      summary: Retrieve the discount engine item associated to the order
-      description: Retrieve the discount engine item associated to the order
-      tags:
-      - discount_engine_items
-      parameters:
-      - name: orderId
-        in: path
-        schema:
-          type: string
-        required: true
-        description: The resource's id
-      responses:
-        '200':
-          description: The discount_engine_item associated to the order
-  /talon_one_accounts/{talonOneAccountId}/discount_engine_items:
-    get:
-      operationId: GET/talonOneAccountId/discount_engine_items
-      summary: Retrieve the discount engine items associated to the talon one account
-      description: Retrieve the discount engine items associated to the talon one account
-      tags:
-      - discount_engine_items
-      parameters:
-      - name: talonOneAccountId
-        in: path
-        schema:
-          type: string
-        required: true
-        description: The resource's id
-      responses:
-        '200':
-          description: The discount_engine_items associated to the talon one account
 components:
   schemas:
-    discountEngineItemResponseList:
-      type: object
-      properties:
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/discountEngineItemResponse/properties/data'
     discountEngineItemResponse:
       type: object
       properties:
@@ -211,9 +153,19 @@ components:
                           type: string
                           description: The resource ID
     discountEngineItem:
+      type: object
       properties:
         data:
+          type: object
+          required:
+          - type
+          - attributes
           properties:
+            type:
+              type: string
+              description: The resource's type
+              enum:
+              - discount_engine_items
             attributes:
               type: object
               properties:
@@ -249,6 +201,61 @@ components:
                   example:
                     foo: bar
                   nullable: true
+            relationships:
+              type: object
+              properties:
+                discount_engine:
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - discount_engines
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+                order:
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - orders
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+                event_stores:
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - event_stores
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+    discountEngineItemResponseList:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/discountEngineItemResponse/properties/data'
   securitySchemes:
     bearerAuth:
       type: http

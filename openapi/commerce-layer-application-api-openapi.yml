@@ -1,6 +1,6 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: Commerce Layer addresses application API
+  title: Commerce Layer Application API
   version: 7.10.1
   contact:
     name: API Support
@@ -36,10 +36,46 @@ paths:
                 $ref: '#/components/schemas/applicationResponse'
 components:
   schemas:
-    application:
+    applicationResponse:
+      type: object
       properties:
         data:
+          type: object
           properties:
+            id:
+              type: string
+              description: Unique identifier for the resource (hash).
+              example: XAyRWNUzyN
+            type:
+              type: string
+              description: The resource's type
+              enum:
+              - application
+            links:
+              type: object
+              properties:
+                self:
+                  type: string
+                  description: URL
+            attributes:
+              $ref: '#/components/schemas/application/properties/data/properties/attributes'
+            relationships:
+              type: object
+              properties: {}
+    application:
+      type: object
+      properties:
+        data:
+          type: object
+          required:
+          - type
+          - attributes
+          properties:
+            type:
+              type: string
+              description: The resource's type
+              enum:
+              - application
             attributes:
               type: object
               properties:
@@ -125,29 +161,6 @@ components:
                   example:
                     foo: bar
                   nullable: true
-    applicationResponse:
-      type: object
-      properties:
-        data:
-          type: object
-          properties:
-            id:
-              type: string
-              description: Unique identifier for the resource (hash).
-              example: XAyRWNUzyN
-            type:
-              type: string
-              description: The resource's type
-              enum:
-              - application
-            links:
-              type: object
-              properties:
-                self:
-                  type: string
-                  description: URL
-            attributes:
-              $ref: '#/components/schemas/application/properties/data/properties/attributes'
             relationships:
               type: object
               properties: {}

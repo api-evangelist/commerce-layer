@@ -1,6 +1,6 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: Commerce Layer addresses resource_errors API
+  title: Commerce Layer Resource Errors API
   version: 7.10.1
   contact:
     name: API Support
@@ -20,23 +20,6 @@ tags:
 - name: resource_errors
   description: resource type
 paths:
-  /orders/{orderId}/resource_errors:
-    get:
-      operationId: GET/orderId/resource_errors
-      summary: Retrieve the resource errors associated to the order
-      description: Retrieve the resource errors associated to the order
-      tags:
-      - resource_errors
-      parameters:
-      - name: orderId
-        in: path
-        schema:
-          type: string
-        required: true
-        description: The resource's id
-      responses:
-        '200':
-          description: The resource_errors associated to the order
   /resource_errors:
     get:
       operationId: GET/resource_errors
@@ -72,23 +55,6 @@ paths:
             application/vnd.api+json:
               schema:
                 $ref: '#/components/schemas/resourceErrorResponse'
-  /returns/{returnId}/resource_errors:
-    get:
-      operationId: GET/returnId/resource_errors
-      summary: Retrieve the resource errors associated to the return
-      description: Retrieve the resource errors associated to the return
-      tags:
-      - resource_errors
-      parameters:
-      - name: returnId
-        in: path
-        schema:
-          type: string
-        required: true
-        description: The resource's id
-      responses:
-        '200':
-          description: The resource_errors associated to the return
 components:
   schemas:
     resourceErrorResponse:
@@ -171,9 +137,19 @@ components:
           items:
             $ref: '#/components/schemas/resourceErrorResponse/properties/data'
     resourceError:
+      type: object
       properties:
         data:
+          type: object
+          required:
+          - type
+          - attributes
           properties:
+            type:
+              type: string
+              description: The resource's type
+              enum:
+              - resource_errors
             attributes:
               type: object
               properties:
@@ -218,6 +194,43 @@ components:
                   example:
                     foo: bar
                   nullable: true
+            relationships:
+              type: object
+              properties:
+                resource:
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - orders
+                          - returns
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+                  oneOf:
+                  - $ref: '#/components/schemas/order'
+                  - $ref: '#/components/schemas/return'
+                event_stores:
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - event_stores
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
   securitySchemes:
     bearerAuth:
       type: http

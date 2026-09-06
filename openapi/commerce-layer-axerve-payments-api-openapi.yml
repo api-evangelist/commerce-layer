@@ -1,6 +1,6 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: Commerce Layer addresses axerve_payments API
+  title: Commerce Layer Axerve Payments API
   version: 7.10.1
   contact:
     name: API Support
@@ -20,23 +20,6 @@ tags:
 - name: axerve_payments
   description: resource type
 paths:
-  /axerve_gateways/{axerveGatewayId}/axerve_payments:
-    get:
-      operationId: GET/axerveGatewayId/axerve_payments
-      summary: Retrieve the axerve payments associated to the axerve gateway
-      description: Retrieve the axerve payments associated to the axerve gateway
-      tags:
-      - axerve_payments
-      parameters:
-      - name: axerveGatewayId
-        in: path
-        schema:
-          type: string
-        required: true
-        description: The resource's id
-      responses:
-        '200':
-          description: The axerve_payments associated to the axerve gateway
   /axerve_payments:
     get:
       operationId: GET/axerve_payments
@@ -135,169 +118,6 @@ paths:
           description: No content
 components:
   schemas:
-    axervePaymentResponseList:
-      type: object
-      properties:
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/axervePaymentResponse/properties/data'
-    axervePaymentCreate:
-      required:
-      - data
-      type: object
-      properties:
-        data:
-          type: object
-          required:
-          - type
-          - attributes
-          properties:
-            type:
-              type: string
-              description: The resource's type
-              enum:
-              - axerve_payments
-            attributes:
-              type: object
-              properties:
-                return_url:
-                  type: string
-                  description: The URL where the payer is redirected after they approve the payment.
-                  example: https://yourdomain.com/thankyou
-                client_ip:
-                  type: string
-                  description: The IP adress of the client creating the payment.
-                  example: 213.45.120.5
-                buyer_details:
-                  type: object
-                  description: The details of the buyer creating the payment.
-                  example:
-                    cardHolder:
-                      email: george.harrison@gmail.com
-                    shippingAddress:
-                      firstName: George
-                request_token:
-                  type: boolean
-                  description: Requires the creation of a token to represent this payment, mandatory to use customer's wallet and order subscriptions.
-                  example: true
-                reference:
-                  type: string
-                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
-                  example: ANY-EXTERNAL-REFEFERNCE
-                reference_origin:
-                  type: string
-                  description: Any identifier of the third party system that defines the reference code.
-                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
-                metadata:
-                  type: object
-                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
-                  example:
-                    foo: bar
-              required:
-              - return_url
-            relationships:
-              type: object
-              properties:
-                order:
-                  required:
-                  - data
-                  type: object
-                  properties:
-                    data:
-                      type: object
-                      properties:
-                        type:
-                          type: string
-                          description: The resource's type
-                          enum:
-                          - orders
-                        id:
-                          type: string
-                          description: Unique identifier for the resource (hash).
-                          example: XAyRWNUzyN
-              required:
-              - order
-    axervePayment:
-      properties:
-        data:
-          properties:
-            attributes:
-              type: object
-              properties:
-                login:
-                  type: string
-                  description: The merchant login code.
-                  example: xxxx-yyyy-zzzz
-                  nullable: false
-                return_url:
-                  type: string
-                  description: The URL where the payer is redirected after they approve the payment.
-                  example: https://yourdomain.com/thankyou
-                  nullable: false
-                payment_request_data:
-                  type: object
-                  description: The Axerve payment request data, collected by client.
-                  example:
-                    foo: bar
-                  nullable: true
-                client_ip:
-                  type: string
-                  description: The IP adress of the client creating the payment.
-                  example: 213.45.120.5
-                  nullable: true
-                buyer_details:
-                  type: object
-                  description: The details of the buyer creating the payment.
-                  example:
-                    cardHolder:
-                      email: george.harrison@gmail.com
-                    shippingAddress:
-                      firstName: George
-                  nullable: true
-                request_token:
-                  type: boolean
-                  description: Requires the creation of a token to represent this payment, mandatory to use customer's wallet and order subscriptions.
-                  example: true
-                  nullable: true
-                mismatched_amounts:
-                  type: boolean
-                  description: Indicates if the order current amount differs form the one of the associated authorization.
-                  example: false
-                  nullable: true
-                payment_instrument:
-                  type: object
-                  description: Information about the payment instrument used in the transaction.
-                  example:
-                    issuer: cl bank
-                    card_type: visa
-                  nullable: true
-                created_at:
-                  type: string
-                  description: Time at which the resource was created.
-                  example: '2018-01-01T12:00:00.000Z'
-                  nullable: false
-                updated_at:
-                  type: string
-                  description: Time at which the resource was last updated.
-                  example: '2018-01-01T12:00:00.000Z'
-                  nullable: false
-                reference:
-                  type: string
-                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
-                  example: ANY-EXTERNAL-REFEFERNCE
-                  nullable: true
-                reference_origin:
-                  type: string
-                  description: Any identifier of the third party system that defines the reference code.
-                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
-                  nullable: true
-                metadata:
-                  type: object
-                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
-                  example:
-                    foo: bar
-                  nullable: true
     axervePaymentResponse:
       type: object
       properties:
@@ -460,6 +280,227 @@ components:
                           description: The resource's type
                           enum:
                           - orders
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+    axervePaymentCreate:
+      required:
+      - data
+      type: object
+      properties:
+        data:
+          type: object
+          required:
+          - type
+          - attributes
+          properties:
+            type:
+              type: string
+              description: The resource's type
+              enum:
+              - axerve_payments
+            attributes:
+              type: object
+              properties:
+                return_url:
+                  type: string
+                  description: The URL where the payer is redirected after they approve the payment.
+                  example: https://yourdomain.com/thankyou
+                client_ip:
+                  type: string
+                  description: The IP adress of the client creating the payment.
+                  example: 213.45.120.5
+                buyer_details:
+                  type: object
+                  description: The details of the buyer creating the payment.
+                  example:
+                    cardHolder:
+                      email: george.harrison@gmail.com
+                    shippingAddress:
+                      firstName: George
+                request_token:
+                  type: boolean
+                  description: Requires the creation of a token to represent this payment, mandatory to use customer's wallet and order subscriptions.
+                  example: true
+                reference:
+                  type: string
+                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
+                  example: ANY-EXTERNAL-REFEFERNCE
+                reference_origin:
+                  type: string
+                  description: Any identifier of the third party system that defines the reference code.
+                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
+                metadata:
+                  type: object
+                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
+                  example:
+                    foo: bar
+              required:
+              - return_url
+            relationships:
+              type: object
+              properties:
+                order:
+                  required:
+                  - data
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - orders
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+              required:
+              - order
+    axervePaymentResponseList:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/axervePaymentResponse/properties/data'
+    axervePayment:
+      type: object
+      properties:
+        data:
+          type: object
+          required:
+          - type
+          - attributes
+          properties:
+            type:
+              type: string
+              description: The resource's type
+              enum:
+              - axerve_payments
+            attributes:
+              type: object
+              properties:
+                login:
+                  type: string
+                  description: The merchant login code.
+                  example: xxxx-yyyy-zzzz
+                  nullable: false
+                return_url:
+                  type: string
+                  description: The URL where the payer is redirected after they approve the payment.
+                  example: https://yourdomain.com/thankyou
+                  nullable: false
+                payment_request_data:
+                  type: object
+                  description: The Axerve payment request data, collected by client.
+                  example:
+                    foo: bar
+                  nullable: true
+                client_ip:
+                  type: string
+                  description: The IP adress of the client creating the payment.
+                  example: 213.45.120.5
+                  nullable: true
+                buyer_details:
+                  type: object
+                  description: The details of the buyer creating the payment.
+                  example:
+                    cardHolder:
+                      email: george.harrison@gmail.com
+                    shippingAddress:
+                      firstName: George
+                  nullable: true
+                request_token:
+                  type: boolean
+                  description: Requires the creation of a token to represent this payment, mandatory to use customer's wallet and order subscriptions.
+                  example: true
+                  nullable: true
+                mismatched_amounts:
+                  type: boolean
+                  description: Indicates if the order current amount differs form the one of the associated authorization.
+                  example: false
+                  nullable: true
+                payment_instrument:
+                  type: object
+                  description: Information about the payment instrument used in the transaction.
+                  example:
+                    issuer: cl bank
+                    card_type: visa
+                  nullable: true
+                created_at:
+                  type: string
+                  description: Time at which the resource was created.
+                  example: '2018-01-01T12:00:00.000Z'
+                  nullable: false
+                updated_at:
+                  type: string
+                  description: Time at which the resource was last updated.
+                  example: '2018-01-01T12:00:00.000Z'
+                  nullable: false
+                reference:
+                  type: string
+                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
+                  example: ANY-EXTERNAL-REFEFERNCE
+                  nullable: true
+                reference_origin:
+                  type: string
+                  description: Any identifier of the third party system that defines the reference code.
+                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
+                  nullable: true
+                metadata:
+                  type: object
+                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
+                  example:
+                    foo: bar
+                  nullable: true
+            relationships:
+              type: object
+              properties:
+                order:
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - orders
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+                payment_gateway:
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - payment_gateways
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+                event_stores:
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - event_stores
                         id:
                           type: string
                           description: Unique identifier for the resource (hash).

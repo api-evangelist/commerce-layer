@@ -1,6 +1,6 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: Commerce Layer addresses stores API
+  title: Commerce Layer Stores API
   version: 7.10.1
   contact:
     name: API Support
@@ -20,74 +20,6 @@ tags:
 - name: stores
   description: resource type
 paths:
-  /markets/{marketId}/stores:
-    get:
-      operationId: GET/marketId/stores
-      summary: Retrieve the stores associated to the market
-      description: Retrieve the stores associated to the market
-      tags:
-      - stores
-      parameters:
-      - name: marketId
-        in: path
-        schema:
-          type: string
-        required: true
-        description: The resource's id
-      responses:
-        '200':
-          description: The stores associated to the market
-  /orders/{orderId}/store:
-    get:
-      operationId: GET/orderId/store
-      summary: Retrieve the store associated to the order
-      description: Retrieve the store associated to the order
-      tags:
-      - stores
-      parameters:
-      - name: orderId
-        in: path
-        schema:
-          type: string
-        required: true
-        description: The resource's id
-      responses:
-        '200':
-          description: The store associated to the order
-  /payment_methods/{paymentMethodId}/store:
-    get:
-      operationId: GET/paymentMethodId/store
-      summary: Retrieve the store associated to the payment method
-      description: Retrieve the store associated to the payment method
-      tags:
-      - stores
-      parameters:
-      - name: paymentMethodId
-        in: path
-        schema:
-          type: string
-        required: true
-        description: The resource's id
-      responses:
-        '200':
-          description: The store associated to the payment method
-  /stock_locations/{stockLocationId}/stores:
-    get:
-      operationId: GET/stockLocationId/stores
-      summary: Retrieve the stores associated to the stock location
-      description: Retrieve the stores associated to the stock location
-      tags:
-      - stores
-      parameters:
-      - name: stockLocationId
-        in: path
-        schema:
-          type: string
-        required: true
-        description: The resource's id
-      responses:
-        '200':
-          description: The stores associated to the stock location
   /stores:
     get:
       operationId: GET/stores
@@ -186,6 +118,167 @@ paths:
           description: No content
 components:
   schemas:
+    store:
+      type: object
+      properties:
+        data:
+          type: object
+          required:
+          - type
+          - attributes
+          properties:
+            type:
+              type: string
+              description: The resource's type
+              enum:
+              - stores
+            attributes:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: The store's internal name.
+                  example: Rome Shop
+                  nullable: false
+                code:
+                  type: string
+                  description: A string that you can use to identify the store (must be unique within the environment).
+                  example: europe1
+                  nullable: true
+                created_at:
+                  type: string
+                  description: Time at which the resource was created.
+                  example: '2018-01-01T12:00:00.000Z'
+                  nullable: false
+                updated_at:
+                  type: string
+                  description: Time at which the resource was last updated.
+                  example: '2018-01-01T12:00:00.000Z'
+                  nullable: false
+                reference:
+                  type: string
+                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
+                  example: ANY-EXTERNAL-REFEFERNCE
+                  nullable: true
+                reference_origin:
+                  type: string
+                  description: Any identifier of the third party system that defines the reference code.
+                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
+                  nullable: true
+                metadata:
+                  type: object
+                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
+                  example:
+                    foo: bar
+                  nullable: true
+            relationships:
+              type: object
+              properties:
+                market:
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - markets
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+                merchant:
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - merchants
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+                stock_location:
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - stock_locations
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+                orders:
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - orders
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+                payment_methods:
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - payment_methods
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+                events:
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - events
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+                event_stores:
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - event_stores
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
     storeResponse:
       type: object
       properties:
@@ -373,49 +466,6 @@ components:
                         id:
                           type: string
                           description: The resource ID
-    store:
-      properties:
-        data:
-          properties:
-            attributes:
-              type: object
-              properties:
-                name:
-                  type: string
-                  description: The store's internal name.
-                  example: Rome Shop
-                  nullable: false
-                code:
-                  type: string
-                  description: A string that you can use to identify the store (must be unique within the environment).
-                  example: europe1
-                  nullable: true
-                created_at:
-                  type: string
-                  description: Time at which the resource was created.
-                  example: '2018-01-01T12:00:00.000Z'
-                  nullable: false
-                updated_at:
-                  type: string
-                  description: Time at which the resource was last updated.
-                  example: '2018-01-01T12:00:00.000Z'
-                  nullable: false
-                reference:
-                  type: string
-                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
-                  example: ANY-EXTERNAL-REFEFERNCE
-                  nullable: true
-                reference_origin:
-                  type: string
-                  description: Any identifier of the third party system that defines the reference code.
-                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
-                  nullable: true
-                metadata:
-                  type: object
-                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
-                  example:
-                    foo: bar
-                  nullable: true
     storeResponseList:
       type: object
       properties:

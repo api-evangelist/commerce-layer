@@ -1,6 +1,6 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: Commerce Layer addresses API
+  title: Commerce Layer Addresses API
   version: 7.10.1
   contact:
     name: API Support
@@ -116,216 +116,22 @@ paths:
       responses:
         '204':
           description: No content
-  /bing_geocoders/{bingGeocoderId}/addresses:
-    get:
-      operationId: GET/bingGeocoderId/addresses
-      summary: Retrieve the addresses associated to the bing geocoder
-      description: Retrieve the addresses associated to the bing geocoder
-      tags:
-      - addresses
-      parameters:
-      - name: bingGeocoderId
-        in: path
-        schema:
-          type: string
-        required: true
-        description: The resource's id
-      responses:
-        '200':
-          description: The addresses associated to the bing geocoder
-  /customer_addresses/{customerAddressId}/address:
-    get:
-      operationId: GET/customerAddressId/address
-      summary: Retrieve the address associated to the customer address
-      description: Retrieve the address associated to the customer address
-      tags:
-      - addresses
-      parameters:
-      - name: customerAddressId
-        in: path
-        schema:
-          type: string
-        required: true
-        description: The resource's id
-      responses:
-        '200':
-          description: The address associated to the customer address
-  /geocoders/{geocoderId}/addresses:
-    get:
-      operationId: GET/geocoderId/addresses
-      summary: Retrieve the addresses associated to the geocoder
-      description: Retrieve the addresses associated to the geocoder
-      tags:
-      - addresses
-      parameters:
-      - name: geocoderId
-        in: path
-        schema:
-          type: string
-        required: true
-        description: The resource's id
-      responses:
-        '200':
-          description: The addresses associated to the geocoder
-  /google_geocoders/{googleGeocoderId}/addresses:
-    get:
-      operationId: GET/googleGeocoderId/addresses
-      summary: Retrieve the addresses associated to the google geocoder
-      description: Retrieve the addresses associated to the google geocoder
-      tags:
-      - addresses
-      parameters:
-      - name: googleGeocoderId
-        in: path
-        schema:
-          type: string
-        required: true
-        description: The resource's id
-      responses:
-        '200':
-          description: The addresses associated to the google geocoder
-  /merchants/{merchantId}/address:
-    get:
-      operationId: GET/merchantId/address
-      summary: Retrieve the address associated to the merchant
-      description: Retrieve the address associated to the merchant
-      tags:
-      - addresses
-      parameters:
-      - name: merchantId
-        in: path
-        schema:
-          type: string
-        required: true
-        description: The resource's id
-      responses:
-        '200':
-          description: The address associated to the merchant
-  /orders/{orderId}/shipping_address:
-    get:
-      operationId: GET/orderId/shipping_address
-      summary: Retrieve the shipping address associated to the order
-      description: Retrieve the shipping address associated to the order
-      tags:
-      - addresses
-      parameters:
-      - name: orderId
-        in: path
-        schema:
-          type: string
-        required: true
-        description: The resource's id
-      responses:
-        '200':
-          description: The shipping_address associated to the order
-  /orders/{orderId}/billing_address:
-    get:
-      operationId: GET/orderId/billing_address
-      summary: Retrieve the billing address associated to the order
-      description: Retrieve the billing address associated to the order
-      tags:
-      - addresses
-      parameters:
-      - name: orderId
-        in: path
-        schema:
-          type: string
-        required: true
-        description: The resource's id
-      responses:
-        '200':
-          description: The billing_address associated to the order
-  /returns/{returnId}/origin_address:
-    get:
-      operationId: GET/returnId/origin_address
-      summary: Retrieve the origin address associated to the return
-      description: Retrieve the origin address associated to the return
-      tags:
-      - addresses
-      parameters:
-      - name: returnId
-        in: path
-        schema:
-          type: string
-        required: true
-        description: The resource's id
-      responses:
-        '200':
-          description: The origin_address associated to the return
-  /returns/{returnId}/destination_address:
-    get:
-      operationId: GET/returnId/destination_address
-      summary: Retrieve the destination address associated to the return
-      description: Retrieve the destination address associated to the return
-      tags:
-      - addresses
-      parameters:
-      - name: returnId
-        in: path
-        schema:
-          type: string
-        required: true
-        description: The resource's id
-      responses:
-        '200':
-          description: The destination_address associated to the return
-  /shipments/{shipmentId}/origin_address:
-    get:
-      operationId: GET/shipmentId/origin_address
-      summary: Retrieve the origin address associated to the shipment
-      description: Retrieve the origin address associated to the shipment
-      tags:
-      - addresses
-      parameters:
-      - name: shipmentId
-        in: path
-        schema:
-          type: string
-        required: true
-        description: The resource's id
-      responses:
-        '200':
-          description: The origin_address associated to the shipment
-  /shipments/{shipmentId}/shipping_address:
-    get:
-      operationId: GET/shipmentId/shipping_address
-      summary: Retrieve the shipping address associated to the shipment
-      description: Retrieve the shipping address associated to the shipment
-      tags:
-      - addresses
-      parameters:
-      - name: shipmentId
-        in: path
-        schema:
-          type: string
-        required: true
-        description: The resource's id
-      responses:
-        '200':
-          description: The shipping_address associated to the shipment
-  /stock_locations/{stockLocationId}/address:
-    get:
-      operationId: GET/stockLocationId/address
-      summary: Retrieve the address associated to the stock location
-      description: Retrieve the address associated to the stock location
-      tags:
-      - addresses
-      parameters:
-      - name: stockLocationId
-        in: path
-        schema:
-          type: string
-        required: true
-        description: The resource's id
-      responses:
-        '200':
-          description: The address associated to the stock location
 components:
   schemas:
     address:
+      type: object
       properties:
         data:
+          type: object
+          required:
+          - type
+          - attributes
           properties:
+            type:
+              type: string
+              description: The resource's type
+              enum:
+              - addresses
             attributes:
               type: object
               properties:
@@ -475,6 +281,332 @@ components:
                   example:
                     foo: bar
                   nullable: true
+            relationships:
+              type: object
+              properties:
+                geocoder:
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - geocoders
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+                events:
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - events
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+                tags:
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - tags
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+                event_stores:
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - event_stores
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+    addressResponse:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            id:
+              type: string
+              description: Unique identifier for the resource (hash).
+              example: XAyRWNUzyN
+            type:
+              type: string
+              description: The resource's type
+              enum:
+              - addresses
+            links:
+              type: object
+              properties:
+                self:
+                  type: string
+                  description: URL
+            attributes:
+              $ref: '#/components/schemas/address/properties/data/properties/attributes'
+            relationships:
+              type: object
+              properties:
+                geocoder:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - geocoder
+                        id:
+                          type: string
+                          description: The resource ID
+                events:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - events
+                        id:
+                          type: string
+                          description: The resource ID
+                tags:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - tags
+                        id:
+                          type: string
+                          description: The resource ID
+                event_stores:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - event_stores
+                        id:
+                          type: string
+                          description: The resource ID
+    addressResponseList:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/addressResponse/properties/data'
+    addressCreate:
+      required:
+      - data
+      type: object
+      properties:
+        data:
+          type: object
+          required:
+          - type
+          - attributes
+          properties:
+            type:
+              type: string
+              description: The resource's type
+              enum:
+              - addresses
+            attributes:
+              type: object
+              properties:
+                business:
+                  type: boolean
+                  description: Indicates if it's a business or a personal address.
+                  example: false
+                first_name:
+                  type: string
+                  description: Address first name (personal).
+                  example: John
+                last_name:
+                  type: string
+                  description: Address last name (personal).
+                  example: Smith
+                company:
+                  type: string
+                  description: Address company name (business).
+                  example: The Red Brand Inc.
+                line_1:
+                  type: string
+                  description: Address line 1, i.e. Street address, PO Box.
+                  example: 2883 Geraldine Lane
+                line_2:
+                  type: string
+                  description: Address line 2, i.e. Apartment, Suite, Building.
+                  example: Apt.23
+                city:
+                  type: string
+                  description: Address city.
+                  example: New York
+                zip_code:
+                  type: string
+                  description: ZIP or postal code.
+                  example: '10013'
+                state_code:
+                  type: string
+                  description: State, province or region code.
+                  example: NY
+                country_code:
+                  type: string
+                  description: The international 2-letter country code as defined by the ISO 3166-1 standard.
+                  example: US
+                phone:
+                  type: string
+                  description: Phone number (including extension).
+                  example: (212) 646-338-1228
+                email:
+                  type: string
+                  description: Email address.
+                  example: john@example.com
+                notes:
+                  type: string
+                  description: A free notes attached to the address. When used as a shipping address, this can be useful to let the customers add specific delivery instructions.
+                  example: Please ring the bell twice
+                lat:
+                  type: number
+                  description: The address geocoded latitude. This is automatically generated when creating a shipping/billing address for an order and a valid geocoder is attached to the order's market.
+                  example: 40.6971494
+                lng:
+                  type: number
+                  description: The address geocoded longitude. This is automatically generated when creating a shipping/billing address for an order and a valid geocoder is attached to the order's market.
+                  example: -74.2598672
+                billing_info:
+                  type: string
+                  description: Customer's billing information (i.e. VAT number, codice fiscale).
+                  example: VAT ID IT02382940977
+                reference:
+                  type: string
+                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
+                  example: ANY-EXTERNAL-REFEFERNCE
+                reference_origin:
+                  type: string
+                  description: Any identifier of the third party system that defines the reference code.
+                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
+                metadata:
+                  type: object
+                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
+                  example:
+                    foo: bar
+              required:
+              - line_1
+              - city
+              - country_code
+              - phone
+            relationships:
+              type: object
+              properties:
+                geocoder:
+                  required:
+                  - data
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - geocoders
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+                tags:
+                  required:
+                  - data
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - tags
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
     addressUpdate:
       required:
       - data
@@ -638,269 +770,6 @@ components:
                           type: string
                           description: Unique identifier for the resource (hash).
                           example: XAyRWNUzyN
-    addressCreate:
-      required:
-      - data
-      type: object
-      properties:
-        data:
-          type: object
-          required:
-          - type
-          - attributes
-          properties:
-            type:
-              type: string
-              description: The resource's type
-              enum:
-              - addresses
-            attributes:
-              type: object
-              properties:
-                business:
-                  type: boolean
-                  description: Indicates if it's a business or a personal address.
-                  example: false
-                first_name:
-                  type: string
-                  description: Address first name (personal).
-                  example: John
-                last_name:
-                  type: string
-                  description: Address last name (personal).
-                  example: Smith
-                company:
-                  type: string
-                  description: Address company name (business).
-                  example: The Red Brand Inc.
-                line_1:
-                  type: string
-                  description: Address line 1, i.e. Street address, PO Box.
-                  example: 2883 Geraldine Lane
-                line_2:
-                  type: string
-                  description: Address line 2, i.e. Apartment, Suite, Building.
-                  example: Apt.23
-                city:
-                  type: string
-                  description: Address city.
-                  example: New York
-                zip_code:
-                  type: string
-                  description: ZIP or postal code.
-                  example: '10013'
-                state_code:
-                  type: string
-                  description: State, province or region code.
-                  example: NY
-                country_code:
-                  type: string
-                  description: The international 2-letter country code as defined by the ISO 3166-1 standard.
-                  example: US
-                phone:
-                  type: string
-                  description: Phone number (including extension).
-                  example: (212) 646-338-1228
-                email:
-                  type: string
-                  description: Email address.
-                  example: john@example.com
-                notes:
-                  type: string
-                  description: A free notes attached to the address. When used as a shipping address, this can be useful to let the customers add specific delivery instructions.
-                  example: Please ring the bell twice
-                lat:
-                  type: number
-                  description: The address geocoded latitude. This is automatically generated when creating a shipping/billing address for an order and a valid geocoder is attached to the order's market.
-                  example: 40.6971494
-                lng:
-                  type: number
-                  description: The address geocoded longitude. This is automatically generated when creating a shipping/billing address for an order and a valid geocoder is attached to the order's market.
-                  example: -74.2598672
-                billing_info:
-                  type: string
-                  description: Customer's billing information (i.e. VAT number, codice fiscale).
-                  example: VAT ID IT02382940977
-                reference:
-                  type: string
-                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
-                  example: ANY-EXTERNAL-REFEFERNCE
-                reference_origin:
-                  type: string
-                  description: Any identifier of the third party system that defines the reference code.
-                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
-                metadata:
-                  type: object
-                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
-                  example:
-                    foo: bar
-              required:
-              - line_1
-              - city
-              - country_code
-              - phone
-            relationships:
-              type: object
-              properties:
-                geocoder:
-                  required:
-                  - data
-                  type: object
-                  properties:
-                    data:
-                      type: object
-                      properties:
-                        type:
-                          type: string
-                          description: The resource's type
-                          enum:
-                          - geocoders
-                        id:
-                          type: string
-                          description: Unique identifier for the resource (hash).
-                          example: XAyRWNUzyN
-                tags:
-                  required:
-                  - data
-                  type: object
-                  properties:
-                    data:
-                      type: object
-                      properties:
-                        type:
-                          type: string
-                          description: The resource's type
-                          enum:
-                          - tags
-                        id:
-                          type: string
-                          description: Unique identifier for the resource (hash).
-                          example: XAyRWNUzyN
-    addressResponse:
-      type: object
-      properties:
-        data:
-          type: object
-          properties:
-            id:
-              type: string
-              description: Unique identifier for the resource (hash).
-              example: XAyRWNUzyN
-            type:
-              type: string
-              description: The resource's type
-              enum:
-              - addresses
-            links:
-              type: object
-              properties:
-                self:
-                  type: string
-                  description: URL
-            attributes:
-              $ref: '#/components/schemas/address/properties/data/properties/attributes'
-            relationships:
-              type: object
-              properties:
-                geocoder:
-                  type: object
-                  properties:
-                    links:
-                      type: object
-                      properties:
-                        self:
-                          type: string
-                          description: URL
-                        related:
-                          type: string
-                          description: URL
-                    data:
-                      type: object
-                      properties:
-                        type:
-                          type: string
-                          description: The resource's type
-                          enum:
-                          - geocoder
-                        id:
-                          type: string
-                          description: The resource ID
-                events:
-                  type: object
-                  properties:
-                    links:
-                      type: object
-                      properties:
-                        self:
-                          type: string
-                          description: URL
-                        related:
-                          type: string
-                          description: URL
-                    data:
-                      type: object
-                      properties:
-                        type:
-                          type: string
-                          description: The resource's type
-                          enum:
-                          - events
-                        id:
-                          type: string
-                          description: The resource ID
-                tags:
-                  type: object
-                  properties:
-                    links:
-                      type: object
-                      properties:
-                        self:
-                          type: string
-                          description: URL
-                        related:
-                          type: string
-                          description: URL
-                    data:
-                      type: object
-                      properties:
-                        type:
-                          type: string
-                          description: The resource's type
-                          enum:
-                          - tags
-                        id:
-                          type: string
-                          description: The resource ID
-                event_stores:
-                  type: object
-                  properties:
-                    links:
-                      type: object
-                      properties:
-                        self:
-                          type: string
-                          description: URL
-                        related:
-                          type: string
-                          description: URL
-                    data:
-                      type: object
-                      properties:
-                        type:
-                          type: string
-                          description: The resource's type
-                          enum:
-                          - event_stores
-                        id:
-                          type: string
-                          description: The resource ID
-    addressResponseList:
-      type: object
-      properties:
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/addressResponse/properties/data'
   securitySchemes:
     bearerAuth:
       type: http

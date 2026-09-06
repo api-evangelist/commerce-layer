@@ -1,6 +1,6 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: Commerce Layer addresses gift_card_recipients API
+  title: Commerce Layer Gift Card Recipients API
   version: 7.10.1
   contact:
     name: API Support
@@ -116,23 +116,6 @@ paths:
       responses:
         '204':
           description: No content
-  /gift_cards/{giftCardId}/gift_card_recipient:
-    get:
-      operationId: GET/giftCardId/gift_card_recipient
-      summary: Retrieve the gift card recipient associated to the gift card
-      description: Retrieve the gift card recipient associated to the gift card
-      tags:
-      - gift_card_recipients
-      parameters:
-      - name: giftCardId
-        in: path
-        schema:
-          type: string
-        required: true
-        description: The resource's id
-      responses:
-        '200':
-          description: The gift_card_recipient associated to the gift card
 components:
   schemas:
     giftCardRecipientResponseList:
@@ -312,6 +295,112 @@ components:
                         id:
                           type: string
                           description: The resource ID
+    giftCardRecipient:
+      type: object
+      properties:
+        data:
+          type: object
+          required:
+          - type
+          - attributes
+          properties:
+            type:
+              type: string
+              description: The resource's type
+              enum:
+              - gift_card_recipients
+            attributes:
+              type: object
+              properties:
+                email:
+                  type: string
+                  description: The recipient email address.
+                  example: john@example.com
+                  nullable: false
+                first_name:
+                  type: string
+                  description: The recipient first name.
+                  example: John
+                  nullable: true
+                last_name:
+                  type: string
+                  description: The recipient last name.
+                  example: Smith
+                  nullable: true
+                created_at:
+                  type: string
+                  description: Time at which the resource was created.
+                  example: '2018-01-01T12:00:00.000Z'
+                  nullable: false
+                updated_at:
+                  type: string
+                  description: Time at which the resource was last updated.
+                  example: '2018-01-01T12:00:00.000Z'
+                  nullable: false
+                reference:
+                  type: string
+                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
+                  example: ANY-EXTERNAL-REFEFERNCE
+                  nullable: true
+                reference_origin:
+                  type: string
+                  description: Any identifier of the third party system that defines the reference code.
+                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
+                  nullable: true
+                metadata:
+                  type: object
+                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
+                  example:
+                    foo: bar
+                  nullable: true
+            relationships:
+              type: object
+              properties:
+                customer:
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - customers
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+                event_stores:
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - event_stores
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+                attachments:
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - attachments
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
     giftCardRecipientCreate:
       required:
       - data
@@ -378,54 +467,6 @@ components:
                           type: string
                           description: Unique identifier for the resource (hash).
                           example: XAyRWNUzyN
-    giftCardRecipient:
-      properties:
-        data:
-          properties:
-            attributes:
-              type: object
-              properties:
-                email:
-                  type: string
-                  description: The recipient email address.
-                  example: john@example.com
-                  nullable: false
-                first_name:
-                  type: string
-                  description: The recipient first name.
-                  example: John
-                  nullable: true
-                last_name:
-                  type: string
-                  description: The recipient last name.
-                  example: Smith
-                  nullable: true
-                created_at:
-                  type: string
-                  description: Time at which the resource was created.
-                  example: '2018-01-01T12:00:00.000Z'
-                  nullable: false
-                updated_at:
-                  type: string
-                  description: Time at which the resource was last updated.
-                  example: '2018-01-01T12:00:00.000Z'
-                  nullable: false
-                reference:
-                  type: string
-                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
-                  example: ANY-EXTERNAL-REFEFERNCE
-                  nullable: true
-                reference_origin:
-                  type: string
-                  description: Any identifier of the third party system that defines the reference code.
-                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
-                  nullable: true
-                metadata:
-                  type: object
-                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
-                  example:
-                    foo: bar
-                  nullable: true
   securitySchemes:
     bearerAuth:
       type: http

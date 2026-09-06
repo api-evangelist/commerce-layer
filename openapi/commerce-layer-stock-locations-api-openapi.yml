@@ -1,6 +1,6 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: Commerce Layer addresses stock_locations API
+  title: Commerce Layer Stock Locations API
   version: 7.10.1
   contact:
     name: API Support
@@ -20,193 +20,6 @@ tags:
 - name: stock_locations
   description: resource type
 paths:
-  /customers/{customerId}/jwt_stock_locations:
-    get:
-      operationId: GET/customerId/jwt_stock_locations
-      summary: Retrieve the jwt stock locations associated to the customer
-      description: Retrieve the jwt stock locations associated to the customer
-      tags:
-      - stock_locations
-      parameters:
-      - name: customerId
-        in: path
-        schema:
-          type: string
-        required: true
-        description: The resource's id
-      responses:
-        '200':
-          description: The jwt_stock_locations associated to the customer
-  /delivery_lead_times/{deliveryLeadTimeId}/stock_location:
-    get:
-      operationId: GET/deliveryLeadTimeId/stock_location
-      summary: Retrieve the stock location associated to the delivery lead time
-      description: Retrieve the stock location associated to the delivery lead time
-      tags:
-      - stock_locations
-      parameters:
-      - name: deliveryLeadTimeId
-        in: path
-        schema:
-          type: string
-        required: true
-        description: The resource's id
-      responses:
-        '200':
-          description: The stock_location associated to the delivery lead time
-  /inventory_return_locations/{inventoryReturnLocationId}/stock_location:
-    get:
-      operationId: GET/inventoryReturnLocationId/stock_location
-      summary: Retrieve the stock location associated to the inventory return location
-      description: Retrieve the stock location associated to the inventory return location
-      tags:
-      - stock_locations
-      parameters:
-      - name: inventoryReturnLocationId
-        in: path
-        schema:
-          type: string
-        required: true
-        description: The resource's id
-      responses:
-        '200':
-          description: The stock_location associated to the inventory return location
-  /inventory_stock_locations/{inventoryStockLocationId}/stock_location:
-    get:
-      operationId: GET/inventoryStockLocationId/stock_location
-      summary: Retrieve the stock location associated to the inventory stock location
-      description: Retrieve the stock location associated to the inventory stock location
-      tags:
-      - stock_locations
-      parameters:
-      - name: inventoryStockLocationId
-        in: path
-        schema:
-          type: string
-        required: true
-        description: The resource's id
-      responses:
-        '200':
-          description: The stock_location associated to the inventory stock location
-  /packages/{packageId}/stock_location:
-    get:
-      operationId: GET/packageId/stock_location
-      summary: Retrieve the stock location associated to the package
-      description: Retrieve the stock location associated to the package
-      tags:
-      - stock_locations
-      parameters:
-      - name: packageId
-        in: path
-        schema:
-          type: string
-        required: true
-        description: The resource's id
-      responses:
-        '200':
-          description: The stock_location associated to the package
-  /prices/{priceId}/jwt_stock_locations:
-    get:
-      operationId: GET/priceId/jwt_stock_locations
-      summary: Retrieve the jwt stock locations associated to the price
-      description: Retrieve the jwt stock locations associated to the price
-      tags:
-      - stock_locations
-      parameters:
-      - name: priceId
-        in: path
-        schema:
-          type: string
-        required: true
-        description: The resource's id
-      responses:
-        '200':
-          description: The jwt_stock_locations associated to the price
-  /returns/{returnId}/stock_location:
-    get:
-      operationId: GET/returnId/stock_location
-      summary: Retrieve the stock location associated to the return
-      description: Retrieve the stock location associated to the return
-      tags:
-      - stock_locations
-      parameters:
-      - name: returnId
-        in: path
-        schema:
-          type: string
-        required: true
-        description: The resource's id
-      responses:
-        '200':
-          description: The stock_location associated to the return
-  /shipments/{shipmentId}/stock_location:
-    get:
-      operationId: GET/shipmentId/stock_location
-      summary: Retrieve the stock location associated to the shipment
-      description: Retrieve the stock location associated to the shipment
-      tags:
-      - stock_locations
-      parameters:
-      - name: shipmentId
-        in: path
-        schema:
-          type: string
-        required: true
-        description: The resource's id
-      responses:
-        '200':
-          description: The stock_location associated to the shipment
-  /shipping_methods/{shippingMethodId}/stock_location:
-    get:
-      operationId: GET/shippingMethodId/stock_location
-      summary: Retrieve the stock location associated to the shipping method
-      description: Retrieve the stock location associated to the shipping method
-      tags:
-      - stock_locations
-      parameters:
-      - name: shippingMethodId
-        in: path
-        schema:
-          type: string
-        required: true
-        description: The resource's id
-      responses:
-        '200':
-          description: The stock_location associated to the shipping method
-  /skus/{skuId}/jwt_stock_locations:
-    get:
-      operationId: GET/skuId/jwt_stock_locations
-      summary: Retrieve the jwt stock locations associated to the SKU
-      description: Retrieve the jwt stock locations associated to the SKU
-      tags:
-      - stock_locations
-      parameters:
-      - name: skuId
-        in: path
-        schema:
-          type: string
-        required: true
-        description: The resource's id
-      responses:
-        '200':
-          description: The jwt_stock_locations associated to the SKU
-  /stock_items/{stockItemId}/stock_location:
-    get:
-      operationId: GET/stockItemId/stock_location
-      summary: Retrieve the stock location associated to the stock item
-      description: Retrieve the stock location associated to the stock item
-      tags:
-      - stock_locations
-      parameters:
-      - name: stockItemId
-        in: path
-        schema:
-          type: string
-        required: true
-        description: The resource's id
-      responses:
-        '200':
-          description: The stock_location associated to the stock item
   /stock_locations:
     get:
       operationId: GET/stock_locations
@@ -303,57 +116,6 @@ paths:
       responses:
         '204':
           description: No content
-  /stock_transfers/{stockTransferId}/origin_stock_location:
-    get:
-      operationId: GET/stockTransferId/origin_stock_location
-      summary: Retrieve the origin stock location associated to the stock transfer
-      description: Retrieve the origin stock location associated to the stock transfer
-      tags:
-      - stock_locations
-      parameters:
-      - name: stockTransferId
-        in: path
-        schema:
-          type: string
-        required: true
-        description: The resource's id
-      responses:
-        '200':
-          description: The origin_stock_location associated to the stock transfer
-  /stock_transfers/{stockTransferId}/destination_stock_location:
-    get:
-      operationId: GET/stockTransferId/destination_stock_location
-      summary: Retrieve the destination stock location associated to the stock transfer
-      description: Retrieve the destination stock location associated to the stock transfer
-      tags:
-      - stock_locations
-      parameters:
-      - name: stockTransferId
-        in: path
-        schema:
-          type: string
-        required: true
-        description: The resource's id
-      responses:
-        '200':
-          description: The destination_stock_location associated to the stock transfer
-  /stores/{storeId}/stock_location:
-    get:
-      operationId: GET/storeId/stock_location
-      summary: Retrieve the stock location associated to the store
-      description: Retrieve the stock location associated to the store
-      tags:
-      - stock_locations
-      parameters:
-      - name: storeId
-        in: path
-        schema:
-          type: string
-        required: true
-        description: The resource's id
-      responses:
-        '200':
-          description: The stock_location associated to the store
 components:
   schemas:
     stockLocationResponseList:
@@ -363,216 +125,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/stockLocationResponse/properties/data'
-    stockLocationUpdate:
-      required:
-      - data
-      type: object
-      properties:
-        data:
-          type: object
-          required:
-          - type
-          - id
-          - attributes
-          properties:
-            type:
-              type: string
-              description: The resource's type
-              enum:
-              - stock_locations
-            id:
-              type: string
-              description: Unique identifier for the resource (hash).
-              example: XAyRWNUzyN
-            attributes:
-              type: object
-              properties:
-                name:
-                  type: string
-                  description: The stock location's internal name.
-                  example: Primary warehouse
-                  nullable: false
-                code:
-                  type: string
-                  description: A string that you can use to identify the stock location (must be unique within the environment).
-                  example: europe1
-                  nullable: true
-                label_format:
-                  type: string
-                  description: The shipping label format for this stock location. Can be one of 'PDF', 'ZPL', 'EPL2', or 'PNG'.
-                  example: PDF
-                  nullable: true
-                suppress_etd:
-                  type: boolean
-                  description: Flag it if you want to skip the electronic invoice creation when generating the customs info for this stock location shipments.
-                  example: false
-                  nullable: false
-                reference:
-                  type: string
-                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
-                  example: ANY-EXTERNAL-REFEFERNCE
-                  nullable: true
-                reference_origin:
-                  type: string
-                  description: Any identifier of the third party system that defines the reference code.
-                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
-                  nullable: true
-                metadata:
-                  type: object
-                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
-                  example:
-                    foo: bar
-                  nullable: true
-            relationships:
-              type: object
-              properties:
-                address:
-                  required:
-                  - data
-                  type: object
-                  properties:
-                    data:
-                      type: object
-                      properties:
-                        type:
-                          type: string
-                          description: The resource's type
-                          enum:
-                          - addresses
-                        id:
-                          type: string
-                          description: Unique identifier for the resource (hash).
-                          example: XAyRWNUzyN
-    stockLocationCreate:
-      required:
-      - data
-      type: object
-      properties:
-        data:
-          type: object
-          required:
-          - type
-          - attributes
-          properties:
-            type:
-              type: string
-              description: The resource's type
-              enum:
-              - stock_locations
-            attributes:
-              type: object
-              properties:
-                name:
-                  type: string
-                  description: The stock location's internal name.
-                  example: Primary warehouse
-                code:
-                  type: string
-                  description: A string that you can use to identify the stock location (must be unique within the environment).
-                  example: europe1
-                label_format:
-                  type: string
-                  description: The shipping label format for this stock location. Can be one of 'PDF', 'ZPL', 'EPL2', or 'PNG'.
-                  example: PDF
-                suppress_etd:
-                  type: boolean
-                  description: Flag it if you want to skip the electronic invoice creation when generating the customs info for this stock location shipments.
-                  example: false
-                reference:
-                  type: string
-                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
-                  example: ANY-EXTERNAL-REFEFERNCE
-                reference_origin:
-                  type: string
-                  description: Any identifier of the third party system that defines the reference code.
-                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
-                metadata:
-                  type: object
-                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
-                  example:
-                    foo: bar
-              required:
-              - name
-            relationships:
-              type: object
-              properties:
-                address:
-                  required:
-                  - data
-                  type: object
-                  properties:
-                    data:
-                      type: object
-                      properties:
-                        type:
-                          type: string
-                          description: The resource's type
-                          enum:
-                          - addresses
-                        id:
-                          type: string
-                          description: Unique identifier for the resource (hash).
-                          example: XAyRWNUzyN
-              required:
-              - address
-    stockLocation:
-      properties:
-        data:
-          properties:
-            attributes:
-              type: object
-              properties:
-                number:
-                  type: integer
-                  description: Unique identifier for the stock location (numeric).
-                  example: 1234
-                  nullable: true
-                name:
-                  type: string
-                  description: The stock location's internal name.
-                  example: Primary warehouse
-                  nullable: false
-                code:
-                  type: string
-                  description: A string that you can use to identify the stock location (must be unique within the environment).
-                  example: europe1
-                  nullable: true
-                label_format:
-                  type: string
-                  description: The shipping label format for this stock location. Can be one of 'PDF', 'ZPL', 'EPL2', or 'PNG'.
-                  example: PDF
-                  nullable: true
-                suppress_etd:
-                  type: boolean
-                  description: Flag it if you want to skip the electronic invoice creation when generating the customs info for this stock location shipments.
-                  example: false
-                  nullable: true
-                created_at:
-                  type: string
-                  description: Time at which the resource was created.
-                  example: '2018-01-01T12:00:00.000Z'
-                  nullable: false
-                updated_at:
-                  type: string
-                  description: Time at which the resource was last updated.
-                  example: '2018-01-01T12:00:00.000Z'
-                  nullable: false
-                reference:
-                  type: string
-                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
-                  example: ANY-EXTERNAL-REFEFERNCE
-                  nullable: true
-                reference_origin:
-                  type: string
-                  description: Any identifier of the third party system that defines the reference code.
-                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
-                  nullable: true
-                metadata:
-                  type: object
-                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
-                  example:
-                    foo: bar
-                  nullable: true
     stockLocationResponse:
       type: object
       properties:
@@ -783,6 +335,349 @@ components:
                         id:
                           type: string
                           description: The resource ID
+    stockLocationCreate:
+      required:
+      - data
+      type: object
+      properties:
+        data:
+          type: object
+          required:
+          - type
+          - attributes
+          properties:
+            type:
+              type: string
+              description: The resource's type
+              enum:
+              - stock_locations
+            attributes:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: The stock location's internal name.
+                  example: Primary warehouse
+                code:
+                  type: string
+                  description: A string that you can use to identify the stock location (must be unique within the environment).
+                  example: europe1
+                label_format:
+                  type: string
+                  description: The shipping label format for this stock location. Can be one of 'PDF', 'ZPL', 'EPL2', or 'PNG'.
+                  example: PDF
+                suppress_etd:
+                  type: boolean
+                  description: Flag it if you want to skip the electronic invoice creation when generating the customs info for this stock location shipments.
+                  example: false
+                reference:
+                  type: string
+                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
+                  example: ANY-EXTERNAL-REFEFERNCE
+                reference_origin:
+                  type: string
+                  description: Any identifier of the third party system that defines the reference code.
+                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
+                metadata:
+                  type: object
+                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
+                  example:
+                    foo: bar
+              required:
+              - name
+            relationships:
+              type: object
+              properties:
+                address:
+                  required:
+                  - data
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - addresses
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+              required:
+              - address
+    stockLocation:
+      type: object
+      properties:
+        data:
+          type: object
+          required:
+          - type
+          - attributes
+          properties:
+            type:
+              type: string
+              description: The resource's type
+              enum:
+              - stock_locations
+            attributes:
+              type: object
+              properties:
+                number:
+                  type: integer
+                  description: Unique identifier for the stock location (numeric).
+                  example: 1234
+                  nullable: true
+                name:
+                  type: string
+                  description: The stock location's internal name.
+                  example: Primary warehouse
+                  nullable: false
+                code:
+                  type: string
+                  description: A string that you can use to identify the stock location (must be unique within the environment).
+                  example: europe1
+                  nullable: true
+                label_format:
+                  type: string
+                  description: The shipping label format for this stock location. Can be one of 'PDF', 'ZPL', 'EPL2', or 'PNG'.
+                  example: PDF
+                  nullable: true
+                suppress_etd:
+                  type: boolean
+                  description: Flag it if you want to skip the electronic invoice creation when generating the customs info for this stock location shipments.
+                  example: false
+                  nullable: true
+                created_at:
+                  type: string
+                  description: Time at which the resource was created.
+                  example: '2018-01-01T12:00:00.000Z'
+                  nullable: false
+                updated_at:
+                  type: string
+                  description: Time at which the resource was last updated.
+                  example: '2018-01-01T12:00:00.000Z'
+                  nullable: false
+                reference:
+                  type: string
+                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
+                  example: ANY-EXTERNAL-REFEFERNCE
+                  nullable: true
+                reference_origin:
+                  type: string
+                  description: Any identifier of the third party system that defines the reference code.
+                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
+                  nullable: true
+                metadata:
+                  type: object
+                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
+                  example:
+                    foo: bar
+                  nullable: true
+            relationships:
+              type: object
+              properties:
+                address:
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - addresses
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+                inventory_stock_locations:
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - inventory_stock_locations
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+                inventory_return_locations:
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - inventory_return_locations
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+                stock_items:
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - stock_items
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+                stock_transfers:
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - stock_transfers
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+                stores:
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - stores
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+                attachments:
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - attachments
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+                event_stores:
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - event_stores
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+    stockLocationUpdate:
+      required:
+      - data
+      type: object
+      properties:
+        data:
+          type: object
+          required:
+          - type
+          - id
+          - attributes
+          properties:
+            type:
+              type: string
+              description: The resource's type
+              enum:
+              - stock_locations
+            id:
+              type: string
+              description: Unique identifier for the resource (hash).
+              example: XAyRWNUzyN
+            attributes:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: The stock location's internal name.
+                  example: Primary warehouse
+                  nullable: false
+                code:
+                  type: string
+                  description: A string that you can use to identify the stock location (must be unique within the environment).
+                  example: europe1
+                  nullable: true
+                label_format:
+                  type: string
+                  description: The shipping label format for this stock location. Can be one of 'PDF', 'ZPL', 'EPL2', or 'PNG'.
+                  example: PDF
+                  nullable: true
+                suppress_etd:
+                  type: boolean
+                  description: Flag it if you want to skip the electronic invoice creation when generating the customs info for this stock location shipments.
+                  example: false
+                  nullable: false
+                reference:
+                  type: string
+                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
+                  example: ANY-EXTERNAL-REFEFERNCE
+                  nullable: true
+                reference_origin:
+                  type: string
+                  description: Any identifier of the third party system that defines the reference code.
+                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
+                  nullable: true
+                metadata:
+                  type: object
+                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
+                  example:
+                    foo: bar
+                  nullable: true
+            relationships:
+              type: object
+              properties:
+                address:
+                  required:
+                  - data
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - addresses
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
   securitySchemes:
     bearerAuth:
       type: http

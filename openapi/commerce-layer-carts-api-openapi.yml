@@ -1,18 +1,16 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: Commerce Layer addresses carts API
-  version: 7.10.1
+  title: Commerce Layer Metrics Carts API
+  version: 3.1.21
   contact:
     name: API Support
     url: https://commercelayer.io
     email: support@commercelayer.io
   description: Headless Commerce for Global Brands.
 servers:
-- url: https://{your_organization_slug}.commercelayer.io/api
-  description: API
-- url: https://core.commercelayer.io/users/sign_in
-  description: Sign in
-- url: https://docs.commercelayer.io/api
+- url: https://{your-domain}.commercelayer.io/metrics
+  description: Commerce Layer Metrics API
+- url: https://docs.commercelayer.io/metrics-api
   description: API reference
 security:
 - bearerAuth: []
@@ -24,7 +22,7 @@ paths:
     post:
       operationId: POST/carts/breakdown
       summary: Query breakdown on carts
-      description: "Breakdowns are aggregations that summarize your data as metrics (based on specific operators) or statistics, computed on field values. When performing a breakdown query on the Metrics API endpoint you get in the response the value of the computation (based on the selected operator) on the selected field, aggregated by another field.\r\n\r\n### Nesting breakdowns\r\nBreakdowns can be nested recursively one into the other, up to one level (see example). The valid values allowed for the by key of the nested breakdown are strictly dependent on the value you specified in the by key of the parent breakdown. Hence, they are different for each resource you’re doing statistics on (see orders, returns, and carts for the related lists).You cannot group the nested breakdown by the same field by which you’re already grouping the parent breakdown.\r\n\r\nSingle breakdown request\r\n\r\n`{\r\n\t\"breakdown\": {\r\n\t  \"by\": \"market.name\",\r\n\t  \"field\": \"order.id\",\r\n\t  \"operator\": \"value_count\",\r\n\t  \"condition\": {\r\n\t    \"gte_lte\": [ 10000, 100000 ]\r\n\t  },\r\n\t  \"sort\": \"desc\",\r\n\t  \"limit\": 2\r\n\t}\r\n}`\r\n  \r\n  \r\n Nested breakdown request\r\n \r\n` {\r\n    \"breakdown\": {\r\n      \"by\": \"market.name\",\r\n      \"field\": \"order.id\",\r\n      \"operator\": \"value_count\",\r\n      \"condition\": {\r\n        \"gte_lte\": [ 10000, 100000 ]  \r\n      },\r\n      \"sort\": \"desc\",\r\n      \"limit\": 3,\r\n      \"breakdown\": {\r\n        \"by\": \"order.currency_code\",\r\n        \"field\": \"order.total_amount_with_taxes\",\r\n        \"operator\": \"sum\"\r\n        \"sort\": \"desc\",\r\n        \"limit\": 2\r\n      }\r\n    }\r\n  }`"
+      description: "Breakdowns are aggregations that summarize your data as metrics (based on specific operators) or statistics, computed on field values. When performing a breakdown query on the Metrics API endpoint you get in the response the value of the computation (based on the selected operator) on the selected field, aggregated by another field.\n\n### Nesting breakdowns\nBreakdowns can be nested recursively one into the other, up to one level (see example). The valid values allowed for the by key of the nested breakdown are strictly dependent on the value you specified in the by key of the parent breakdown. Hence, they are different for each resource you’re doing statistics on (see orders, returns, and carts for the related lists).You cannot group the nested breakdown by the same field by which you’re already grouping the parent breakdown.\n\nSingle breakdown request\n\n`{\n\t\"breakdown\": {\n\t  \"by\": \"market.name\",\n\t  \"field\": \"order.id\",\n\t  \"operator\": \"value_count\",\n\t  \"condition\": {\n\t    \"gte_lte\": [ 10000, 100000 ]\n\t  },\n\t  \"sort\": \"desc\",\n\t  \"limit\": 2\n\t}\n}`\n  \n  \n Nested breakdown request\n \n` {\n    \"breakdown\": {\n      \"by\": \"market.name\",\n      \"field\": \"order.id\",\n      \"operator\": \"value_count\",\n      \"condition\": {\n        \"gte_lte\": [ 10000, 100000 ]  \n      },\n      \"sort\": \"desc\",\n      \"limit\": 3,\n      \"breakdown\": {\n        \"by\": \"order.currency_code\",\n        \"field\": \"order.total_amount_with_taxes\",\n        \"operator\": \"sum\"\n        \"sort\": \"desc\",\n        \"limit\": 2\n      }\n    }\n  }`"
       tags:
       - carts
       requestBody:
@@ -3438,7 +3436,7 @@ paths:
     post:
       operationId: POST/carts/date_breakdown
       summary: Query date_breakdown on carts
-      description: "Date breakdowns summarizes metrics data grouped by time intervals on a defined time range. They also support support breakdowns over the main date breakdown query and also supports all breakdown queries capabilities through the \"breakdown\" key, this also includes the possibility of nesting the breakdown over the main breakdown. \r\n\r\n\r\nSingle date breakdown request (no breakdown)\r\n\r\n`{\r\n\t\"date_breakdown\": {\r\n        \"by\": \"order.created_at\",\r\n        \"field\": \"order.total_amount_with_taxes\",\r\n        \"operator\": \"stats\",\r\n        \"interval\": \"year\"\r\n    }\r\n}`\r\n  \r\n  \r\nSingle date breakdown request with one breakdown\r\n \r\n` \r\n{\r\n\t\"date_breakdown\": {\r\n        \"by\": \"order.created_at\",\r\n        \"field\": \"order.total_amount_with_taxes\",\r\n        \"operator\": \"stats\",\r\n        \"interval\": \"year\",\r\n        \"breakdown\": {\r\n            \"by\": \"order.customer_type\",\r\n            \"field\": \"line_items.total_amount\",\r\n            \"operator\": \"sum\",\r\n            \"sort\": \"desc\",\r\n            \"limit\": 20\r\n        }\r\n    }\r\n  }`\r\n  \r\n  \r\nSingle date breakdown request with breakdown with a nested breakdown\r\n\r\n` \r\n\"date_breakdown\": {\r\n        \"by\": \"order.created_at\",\r\n        \"field\": \"order.total_amount_with_taxes\",\r\n        \"operator\": \"stats\",\r\n        \"interval\": \"year\",\r\n        \"breakdown\": {\r\n            \"by\": \"order.customer_type\",\r\n            \"field\": \"line_items.total_amount\",\r\n            \"operator\": \"sum\",\r\n            \"sort\": \"desc\",\r\n            \"limit\": 20,\r\n            \"breakdown\": {\r\n                \"by\": \"order.currency_code\",\r\n                \"field\": \"line_items.total_amount\",\r\n                \"operator\": \"sum\",\r\n                \"sort\": \"desc\",\r\n                \"limit\": 21\r\n            }\r\n        }\r\n    }\r\n }`"
+      description: "Date breakdowns summarizes metrics data grouped by time intervals on a defined time range. They also support support breakdowns over the main date breakdown query and also supports all breakdown queries capabilities through the \"breakdown\" key, this also includes the possibility of nesting the breakdown over the main breakdown. \n\n\nSingle date breakdown request (no breakdown)\n\n`{\n\t\"date_breakdown\": {\n        \"by\": \"order.created_at\",\n        \"field\": \"order.total_amount_with_taxes\",\n        \"operator\": \"stats\",\n        \"interval\": \"year\"\n    }\n}`\n  \n  \nSingle date breakdown request with one breakdown\n \n` \n{\n\t\"date_breakdown\": {\n        \"by\": \"order.created_at\",\n        \"field\": \"order.total_amount_with_taxes\",\n        \"operator\": \"stats\",\n        \"interval\": \"year\",\n        \"breakdown\": {\n            \"by\": \"order.customer_type\",\n            \"field\": \"line_items.total_amount\",\n            \"operator\": \"sum\",\n            \"sort\": \"desc\",\n            \"limit\": 20\n        }\n    }\n  }`\n  \n  \nSingle date breakdown request with breakdown with a nested breakdown\n\n` \n\"date_breakdown\": {\n        \"by\": \"order.created_at\",\n        \"field\": \"order.total_amount_with_taxes\",\n        \"operator\": \"stats\",\n        \"interval\": \"year\",\n        \"breakdown\": {\n            \"by\": \"order.customer_type\",\n            \"field\": \"line_items.total_amount\",\n            \"operator\": \"sum\",\n            \"sort\": \"desc\",\n            \"limit\": 20,\n            \"breakdown\": {\n                \"by\": \"order.currency_code\",\n                \"field\": \"line_items.total_amount\",\n                \"operator\": \"sum\",\n                \"sort\": \"desc\",\n                \"limit\": 21\n            }\n        }\n    }\n }`"
       tags:
       - carts
       requestBody:
@@ -3546,7 +3544,7 @@ paths:
     post:
       operationId: POST/carts/stats
       summary: Query stats on carts
-      description: "Stats are aggregations that summarize your data within an operator (depending of the field, some of them could not be available), such as: value_count, cardinality, avg, min, max, sum or stats (which returns avg, min, max, sum) computed on the field specificed. When performing a stats query on the Metrics API endpoint you get in the response the value of the computation (based on the selected operator) on the selected field.\r\n\r\nStats request\r\n\r\n`{\r\n\t \"stats\": {\r\n        \"field\": \"order.total_amount_cents\",\r\n        \"operator\": \"stats\"\r\n    }\r\n}`"
+      description: "Stats are aggregations that summarize your data within an operator (depending of the field, some of them could not be available), such as: value_count, cardinality, avg, min, max, sum or stats (which returns avg, min, max, sum) computed on the field specificed. When performing a stats query on the Metrics API endpoint you get in the response the value of the computation (based on the selected operator) on the selected field.\n\nStats request\n\n`{\n\t \"stats\": {\n        \"field\": \"order.total_amount_cents\",\n        \"operator\": \"stats\"\n    }\n}`"
       tags:
       - carts
       requestBody:
@@ -5340,6 +5338,88 @@ paths:
                 description: CSV file with exported records (text/csv)
 components:
   schemas:
+    carts_stats_request:
+      type: object
+      properties:
+        filter:
+          $ref: '#/components/schemas/carts_filter'
+        stats:
+          type: object
+          description: Check available [fields](#/components/schemas/carts_stats_request/properties/stats/properties/field/description)
+          required:
+          - field
+          properties:
+            field:
+              type: string
+              description: "These are the valid values you can specify for the field key of the stats query and the related valid operators, based on that key:\n\n\n        \n| Value | Operators |\n| --- | --------- |\n|**`customer.id`** | <p>`cardinality`</p><p>`value_count`</p>|\n|**`customer.email`** | <p>`cardinality`</p><p>`value_count`</p>|\n|**`customer.group_name`** | <p>`cardinality`</p><p>`value_count`</p>|\n|**`customer.reference`** | <p>`cardinality`</p><p>`value_count`</p>|\n|**`customer.reference_origin`** | <p>`cardinality`</p><p>`value_count`</p>|\n|**`line_items.code`** | <p>`cardinality`</p><p>`value_count`</p>|\n|**`line_items.discount`** | <p>`avg`</p><p>`max`</p><p>`min`</p><p>`sum`</p><p>`stats`</p>|\n|**`line_items.id`** | <p>`cardinality`</p><p>`value_count`</p>|\n|**`line_items.item_id`** | <p>`cardinality`</p><p>`value_count`</p>|\n|**`line_items.options_amount`** | <p>`avg`</p><p>`max`</p><p>`min`</p><p>`sum`</p><p>`stats`</p>|\n|**`line_items.quantity`** | <p>`avg`</p><p>`max`</p><p>`min`</p><p>`sum`</p><p>`stats`</p>|\n|**`line_items.tax_amount`** | <p>`avg`</p><p>`max`</p><p>`min`</p><p>`sum`</p><p>`stats`</p>|\n|**`line_items.tax_rate`** | <p>`avg`</p><p>`max`</p><p>`min`</p><p>`sum`</p><p>`stats`</p>|\n|**`line_items.total_amount`** | <p>`avg`</p><p>`max`</p><p>`min`</p><p>`sum`</p><p>`stats`</p>|\n|**`line_items.unit_amount`** | <p>`avg`</p><p>`max`</p><p>`min`</p><p>`sum`</p><p>`stats`</p>|\n|**`line_items.options.id`** | <p>`cardinality`</p><p>`value_count`</p>|\n|**`line_items.options.quantity`** | <p>`avg`</p><p>`max`</p><p>`min`</p><p>`sum`</p><p>`stats`</p>|\n|**`line_items.options.total_amount`** | <p>`avg`</p><p>`max`</p><p>`min`</p><p>`sum`</p><p>`stats`</p>|\n|**`line_items.options.unit_amount`** | <p>`avg`</p><p>`max`</p><p>`min`</p><p>`sum`</p><p>`stats`</p>|\n|**`market.id`** | <p>`cardinality`</p>|\n|**`market.number`** | <p>`cardinality`</p><p>`value_count`</p>|\n|**`order.adjustment_amount`** | <p>`avg`</p><p>`max`</p><p>`min`</p><p>`sum`</p><p>`stats`</p>|\n|**`order.adjustment_tax_amount`** | <p>`avg`</p><p>`max`</p><p>`min`</p><p>`sum`</p><p>`stats`</p>|\n|**`order.adjustment_taxable_amount`** | <p>`avg`</p><p>`max`</p><p>`min`</p><p>`sum`</p><p>`stats`</p>|\n|**`order.discount_amount`** | <p>`avg`</p><p>`max`</p><p>`min`</p><p>`sum`</p><p>`stats`</p>|\n|**`order.duty_amount`** | <p>`avg`</p><p>`max`</p><p>`min`</p><p>`sum`</p><p>`stats`</p>|\n|**`order.gift_card_code`** | <p>`value_count`</p>|\n|**`order.gift_card_amount`** | <p>`avg`</p><p>`max`</p><p>`min`</p><p>`sum`</p><p>`stats`</p>|\n|**`order.id`** | <p>`cardinality`</p><p>`value_count`</p>|\n|**`order.line_item_options_count`** | <p>`avg`</p><p>`max`</p><p>`min`</p><p>`sum`</p><p>`stats`</p>|\n|**`order.number`** | <p>`value_count`</p>|\n|**`order.payment_method_amount`** | <p>`avg`</p><p>`max`</p><p>`min`</p><p>`sum`</p><p>`stats`</p>|\n|**`order.payment_method_tax_amount`** | <p>`avg`</p><p>`max`</p><p>`min`</p><p>`sum`</p><p>`stats`</p>|\n|**`order.payment_method_taxable_amount`** | <p>`avg`</p><p>`max`</p><p>`min`</p><p>`sum`</p><p>`stats`</p>|\n|**`order.reference`** | <p>`cardinality`</p><p>`value_count`</p>|\n|**`order.reference_origin`** | <p>`cardinality`</p><p>`value_count`</p>|\n|**`order.shipments_count`** | <p>`avg`</p><p>`max`</p><p>`min`</p><p>`sum`</p><p>`stats`</p>|\n|**`order.shipping_amount`** | <p>`avg`</p><p>`max`</p><p>`min`</p><p>`sum`</p><p>`stats`</p>|\n|**`order.shipping_taxable_amount`** | <p>`avg`</p><p>`max`</p><p>`min`</p><p>`sum`</p><p>`stats`</p>|\n|**`order.skus_count`** | <p>`avg`</p><p>`max`</p><p>`min`</p><p>`sum`</p><p>`stats`</p>|\n|**`order.subtotal_amount`** | <p>`avg`</p><p>`max`</p><p>`min`</p><p>`sum`</p><p>`stats`</p>|\n|**`order.subtotal_tax_amount`** | <p>`avg`</p><p>`max`</p><p>`min`</p><p>`sum`</p><p>`stats`</p>|\n|**`order.subtotal_taxable_amount`** | <p>`avg`</p><p>`max`</p><p>`min`</p><p>`sum`</p><p>`stats`</p>|\n|**`order.total_amount`** | <p>`avg`</p><p>`max`</p><p>`min`</p><p>`sum`</p><p>`stats`</p>|\n|**`order.total_amount_with_taxes`** | <p>`avg`</p><p>`max`</p><p>`min`</p><p>`sum`</p><p>`stats`</p>|\n|**`order.total_tax_amount`** | <p>`avg`</p><p>`max`</p><p>`min`</p><p>`sum`</p><p>`stats`</p>|\n|**`order.total_taxable_amount`** | <p>`avg`</p><p>`max`</p><p>`min`</p><p>`sum`</p><p>`stats`</p>|\n|**`resource_errors.code`** | <p>`cardinality`</p><p>`value_count`</p>|\n|**`resource_errors.id`** | <p>`cardinality`</p><p>`value_count`</p>|\n|**`resource_errors.message`** | <p>`cardinality`</p><p>`value_count`</p>|\n"
+              enum:
+              - customer.id
+              - customer.email
+              - customer.group_name
+              - customer.reference
+              - customer.reference_origin
+              - line_items.code
+              - line_items.discount
+              - line_items.id
+              - line_items.item_id
+              - line_items.options_amount
+              - line_items.quantity
+              - line_items.tax_amount
+              - line_items.tax_rate
+              - line_items.total_amount
+              - line_items.unit_amount
+              - line_items.options.id
+              - line_items.options.quantity
+              - line_items.options.total_amount
+              - line_items.options.unit_amount
+              - market.id
+              - market.number
+              - order.adjustment_amount
+              - order.adjustment_tax_amount
+              - order.adjustment_taxable_amount
+              - order.discount_amount
+              - order.duty_amount
+              - order.gift_card_code
+              - order.gift_card_amount
+              - order.id
+              - order.line_item_options_count
+              - order.number
+              - order.payment_method_amount
+              - order.payment_method_tax_amount
+              - order.payment_method_taxable_amount
+              - order.reference
+              - order.reference_origin
+              - order.shipments_count
+              - order.shipping_amount
+              - order.shipping_taxable_amount
+              - order.skus_count
+              - order.subtotal_amount
+              - order.subtotal_tax_amount
+              - order.subtotal_taxable_amount
+              - order.total_amount
+              - order.total_amount_with_taxes
+              - order.total_tax_amount
+              - order.total_taxable_amount
+              - resource_errors.code
+              - resource_errors.id
+              - resource_errors.message
+            operator:
+              type: string
+              description: Operator to apply
+              enum:
+              - cardinality
+              - value_count
+              - avg
+              - max
+              - min
+              - sum
+              - stats
+        meta:
+          type: object
+          properties:
+            payload:
+              type: boolean
+              description: Set to true if you want to receive how the payload has been made
     carts_breakdown_request:
       type: object
       properties:
@@ -5740,756 +5820,6 @@ components:
               - by
               - field
               - operator
-        meta:
-          type: object
-          properties:
-            payload:
-              type: boolean
-              description: Set to true if you want to receive how the payload has been made
-    carts_date_breakdown_request:
-      type: object
-      properties:
-        filter:
-          $ref: '#/components/schemas/carts_filter'
-        date_breakdown:
-          type: object
-          description: Check available [fields](#/components/schemas/carts_date_breakdown_request/properties/date_breakdown/properties/field/description)
-          required:
-          - by
-          - field
-          - operator
-          properties:
-            by:
-              type: string
-              description: Field to base your date breakdown query
-              enum:
-              - order.created_at
-              - order.updated_at
-              - order.current_date
-              - resource_errors.created_at
-              - resource_errors.updated_at
-            field:
-              type: string
-              description: "These are the valid values you can specify for the field key of the date_breakdown query and the related valid operators, based on that key:\n\n\n        \n| Value | Operators |\n| --- | --------- |\n|**`customer.id`** | <p>`cardinality`</p><p>`value_count`</p>|\n|**`customer.email`** | <p>`cardinality`</p><p>`value_count`</p>|\n|**`customer.group_name`** | <p>`cardinality`</p><p>`value_count`</p>|\n|**`customer.reference`** | <p>`cardinality`</p><p>`value_count`</p>|\n|**`customer.reference_origin`** | <p>`cardinality`</p><p>`value_count`</p>|\n|**`line_items.code`** | <p>`cardinality`</p><p>`value_count`</p>|\n|**`line_items.discount`** | <p>`avg`</p><p>`max`</p><p>`min`</p><p>`sum`</p><p>`stats`</p>|\n|**`line_items.id`** | <p>`cardinality`</p><p>`value_count`</p>|\n|**`line_items.item_id`** | <p>`cardinality`</p><p>`value_count`</p>|\n|**`line_items.options_amount`** | <p>`avg`</p><p>`max`</p><p>`min`</p><p>`sum`</p><p>`stats`</p>|\n|**`line_items.quantity`** | <p>`avg`</p><p>`max`</p><p>`min`</p><p>`sum`</p><p>`stats`</p>|\n|**`line_items.tax_amount`** | <p>`avg`</p><p>`max`</p><p>`min`</p><p>`sum`</p><p>`stats`</p>|\n|**`line_items.tax_rate`** | <p>`avg`</p><p>`max`</p><p>`min`</p><p>`sum`</p><p>`stats`</p>|\n|**`line_items.total_amount`** | <p>`avg`</p><p>`max`</p><p>`min`</p><p>`sum`</p><p>`stats`</p>|\n|**`line_items.unit_amount`** | <p>`avg`</p><p>`max`</p><p>`min`</p><p>`sum`</p><p>`stats`</p>|\n|**`line_items.options.id`** | <p>`cardinality`</p><p>`value_count`</p>|\n|**`line_items.options.quantity`** | <p>`avg`</p><p>`max`</p><p>`min`</p><p>`sum`</p><p>`stats`</p>|\n|**`line_items.options.total_amount`** | <p>`avg`</p><p>`max`</p><p>`min`</p><p>`sum`</p><p>`stats`</p>|\n|**`line_items.options.unit_amount`** | <p>`avg`</p><p>`max`</p><p>`min`</p><p>`sum`</p><p>`stats`</p>|\n|**`market.id`** | <p>`cardinality`</p>|\n|**`market.number`** | <p>`cardinality`</p><p>`value_count`</p>|\n|**`order.adjustment_amount`** | <p>`avg`</p><p>`max`</p><p>`min`</p><p>`sum`</p><p>`stats`</p>|\n|**`order.adjustment_tax_amount`** | <p>`avg`</p><p>`max`</p><p>`min`</p><p>`sum`</p><p>`stats`</p>|\n|**`order.adjustment_taxable_amount`** | <p>`avg`</p><p>`max`</p><p>`min`</p><p>`sum`</p><p>`stats`</p>|\n|**`order.discount_amount`** | <p>`avg`</p><p>`max`</p><p>`min`</p><p>`sum`</p><p>`stats`</p>|\n|**`order.duty_amount`** | <p>`avg`</p><p>`max`</p><p>`min`</p><p>`sum`</p><p>`stats`</p>|\n|**`order.gift_card_code`** | <p>`value_count`</p>|\n|**`order.gift_card_amount`** | <p>`avg`</p><p>`max`</p><p>`min`</p><p>`sum`</p><p>`stats`</p>|\n|**`order.id`** | <p>`cardinality`</p><p>`value_count`</p>|\n|**`order.line_item_options_count`** | <p>`avg`</p><p>`max`</p><p>`min`</p><p>`sum`</p><p>`stats`</p>|\n|**`order.number`** | <p>`value_count`</p>|\n|**`order.payment_method_amount`** | <p>`avg`</p><p>`max`</p><p>`min`</p><p>`sum`</p><p>`stats`</p>|\n|**`order.payment_method_tax_amount`** | <p>`avg`</p><p>`max`</p><p>`min`</p><p>`sum`</p><p>`stats`</p>|\n|**`order.payment_method_taxable_amount`** | <p>`avg`</p><p>`max`</p><p>`min`</p><p>`sum`</p><p>`stats`</p>|\n|**`order.reference`** | <p>`cardinality`</p><p>`value_count`</p>|\n|**`order.reference_origin`** | <p>`cardinality`</p><p>`value_count`</p>|\n|**`order.shipments_count`** | <p>`avg`</p><p>`max`</p><p>`min`</p><p>`sum`</p><p>`stats`</p>|\n|**`order.shipping_amount`** | <p>`avg`</p><p>`max`</p><p>`min`</p><p>`sum`</p><p>`stats`</p>|\n|**`order.shipping_taxable_amount`** | <p>`avg`</p><p>`max`</p><p>`min`</p><p>`sum`</p><p>`stats`</p>|\n|**`order.skus_count`** | <p>`avg`</p><p>`max`</p><p>`min`</p><p>`sum`</p><p>`stats`</p>|\n|**`order.subtotal_amount`** | <p>`avg`</p><p>`max`</p><p>`min`</p><p>`sum`</p><p>`stats`</p>|\n|**`order.subtotal_tax_amount`** | <p>`avg`</p><p>`max`</p><p>`min`</p><p>`sum`</p><p>`stats`</p>|\n|**`order.subtotal_taxable_amount`** | <p>`avg`</p><p>`max`</p><p>`min`</p><p>`sum`</p><p>`stats`</p>|\n|**`order.total_amount`** | <p>`avg`</p><p>`max`</p><p>`min`</p><p>`sum`</p><p>`stats`</p>|\n|**`order.total_amount_with_taxes`** | <p>`avg`</p><p>`max`</p><p>`min`</p><p>`sum`</p><p>`stats`</p>|\n|**`order.total_tax_amount`** | <p>`avg`</p><p>`max`</p><p>`min`</p><p>`sum`</p><p>`stats`</p>|\n|**`order.total_taxable_amount`** | <p>`avg`</p><p>`max`</p><p>`min`</p><p>`sum`</p><p>`stats`</p>|\n|**`resource_errors.code`** | <p>`cardinality`</p><p>`value_count`</p>|\n|**`resource_errors.id`** | <p>`cardinality`</p><p>`value_count`</p>|\n|**`resource_errors.message`** | <p>`cardinality`</p><p>`value_count`</p>|\n"
-              enum:
-              - customer.id
-              - customer.email
-              - customer.group_name
-              - customer.reference
-              - customer.reference_origin
-              - line_items.code
-              - line_items.discount
-              - line_items.id
-              - line_items.item_id
-              - line_items.options_amount
-              - line_items.quantity
-              - line_items.tax_amount
-              - line_items.tax_rate
-              - line_items.total_amount
-              - line_items.unit_amount
-              - line_items.options.id
-              - line_items.options.quantity
-              - line_items.options.total_amount
-              - line_items.options.unit_amount
-              - market.id
-              - market.number
-              - order.adjustment_amount
-              - order.adjustment_tax_amount
-              - order.adjustment_taxable_amount
-              - order.discount_amount
-              - order.duty_amount
-              - order.gift_card_code
-              - order.gift_card_amount
-              - order.id
-              - order.line_item_options_count
-              - order.number
-              - order.payment_method_amount
-              - order.payment_method_tax_amount
-              - order.payment_method_taxable_amount
-              - order.reference
-              - order.reference_origin
-              - order.shipments_count
-              - order.shipping_amount
-              - order.shipping_taxable_amount
-              - order.skus_count
-              - order.subtotal_amount
-              - order.subtotal_tax_amount
-              - order.subtotal_taxable_amount
-              - order.total_amount
-              - order.total_amount_with_taxes
-              - order.total_tax_amount
-              - order.total_taxable_amount
-              - resource_errors.code
-              - resource_errors.id
-              - resource_errors.message
-            operator:
-              type: string
-              description: Operator to apply
-              enum:
-              - cardinality
-              - value_count
-              - avg
-              - max
-              - min
-              - sum
-              - stats
-            interval:
-              type: string
-              description: Interval to base the date breakdown
-              enum:
-              - day
-              - hour
-              - month
-              - week
-              - year
-            breakdown:
-              type: object
-              description: Check available [fields](#/components/schemas/carts_breakdown_request/properties/breakdown/properties/field/description)
-              required:
-              - by
-              - field
-              - operator
-              properties:
-                by:
-                  type: string
-                  description: "Field to base your breakdown query.\n\nForbidden nesting\n\n          These are the valid values you can specify for the by key of the breakdown query and the related forbidden values for the by key of the nested breakdown, based on the by key of the parent breakdown (i.e. for each row of the table below the full list of the valid values for the by key of the nested breakdown is given by all the values in the \"Value\" column except the values in the row's \"Forbidden nesting\" cell):\n\n\n          \n| Value | Forbidden nesting |\n| --- | ------ |\n|**`billing_address.business`** | <p>`billing_address.geocoded`</p> <p>`billing_address.localized`</p> <p>`customer.*`</p> <p>`shipping_address.*`</p> <p>`line_items.item_type`</p> <p>`order.freight_taxable`</p> <p>`order.fulfillment_status`</p> <p>`order.payment_status`</p> <p>`order.status`</p> |\n|**`billing_address.city`** | <p>`billing_address.country_code`</p> <p>`billing_address.state_code`</p> <p>`customer.*`</p> <p>`shipping_address.*`</p> <p>`line_items.item_type`</p> |\n|**`billing_address.country_code`** | <p>`customer.*`</p> <p>`shipping_address.*`</p> <p>`line_items.item_type`</p> |\n|**`billing_address.geocoded`** | <p>`billing_address.*`</p> <p>`customer.*`</p> <p>`shipping_address.*`</p> <p>`line_items.item_type`</p> |\n|**`billing_address.localized`** | <p>`billing_address.*`</p> <p>`customer.*`</p> <p>`shipping_address.*`</p> <p>`line_items.item_type`</p> |\n|**`billing_address.state_code`** | <p>`billing_address.country_code`</p> <p>`customer.*`</p> <p>`shipping_address.*`</p> <p>`line_items.item_type`</p> |\n|**`billing_address.zip_code`** | <p>`billing_address.country_code`</p> <p>`billing_address.city`</p> <p>`billing_address.geocoded`</p> <p>`billing_address.localized`</p> <p>`customer.*`</p> <p>`shipping_address.*`</p> <p>`line_items.item_type`</p> |\n|**`customer.id`** | |\n|**`customer.email`** | |\n|**`customer.group_name`** | |\n|**`customer.reference`** | |\n|**`customer.reference_origin`** | |\n|**`line_items.code`** | |\n|**`line_items.id`** | |\n|**`line_items.item_id`** | |\n|**`line_items.item_type`** | |\n|**`line_items.name`** | |\n|**`line_items.options.id`** | <p>`line_items.*`</p> |\n|**`line_items.options.name`** | <p>`line_items.*`</p> |\n|**`market.id`** | <p>`billing_address.geocoded`</p> <p>`billing_address.localized`</p> <p>`shipping_address.geocoded`</p> <p>`shipping_address.localized`</p> <p>`line_items.item_type`</p> |\n|**`market.name`** | |\n|**`market.number`** | |\n|**`order.customer_type`** | |\n|**`order.country_code`** | |\n|**`order.coupon_code`** | |\n|**`order.currency_code`** | |\n|**`order.freight_taxable`** | |\n|**`order.gift_card_code`** | |\n|**`order.guest`** | |\n|**`order.language_code`** | |\n|**`order.reference`** | |\n|**`order.reference_origin`** | |\n|**`order.status`** | |\n|**`order.tax_included`** | |\n|**`order.link_id`** | |\n|**`order.user_id`** | |\n|**`order.store_id`** | |\n|**`order.affiliate_code`** | |\n|**`payment_method.source_type`** | |\n|**`payment_method.name`** | |\n|**`payment_method.moto`** | |\n|**`shipping_address.business`** | <p>`shipping_address.geocoded`</p> <p>`shipping_address.localized`</p> <p>`customer.*`</p> <p>`billing_address.*`</p> <p>`line_items.item_type`</p> <p>`order.freight_taxable`</p> <p>`order.fulfillment_status`</p> <p>`order.payment_status`</p> <p>`order.status`</p> |\n|**`shipping_address.city`** | <p>`shipping_address.country_code`</p> <p>`shipping_address.state_code`</p> <p>`customer.*`</p> <p>`billing_address.*`</p> <p>`line_items.item_type`</p> |\n|**`shipping_address.country_code`** | <p>`customer.*`</p> <p>`billing_address.*`</p> <p>`line_items.item_type`</p> |\n|**`shipping_address.geocoded`** | <p>`billing_address.*`</p> <p>`customer.*`</p> <p>`shipping_address.*`</p> <p>`line_items.item_type`</p> |\n|**`shipping_address.localized`** | <p>`billing_address.*`</p> <p>`customer.*`</p> <p>`shipping_address.*`</p> <p>`line_items.item_type`</p> |\n|**`shipping_address.state_code`** | <p>`shipping_address.country_code`</p> <p>`customer.*`</p> <p>`billing_address.*`</p> <p>`line_items.item_type`</p> |\n|**`shipping_address.zip_code`** | <p>`shipping_address.country_code`</p> <p>`shipping_address.city`</p> <p>`shipping_address.geocoded`</p> <p>`shipping_address.localized`</p> <p>`customer.*`</p> <p>`billing_address.*`</p> <p>`line_items.item_type`</p> |\n|**`tags.id`** | |\n|**`tags.name`** | |\n|**`resource_errors.code`** | |\n|**`resource_errors.name`** | |\n|**`resource_errors.id`** | |\n|**`resource_errors.message`** | |\n"
-                  enum:
-                  - billing_address.business
-                  - billing_address.city
-                  - billing_address.country_code
-                  - billing_address.geocoded
-                  - billing_address.localized
-                  - billing_address.state_code
-                  - billing_address.zip_code
-                  - customer.id
-                  - customer.email
-                  - customer.group_name
-                  - customer.reference
-                  - customer.reference_origin
-                  - line_items.code
-                  - line_items.id
-                  - line_items.item_id
-                  - line_items.item_type
-                  - line_items.name
-                  - line_items.options.id
-                  - line_items.options.name
-                  - market.id
-                  - market.name
-                  - market.number
-                  - organization.id
-                  - organization.name
-                  - organization.slug
-                  - order.customer_type
-                  - order.country_code
-                  - order.coupon_code
-                  - order.currency_code
-                  - order.freight_taxable
-                  - order.gift_card_code
-                  - order.guest
-                  - order.language_code
-                  - order.mode
-                  - order.reference
-                  - order.reference_origin
-                  - order.status
-                  - order.tax_included
-                  - order.link_id
-                  - order.user_id
-                  - order.store_id
-                  - order.affiliate_code
-                  - payment_method.source_type
-                  - payment_method.name
-                  - payment_method.moto
-                  - shipping_address.business
-                  - shipping_address.city
-                  - shipping_address.country_code
-                  - shipping_address.geocoded
-                  - shipping_address.localized
-                  - shipping_address.state_code
-                  - shipping_address.zip_code
-                  - tags.id
-                  - tags.name
-                  - resource_errors.code
-                  - resource_errors.name
-                  - resource_errors.id
-                  - resource_errors.message
-                field:
-                  type: string
-                  description: "These are the valid values you can specify for the field key of the breakdown query and the related valid operators, based on that key:\n\n\n        \n| Value | Operators |\n| --- | --------- |\n|**`customer.id`** | <p>`cardinality`</p><p>`value_count`</p>|\n|**`customer.email`** | <p>`cardinality`</p><p>`value_count`</p>|\n|**`customer.group_name`** | <p>`cardinality`</p><p>`value_count`</p>|\n|**`customer.reference`** | <p>`cardinality`</p><p>`value_count`</p>|\n|**`customer.reference_origin`** | <p>`cardinality`</p><p>`value_count`</p>|\n|**`line_items.code`** | <p>`cardinality`</p><p>`value_count`</p>|\n|**`line_items.discount`** | <p>`avg`</p><p>`max`</p><p>`min`</p><p>`sum`</p><p>`stats`</p>|\n|**`line_items.id`** | <p>`cardinality`</p><p>`value_count`</p>|\n|**`line_items.item_id`** | <p>`cardinality`</p><p>`value_count`</p>|\n|**`line_items.options_amount`** | <p>`avg`</p><p>`max`</p><p>`min`</p><p>`sum`</p><p>`stats`</p>|\n|**`line_items.quantity`** | <p>`avg`</p><p>`max`</p><p>`min`</p><p>`sum`</p><p>`stats`</p>|\n|**`line_items.tax_amount`** | <p>`avg`</p><p>`max`</p><p>`min`</p><p>`sum`</p><p>`stats`</p>|\n|**`line_items.tax_rate`** | <p>`avg`</p><p>`max`</p><p>`min`</p><p>`sum`</p><p>`stats`</p>|\n|**`line_items.total_amount`** | <p>`avg`</p><p>`max`</p><p>`min`</p><p>`sum`</p><p>`stats`</p>|\n|**`line_items.unit_amount`** | <p>`avg`</p><p>`max`</p><p>`min`</p><p>`sum`</p><p>`stats`</p>|\n|**`line_items.options.id`** | <p>`cardinality`</p><p>`value_count`</p>|\n|**`line_items.options.quantity`** | <p>`avg`</p><p>`max`</p><p>`min`</p><p>`sum`</p><p>`stats`</p>|\n|**`line_items.options.total_amount`** | <p>`avg`</p><p>`max`</p><p>`min`</p><p>`sum`</p><p>`stats`</p>|\n|**`line_items.options.unit_amount`** | <p>`avg`</p><p>`max`</p><p>`min`</p><p>`sum`</p><p>`stats`</p>|\n|**`market.id`** | <p>`cardinality`</p>|\n|**`market.number`** | <p>`cardinality`</p><p>`value_count`</p>|\n|**`order.adjustment_amount`** | <p>`avg`</p><p>`max`</p><p>`min`</p><p>`sum`</p><p>`stats`</p>|\n|**`order.adjustment_tax_amount`** | <p>`avg`</p><p>`max`</p><p>`min`</p><p>`sum`</p><p>`stats`</p>|\n|**`order.adjustment_taxable_amount`** | <p>`avg`</p><p>`max`</p><p>`min`</p><p>`sum`</p><p>`stats`</p>|\n|**`order.discount_amount`** | <p>`avg`</p><p>`max`</p><p>`min`</p><p>`sum`</p><p>`stats`</p>|\n|**`order.duty_amount`** | <p>`avg`</p><p>`max`</p><p>`min`</p><p>`sum`</p><p>`stats`</p>|\n|**`order.gift_card_code`** | <p>`value_count`</p>|\n|**`order.gift_card_amount`** | <p>`avg`</p><p>`max`</p><p>`min`</p><p>`sum`</p><p>`stats`</p>|\n|**`order.id`** | <p>`cardinality`</p><p>`value_count`</p>|\n|**`order.line_item_options_count`** | <p>`avg`</p><p>`max`</p><p>`min`</p><p>`sum`</p><p>`stats`</p>|\n|**`order.number`** | <p>`value_count`</p>|\n|**`order.payment_method_amount`** | <p>`avg`</p><p>`max`</p><p>`min`</p><p>`sum`</p><p>`stats`</p>|\n|**`order.payment_method_tax_amount`** | <p>`avg`</p><p>`max`</p><p>`min`</p><p>`sum`</p><p>`stats`</p>|\n|**`order.payment_method_taxable_amount`** | <p>`avg`</p><p>`max`</p><p>`min`</p><p>`sum`</p><p>`stats`</p>|\n|**`order.reference`** | <p>`cardinality`</p><p>`value_count`</p>|\n|**`order.reference_origin`** | <p>`cardinality`</p><p>`value_count`</p>|\n|**`order.shipments_count`** | <p>`avg`</p><p>`max`</p><p>`min`</p><p>`sum`</p><p>`stats`</p>|\n|**`order.shipping_amount`** | <p>`avg`</p><p>`max`</p><p>`min`</p><p>`sum`</p><p>`stats`</p>|\n|**`order.shipping_taxable_amount`** | <p>`avg`</p><p>`max`</p><p>`min`</p><p>`sum`</p><p>`stats`</p>|\n|**`order.skus_count`** | <p>`avg`</p><p>`max`</p><p>`min`</p><p>`sum`</p><p>`stats`</p>|\n|**`order.subtotal_amount`** | <p>`avg`</p><p>`max`</p><p>`min`</p><p>`sum`</p><p>`stats`</p>|\n|**`order.subtotal_tax_amount`** | <p>`avg`</p><p>`max`</p><p>`min`</p><p>`sum`</p><p>`stats`</p>|\n|**`order.subtotal_taxable_amount`** | <p>`avg`</p><p>`max`</p><p>`min`</p><p>`sum`</p><p>`stats`</p>|\n|**`order.total_amount`** | <p>`avg`</p><p>`max`</p><p>`min`</p><p>`sum`</p><p>`stats`</p>|\n|**`order.total_amount_with_taxes`** | <p>`avg`</p><p>`max`</p><p>`min`</p><p>`sum`</p><p>`stats`</p>|\n|**`order.total_tax_amount`** | <p>`avg`</p><p>`max`</p><p>`min`</p><p>`sum`</p><p>`stats`</p>|\n|**`order.total_taxable_amount`** | <p>`avg`</p><p>`max`</p><p>`min`</p><p>`sum`</p><p>`stats`</p>|\n|**`resource_errors.code`** | <p>`cardinality`</p><p>`value_count`</p>|\n|**`resource_errors.id`** | <p>`cardinality`</p><p>`value_count`</p>|\n|**`resource_errors.message`** | <p>`cardinality`</p><p>`value_count`</p>|\n"
-                  enum:
-                  - customer.id
-                  - customer.email
-                  - customer.group_name
-                  - customer.reference
-                  - customer.reference_origin
-                  - line_items.code
-                  - line_items.discount
-                  - line_items.id
-                  - line_items.item_id
-                  - line_items.options_amount
-                  - line_items.quantity
-                  - line_items.tax_amount
-                  - line_items.tax_rate
-                  - line_items.total_amount
-                  - line_items.unit_amount
-                  - line_items.options.id
-                  - line_items.options.quantity
-                  - line_items.options.total_amount
-                  - line_items.options.unit_amount
-                  - market.id
-                  - market.number
-                  - order.adjustment_amount
-                  - order.adjustment_tax_amount
-                  - order.adjustment_taxable_amount
-                  - order.discount_amount
-                  - order.duty_amount
-                  - order.gift_card_code
-                  - order.gift_card_amount
-                  - order.id
-                  - order.line_item_options_count
-                  - order.number
-                  - order.payment_method_amount
-                  - order.payment_method_tax_amount
-                  - order.payment_method_taxable_amount
-                  - order.reference
-                  - order.reference_origin
-                  - order.shipments_count
-                  - order.shipping_amount
-                  - order.shipping_taxable_amount
-                  - order.skus_count
-                  - order.subtotal_amount
-                  - order.subtotal_tax_amount
-                  - order.subtotal_taxable_amount
-                  - order.total_amount
-                  - order.total_amount_with_taxes
-                  - order.total_tax_amount
-                  - order.total_taxable_amount
-                  - resource_errors.code
-                  - resource_errors.id
-                  - resource_errors.message
-                operator:
-                  type: string
-                  description: Operator to apply
-                  enum:
-                  - cardinality
-                  - value_count
-                  - avg
-                  - max
-                  - min
-                  - sum
-                  - stats
-                sort:
-                  type: string
-                  description: Result sorting
-                  enum:
-                  - asc
-                  - desc
-                limit:
-                  type: integer
-                  description: Results limit
-                  default: 10
-                  maximum: 100
-                condition:
-                  description: Condition to filter the data over the breakdown result, value of the operator must be a Number or Array of numbers if operator is a range
-                  oneOf:
-                  - type: object
-                    properties:
-                      eq:
-                        type: number
-                  - type: object
-                    properties:
-                      ne:
-                        type: number
-                  - type: object
-                    properties:
-                      gt:
-                        type: number
-                  - type: object
-                    properties:
-                      gte:
-                        type: number
-                  - type: object
-                    properties:
-                      lt:
-                        type: number
-                  - type: object
-                    properties:
-                      lte:
-                        type: number
-                  - type: object
-                    properties:
-                      gt_lt:
-                        type: array
-                        items:
-                          type: number
-                  - type: object
-                    properties:
-                      gte_lte:
-                        type: array
-                        items:
-                          type: number
-                  - type: object
-                    properties:
-                      gte_lt:
-                        type: array
-                        items:
-                          type: number
-                  - type: object
-                    properties:
-                      gt_lte:
-                        type: array
-                        items:
-                          type: number
-                  additionalProperties: false
-                breakdown:
-                  type: object
-                  properties:
-                    by:
-                      type: string
-                      description: "Field to base your breakdown query.\n\nForbidden nesting\n\n          These are the valid values you can specify for the by key of the breakdown query and the related forbidden values for the by key of the nested breakdown, based on the by key of the parent breakdown (i.e. for each row of the table below the full list of the valid values for the by key of the nested breakdown is given by all the values in the \"Value\" column except the values in the row's \"Forbidden nesting\" cell):\n\n\n          \n| Value | Forbidden nesting |\n| --- | ------ |\n|**`billing_address.business`** | <p>`billing_address.geocoded`</p> <p>`billing_address.localized`</p> <p>`customer.*`</p> <p>`shipping_address.*`</p> <p>`line_items.item_type`</p> <p>`order.freight_taxable`</p> <p>`order.fulfillment_status`</p> <p>`order.payment_status`</p> <p>`order.status`</p> |\n|**`billing_address.city`** | <p>`billing_address.country_code`</p> <p>`billing_address.state_code`</p> <p>`customer.*`</p> <p>`shipping_address.*`</p> <p>`line_items.item_type`</p> |\n|**`billing_address.country_code`** | <p>`customer.*`</p> <p>`shipping_address.*`</p> <p>`line_items.item_type`</p> |\n|**`billing_address.geocoded`** | <p>`billing_address.*`</p> <p>`customer.*`</p> <p>`shipping_address.*`</p> <p>`line_items.item_type`</p> |\n|**`billing_address.localized`** | <p>`billing_address.*`</p> <p>`customer.*`</p> <p>`shipping_address.*`</p> <p>`line_items.item_type`</p> |\n|**`billing_address.state_code`** | <p>`billing_address.country_code`</p> <p>`customer.*`</p> <p>`shipping_address.*`</p> <p>`line_items.item_type`</p> |\n|**`billing_address.zip_code`** | <p>`billing_address.country_code`</p> <p>`billing_address.city`</p> <p>`billing_address.geocoded`</p> <p>`billing_address.localized`</p> <p>`customer.*`</p> <p>`shipping_address.*`</p> <p>`line_items.item_type`</p> |\n|**`customer.id`** | |\n|**`customer.email`** | |\n|**`customer.group_name`** | |\n|**`customer.reference`** | |\n|**`customer.reference_origin`** | |\n|**`line_items.code`** | |\n|**`line_items.id`** | |\n|**`line_items.item_id`** | |\n|**`line_items.item_type`** | |\n|**`line_items.name`** | |\n|**`line_items.options.id`** | <p>`line_items.*`</p> |\n|**`line_items.options.name`** | <p>`line_items.*`</p> |\n|**`market.id`** | <p>`billing_address.geocoded`</p> <p>`billing_address.localized`</p> <p>`shipping_address.geocoded`</p> <p>`shipping_address.localized`</p> <p>`line_items.item_type`</p> |\n|**`market.name`** | |\n|**`market.number`** | |\n|**`order.customer_type`** | |\n|**`order.country_code`** | |\n|**`order.coupon_code`** | |\n|**`order.currency_code`** | |\n|**`order.freight_taxable`** | |\n|**`order.gift_card_code`** | |\n|**`order.guest`** | |\n|**`order.language_code`** | |\n|**`order.reference`** | |\n|**`order.reference_origin`** | |\n|**`order.status`** | |\n|**`order.tax_included`** | |\n|**`order.link_id`** | |\n|**`order.user_id`** | |\n|**`order.store_id`** | |\n|**`order.affiliate_code`** | |\n|**`payment_method.source_type`** | |\n|**`payment_method.name`** | |\n|**`payment_method.moto`** | |\n|**`shipping_address.business`** | <p>`shipping_address.geocoded`</p> <p>`shipping_address.localized`</p> <p>`customer.*`</p> <p>`billing_address.*`</p> <p>`line_items.item_type`</p> <p>`order.freight_taxable`</p> <p>`order.fulfillment_status`</p> <p>`order.payment_status`</p> <p>`order.status`</p> |\n|**`shipping_address.city`** | <p>`shipping_address.country_code`</p> <p>`shipping_address.state_code`</p> <p>`customer.*`</p> <p>`billing_address.*`</p> <p>`line_items.item_type`</p> |\n|**`shipping_address.country_code`** | <p>`customer.*`</p> <p>`billing_address.*`</p> <p>`line_items.item_type`</p> |\n|**`shipping_address.geocoded`** | <p>`billing_address.*`</p> <p>`customer.*`</p> <p>`shipping_address.*`</p> <p>`line_items.item_type`</p> |\n|**`shipping_address.localized`** | <p>`billing_address.*`</p> <p>`customer.*`</p> <p>`shipping_address.*`</p> <p>`line_items.item_type`</p> |\n|**`shipping_address.state_code`** | <p>`shipping_address.country_code`</p> <p>`customer.*`</p> <p>`billing_address.*`</p> <p>`line_items.item_type`</p> |\n|**`shipping_address.zip_code`** | <p>`shipping_address.country_code`</p> <p>`shipping_address.city`</p> <p>`shipping_address.geocoded`</p> <p>`shipping_address.localized`</p> <p>`customer.*`</p> <p>`billing_address.*`</p> <p>`line_items.item_type`</p> |\n|**`tags.id`** | |\n|**`tags.name`** | |\n|**`resource_errors.code`** | |\n|**`resource_errors.name`** | |\n|**`resource_errors.id`** | |\n|**`resource_errors.message`** | |\n"
-                      enum:
-                      - billing_address.business
-                      - billing_address.city
-                      - billing_address.country_code
-                      - billing_address.geocoded
-                      - billing_address.localized
-                      - billing_address.state_code
-                      - billing_address.zip_code
-                      - customer.id
-                      - customer.email
-                      - customer.group_name
-                      - customer.reference
-                      - customer.reference_origin
-                      - line_items.code
-                      - line_items.id
-                      - line_items.item_id
-                      - line_items.item_type
-                      - line_items.name
-                      - line_items.options.id
-                      - line_items.options.name
-                      - market.id
-                      - market.name
-                      - market.number
-                      - organization.id
-                      - organization.name
-                      - organization.slug
-                      - order.customer_type
-                      - order.country_code
-                      - order.coupon_code
-                      - order.currency_code
-                      - order.freight_taxable
-                      - order.gift_card_code
-                      - order.guest
-                      - order.language_code
-                      - order.mode
-                      - order.reference
-                      - order.reference_origin
-                      - order.status
-                      - order.tax_included
-                      - order.link_id
-                      - order.user_id
-                      - order.store_id
-                      - order.affiliate_code
-                      - payment_method.source_type
-                      - payment_method.name
-                      - payment_method.moto
-                      - shipping_address.business
-                      - shipping_address.city
-                      - shipping_address.country_code
-                      - shipping_address.geocoded
-                      - shipping_address.localized
-                      - shipping_address.state_code
-                      - shipping_address.zip_code
-                      - tags.id
-                      - tags.name
-                      - resource_errors.code
-                      - resource_errors.name
-                      - resource_errors.id
-                      - resource_errors.message
-                    field:
-                      type: string
-                      description: "These are the valid values you can specify for the field key of the breakdown query and the related valid operators, based on that key:\n\n\n        \n| Value | Operators |\n| --- | --------- |\n|**`customer.id`** | <p>`cardinality`</p><p>`value_count`</p>|\n|**`customer.email`** | <p>`cardinality`</p><p>`value_count`</p>|\n|**`customer.group_name`** | <p>`cardinality`</p><p>`value_count`</p>|\n|**`customer.reference`** | <p>`cardinality`</p><p>`value_count`</p>|\n|**`customer.reference_origin`** | <p>`cardinality`</p><p>`value_count`</p>|\n|**`line_items.code`** | <p>`cardinality`</p><p>`value_count`</p>|\n|**`line_items.discount`** | <p>`avg`</p><p>`max`</p><p>`min`</p><p>`sum`</p><p>`stats`</p>|\n|**`line_items.id`** | <p>`cardinality`</p><p>`value_count`</p>|\n|**`line_items.item_id`** | <p>`cardinality`</p><p>`value_count`</p>|\n|**`line_items.options_amount`** | <p>`avg`</p><p>`max`</p><p>`min`</p><p>`sum`</p><p>`stats`</p>|\n|**`line_items.quantity`** | <p>`avg`</p><p>`max`</p><p>`min`</p><p>`sum`</p><p>`stats`</p>|\n|**`line_items.tax_amount`** | <p>`avg`</p><p>`max`</p><p>`min`</p><p>`sum`</p><p>`stats`</p>|\n|**`line_items.tax_rate`** | <p>`avg`</p><p>`max`</p><p>`min`</p><p>`sum`</p><p>`stats`</p>|\n|**`line_items.total_amount`** | <p>`avg`</p><p>`max`</p><p>`min`</p><p>`sum`</p><p>`stats`</p>|\n|**`line_items.unit_amount`** | <p>`avg`</p><p>`max`</p><p>`min`</p><p>`sum`</p><p>`stats`</p>|\n|**`line_items.options.id`** | <p>`cardinality`</p><p>`value_count`</p>|\n|**`line_items.options.quantity`** | <p>`avg`</p><p>`max`</p><p>`min`</p><p>`sum`</p><p>`stats`</p>|\n|**`line_items.options.total_amount`** | <p>`avg`</p><p>`max`</p><p>`min`</p><p>`sum`</p><p>`stats`</p>|\n|**`line_items.options.unit_amount`** | <p>`avg`</p><p>`max`</p><p>`min`</p><p>`sum`</p><p>`stats`</p>|\n|**`market.id`** | <p>`cardinality`</p>|\n|**`market.number`** | <p>`cardinality`</p><p>`value_count`</p>|\n|**`order.adjustment_amount`** | <p>`avg`</p><p>`max`</p><p>`min`</p><p>`sum`</p><p>`stats`</p>|\n|**`order.adjustment_tax_amount`** | <p>`avg`</p><p>`max`</p><p>`min`</p><p>`sum`</p><p>`stats`</p>|\n|**`order.adjustment_taxable_amount`** | <p>`avg`</p><p>`max`</p><p>`min`</p><p>`sum`</p><p>`stats`</p>|\n|**`order.discount_amount`** | <p>`avg`</p><p>`max`</p><p>`min`</p><p>`sum`</p><p>`stats`</p>|\n|**`order.duty_amount`** | <p>`avg`</p><p>`max`</p><p>`min`</p><p>`sum`</p><p>`stats`</p>|\n|**`order.gift_card_code`** | <p>`value_count`</p>|\n|**`order.gift_card_amount`** | <p>`avg`</p><p>`max`</p><p>`min`</p><p>`sum`</p><p>`stats`</p>|\n|**`order.id`** | <p>`cardinality`</p><p>`value_count`</p>|\n|**`order.line_item_options_count`** | <p>`avg`</p><p>`max`</p><p>`min`</p><p>`sum`</p><p>`stats`</p>|\n|**`order.number`** | <p>`value_count`</p>|\n|**`order.payment_method_amount`** | <p>`avg`</p><p>`max`</p><p>`min`</p><p>`sum`</p><p>`stats`</p>|\n|**`order.payment_method_tax_amount`** | <p>`avg`</p><p>`max`</p><p>`min`</p><p>`sum`</p><p>`stats`</p>|\n|**`order.payment_method_taxable_amount`** | <p>`avg`</p><p>`max`</p><p>`min`</p><p>`sum`</p><p>`stats`</p>|\n|**`order.reference`** | <p>`cardinality`</p><p>`value_count`</p>|\n|**`order.reference_origin`** | <p>`cardinality`</p><p>`value_count`</p>|\n|**`order.shipments_count`** | <p>`avg`</p><p>`max`</p><p>`min`</p><p>`sum`</p><p>`stats`</p>|\n|**`order.shipping_amount`** | <p>`avg`</p><p>`max`</p><p>`min`</p><p>`sum`</p><p>`stats`</p>|\n|**`order.shipping_taxable_amount`** | <p>`avg`</p><p>`max`</p><p>`min`</p><p>`sum`</p><p>`stats`</p>|\n|**`order.skus_count`** | <p>`avg`</p><p>`max`</p><p>`min`</p><p>`sum`</p><p>`stats`</p>|\n|**`order.subtotal_amount`** | <p>`avg`</p><p>`max`</p><p>`min`</p><p>`sum`</p><p>`stats`</p>|\n|**`order.subtotal_tax_amount`** | <p>`avg`</p><p>`max`</p><p>`min`</p><p>`sum`</p><p>`stats`</p>|\n|**`order.subtotal_taxable_amount`** | <p>`avg`</p><p>`max`</p><p>`min`</p><p>`sum`</p><p>`stats`</p>|\n|**`order.total_amount`** | <p>`avg`</p><p>`max`</p><p>`min`</p><p>`sum`</p><p>`stats`</p>|\n|**`order.total_amount_with_taxes`** | <p>`avg`</p><p>`max`</p><p>`min`</p><p>`sum`</p><p>`stats`</p>|\n|**`order.total_tax_amount`** | <p>`avg`</p><p>`max`</p><p>`min`</p><p>`sum`</p><p>`stats`</p>|\n|**`order.total_taxable_amount`** | <p>`avg`</p><p>`max`</p><p>`min`</p><p>`sum`</p><p>`stats`</p>|\n|**`resource_errors.code`** | <p>`cardinality`</p><p>`value_count`</p>|\n|**`resource_errors.id`** | <p>`cardinality`</p><p>`value_count`</p>|\n|**`resource_errors.message`** | <p>`cardinality`</p><p>`value_count`</p>|\n"
-                      enum:
-                      - customer.id
-                      - customer.email
-                      - customer.group_name
-                      - customer.reference
-                      - customer.reference_origin
-                      - line_items.code
-                      - line_items.discount
-                      - line_items.id
-                      - line_items.item_id
-                      - line_items.options_amount
-                      - line_items.quantity
-                      - line_items.tax_amount
-                      - line_items.tax_rate
-                      - line_items.total_amount
-                      - line_items.unit_amount
-                      - line_items.options.id
-                      - line_items.options.quantity
-                      - line_items.options.total_amount
-                      - line_items.options.unit_amount
-                      - market.id
-                      - market.number
-                      - order.adjustment_amount
-                      - order.adjustment_tax_amount
-                      - order.adjustment_taxable_amount
-                      - order.discount_amount
-                      - order.duty_amount
-                      - order.gift_card_code
-                      - order.gift_card_amount
-                      - order.id
-                      - order.line_item_options_count
-                      - order.number
-                      - order.payment_method_amount
-                      - order.payment_method_tax_amount
-                      - order.payment_method_taxable_amount
-                      - order.reference
-                      - order.reference_origin
-                      - order.shipments_count
-                      - order.shipping_amount
-                      - order.shipping_taxable_amount
-                      - order.skus_count
-                      - order.subtotal_amount
-                      - order.subtotal_tax_amount
-                      - order.subtotal_taxable_amount
-                      - order.total_amount
-                      - order.total_amount_with_taxes
-                      - order.total_tax_amount
-                      - order.total_taxable_amount
-                      - resource_errors.code
-                      - resource_errors.id
-                      - resource_errors.message
-                    operator:
-                      type: string
-                      description: Operator to apply
-                      enum:
-                      - cardinality
-                      - value_count
-                      - avg
-                      - max
-                      - min
-                      - sum
-                      - stats
-                    sort:
-                      type: string
-                      description: Result sorting
-                      enum:
-                      - asc
-                      - desc
-                    limit:
-                      type: integer
-                      description: Results limit
-                      default: 10
-                      maximum: 100
-                    condition:
-                      description: Condition to filter the data over the breakdown result, value of the operator must be a Number or Array of numbers if operator is a range
-                      oneOf:
-                      - type: object
-                        properties:
-                          eq:
-                            type: number
-                      - type: object
-                        properties:
-                          ne:
-                            type: number
-                      - type: object
-                        properties:
-                          gt:
-                            type: number
-                      - type: object
-                        properties:
-                          gte:
-                            type: number
-                      - type: object
-                        properties:
-                          lt:
-                            type: number
-                      - type: object
-                        properties:
-                          lte:
-                            type: number
-                      - type: object
-                        properties:
-                          gt_lt:
-                            type: array
-                            items:
-                              type: number
-                      - type: object
-                        properties:
-                          gte_lte:
-                            type: array
-                            items:
-                              type: number
-                      - type: object
-                        properties:
-                          gte_lt:
-                            type: array
-                            items:
-                              type: number
-                      - type: object
-                        properties:
-                          gt_lte:
-                            type: array
-                            items:
-                              type: number
-                      additionalProperties: false
-                  required:
-                  - by
-                  - field
-                  - operator
-        meta:
-          type: object
-          properties:
-            payload:
-              type: boolean
-              description: Set to true if you want to receive how the payload has been made
-    carts_stats_request:
-      type: object
-      properties:
-        filter:
-          $ref: '#/components/schemas/carts_filter'
-        stats:
-          type: object
-          description: Check available [fields](#/components/schemas/carts_stats_request/properties/stats/properties/field/description)
-          required:
-          - field
-          properties:
-            field:
-              type: string
-              description: "These are the valid values you can specify for the field key of the stats query and the related valid operators, based on that key:\n\n\n        \n| Value | Operators |\n| --- | --------- |\n|**`customer.id`** | <p>`cardinality`</p><p>`value_count`</p>|\n|**`customer.email`** | <p>`cardinality`</p><p>`value_count`</p>|\n|**`customer.group_name`** | <p>`cardinality`</p><p>`value_count`</p>|\n|**`customer.reference`** | <p>`cardinality`</p><p>`value_count`</p>|\n|**`customer.reference_origin`** | <p>`cardinality`</p><p>`value_count`</p>|\n|**`line_items.code`** | <p>`cardinality`</p><p>`value_count`</p>|\n|**`line_items.discount`** | <p>`avg`</p><p>`max`</p><p>`min`</p><p>`sum`</p><p>`stats`</p>|\n|**`line_items.id`** | <p>`cardinality`</p><p>`value_count`</p>|\n|**`line_items.item_id`** | <p>`cardinality`</p><p>`value_count`</p>|\n|**`line_items.options_amount`** | <p>`avg`</p><p>`max`</p><p>`min`</p><p>`sum`</p><p>`stats`</p>|\n|**`line_items.quantity`** | <p>`avg`</p><p>`max`</p><p>`min`</p><p>`sum`</p><p>`stats`</p>|\n|**`line_items.tax_amount`** | <p>`avg`</p><p>`max`</p><p>`min`</p><p>`sum`</p><p>`stats`</p>|\n|**`line_items.tax_rate`** | <p>`avg`</p><p>`max`</p><p>`min`</p><p>`sum`</p><p>`stats`</p>|\n|**`line_items.total_amount`** | <p>`avg`</p><p>`max`</p><p>`min`</p><p>`sum`</p><p>`stats`</p>|\n|**`line_items.unit_amount`** | <p>`avg`</p><p>`max`</p><p>`min`</p><p>`sum`</p><p>`stats`</p>|\n|**`line_items.options.id`** | <p>`cardinality`</p><p>`value_count`</p>|\n|**`line_items.options.quantity`** | <p>`avg`</p><p>`max`</p><p>`min`</p><p>`sum`</p><p>`stats`</p>|\n|**`line_items.options.total_amount`** | <p>`avg`</p><p>`max`</p><p>`min`</p><p>`sum`</p><p>`stats`</p>|\n|**`line_items.options.unit_amount`** | <p>`avg`</p><p>`max`</p><p>`min`</p><p>`sum`</p><p>`stats`</p>|\n|**`market.id`** | <p>`cardinality`</p>|\n|**`market.number`** | <p>`cardinality`</p><p>`value_count`</p>|\n|**`order.adjustment_amount`** | <p>`avg`</p><p>`max`</p><p>`min`</p><p>`sum`</p><p>`stats`</p>|\n|**`order.adjustment_tax_amount`** | <p>`avg`</p><p>`max`</p><p>`min`</p><p>`sum`</p><p>`stats`</p>|\n|**`order.adjustment_taxable_amount`** | <p>`avg`</p><p>`max`</p><p>`min`</p><p>`sum`</p><p>`stats`</p>|\n|**`order.discount_amount`** | <p>`avg`</p><p>`max`</p><p>`min`</p><p>`sum`</p><p>`stats`</p>|\n|**`order.duty_amount`** | <p>`avg`</p><p>`max`</p><p>`min`</p><p>`sum`</p><p>`stats`</p>|\n|**`order.gift_card_code`** | <p>`value_count`</p>|\n|**`order.gift_card_amount`** | <p>`avg`</p><p>`max`</p><p>`min`</p><p>`sum`</p><p>`stats`</p>|\n|**`order.id`** | <p>`cardinality`</p><p>`value_count`</p>|\n|**`order.line_item_options_count`** | <p>`avg`</p><p>`max`</p><p>`min`</p><p>`sum`</p><p>`stats`</p>|\n|**`order.number`** | <p>`value_count`</p>|\n|**`order.payment_method_amount`** | <p>`avg`</p><p>`max`</p><p>`min`</p><p>`sum`</p><p>`stats`</p>|\n|**`order.payment_method_tax_amount`** | <p>`avg`</p><p>`max`</p><p>`min`</p><p>`sum`</p><p>`stats`</p>|\n|**`order.payment_method_taxable_amount`** | <p>`avg`</p><p>`max`</p><p>`min`</p><p>`sum`</p><p>`stats`</p>|\n|**`order.reference`** | <p>`cardinality`</p><p>`value_count`</p>|\n|**`order.reference_origin`** | <p>`cardinality`</p><p>`value_count`</p>|\n|**`order.shipments_count`** | <p>`avg`</p><p>`max`</p><p>`min`</p><p>`sum`</p><p>`stats`</p>|\n|**`order.shipping_amount`** | <p>`avg`</p><p>`max`</p><p>`min`</p><p>`sum`</p><p>`stats`</p>|\n|**`order.shipping_taxable_amount`** | <p>`avg`</p><p>`max`</p><p>`min`</p><p>`sum`</p><p>`stats`</p>|\n|**`order.skus_count`** | <p>`avg`</p><p>`max`</p><p>`min`</p><p>`sum`</p><p>`stats`</p>|\n|**`order.subtotal_amount`** | <p>`avg`</p><p>`max`</p><p>`min`</p><p>`sum`</p><p>`stats`</p>|\n|**`order.subtotal_tax_amount`** | <p>`avg`</p><p>`max`</p><p>`min`</p><p>`sum`</p><p>`stats`</p>|\n|**`order.subtotal_taxable_amount`** | <p>`avg`</p><p>`max`</p><p>`min`</p><p>`sum`</p><p>`stats`</p>|\n|**`order.total_amount`** | <p>`avg`</p><p>`max`</p><p>`min`</p><p>`sum`</p><p>`stats`</p>|\n|**`order.total_amount_with_taxes`** | <p>`avg`</p><p>`max`</p><p>`min`</p><p>`sum`</p><p>`stats`</p>|\n|**`order.total_tax_amount`** | <p>`avg`</p><p>`max`</p><p>`min`</p><p>`sum`</p><p>`stats`</p>|\n|**`order.total_taxable_amount`** | <p>`avg`</p><p>`max`</p><p>`min`</p><p>`sum`</p><p>`stats`</p>|\n|**`resource_errors.code`** | <p>`cardinality`</p><p>`value_count`</p>|\n|**`resource_errors.id`** | <p>`cardinality`</p><p>`value_count`</p>|\n|**`resource_errors.message`** | <p>`cardinality`</p><p>`value_count`</p>|\n"
-              enum:
-              - customer.id
-              - customer.email
-              - customer.group_name
-              - customer.reference
-              - customer.reference_origin
-              - line_items.code
-              - line_items.discount
-              - line_items.id
-              - line_items.item_id
-              - line_items.options_amount
-              - line_items.quantity
-              - line_items.tax_amount
-              - line_items.tax_rate
-              - line_items.total_amount
-              - line_items.unit_amount
-              - line_items.options.id
-              - line_items.options.quantity
-              - line_items.options.total_amount
-              - line_items.options.unit_amount
-              - market.id
-              - market.number
-              - order.adjustment_amount
-              - order.adjustment_tax_amount
-              - order.adjustment_taxable_amount
-              - order.discount_amount
-              - order.duty_amount
-              - order.gift_card_code
-              - order.gift_card_amount
-              - order.id
-              - order.line_item_options_count
-              - order.number
-              - order.payment_method_amount
-              - order.payment_method_tax_amount
-              - order.payment_method_taxable_amount
-              - order.reference
-              - order.reference_origin
-              - order.shipments_count
-              - order.shipping_amount
-              - order.shipping_taxable_amount
-              - order.skus_count
-              - order.subtotal_amount
-              - order.subtotal_tax_amount
-              - order.subtotal_taxable_amount
-              - order.total_amount
-              - order.total_amount_with_taxes
-              - order.total_tax_amount
-              - order.total_taxable_amount
-              - resource_errors.code
-              - resource_errors.id
-              - resource_errors.message
-            operator:
-              type: string
-              description: Operator to apply
-              enum:
-              - cardinality
-              - value_count
-              - avg
-              - max
-              - min
-              - sum
-              - stats
-        meta:
-          type: object
-          properties:
-            payload:
-              type: boolean
-              description: Set to true if you want to receive how the payload has been made
-    carts_search_request:
-      type: object
-      properties:
-        filter:
-          $ref: '#/components/schemas/carts_filter'
-        search:
-          type: object
-          required:
-          - fields
-          properties:
-            sort:
-              type: string
-              description: Result sorting
-              enum:
-              - asc
-              - desc
-            limit:
-              type: integer
-              description: Results limit
-              default: 50
-              maximum: 100
-            sort_by:
-              $ref: '#/components/schemas/carts_search_fields'
-            fields:
-              type: array
-              items:
-                $ref: '#/components/schemas/carts_search_fields'
-        meta:
-          type: object
-          properties:
-            payload:
-              type: boolean
-              description: Set to true if you want to receive how the payload has been made
-    carts_search_fields:
-      type: string
-      enum:
-      - billing_address.business
-      - billing_address.city
-      - billing_address.country_code
-      - billing_address.geocoded
-      - billing_address.localized
-      - billing_address.state_code
-      - billing_address.zip_code
-      - customer.id
-      - customer.email
-      - customer.group_name
-      - customer.reference
-      - customer.reference_origin
-      - line_items.code
-      - line_items.discount
-      - line_items.id
-      - line_items.item_id
-      - line_items.item_type
-      - line_items.name
-      - line_items.options_amount
-      - line_items.quantity
-      - line_items.tax_amount
-      - line_items.tax_rate
-      - line_items.total_amount
-      - line_items.unit_amount
-      - line_items.updated_at
-      - line_items.options.id
-      - line_items.options.name
-      - line_items.options.quantity
-      - line_items.options.total_amount
-      - line_items.options.unit_amount
-      - market.id
-      - market.name
-      - market.number
-      - organization.id
-      - organization.name
-      - organization.slug
-      - order.discounted
-      - order.gift_card
-      - order.payment_status
-      - order.fulfillment_status
-      - order.coupon
-      - order.customer_type
-      - order.options
-      - order.adjustment_amount
-      - order.adjustment_tax_amount
-      - order.adjustment_taxable_amount
-      - order.country_code
-      - order.coupon_code
-      - order.created_at
-      - order.currency_code
-      - order.discount_amount
-      - order.duty_amount
-      - order.freight_taxable
-      - order.gift_card_code
-      - order.gift_card_amount
-      - order.guest
-      - order.id
-      - order.language_code
-      - order.line_item_options_count
-      - order.mode
-      - order.number
-      - order.payment_method_amount
-      - order.payment_method_tax_amount
-      - order.payment_method_taxable_amount
-      - order.reference
-      - order.reference_origin
-      - order.shipments_count
-      - order.shipping_amount
-      - order.shipping_taxable_amount
-      - order.skus_count
-      - order.status
-      - order.subtotal_amount
-      - order.subtotal_tax_amount
-      - order.subtotal_taxable_amount
-      - order.tax_included
-      - order.total_amount
-      - order.total_amount_with_taxes
-      - order.total_tax_amount
-      - order.total_taxable_amount
-      - order.updated_at
-      - order.current_date
-      - order.aggregated_details
-      - order.link_id
-      - order.user_id
-      - order.store_id
-      - order.affiliate_code
-      - payment_method.id
-      - payment_method.source_type
-      - payment_method.name
-      - payment_method.moto
-      - shipping_address.business
-      - shipping_address.city
-      - shipping_address.country_code
-      - shipping_address.geocoded
-      - shipping_address.localized
-      - shipping_address.state_code
-      - shipping_address.zip_code
-      - tags.id
-      - tags.name
-      - resource_errors.code
-      - resource_errors.name
-      - resource_errors.id
-      - resource_errors.message
-      - resource_errors.created_at
-      - resource_errors.updated_at
-    carts_export_request:
-      type: object
-      properties:
-        filter:
-          $ref: '#/components/schemas/carts_filter'
-        search:
-          type: object
-          required:
-          - fields
-          properties:
-            sort:
-              type: string
-              description: Result sorting
-              enum:
-              - asc
-              - desc
-              default: desc
-            sort_by:
-              $ref: '#/components/schemas/carts_export_fields'
-            fields:
-              type: array
-              items:
-                $ref: '#/components/schemas/carts_export_fields'
-              description: Fields to export (order/return and single-level references only, no line_items). tags.name and tags.id return joined values.
         meta:
           type: object
           properties:
@@ -10290,6 +9620,674 @@ components:
                     minItems: 2
                     maxItems: 2
                     description: Greater than, less than equal updated_at
+    carts_search_fields:
+      type: string
+      enum:
+      - billing_address.business
+      - billing_address.city
+      - billing_address.country_code
+      - billing_address.geocoded
+      - billing_address.localized
+      - billing_address.state_code
+      - billing_address.zip_code
+      - customer.id
+      - customer.email
+      - customer.group_name
+      - customer.reference
+      - customer.reference_origin
+      - line_items.code
+      - line_items.discount
+      - line_items.id
+      - line_items.item_id
+      - line_items.item_type
+      - line_items.name
+      - line_items.options_amount
+      - line_items.quantity
+      - line_items.tax_amount
+      - line_items.tax_rate
+      - line_items.total_amount
+      - line_items.unit_amount
+      - line_items.updated_at
+      - line_items.options.id
+      - line_items.options.name
+      - line_items.options.quantity
+      - line_items.options.total_amount
+      - line_items.options.unit_amount
+      - market.id
+      - market.name
+      - market.number
+      - organization.id
+      - organization.name
+      - organization.slug
+      - order.discounted
+      - order.gift_card
+      - order.payment_status
+      - order.fulfillment_status
+      - order.coupon
+      - order.customer_type
+      - order.options
+      - order.adjustment_amount
+      - order.adjustment_tax_amount
+      - order.adjustment_taxable_amount
+      - order.country_code
+      - order.coupon_code
+      - order.created_at
+      - order.currency_code
+      - order.discount_amount
+      - order.duty_amount
+      - order.freight_taxable
+      - order.gift_card_code
+      - order.gift_card_amount
+      - order.guest
+      - order.id
+      - order.language_code
+      - order.line_item_options_count
+      - order.mode
+      - order.number
+      - order.payment_method_amount
+      - order.payment_method_tax_amount
+      - order.payment_method_taxable_amount
+      - order.reference
+      - order.reference_origin
+      - order.shipments_count
+      - order.shipping_amount
+      - order.shipping_taxable_amount
+      - order.skus_count
+      - order.status
+      - order.subtotal_amount
+      - order.subtotal_tax_amount
+      - order.subtotal_taxable_amount
+      - order.tax_included
+      - order.total_amount
+      - order.total_amount_with_taxes
+      - order.total_tax_amount
+      - order.total_taxable_amount
+      - order.updated_at
+      - order.current_date
+      - order.aggregated_details
+      - order.link_id
+      - order.user_id
+      - order.store_id
+      - order.affiliate_code
+      - payment_method.id
+      - payment_method.source_type
+      - payment_method.name
+      - payment_method.moto
+      - shipping_address.business
+      - shipping_address.city
+      - shipping_address.country_code
+      - shipping_address.geocoded
+      - shipping_address.localized
+      - shipping_address.state_code
+      - shipping_address.zip_code
+      - tags.id
+      - tags.name
+      - resource_errors.code
+      - resource_errors.name
+      - resource_errors.id
+      - resource_errors.message
+      - resource_errors.created_at
+      - resource_errors.updated_at
+    carts_date_breakdown_request:
+      type: object
+      properties:
+        filter:
+          $ref: '#/components/schemas/carts_filter'
+        date_breakdown:
+          type: object
+          description: Check available [fields](#/components/schemas/carts_date_breakdown_request/properties/date_breakdown/properties/field/description)
+          required:
+          - by
+          - field
+          - operator
+          properties:
+            by:
+              type: string
+              description: Field to base your date breakdown query
+              enum:
+              - order.created_at
+              - order.updated_at
+              - order.current_date
+              - resource_errors.created_at
+              - resource_errors.updated_at
+            field:
+              type: string
+              description: "These are the valid values you can specify for the field key of the date_breakdown query and the related valid operators, based on that key:\n\n\n        \n| Value | Operators |\n| --- | --------- |\n|**`customer.id`** | <p>`cardinality`</p><p>`value_count`</p>|\n|**`customer.email`** | <p>`cardinality`</p><p>`value_count`</p>|\n|**`customer.group_name`** | <p>`cardinality`</p><p>`value_count`</p>|\n|**`customer.reference`** | <p>`cardinality`</p><p>`value_count`</p>|\n|**`customer.reference_origin`** | <p>`cardinality`</p><p>`value_count`</p>|\n|**`line_items.code`** | <p>`cardinality`</p><p>`value_count`</p>|\n|**`line_items.discount`** | <p>`avg`</p><p>`max`</p><p>`min`</p><p>`sum`</p><p>`stats`</p>|\n|**`line_items.id`** | <p>`cardinality`</p><p>`value_count`</p>|\n|**`line_items.item_id`** | <p>`cardinality`</p><p>`value_count`</p>|\n|**`line_items.options_amount`** | <p>`avg`</p><p>`max`</p><p>`min`</p><p>`sum`</p><p>`stats`</p>|\n|**`line_items.quantity`** | <p>`avg`</p><p>`max`</p><p>`min`</p><p>`sum`</p><p>`stats`</p>|\n|**`line_items.tax_amount`** | <p>`avg`</p><p>`max`</p><p>`min`</p><p>`sum`</p><p>`stats`</p>|\n|**`line_items.tax_rate`** | <p>`avg`</p><p>`max`</p><p>`min`</p><p>`sum`</p><p>`stats`</p>|\n|**`line_items.total_amount`** | <p>`avg`</p><p>`max`</p><p>`min`</p><p>`sum`</p><p>`stats`</p>|\n|**`line_items.unit_amount`** | <p>`avg`</p><p>`max`</p><p>`min`</p><p>`sum`</p><p>`stats`</p>|\n|**`line_items.options.id`** | <p>`cardinality`</p><p>`value_count`</p>|\n|**`line_items.options.quantity`** | <p>`avg`</p><p>`max`</p><p>`min`</p><p>`sum`</p><p>`stats`</p>|\n|**`line_items.options.total_amount`** | <p>`avg`</p><p>`max`</p><p>`min`</p><p>`sum`</p><p>`stats`</p>|\n|**`line_items.options.unit_amount`** | <p>`avg`</p><p>`max`</p><p>`min`</p><p>`sum`</p><p>`stats`</p>|\n|**`market.id`** | <p>`cardinality`</p>|\n|**`market.number`** | <p>`cardinality`</p><p>`value_count`</p>|\n|**`order.adjustment_amount`** | <p>`avg`</p><p>`max`</p><p>`min`</p><p>`sum`</p><p>`stats`</p>|\n|**`order.adjustment_tax_amount`** | <p>`avg`</p><p>`max`</p><p>`min`</p><p>`sum`</p><p>`stats`</p>|\n|**`order.adjustment_taxable_amount`** | <p>`avg`</p><p>`max`</p><p>`min`</p><p>`sum`</p><p>`stats`</p>|\n|**`order.discount_amount`** | <p>`avg`</p><p>`max`</p><p>`min`</p><p>`sum`</p><p>`stats`</p>|\n|**`order.duty_amount`** | <p>`avg`</p><p>`max`</p><p>`min`</p><p>`sum`</p><p>`stats`</p>|\n|**`order.gift_card_code`** | <p>`value_count`</p>|\n|**`order.gift_card_amount`** | <p>`avg`</p><p>`max`</p><p>`min`</p><p>`sum`</p><p>`stats`</p>|\n|**`order.id`** | <p>`cardinality`</p><p>`value_count`</p>|\n|**`order.line_item_options_count`** | <p>`avg`</p><p>`max`</p><p>`min`</p><p>`sum`</p><p>`stats`</p>|\n|**`order.number`** | <p>`value_count`</p>|\n|**`order.payment_method_amount`** | <p>`avg`</p><p>`max`</p><p>`min`</p><p>`sum`</p><p>`stats`</p>|\n|**`order.payment_method_tax_amount`** | <p>`avg`</p><p>`max`</p><p>`min`</p><p>`sum`</p><p>`stats`</p>|\n|**`order.payment_method_taxable_amount`** | <p>`avg`</p><p>`max`</p><p>`min`</p><p>`sum`</p><p>`stats`</p>|\n|**`order.reference`** | <p>`cardinality`</p><p>`value_count`</p>|\n|**`order.reference_origin`** | <p>`cardinality`</p><p>`value_count`</p>|\n|**`order.shipments_count`** | <p>`avg`</p><p>`max`</p><p>`min`</p><p>`sum`</p><p>`stats`</p>|\n|**`order.shipping_amount`** | <p>`avg`</p><p>`max`</p><p>`min`</p><p>`sum`</p><p>`stats`</p>|\n|**`order.shipping_taxable_amount`** | <p>`avg`</p><p>`max`</p><p>`min`</p><p>`sum`</p><p>`stats`</p>|\n|**`order.skus_count`** | <p>`avg`</p><p>`max`</p><p>`min`</p><p>`sum`</p><p>`stats`</p>|\n|**`order.subtotal_amount`** | <p>`avg`</p><p>`max`</p><p>`min`</p><p>`sum`</p><p>`stats`</p>|\n|**`order.subtotal_tax_amount`** | <p>`avg`</p><p>`max`</p><p>`min`</p><p>`sum`</p><p>`stats`</p>|\n|**`order.subtotal_taxable_amount`** | <p>`avg`</p><p>`max`</p><p>`min`</p><p>`sum`</p><p>`stats`</p>|\n|**`order.total_amount`** | <p>`avg`</p><p>`max`</p><p>`min`</p><p>`sum`</p><p>`stats`</p>|\n|**`order.total_amount_with_taxes`** | <p>`avg`</p><p>`max`</p><p>`min`</p><p>`sum`</p><p>`stats`</p>|\n|**`order.total_tax_amount`** | <p>`avg`</p><p>`max`</p><p>`min`</p><p>`sum`</p><p>`stats`</p>|\n|**`order.total_taxable_amount`** | <p>`avg`</p><p>`max`</p><p>`min`</p><p>`sum`</p><p>`stats`</p>|\n|**`resource_errors.code`** | <p>`cardinality`</p><p>`value_count`</p>|\n|**`resource_errors.id`** | <p>`cardinality`</p><p>`value_count`</p>|\n|**`resource_errors.message`** | <p>`cardinality`</p><p>`value_count`</p>|\n"
+              enum:
+              - customer.id
+              - customer.email
+              - customer.group_name
+              - customer.reference
+              - customer.reference_origin
+              - line_items.code
+              - line_items.discount
+              - line_items.id
+              - line_items.item_id
+              - line_items.options_amount
+              - line_items.quantity
+              - line_items.tax_amount
+              - line_items.tax_rate
+              - line_items.total_amount
+              - line_items.unit_amount
+              - line_items.options.id
+              - line_items.options.quantity
+              - line_items.options.total_amount
+              - line_items.options.unit_amount
+              - market.id
+              - market.number
+              - order.adjustment_amount
+              - order.adjustment_tax_amount
+              - order.adjustment_taxable_amount
+              - order.discount_amount
+              - order.duty_amount
+              - order.gift_card_code
+              - order.gift_card_amount
+              - order.id
+              - order.line_item_options_count
+              - order.number
+              - order.payment_method_amount
+              - order.payment_method_tax_amount
+              - order.payment_method_taxable_amount
+              - order.reference
+              - order.reference_origin
+              - order.shipments_count
+              - order.shipping_amount
+              - order.shipping_taxable_amount
+              - order.skus_count
+              - order.subtotal_amount
+              - order.subtotal_tax_amount
+              - order.subtotal_taxable_amount
+              - order.total_amount
+              - order.total_amount_with_taxes
+              - order.total_tax_amount
+              - order.total_taxable_amount
+              - resource_errors.code
+              - resource_errors.id
+              - resource_errors.message
+            operator:
+              type: string
+              description: Operator to apply
+              enum:
+              - cardinality
+              - value_count
+              - avg
+              - max
+              - min
+              - sum
+              - stats
+            interval:
+              type: string
+              description: Interval to base the date breakdown
+              enum:
+              - day
+              - hour
+              - month
+              - week
+              - year
+            breakdown:
+              type: object
+              description: Check available [fields](#/components/schemas/carts_breakdown_request/properties/breakdown/properties/field/description)
+              required:
+              - by
+              - field
+              - operator
+              properties:
+                by:
+                  type: string
+                  description: "Field to base your breakdown query.\n\nForbidden nesting\n\n          These are the valid values you can specify for the by key of the breakdown query and the related forbidden values for the by key of the nested breakdown, based on the by key of the parent breakdown (i.e. for each row of the table below the full list of the valid values for the by key of the nested breakdown is given by all the values in the \"Value\" column except the values in the row's \"Forbidden nesting\" cell):\n\n\n          \n| Value | Forbidden nesting |\n| --- | ------ |\n|**`billing_address.business`** | <p>`billing_address.geocoded`</p> <p>`billing_address.localized`</p> <p>`customer.*`</p> <p>`shipping_address.*`</p> <p>`line_items.item_type`</p> <p>`order.freight_taxable`</p> <p>`order.fulfillment_status`</p> <p>`order.payment_status`</p> <p>`order.status`</p> |\n|**`billing_address.city`** | <p>`billing_address.country_code`</p> <p>`billing_address.state_code`</p> <p>`customer.*`</p> <p>`shipping_address.*`</p> <p>`line_items.item_type`</p> |\n|**`billing_address.country_code`** | <p>`customer.*`</p> <p>`shipping_address.*`</p> <p>`line_items.item_type`</p> |\n|**`billing_address.geocoded`** | <p>`billing_address.*`</p> <p>`customer.*`</p> <p>`shipping_address.*`</p> <p>`line_items.item_type`</p> |\n|**`billing_address.localized`** | <p>`billing_address.*`</p> <p>`customer.*`</p> <p>`shipping_address.*`</p> <p>`line_items.item_type`</p> |\n|**`billing_address.state_code`** | <p>`billing_address.country_code`</p> <p>`customer.*`</p> <p>`shipping_address.*`</p> <p>`line_items.item_type`</p> |\n|**`billing_address.zip_code`** | <p>`billing_address.country_code`</p> <p>`billing_address.city`</p> <p>`billing_address.geocoded`</p> <p>`billing_address.localized`</p> <p>`customer.*`</p> <p>`shipping_address.*`</p> <p>`line_items.item_type`</p> |\n|**`customer.id`** | |\n|**`customer.email`** | |\n|**`customer.group_name`** | |\n|**`customer.reference`** | |\n|**`customer.reference_origin`** | |\n|**`line_items.code`** | |\n|**`line_items.id`** | |\n|**`line_items.item_id`** | |\n|**`line_items.item_type`** | |\n|**`line_items.name`** | |\n|**`line_items.options.id`** | <p>`line_items.*`</p> |\n|**`line_items.options.name`** | <p>`line_items.*`</p> |\n|**`market.id`** | <p>`billing_address.geocoded`</p> <p>`billing_address.localized`</p> <p>`shipping_address.geocoded`</p> <p>`shipping_address.localized`</p> <p>`line_items.item_type`</p> |\n|**`market.name`** | |\n|**`market.number`** | |\n|**`order.customer_type`** | |\n|**`order.country_code`** | |\n|**`order.coupon_code`** | |\n|**`order.currency_code`** | |\n|**`order.freight_taxable`** | |\n|**`order.gift_card_code`** | |\n|**`order.guest`** | |\n|**`order.language_code`** | |\n|**`order.reference`** | |\n|**`order.reference_origin`** | |\n|**`order.status`** | |\n|**`order.tax_included`** | |\n|**`order.link_id`** | |\n|**`order.user_id`** | |\n|**`order.store_id`** | |\n|**`order.affiliate_code`** | |\n|**`payment_method.source_type`** | |\n|**`payment_method.name`** | |\n|**`payment_method.moto`** | |\n|**`shipping_address.business`** | <p>`shipping_address.geocoded`</p> <p>`shipping_address.localized`</p> <p>`customer.*`</p> <p>`billing_address.*`</p> <p>`line_items.item_type`</p> <p>`order.freight_taxable`</p> <p>`order.fulfillment_status`</p> <p>`order.payment_status`</p> <p>`order.status`</p> |\n|**`shipping_address.city`** | <p>`shipping_address.country_code`</p> <p>`shipping_address.state_code`</p> <p>`customer.*`</p> <p>`billing_address.*`</p> <p>`line_items.item_type`</p> |\n|**`shipping_address.country_code`** | <p>`customer.*`</p> <p>`billing_address.*`</p> <p>`line_items.item_type`</p> |\n|**`shipping_address.geocoded`** | <p>`billing_address.*`</p> <p>`customer.*`</p> <p>`shipping_address.*`</p> <p>`line_items.item_type`</p> |\n|**`shipping_address.localized`** | <p>`billing_address.*`</p> <p>`customer.*`</p> <p>`shipping_address.*`</p> <p>`line_items.item_type`</p> |\n|**`shipping_address.state_code`** | <p>`shipping_address.country_code`</p> <p>`customer.*`</p> <p>`billing_address.*`</p> <p>`line_items.item_type`</p> |\n|**`shipping_address.zip_code`** | <p>`shipping_address.country_code`</p> <p>`shipping_address.city`</p> <p>`shipping_address.geocoded`</p> <p>`shipping_address.localized`</p> <p>`customer.*`</p> <p>`billing_address.*`</p> <p>`line_items.item_type`</p> |\n|**`tags.id`** | |\n|**`tags.name`** | |\n|**`resource_errors.code`** | |\n|**`resource_errors.name`** | |\n|**`resource_errors.id`** | |\n|**`resource_errors.message`** | |\n"
+                  enum:
+                  - billing_address.business
+                  - billing_address.city
+                  - billing_address.country_code
+                  - billing_address.geocoded
+                  - billing_address.localized
+                  - billing_address.state_code
+                  - billing_address.zip_code
+                  - customer.id
+                  - customer.email
+                  - customer.group_name
+                  - customer.reference
+                  - customer.reference_origin
+                  - line_items.code
+                  - line_items.id
+                  - line_items.item_id
+                  - line_items.item_type
+                  - line_items.name
+                  - line_items.options.id
+                  - line_items.options.name
+                  - market.id
+                  - market.name
+                  - market.number
+                  - organization.id
+                  - organization.name
+                  - organization.slug
+                  - order.customer_type
+                  - order.country_code
+                  - order.coupon_code
+                  - order.currency_code
+                  - order.freight_taxable
+                  - order.gift_card_code
+                  - order.guest
+                  - order.language_code
+                  - order.mode
+                  - order.reference
+                  - order.reference_origin
+                  - order.status
+                  - order.tax_included
+                  - order.link_id
+                  - order.user_id
+                  - order.store_id
+                  - order.affiliate_code
+                  - payment_method.source_type
+                  - payment_method.name
+                  - payment_method.moto
+                  - shipping_address.business
+                  - shipping_address.city
+                  - shipping_address.country_code
+                  - shipping_address.geocoded
+                  - shipping_address.localized
+                  - shipping_address.state_code
+                  - shipping_address.zip_code
+                  - tags.id
+                  - tags.name
+                  - resource_errors.code
+                  - resource_errors.name
+                  - resource_errors.id
+                  - resource_errors.message
+                field:
+                  type: string
+                  description: "These are the valid values you can specify for the field key of the breakdown query and the related valid operators, based on that key:\n\n\n        \n| Value | Operators |\n| --- | --------- |\n|**`customer.id`** | <p>`cardinality`</p><p>`value_count`</p>|\n|**`customer.email`** | <p>`cardinality`</p><p>`value_count`</p>|\n|**`customer.group_name`** | <p>`cardinality`</p><p>`value_count`</p>|\n|**`customer.reference`** | <p>`cardinality`</p><p>`value_count`</p>|\n|**`customer.reference_origin`** | <p>`cardinality`</p><p>`value_count`</p>|\n|**`line_items.code`** | <p>`cardinality`</p><p>`value_count`</p>|\n|**`line_items.discount`** | <p>`avg`</p><p>`max`</p><p>`min`</p><p>`sum`</p><p>`stats`</p>|\n|**`line_items.id`** | <p>`cardinality`</p><p>`value_count`</p>|\n|**`line_items.item_id`** | <p>`cardinality`</p><p>`value_count`</p>|\n|**`line_items.options_amount`** | <p>`avg`</p><p>`max`</p><p>`min`</p><p>`sum`</p><p>`stats`</p>|\n|**`line_items.quantity`** | <p>`avg`</p><p>`max`</p><p>`min`</p><p>`sum`</p><p>`stats`</p>|\n|**`line_items.tax_amount`** | <p>`avg`</p><p>`max`</p><p>`min`</p><p>`sum`</p><p>`stats`</p>|\n|**`line_items.tax_rate`** | <p>`avg`</p><p>`max`</p><p>`min`</p><p>`sum`</p><p>`stats`</p>|\n|**`line_items.total_amount`** | <p>`avg`</p><p>`max`</p><p>`min`</p><p>`sum`</p><p>`stats`</p>|\n|**`line_items.unit_amount`** | <p>`avg`</p><p>`max`</p><p>`min`</p><p>`sum`</p><p>`stats`</p>|\n|**`line_items.options.id`** | <p>`cardinality`</p><p>`value_count`</p>|\n|**`line_items.options.quantity`** | <p>`avg`</p><p>`max`</p><p>`min`</p><p>`sum`</p><p>`stats`</p>|\n|**`line_items.options.total_amount`** | <p>`avg`</p><p>`max`</p><p>`min`</p><p>`sum`</p><p>`stats`</p>|\n|**`line_items.options.unit_amount`** | <p>`avg`</p><p>`max`</p><p>`min`</p><p>`sum`</p><p>`stats`</p>|\n|**`market.id`** | <p>`cardinality`</p>|\n|**`market.number`** | <p>`cardinality`</p><p>`value_count`</p>|\n|**`order.adjustment_amount`** | <p>`avg`</p><p>`max`</p><p>`min`</p><p>`sum`</p><p>`stats`</p>|\n|**`order.adjustment_tax_amount`** | <p>`avg`</p><p>`max`</p><p>`min`</p><p>`sum`</p><p>`stats`</p>|\n|**`order.adjustment_taxable_amount`** | <p>`avg`</p><p>`max`</p><p>`min`</p><p>`sum`</p><p>`stats`</p>|\n|**`order.discount_amount`** | <p>`avg`</p><p>`max`</p><p>`min`</p><p>`sum`</p><p>`stats`</p>|\n|**`order.duty_amount`** | <p>`avg`</p><p>`max`</p><p>`min`</p><p>`sum`</p><p>`stats`</p>|\n|**`order.gift_card_code`** | <p>`value_count`</p>|\n|**`order.gift_card_amount`** | <p>`avg`</p><p>`max`</p><p>`min`</p><p>`sum`</p><p>`stats`</p>|\n|**`order.id`** | <p>`cardinality`</p><p>`value_count`</p>|\n|**`order.line_item_options_count`** | <p>`avg`</p><p>`max`</p><p>`min`</p><p>`sum`</p><p>`stats`</p>|\n|**`order.number`** | <p>`value_count`</p>|\n|**`order.payment_method_amount`** | <p>`avg`</p><p>`max`</p><p>`min`</p><p>`sum`</p><p>`stats`</p>|\n|**`order.payment_method_tax_amount`** | <p>`avg`</p><p>`max`</p><p>`min`</p><p>`sum`</p><p>`stats`</p>|\n|**`order.payment_method_taxable_amount`** | <p>`avg`</p><p>`max`</p><p>`min`</p><p>`sum`</p><p>`stats`</p>|\n|**`order.reference`** | <p>`cardinality`</p><p>`value_count`</p>|\n|**`order.reference_origin`** | <p>`cardinality`</p><p>`value_count`</p>|\n|**`order.shipments_count`** | <p>`avg`</p><p>`max`</p><p>`min`</p><p>`sum`</p><p>`stats`</p>|\n|**`order.shipping_amount`** | <p>`avg`</p><p>`max`</p><p>`min`</p><p>`sum`</p><p>`stats`</p>|\n|**`order.shipping_taxable_amount`** | <p>`avg`</p><p>`max`</p><p>`min`</p><p>`sum`</p><p>`stats`</p>|\n|**`order.skus_count`** | <p>`avg`</p><p>`max`</p><p>`min`</p><p>`sum`</p><p>`stats`</p>|\n|**`order.subtotal_amount`** | <p>`avg`</p><p>`max`</p><p>`min`</p><p>`sum`</p><p>`stats`</p>|\n|**`order.subtotal_tax_amount`** | <p>`avg`</p><p>`max`</p><p>`min`</p><p>`sum`</p><p>`stats`</p>|\n|**`order.subtotal_taxable_amount`** | <p>`avg`</p><p>`max`</p><p>`min`</p><p>`sum`</p><p>`stats`</p>|\n|**`order.total_amount`** | <p>`avg`</p><p>`max`</p><p>`min`</p><p>`sum`</p><p>`stats`</p>|\n|**`order.total_amount_with_taxes`** | <p>`avg`</p><p>`max`</p><p>`min`</p><p>`sum`</p><p>`stats`</p>|\n|**`order.total_tax_amount`** | <p>`avg`</p><p>`max`</p><p>`min`</p><p>`sum`</p><p>`stats`</p>|\n|**`order.total_taxable_amount`** | <p>`avg`</p><p>`max`</p><p>`min`</p><p>`sum`</p><p>`stats`</p>|\n|**`resource_errors.code`** | <p>`cardinality`</p><p>`value_count`</p>|\n|**`resource_errors.id`** | <p>`cardinality`</p><p>`value_count`</p>|\n|**`resource_errors.message`** | <p>`cardinality`</p><p>`value_count`</p>|\n"
+                  enum:
+                  - customer.id
+                  - customer.email
+                  - customer.group_name
+                  - customer.reference
+                  - customer.reference_origin
+                  - line_items.code
+                  - line_items.discount
+                  - line_items.id
+                  - line_items.item_id
+                  - line_items.options_amount
+                  - line_items.quantity
+                  - line_items.tax_amount
+                  - line_items.tax_rate
+                  - line_items.total_amount
+                  - line_items.unit_amount
+                  - line_items.options.id
+                  - line_items.options.quantity
+                  - line_items.options.total_amount
+                  - line_items.options.unit_amount
+                  - market.id
+                  - market.number
+                  - order.adjustment_amount
+                  - order.adjustment_tax_amount
+                  - order.adjustment_taxable_amount
+                  - order.discount_amount
+                  - order.duty_amount
+                  - order.gift_card_code
+                  - order.gift_card_amount
+                  - order.id
+                  - order.line_item_options_count
+                  - order.number
+                  - order.payment_method_amount
+                  - order.payment_method_tax_amount
+                  - order.payment_method_taxable_amount
+                  - order.reference
+                  - order.reference_origin
+                  - order.shipments_count
+                  - order.shipping_amount
+                  - order.shipping_taxable_amount
+                  - order.skus_count
+                  - order.subtotal_amount
+                  - order.subtotal_tax_amount
+                  - order.subtotal_taxable_amount
+                  - order.total_amount
+                  - order.total_amount_with_taxes
+                  - order.total_tax_amount
+                  - order.total_taxable_amount
+                  - resource_errors.code
+                  - resource_errors.id
+                  - resource_errors.message
+                operator:
+                  type: string
+                  description: Operator to apply
+                  enum:
+                  - cardinality
+                  - value_count
+                  - avg
+                  - max
+                  - min
+                  - sum
+                  - stats
+                sort:
+                  type: string
+                  description: Result sorting
+                  enum:
+                  - asc
+                  - desc
+                limit:
+                  type: integer
+                  description: Results limit
+                  default: 10
+                  maximum: 100
+                condition:
+                  description: Condition to filter the data over the breakdown result, value of the operator must be a Number or Array of numbers if operator is a range
+                  oneOf:
+                  - type: object
+                    properties:
+                      eq:
+                        type: number
+                  - type: object
+                    properties:
+                      ne:
+                        type: number
+                  - type: object
+                    properties:
+                      gt:
+                        type: number
+                  - type: object
+                    properties:
+                      gte:
+                        type: number
+                  - type: object
+                    properties:
+                      lt:
+                        type: number
+                  - type: object
+                    properties:
+                      lte:
+                        type: number
+                  - type: object
+                    properties:
+                      gt_lt:
+                        type: array
+                        items:
+                          type: number
+                  - type: object
+                    properties:
+                      gte_lte:
+                        type: array
+                        items:
+                          type: number
+                  - type: object
+                    properties:
+                      gte_lt:
+                        type: array
+                        items:
+                          type: number
+                  - type: object
+                    properties:
+                      gt_lte:
+                        type: array
+                        items:
+                          type: number
+                  additionalProperties: false
+                breakdown:
+                  type: object
+                  properties:
+                    by:
+                      type: string
+                      description: "Field to base your breakdown query.\n\nForbidden nesting\n\n          These are the valid values you can specify for the by key of the breakdown query and the related forbidden values for the by key of the nested breakdown, based on the by key of the parent breakdown (i.e. for each row of the table below the full list of the valid values for the by key of the nested breakdown is given by all the values in the \"Value\" column except the values in the row's \"Forbidden nesting\" cell):\n\n\n          \n| Value | Forbidden nesting |\n| --- | ------ |\n|**`billing_address.business`** | <p>`billing_address.geocoded`</p> <p>`billing_address.localized`</p> <p>`customer.*`</p> <p>`shipping_address.*`</p> <p>`line_items.item_type`</p> <p>`order.freight_taxable`</p> <p>`order.fulfillment_status`</p> <p>`order.payment_status`</p> <p>`order.status`</p> |\n|**`billing_address.city`** | <p>`billing_address.country_code`</p> <p>`billing_address.state_code`</p> <p>`customer.*`</p> <p>`shipping_address.*`</p> <p>`line_items.item_type`</p> |\n|**`billing_address.country_code`** | <p>`customer.*`</p> <p>`shipping_address.*`</p> <p>`line_items.item_type`</p> |\n|**`billing_address.geocoded`** | <p>`billing_address.*`</p> <p>`customer.*`</p> <p>`shipping_address.*`</p> <p>`line_items.item_type`</p> |\n|**`billing_address.localized`** | <p>`billing_address.*`</p> <p>`customer.*`</p> <p>`shipping_address.*`</p> <p>`line_items.item_type`</p> |\n|**`billing_address.state_code`** | <p>`billing_address.country_code`</p> <p>`customer.*`</p> <p>`shipping_address.*`</p> <p>`line_items.item_type`</p> |\n|**`billing_address.zip_code`** | <p>`billing_address.country_code`</p> <p>`billing_address.city`</p> <p>`billing_address.geocoded`</p> <p>`billing_address.localized`</p> <p>`customer.*`</p> <p>`shipping_address.*`</p> <p>`line_items.item_type`</p> |\n|**`customer.id`** | |\n|**`customer.email`** | |\n|**`customer.group_name`** | |\n|**`customer.reference`** | |\n|**`customer.reference_origin`** | |\n|**`line_items.code`** | |\n|**`line_items.id`** | |\n|**`line_items.item_id`** | |\n|**`line_items.item_type`** | |\n|**`line_items.name`** | |\n|**`line_items.options.id`** | <p>`line_items.*`</p> |\n|**`line_items.options.name`** | <p>`line_items.*`</p> |\n|**`market.id`** | <p>`billing_address.geocoded`</p> <p>`billing_address.localized`</p> <p>`shipping_address.geocoded`</p> <p>`shipping_address.localized`</p> <p>`line_items.item_type`</p> |\n|**`market.name`** | |\n|**`market.number`** | |\n|**`order.customer_type`** | |\n|**`order.country_code`** | |\n|**`order.coupon_code`** | |\n|**`order.currency_code`** | |\n|**`order.freight_taxable`** | |\n|**`order.gift_card_code`** | |\n|**`order.guest`** | |\n|**`order.language_code`** | |\n|**`order.reference`** | |\n|**`order.reference_origin`** | |\n|**`order.status`** | |\n|**`order.tax_included`** | |\n|**`order.link_id`** | |\n|**`order.user_id`** | |\n|**`order.store_id`** | |\n|**`order.affiliate_code`** | |\n|**`payment_method.source_type`** | |\n|**`payment_method.name`** | |\n|**`payment_method.moto`** | |\n|**`shipping_address.business`** | <p>`shipping_address.geocoded`</p> <p>`shipping_address.localized`</p> <p>`customer.*`</p> <p>`billing_address.*`</p> <p>`line_items.item_type`</p> <p>`order.freight_taxable`</p> <p>`order.fulfillment_status`</p> <p>`order.payment_status`</p> <p>`order.status`</p> |\n|**`shipping_address.city`** | <p>`shipping_address.country_code`</p> <p>`shipping_address.state_code`</p> <p>`customer.*`</p> <p>`billing_address.*`</p> <p>`line_items.item_type`</p> |\n|**`shipping_address.country_code`** | <p>`customer.*`</p> <p>`billing_address.*`</p> <p>`line_items.item_type`</p> |\n|**`shipping_address.geocoded`** | <p>`billing_address.*`</p> <p>`customer.*`</p> <p>`shipping_address.*`</p> <p>`line_items.item_type`</p> |\n|**`shipping_address.localized`** | <p>`billing_address.*`</p> <p>`customer.*`</p> <p>`shipping_address.*`</p> <p>`line_items.item_type`</p> |\n|**`shipping_address.state_code`** | <p>`shipping_address.country_code`</p> <p>`customer.*`</p> <p>`billing_address.*`</p> <p>`line_items.item_type`</p> |\n|**`shipping_address.zip_code`** | <p>`shipping_address.country_code`</p> <p>`shipping_address.city`</p> <p>`shipping_address.geocoded`</p> <p>`shipping_address.localized`</p> <p>`customer.*`</p> <p>`billing_address.*`</p> <p>`line_items.item_type`</p> |\n|**`tags.id`** | |\n|**`tags.name`** | |\n|**`resource_errors.code`** | |\n|**`resource_errors.name`** | |\n|**`resource_errors.id`** | |\n|**`resource_errors.message`** | |\n"
+                      enum:
+                      - billing_address.business
+                      - billing_address.city
+                      - billing_address.country_code
+                      - billing_address.geocoded
+                      - billing_address.localized
+                      - billing_address.state_code
+                      - billing_address.zip_code
+                      - customer.id
+                      - customer.email
+                      - customer.group_name
+                      - customer.reference
+                      - customer.reference_origin
+                      - line_items.code
+                      - line_items.id
+                      - line_items.item_id
+                      - line_items.item_type
+                      - line_items.name
+                      - line_items.options.id
+                      - line_items.options.name
+                      - market.id
+                      - market.name
+                      - market.number
+                      - organization.id
+                      - organization.name
+                      - organization.slug
+                      - order.customer_type
+                      - order.country_code
+                      - order.coupon_code
+                      - order.currency_code
+                      - order.freight_taxable
+                      - order.gift_card_code
+                      - order.guest
+                      - order.language_code
+                      - order.mode
+                      - order.reference
+                      - order.reference_origin
+                      - order.status
+                      - order.tax_included
+                      - order.link_id
+                      - order.user_id
+                      - order.store_id
+                      - order.affiliate_code
+                      - payment_method.source_type
+                      - payment_method.name
+                      - payment_method.moto
+                      - shipping_address.business
+                      - shipping_address.city
+                      - shipping_address.country_code
+                      - shipping_address.geocoded
+                      - shipping_address.localized
+                      - shipping_address.state_code
+                      - shipping_address.zip_code
+                      - tags.id
+                      - tags.name
+                      - resource_errors.code
+                      - resource_errors.name
+                      - resource_errors.id
+                      - resource_errors.message
+                    field:
+                      type: string
+                      description: "These are the valid values you can specify for the field key of the breakdown query and the related valid operators, based on that key:\n\n\n        \n| Value | Operators |\n| --- | --------- |\n|**`customer.id`** | <p>`cardinality`</p><p>`value_count`</p>|\n|**`customer.email`** | <p>`cardinality`</p><p>`value_count`</p>|\n|**`customer.group_name`** | <p>`cardinality`</p><p>`value_count`</p>|\n|**`customer.reference`** | <p>`cardinality`</p><p>`value_count`</p>|\n|**`customer.reference_origin`** | <p>`cardinality`</p><p>`value_count`</p>|\n|**`line_items.code`** | <p>`cardinality`</p><p>`value_count`</p>|\n|**`line_items.discount`** | <p>`avg`</p><p>`max`</p><p>`min`</p><p>`sum`</p><p>`stats`</p>|\n|**`line_items.id`** | <p>`cardinality`</p><p>`value_count`</p>|\n|**`line_items.item_id`** | <p>`cardinality`</p><p>`value_count`</p>|\n|**`line_items.options_amount`** | <p>`avg`</p><p>`max`</p><p>`min`</p><p>`sum`</p><p>`stats`</p>|\n|**`line_items.quantity`** | <p>`avg`</p><p>`max`</p><p>`min`</p><p>`sum`</p><p>`stats`</p>|\n|**`line_items.tax_amount`** | <p>`avg`</p><p>`max`</p><p>`min`</p><p>`sum`</p><p>`stats`</p>|\n|**`line_items.tax_rate`** | <p>`avg`</p><p>`max`</p><p>`min`</p><p>`sum`</p><p>`stats`</p>|\n|**`line_items.total_amount`** | <p>`avg`</p><p>`max`</p><p>`min`</p><p>`sum`</p><p>`stats`</p>|\n|**`line_items.unit_amount`** | <p>`avg`</p><p>`max`</p><p>`min`</p><p>`sum`</p><p>`stats`</p>|\n|**`line_items.options.id`** | <p>`cardinality`</p><p>`value_count`</p>|\n|**`line_items.options.quantity`** | <p>`avg`</p><p>`max`</p><p>`min`</p><p>`sum`</p><p>`stats`</p>|\n|**`line_items.options.total_amount`** | <p>`avg`</p><p>`max`</p><p>`min`</p><p>`sum`</p><p>`stats`</p>|\n|**`line_items.options.unit_amount`** | <p>`avg`</p><p>`max`</p><p>`min`</p><p>`sum`</p><p>`stats`</p>|\n|**`market.id`** | <p>`cardinality`</p>|\n|**`market.number`** | <p>`cardinality`</p><p>`value_count`</p>|\n|**`order.adjustment_amount`** | <p>`avg`</p><p>`max`</p><p>`min`</p><p>`sum`</p><p>`stats`</p>|\n|**`order.adjustment_tax_amount`** | <p>`avg`</p><p>`max`</p><p>`min`</p><p>`sum`</p><p>`stats`</p>|\n|**`order.adjustment_taxable_amount`** | <p>`avg`</p><p>`max`</p><p>`min`</p><p>`sum`</p><p>`stats`</p>|\n|**`order.discount_amount`** | <p>`avg`</p><p>`max`</p><p>`min`</p><p>`sum`</p><p>`stats`</p>|\n|**`order.duty_amount`** | <p>`avg`</p><p>`max`</p><p>`min`</p><p>`sum`</p><p>`stats`</p>|\n|**`order.gift_card_code`** | <p>`value_count`</p>|\n|**`order.gift_card_amount`** | <p>`avg`</p><p>`max`</p><p>`min`</p><p>`sum`</p><p>`stats`</p>|\n|**`order.id`** | <p>`cardinality`</p><p>`value_count`</p>|\n|**`order.line_item_options_count`** | <p>`avg`</p><p>`max`</p><p>`min`</p><p>`sum`</p><p>`stats`</p>|\n|**`order.number`** | <p>`value_count`</p>|\n|**`order.payment_method_amount`** | <p>`avg`</p><p>`max`</p><p>`min`</p><p>`sum`</p><p>`stats`</p>|\n|**`order.payment_method_tax_amount`** | <p>`avg`</p><p>`max`</p><p>`min`</p><p>`sum`</p><p>`stats`</p>|\n|**`order.payment_method_taxable_amount`** | <p>`avg`</p><p>`max`</p><p>`min`</p><p>`sum`</p><p>`stats`</p>|\n|**`order.reference`** | <p>`cardinality`</p><p>`value_count`</p>|\n|**`order.reference_origin`** | <p>`cardinality`</p><p>`value_count`</p>|\n|**`order.shipments_count`** | <p>`avg`</p><p>`max`</p><p>`min`</p><p>`sum`</p><p>`stats`</p>|\n|**`order.shipping_amount`** | <p>`avg`</p><p>`max`</p><p>`min`</p><p>`sum`</p><p>`stats`</p>|\n|**`order.shipping_taxable_amount`** | <p>`avg`</p><p>`max`</p><p>`min`</p><p>`sum`</p><p>`stats`</p>|\n|**`order.skus_count`** | <p>`avg`</p><p>`max`</p><p>`min`</p><p>`sum`</p><p>`stats`</p>|\n|**`order.subtotal_amount`** | <p>`avg`</p><p>`max`</p><p>`min`</p><p>`sum`</p><p>`stats`</p>|\n|**`order.subtotal_tax_amount`** | <p>`avg`</p><p>`max`</p><p>`min`</p><p>`sum`</p><p>`stats`</p>|\n|**`order.subtotal_taxable_amount`** | <p>`avg`</p><p>`max`</p><p>`min`</p><p>`sum`</p><p>`stats`</p>|\n|**`order.total_amount`** | <p>`avg`</p><p>`max`</p><p>`min`</p><p>`sum`</p><p>`stats`</p>|\n|**`order.total_amount_with_taxes`** | <p>`avg`</p><p>`max`</p><p>`min`</p><p>`sum`</p><p>`stats`</p>|\n|**`order.total_tax_amount`** | <p>`avg`</p><p>`max`</p><p>`min`</p><p>`sum`</p><p>`stats`</p>|\n|**`order.total_taxable_amount`** | <p>`avg`</p><p>`max`</p><p>`min`</p><p>`sum`</p><p>`stats`</p>|\n|**`resource_errors.code`** | <p>`cardinality`</p><p>`value_count`</p>|\n|**`resource_errors.id`** | <p>`cardinality`</p><p>`value_count`</p>|\n|**`resource_errors.message`** | <p>`cardinality`</p><p>`value_count`</p>|\n"
+                      enum:
+                      - customer.id
+                      - customer.email
+                      - customer.group_name
+                      - customer.reference
+                      - customer.reference_origin
+                      - line_items.code
+                      - line_items.discount
+                      - line_items.id
+                      - line_items.item_id
+                      - line_items.options_amount
+                      - line_items.quantity
+                      - line_items.tax_amount
+                      - line_items.tax_rate
+                      - line_items.total_amount
+                      - line_items.unit_amount
+                      - line_items.options.id
+                      - line_items.options.quantity
+                      - line_items.options.total_amount
+                      - line_items.options.unit_amount
+                      - market.id
+                      - market.number
+                      - order.adjustment_amount
+                      - order.adjustment_tax_amount
+                      - order.adjustment_taxable_amount
+                      - order.discount_amount
+                      - order.duty_amount
+                      - order.gift_card_code
+                      - order.gift_card_amount
+                      - order.id
+                      - order.line_item_options_count
+                      - order.number
+                      - order.payment_method_amount
+                      - order.payment_method_tax_amount
+                      - order.payment_method_taxable_amount
+                      - order.reference
+                      - order.reference_origin
+                      - order.shipments_count
+                      - order.shipping_amount
+                      - order.shipping_taxable_amount
+                      - order.skus_count
+                      - order.subtotal_amount
+                      - order.subtotal_tax_amount
+                      - order.subtotal_taxable_amount
+                      - order.total_amount
+                      - order.total_amount_with_taxes
+                      - order.total_tax_amount
+                      - order.total_taxable_amount
+                      - resource_errors.code
+                      - resource_errors.id
+                      - resource_errors.message
+                    operator:
+                      type: string
+                      description: Operator to apply
+                      enum:
+                      - cardinality
+                      - value_count
+                      - avg
+                      - max
+                      - min
+                      - sum
+                      - stats
+                    sort:
+                      type: string
+                      description: Result sorting
+                      enum:
+                      - asc
+                      - desc
+                    limit:
+                      type: integer
+                      description: Results limit
+                      default: 10
+                      maximum: 100
+                    condition:
+                      description: Condition to filter the data over the breakdown result, value of the operator must be a Number or Array of numbers if operator is a range
+                      oneOf:
+                      - type: object
+                        properties:
+                          eq:
+                            type: number
+                      - type: object
+                        properties:
+                          ne:
+                            type: number
+                      - type: object
+                        properties:
+                          gt:
+                            type: number
+                      - type: object
+                        properties:
+                          gte:
+                            type: number
+                      - type: object
+                        properties:
+                          lt:
+                            type: number
+                      - type: object
+                        properties:
+                          lte:
+                            type: number
+                      - type: object
+                        properties:
+                          gt_lt:
+                            type: array
+                            items:
+                              type: number
+                      - type: object
+                        properties:
+                          gte_lte:
+                            type: array
+                            items:
+                              type: number
+                      - type: object
+                        properties:
+                          gte_lt:
+                            type: array
+                            items:
+                              type: number
+                      - type: object
+                        properties:
+                          gt_lte:
+                            type: array
+                            items:
+                              type: number
+                      additionalProperties: false
+                  required:
+                  - by
+                  - field
+                  - operator
+        meta:
+          type: object
+          properties:
+            payload:
+              type: boolean
+              description: Set to true if you want to receive how the payload has been made
+    carts_search_request:
+      type: object
+      properties:
+        filter:
+          $ref: '#/components/schemas/carts_filter'
+        search:
+          type: object
+          required:
+          - fields
+          properties:
+            sort:
+              type: string
+              description: Result sorting
+              enum:
+              - asc
+              - desc
+            limit:
+              type: integer
+              description: Results limit
+              default: 50
+              maximum: 100
+            sort_by:
+              $ref: '#/components/schemas/carts_search_fields'
+            fields:
+              type: array
+              items:
+                $ref: '#/components/schemas/carts_search_fields'
+        meta:
+          type: object
+          properties:
+            payload:
+              type: boolean
+              description: Set to true if you want to receive how the payload has been made
+    carts_export_request:
+      type: object
+      properties:
+        filter:
+          $ref: '#/components/schemas/carts_filter'
+        search:
+          type: object
+          required:
+          - fields
+          properties:
+            sort:
+              type: string
+              description: Result sorting
+              enum:
+              - asc
+              - desc
+              default: desc
+            sort_by:
+              $ref: '#/components/schemas/carts_export_fields'
+            fields:
+              type: array
+              items:
+                $ref: '#/components/schemas/carts_export_fields'
+              description: Fields to export (order/return and single-level references only, no line_items). tags.name and tags.id return joined values.
+        meta:
+          type: object
+          properties:
+            payload:
+              type: boolean
+              description: Set to true if you want to receive how the payload has been made
     carts_export_fields:
       type: string
       enum:

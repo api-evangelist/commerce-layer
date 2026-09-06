@@ -1,18 +1,16 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: Commerce Layer addresses versions API
-  version: 7.10.1
+  title: Commerce Layer Provisioning Versions API
+  version: 1.0.15
   contact:
     name: API Support
     url: https://commercelayer.io
     email: support@commercelayer.io
   description: Headless Commerce for Global Brands.
 servers:
-- url: https://{your_organization_slug}.commercelayer.io/api
-  description: API
-- url: https://core.commercelayer.io/users/sign_in
-  description: Sign in
-- url: https://docs.commercelayer.io/api
+- url: https://provisioning.commercelayer.io
+  description: Commerce Layer Provisioning API
+- url: https://docs.commercelayer.io/provisioning-api
   description: API reference
 security:
 - bearerAuth: []
@@ -108,10 +106,27 @@ paths:
                 $ref: '#/components/schemas/versionResponse'
 components:
   schemas:
-    version:
+    versionResponseList:
+      type: object
       properties:
         data:
+          type: array
+          items:
+            $ref: '#/components/schemas/versionResponse/properties/data'
+    version:
+      type: object
+      properties:
+        data:
+          type: object
+          required:
+          - type
+          - attributes
           properties:
+            type:
+              type: string
+              description: The resource's type.
+              enum:
+              - versions
             attributes:
               type: object
               properties:
@@ -158,28 +173,27 @@ components:
                   example: '2018-01-01T12:00:00.000Z'
                   readOnly: true
                 reference:
-                  type: string
+                  type:
+                  - string
+                  - 'null'
                   description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
                   example: ANY-EXTERNAL-REFEFERNCE
-                  nullable: true
                 reference_origin:
-                  type: string
+                  type:
+                  - string
+                  - 'null'
                   description: Any identifier of the third party system that defines the reference code.
                   example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
-                  nullable: true
                 metadata:
-                  type: object
+                  type:
+                  - object
+                  - 'null'
                   description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
                   example:
                     foo: bar
-                  nullable: true
-    versionResponseList:
-      type: object
-      properties:
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/versionResponse/properties/data'
+            relationships:
+              type: object
+              properties: {}
     versionResponse:
       type: object
       properties:

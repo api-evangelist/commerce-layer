@@ -1,6 +1,6 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: Commerce Layer addresses payment_gateways API
+  title: Commerce Layer Payment Gateways API
   version: 7.10.1
   contact:
     name: API Support
@@ -20,108 +20,6 @@ tags:
 - name: payment_gateways
   description: resource type
 paths:
-  /adyen_payments/{adyenPaymentId}/payment_gateway:
-    get:
-      operationId: GET/adyenPaymentId/payment_gateway
-      summary: Retrieve the payment gateway associated to the adyen payment
-      description: Retrieve the payment gateway associated to the adyen payment
-      tags:
-      - payment_gateways
-      parameters:
-      - name: adyenPaymentId
-        in: path
-        schema:
-          type: string
-        required: true
-        description: The resource's id
-      responses:
-        '200':
-          description: The payment_gateway associated to the adyen payment
-  /axerve_payments/{axervePaymentId}/payment_gateway:
-    get:
-      operationId: GET/axervePaymentId/payment_gateway
-      summary: Retrieve the payment gateway associated to the axerve payment
-      description: Retrieve the payment gateway associated to the axerve payment
-      tags:
-      - payment_gateways
-      parameters:
-      - name: axervePaymentId
-        in: path
-        schema:
-          type: string
-        required: true
-        description: The resource's id
-      responses:
-        '200':
-          description: The payment_gateway associated to the axerve payment
-  /braintree_payments/{braintreePaymentId}/payment_gateway:
-    get:
-      operationId: GET/braintreePaymentId/payment_gateway
-      summary: Retrieve the payment gateway associated to the braintree payment
-      description: Retrieve the payment gateway associated to the braintree payment
-      tags:
-      - payment_gateways
-      parameters:
-      - name: braintreePaymentId
-        in: path
-        schema:
-          type: string
-        required: true
-        description: The resource's id
-      responses:
-        '200':
-          description: The payment_gateway associated to the braintree payment
-  /checkout_com_payments/{checkoutComPaymentId}/payment_gateway:
-    get:
-      operationId: GET/checkoutComPaymentId/payment_gateway
-      summary: Retrieve the payment gateway associated to the checkout.com payment
-      description: Retrieve the payment gateway associated to the checkout.com payment
-      tags:
-      - payment_gateways
-      parameters:
-      - name: checkoutComPaymentId
-        in: path
-        schema:
-          type: string
-        required: true
-        description: The resource's id
-      responses:
-        '200':
-          description: The payment_gateway associated to the checkout.com payment
-  /external_payments/{externalPaymentId}/payment_gateway:
-    get:
-      operationId: GET/externalPaymentId/payment_gateway
-      summary: Retrieve the payment gateway associated to the external payment
-      description: Retrieve the payment gateway associated to the external payment
-      tags:
-      - payment_gateways
-      parameters:
-      - name: externalPaymentId
-        in: path
-        schema:
-          type: string
-        required: true
-        description: The resource's id
-      responses:
-        '200':
-          description: The payment_gateway associated to the external payment
-  /klarna_payments/{klarnaPaymentId}/payment_gateway:
-    get:
-      operationId: GET/klarnaPaymentId/payment_gateway
-      summary: Retrieve the payment gateway associated to the klarna payment
-      description: Retrieve the payment gateway associated to the klarna payment
-      tags:
-      - payment_gateways
-      parameters:
-      - name: klarnaPaymentId
-        in: path
-        schema:
-          type: string
-        required: true
-        description: The resource's id
-      responses:
-        '200':
-          description: The payment_gateway associated to the klarna payment
   /payment_gateways:
     get:
       operationId: GET/payment_gateways
@@ -157,74 +55,6 @@ paths:
             application/vnd.api+json:
               schema:
                 $ref: '#/components/schemas/paymentGatewayResponse'
-  /payment_methods/{paymentMethodId}/payment_gateway:
-    get:
-      operationId: GET/paymentMethodId/payment_gateway
-      summary: Retrieve the payment gateway associated to the payment method
-      description: Retrieve the payment gateway associated to the payment method
-      tags:
-      - payment_gateways
-      parameters:
-      - name: paymentMethodId
-        in: path
-        schema:
-          type: string
-        required: true
-        description: The resource's id
-      responses:
-        '200':
-          description: The payment_gateway associated to the payment method
-  /paypal_payments/{paypalPaymentId}/payment_gateway:
-    get:
-      operationId: GET/paypalPaymentId/payment_gateway
-      summary: Retrieve the payment gateway associated to the paypal payment
-      description: Retrieve the payment gateway associated to the paypal payment
-      tags:
-      - payment_gateways
-      parameters:
-      - name: paypalPaymentId
-        in: path
-        schema:
-          type: string
-        required: true
-        description: The resource's id
-      responses:
-        '200':
-          description: The payment_gateway associated to the paypal payment
-  /satispay_payments/{satispayPaymentId}/payment_gateway:
-    get:
-      operationId: GET/satispayPaymentId/payment_gateway
-      summary: Retrieve the payment gateway associated to the satispay payment
-      description: Retrieve the payment gateway associated to the satispay payment
-      tags:
-      - payment_gateways
-      parameters:
-      - name: satispayPaymentId
-        in: path
-        schema:
-          type: string
-        required: true
-        description: The resource's id
-      responses:
-        '200':
-          description: The payment_gateway associated to the satispay payment
-  /stripe_payments/{stripePaymentId}/payment_gateway:
-    get:
-      operationId: GET/stripePaymentId/payment_gateway
-      summary: Retrieve the payment gateway associated to the stripe payment
-      description: Retrieve the payment gateway associated to the stripe payment
-      tags:
-      - payment_gateways
-      parameters:
-      - name: stripePaymentId
-        in: path
-        schema:
-          type: string
-        required: true
-        description: The resource's id
-      responses:
-        '200':
-          description: The payment_gateway associated to the stripe payment
 components:
   schemas:
     paymentGatewayResponseList:
@@ -234,60 +64,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/paymentGatewayResponse/properties/data'
-    paymentGateway:
-      properties:
-        data:
-          properties:
-            attributes:
-              type: object
-              properties:
-                name:
-                  type: string
-                  description: The payment gateway's internal name.
-                  example: US payment gateway
-                  nullable: false
-                force_payments:
-                  type: boolean
-                  description: Indicates if the payment source is forced on the editable order upon receiving a successful event from the gateway.
-                  example: true
-                  nullable: true
-                credential_keys:
-                  type: object
-                  description: The payment gateway's API credential keys last digits.
-                  example:
-                    api_key: '********BW989'
-                  nullable: true
-                disabled_at:
-                  type: string
-                  description: Time at which this resource was disabled.
-                  example: '2018-01-01T12:00:00.000Z'
-                  nullable: true
-                created_at:
-                  type: string
-                  description: Time at which the resource was created.
-                  example: '2018-01-01T12:00:00.000Z'
-                  nullable: false
-                updated_at:
-                  type: string
-                  description: Time at which the resource was last updated.
-                  example: '2018-01-01T12:00:00.000Z'
-                  nullable: false
-                reference:
-                  type: string
-                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
-                  example: ANY-EXTERNAL-REFEFERNCE
-                  nullable: true
-                reference_origin:
-                  type: string
-                  description: Any identifier of the third party system that defines the reference code.
-                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
-                  nullable: true
-                metadata:
-                  type: object
-                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
-                  example:
-                    foo: bar
-                  nullable: true
     paymentGatewayResponse:
       type: object
       properties:
@@ -360,6 +136,103 @@ components:
                         id:
                           type: string
                           description: The resource ID
+    paymentGateway:
+      type: object
+      properties:
+        data:
+          type: object
+          required:
+          - type
+          - attributes
+          properties:
+            type:
+              type: string
+              description: The resource's type
+              enum:
+              - payment_gateways
+            attributes:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: The payment gateway's internal name.
+                  example: US payment gateway
+                  nullable: false
+                force_payments:
+                  type: boolean
+                  description: Indicates if the payment source is forced on the editable order upon receiving a successful event from the gateway.
+                  example: true
+                  nullable: true
+                credential_keys:
+                  type: object
+                  description: The payment gateway's API credential keys last digits.
+                  example:
+                    api_key: '********BW989'
+                  nullable: true
+                disabled_at:
+                  type: string
+                  description: Time at which this resource was disabled.
+                  example: '2018-01-01T12:00:00.000Z'
+                  nullable: true
+                created_at:
+                  type: string
+                  description: Time at which the resource was created.
+                  example: '2018-01-01T12:00:00.000Z'
+                  nullable: false
+                updated_at:
+                  type: string
+                  description: Time at which the resource was last updated.
+                  example: '2018-01-01T12:00:00.000Z'
+                  nullable: false
+                reference:
+                  type: string
+                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
+                  example: ANY-EXTERNAL-REFEFERNCE
+                  nullable: true
+                reference_origin:
+                  type: string
+                  description: Any identifier of the third party system that defines the reference code.
+                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
+                  nullable: true
+                metadata:
+                  type: object
+                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
+                  example:
+                    foo: bar
+                  nullable: true
+            relationships:
+              type: object
+              properties:
+                payment_methods:
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - payment_methods
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+                event_stores:
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - event_stores
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
   securitySchemes:
     bearerAuth:
       type: http

@@ -1,6 +1,6 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: Commerce Layer addresses inventory_stock_locations API
+  title: Commerce Layer Inventory Stock Locations API
   version: 7.10.1
   contact:
     name: API Support
@@ -20,23 +20,6 @@ tags:
 - name: inventory_stock_locations
   description: resource type
 paths:
-  /inventory_models/{inventoryModelId}/inventory_stock_locations:
-    get:
-      operationId: GET/inventoryModelId/inventory_stock_locations
-      summary: Retrieve the inventory stock locations associated to the inventory model
-      description: Retrieve the inventory stock locations associated to the inventory model
-      tags:
-      - inventory_stock_locations
-      parameters:
-      - name: inventoryModelId
-        in: path
-        schema:
-          type: string
-        required: true
-        description: The resource's id
-      responses:
-        '200':
-          description: The inventory_stock_locations associated to the inventory model
   /inventory_stock_locations:
     get:
       operationId: GET/inventory_stock_locations
@@ -133,40 +116,6 @@ paths:
       responses:
         '204':
           description: No content
-  /shipments/{shipmentId}/inventory_stock_location:
-    get:
-      operationId: GET/shipmentId/inventory_stock_location
-      summary: Retrieve the inventory stock location associated to the shipment
-      description: Retrieve the inventory stock location associated to the shipment
-      tags:
-      - inventory_stock_locations
-      parameters:
-      - name: shipmentId
-        in: path
-        schema:
-          type: string
-        required: true
-        description: The resource's id
-      responses:
-        '200':
-          description: The inventory_stock_location associated to the shipment
-  /stock_locations/{stockLocationId}/inventory_stock_locations:
-    get:
-      operationId: GET/stockLocationId/inventory_stock_locations
-      summary: Retrieve the inventory stock locations associated to the stock location
-      description: Retrieve the inventory stock locations associated to the stock location
-      tags:
-      - inventory_stock_locations
-      parameters:
-      - name: stockLocationId
-        in: path
-        schema:
-          type: string
-        required: true
-        description: The resource's id
-      responses:
-        '200':
-          description: The inventory_stock_locations associated to the stock location
 components:
   schemas:
     inventoryStockLocationResponse:
@@ -264,56 +213,6 @@ components:
                         id:
                           type: string
                           description: The resource ID
-    inventoryStockLocationResponseList:
-      type: object
-      properties:
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/inventoryStockLocationResponse/properties/data'
-    inventoryStockLocation:
-      properties:
-        data:
-          properties:
-            attributes:
-              type: object
-              properties:
-                priority:
-                  type: integer
-                  description: The stock location priority within the associated invetory model.
-                  example: 1
-                  nullable: false
-                on_hold:
-                  type: boolean
-                  description: Indicates if the shipment should be put on hold if fulfilled from the associated stock location. This is useful to manage use cases like back-orders, pre-orders or personalized orders that need to be customized before being fulfilled.
-                  example: false
-                  nullable: true
-                created_at:
-                  type: string
-                  description: Time at which the resource was created.
-                  example: '2018-01-01T12:00:00.000Z'
-                  nullable: false
-                updated_at:
-                  type: string
-                  description: Time at which the resource was last updated.
-                  example: '2018-01-01T12:00:00.000Z'
-                  nullable: false
-                reference:
-                  type: string
-                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
-                  example: ANY-EXTERNAL-REFEFERNCE
-                  nullable: true
-                reference_origin:
-                  type: string
-                  description: Any identifier of the third party system that defines the reference code.
-                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
-                  nullable: true
-                metadata:
-                  type: object
-                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
-                  example:
-                    foo: bar
-                  nullable: true
     inventoryStockLocationCreate:
       required:
       - data
@@ -396,6 +295,114 @@ components:
               required:
               - stock_location
               - inventory_model
+    inventoryStockLocation:
+      type: object
+      properties:
+        data:
+          type: object
+          required:
+          - type
+          - attributes
+          properties:
+            type:
+              type: string
+              description: The resource's type
+              enum:
+              - inventory_stock_locations
+            attributes:
+              type: object
+              properties:
+                priority:
+                  type: integer
+                  description: The stock location priority within the associated invetory model.
+                  example: 1
+                  nullable: false
+                on_hold:
+                  type: boolean
+                  description: Indicates if the shipment should be put on hold if fulfilled from the associated stock location. This is useful to manage use cases like back-orders, pre-orders or personalized orders that need to be customized before being fulfilled.
+                  example: false
+                  nullable: true
+                created_at:
+                  type: string
+                  description: Time at which the resource was created.
+                  example: '2018-01-01T12:00:00.000Z'
+                  nullable: false
+                updated_at:
+                  type: string
+                  description: Time at which the resource was last updated.
+                  example: '2018-01-01T12:00:00.000Z'
+                  nullable: false
+                reference:
+                  type: string
+                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
+                  example: ANY-EXTERNAL-REFEFERNCE
+                  nullable: true
+                reference_origin:
+                  type: string
+                  description: Any identifier of the third party system that defines the reference code.
+                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
+                  nullable: true
+                metadata:
+                  type: object
+                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
+                  example:
+                    foo: bar
+                  nullable: true
+            relationships:
+              type: object
+              properties:
+                stock_location:
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - stock_locations
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+                inventory_model:
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - inventory_models
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+                event_stores:
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - event_stores
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+    inventoryStockLocationResponseList:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/inventoryStockLocationResponse/properties/data'
     inventoryStockLocationUpdate:
       required:
       - data

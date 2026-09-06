@@ -1,6 +1,6 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: Commerce Layer addresses tax_rules API
+  title: Commerce Layer Tax Rules API
   version: 7.10.1
   contact:
     name: API Support
@@ -20,23 +20,6 @@ tags:
 - name: tax_rules
   description: resource type
 paths:
-  /manual_tax_calculators/{manualTaxCalculatorId}/tax_rules:
-    get:
-      operationId: GET/manualTaxCalculatorId/tax_rules
-      summary: Retrieve the tax rules associated to the manual tax calculator
-      description: Retrieve the tax rules associated to the manual tax calculator
-      tags:
-      - tax_rules
-      parameters:
-      - name: manualTaxCalculatorId
-        in: path
-        schema:
-          type: string
-        required: true
-        description: The resource's id
-      responses:
-        '200':
-          description: The tax_rules associated to the manual tax calculator
   /tax_rules:
     get:
       operationId: GET/tax_rules
@@ -239,185 +222,6 @@ components:
                           example: XAyRWNUzyN
               required:
               - manual_tax_calculator
-    taxRule:
-      properties:
-        data:
-          properties:
-            attributes:
-              type: object
-              properties:
-                name:
-                  type: string
-                  description: The tax rule internal name.
-                  example: Fixed 22%
-                  nullable: false
-                tax_rate:
-                  type: number
-                  description: The tax rate for this rule.
-                  example: 0.22
-                  nullable: true
-                freight_taxable:
-                  type: boolean
-                  description: Indicates if the freight is taxable.
-                  example: false
-                  nullable: true
-                payment_method_taxable:
-                  type: boolean
-                  description: Indicates if the payment method is taxable.
-                  example: false
-                  nullable: true
-                gift_card_taxable:
-                  type: boolean
-                  description: Indicates if gift cards are taxable.
-                  example: false
-                  nullable: true
-                adjustment_taxable:
-                  type: boolean
-                  description: Indicates if adjustemnts are taxable.
-                  example: false
-                  nullable: true
-                breakdown:
-                  type: object
-                  description: The breakdown for this tax rule (if calculated).
-                  example:
-                    '41':
-                      tax_rate: 0.22
-                  nullable: true
-                country_code_regex:
-                  type: string
-                  description: The regex that will be evaluated to match the shipping address country code, max size is 5000.
-                  example: AT|BE|BG|CZ|DK|EE|DE|HU|LV|LT
-                  nullable: true
-                not_country_code_regex:
-                  type: string
-                  description: The regex that will be evaluated as negative match for the shipping address country code, max size is 5000.
-                  example: AT|BE|BG|CZ|DK|EE|DE
-                  nullable: true
-                state_code_regex:
-                  type: string
-                  description: The regex that will be evaluated to match the shipping address state code, max size is 5000.
-                  example: A[KLRZ]|C[AOT]|D[CE]|FL
-                  nullable: true
-                not_state_code_regex:
-                  type: string
-                  description: The regex that will be evaluated as negative match for the shipping address state code, max size is 5000.
-                  example: A[KLRZ]|C[AOT]
-                  nullable: true
-                zip_code_regex:
-                  type: string
-                  description: The regex that will be evaluated to match the shipping address zip code, max size is 5000.
-                  example: (?i)(JE1|JE2|JE3|JE4|JE5)
-                  nullable: true
-                not_zip_code_regex:
-                  type: string
-                  description: The regex that will be evaluated as negative match for the shipping zip country code, max size is 5000.
-                  example: (?i)(JE1|JE2|JE3)
-                  nullable: true
-                created_at:
-                  type: string
-                  description: Time at which the resource was created.
-                  example: '2018-01-01T12:00:00.000Z'
-                  nullable: false
-                updated_at:
-                  type: string
-                  description: Time at which the resource was last updated.
-                  example: '2018-01-01T12:00:00.000Z'
-                  nullable: false
-                reference:
-                  type: string
-                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
-                  example: ANY-EXTERNAL-REFEFERNCE
-                  nullable: true
-                reference_origin:
-                  type: string
-                  description: Any identifier of the third party system that defines the reference code.
-                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
-                  nullable: true
-                metadata:
-                  type: object
-                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
-                  example:
-                    foo: bar
-                  nullable: true
-    taxRuleResponse:
-      type: object
-      properties:
-        data:
-          type: object
-          properties:
-            id:
-              type: string
-              description: Unique identifier for the resource (hash).
-              example: XAyRWNUzyN
-            type:
-              type: string
-              description: The resource's type
-              enum:
-              - tax_rules
-            links:
-              type: object
-              properties:
-                self:
-                  type: string
-                  description: URL
-            attributes:
-              $ref: '#/components/schemas/taxRule/properties/data/properties/attributes'
-            relationships:
-              type: object
-              properties:
-                manual_tax_calculator:
-                  type: object
-                  properties:
-                    links:
-                      type: object
-                      properties:
-                        self:
-                          type: string
-                          description: URL
-                        related:
-                          type: string
-                          description: URL
-                    data:
-                      type: object
-                      properties:
-                        type:
-                          type: string
-                          description: The resource's type
-                          enum:
-                          - manual_tax_calculator
-                        id:
-                          type: string
-                          description: The resource ID
-                event_stores:
-                  type: object
-                  properties:
-                    links:
-                      type: object
-                      properties:
-                        self:
-                          type: string
-                          description: URL
-                        related:
-                          type: string
-                          description: URL
-                    data:
-                      type: object
-                      properties:
-                        type:
-                          type: string
-                          description: The resource's type
-                          enum:
-                          - event_stores
-                        id:
-                          type: string
-                          description: The resource ID
-    taxRuleResponseList:
-      type: object
-      properties:
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/taxRuleResponse/properties/data'
     taxRuleUpdate:
       required:
       - data
@@ -538,6 +342,228 @@ components:
                           type: string
                           description: Unique identifier for the resource (hash).
                           example: XAyRWNUzyN
+    taxRule:
+      type: object
+      properties:
+        data:
+          type: object
+          required:
+          - type
+          - attributes
+          properties:
+            type:
+              type: string
+              description: The resource's type
+              enum:
+              - tax_rules
+            attributes:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: The tax rule internal name.
+                  example: Fixed 22%
+                  nullable: false
+                tax_rate:
+                  type: number
+                  description: The tax rate for this rule.
+                  example: 0.22
+                  nullable: true
+                freight_taxable:
+                  type: boolean
+                  description: Indicates if the freight is taxable.
+                  example: false
+                  nullable: true
+                payment_method_taxable:
+                  type: boolean
+                  description: Indicates if the payment method is taxable.
+                  example: false
+                  nullable: true
+                gift_card_taxable:
+                  type: boolean
+                  description: Indicates if gift cards are taxable.
+                  example: false
+                  nullable: true
+                adjustment_taxable:
+                  type: boolean
+                  description: Indicates if adjustemnts are taxable.
+                  example: false
+                  nullable: true
+                breakdown:
+                  type: object
+                  description: The breakdown for this tax rule (if calculated).
+                  example:
+                    '41':
+                      tax_rate: 0.22
+                  nullable: true
+                country_code_regex:
+                  type: string
+                  description: The regex that will be evaluated to match the shipping address country code, max size is 5000.
+                  example: AT|BE|BG|CZ|DK|EE|DE|HU|LV|LT
+                  nullable: true
+                not_country_code_regex:
+                  type: string
+                  description: The regex that will be evaluated as negative match for the shipping address country code, max size is 5000.
+                  example: AT|BE|BG|CZ|DK|EE|DE
+                  nullable: true
+                state_code_regex:
+                  type: string
+                  description: The regex that will be evaluated to match the shipping address state code, max size is 5000.
+                  example: A[KLRZ]|C[AOT]|D[CE]|FL
+                  nullable: true
+                not_state_code_regex:
+                  type: string
+                  description: The regex that will be evaluated as negative match for the shipping address state code, max size is 5000.
+                  example: A[KLRZ]|C[AOT]
+                  nullable: true
+                zip_code_regex:
+                  type: string
+                  description: The regex that will be evaluated to match the shipping address zip code, max size is 5000.
+                  example: (?i)(JE1|JE2|JE3|JE4|JE5)
+                  nullable: true
+                not_zip_code_regex:
+                  type: string
+                  description: The regex that will be evaluated as negative match for the shipping zip country code, max size is 5000.
+                  example: (?i)(JE1|JE2|JE3)
+                  nullable: true
+                created_at:
+                  type: string
+                  description: Time at which the resource was created.
+                  example: '2018-01-01T12:00:00.000Z'
+                  nullable: false
+                updated_at:
+                  type: string
+                  description: Time at which the resource was last updated.
+                  example: '2018-01-01T12:00:00.000Z'
+                  nullable: false
+                reference:
+                  type: string
+                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
+                  example: ANY-EXTERNAL-REFEFERNCE
+                  nullable: true
+                reference_origin:
+                  type: string
+                  description: Any identifier of the third party system that defines the reference code.
+                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
+                  nullable: true
+                metadata:
+                  type: object
+                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
+                  example:
+                    foo: bar
+                  nullable: true
+            relationships:
+              type: object
+              properties:
+                manual_tax_calculator:
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - manual_tax_calculators
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+                event_stores:
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - event_stores
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+    taxRuleResponseList:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/taxRuleResponse/properties/data'
+    taxRuleResponse:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            id:
+              type: string
+              description: Unique identifier for the resource (hash).
+              example: XAyRWNUzyN
+            type:
+              type: string
+              description: The resource's type
+              enum:
+              - tax_rules
+            links:
+              type: object
+              properties:
+                self:
+                  type: string
+                  description: URL
+            attributes:
+              $ref: '#/components/schemas/taxRule/properties/data/properties/attributes'
+            relationships:
+              type: object
+              properties:
+                manual_tax_calculator:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - manual_tax_calculator
+                        id:
+                          type: string
+                          description: The resource ID
+                event_stores:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - event_stores
+                        id:
+                          type: string
+                          description: The resource ID
   securitySchemes:
     bearerAuth:
       type: http
