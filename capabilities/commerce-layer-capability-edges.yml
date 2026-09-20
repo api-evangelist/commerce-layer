@@ -1,0 +1,423 @@
+slug: commerce-layer
+provider: Commerce Layer
+generated_by: planning/capability-mapping/scripts/classify_capabilities.py
+model: claude-opus-5
+frame:
+- Software & Technology
+min_confidence: 0.7
+capability_model:
+  source: https://github.com/vincentmakes/turbo-ea-capabilities
+  license: CC-BY-4.0
+  attribution: Turbo EA Capabilities by Vincent Verdet — Turbo EA, https://github.com/vincentmakes/turbo-ea-capabilities,
+    CC BY 4.0
+  notice: NOTICE
+edge_count: 45
+edges:
+- tag: percentage_discount_promotions
+  spec_file: commerce-layer-percentage-discount-promotions-api-openapi.yml
+  capability_id: BC-440.30
+  capability_id_l1: BC-440
+  capability_name: Discount & Promotion Management
+  confidence: 0.9
+  evidence: '"Create a percentage discount promotion" — schema percentageDiscountPromotion'
+  reason: Defines percentage-based promotional discounts, which is discount & promotion management.
+- tag: price_lists
+  spec_file: commerce-layer-price-lists-api-openapi.yml
+  capability_id: BC-440.20
+  capability_id_l1: BC-440
+  capability_name: Price List Management
+  confidence: 0.9
+  evidence: '"List all price lists", "Create a price list" — schema priceList'
+  reason: Direct CRUD over price lists, i.e. list/regional price book maintenance.
+- tag: fixed_amount_promotions
+  spec_file: commerce-layer-fixed-amount-promotions-api-openapi.yml
+  capability_id: BC-440.30
+  capability_id_l1: BC-440
+  capability_name: Discount & Promotion Management
+  confidence: 0.88
+  evidence: '"Create a fixed amount promotion", schema fixedAmountPromotion'
+  reason: Fixed-amount-off promotional offers — clearly discount and promotion management.
+- tag: free_gift_promotions
+  spec_file: commerce-layer-free-gift-promotions-api-openapi.yml
+  capability_id: BC-440.30
+  capability_id_l1: BC-440
+  capability_name: Discount & Promotion Management
+  confidence: 0.88
+  evidence: '"Create a free gift promotion", schema freeGiftPromotion'
+  reason: Free-gift promotional offers managed over their lifecycle — promotion management.
+- tag: buy_x_pay_y_promotions
+  spec_file: commerce-layer-buy-x-pay-y-promotions-api-openapi.yml
+  capability_id: BC-440.30
+  capability_id_l1: BC-440
+  capability_name: Discount & Promotion Management
+  confidence: 0.85
+  evidence: '"Create a buy x pay y promotion", schema "buyXPayYPromotion"'
+  reason: These operations define promotional offers (buy X pay Y), squarely Discount & Promotion Management.
+- tag: coupons
+  spec_file: commerce-layer-coupons-api-openapi.yml
+  capability_id: BC-440.30
+  capability_id_l1: BC-440
+  capability_name: Discount & Promotion Management
+  confidence: 0.85
+  evidence: '"List all coupons", "Create a coupon", schema "couponCreate"'
+  reason: Coupon lifecycle management is a direct realisation of Discount & Promotion Management.
+- tag: customers
+  spec_file: commerce-layer-customers-api-openapi.yml
+  capability_id: BC-420.10
+  capability_id_l1: BC-420
+  capability_name: Customer Data Management
+  confidence: 0.85
+  evidence: '"List all customers", "Create a customer", "Update a customer"; schemas customer, customerCreate'
+  reason: Direct CRUD lifecycle over the customer master record in a commerce platform — customer data
+    management.
+- tag: external_promotions
+  spec_file: commerce-layer-external-promotions-api-openapi.yml
+  capability_id: BC-440.30
+  capability_id_l1: BC-440
+  capability_name: Discount & Promotion Management
+  confidence: 0.85
+  evidence: '"Create an external promotion", schema externalPromotionCreate'
+  reason: Lifecycle CRUD over promotion definitions applied to orders — discount and promotion management.
+- tag: fixed_price_promotions
+  spec_file: commerce-layer-fixed-price-promotions-api-openapi.yml
+  capability_id: BC-440.30
+  capability_id_l1: BC-440
+  capability_name: Discount & Promotion Management
+  confidence: 0.85
+  evidence: '"Create a fixed price promotion", schema fixedPricePromotion'
+  reason: Promotional offer that sets a fixed promotional price — discount/promotion management (adjacent
+    to price list management, but framed as a promotion).
+- tag: free_shipping_promotions
+  spec_file: commerce-layer-free-shipping-promotions-api-openapi.yml
+  capability_id: BC-440.30
+  capability_id_l1: BC-440
+  capability_name: Discount & Promotion Management
+  confidence: 0.85
+  evidence: '"Create a free shipping promotion", schema freeShippingPromotion'
+  reason: Free-shipping promotional offers — promotion/discount management rather than logistics execution.
+- tag: permissions
+  spec_file: commerce-layer-permissions-api-openapi.yml
+  capability_id: BC-620.20
+  capability_id_l1: BC-620
+  capability_name: Identity & Access Management
+  confidence: 0.85
+  evidence: '"Creates an permission", "GET /roles/{roleId}/permissions  Related role"'
+  reason: Role-based permission administration within an organization — identity & access management.
+- tag: roles
+  spec_file: commerce-layer-roles-api-openapi.yml
+  capability_id: BC-620.20
+  capability_id_l1: BC-620
+  capability_name: Identity & Access Management
+  confidence: 0.85
+  evidence: '"Related permission", "Related membership", "Related API credential", "Creates an role"'
+  reason: Roles tied to permissions, memberships and API credentials in the provisioning API is role-based
+    access control — Identity & Access Management.
+- tag: custom_promotion_rules
+  spec_file: commerce-layer-custom-promotion-rules-api-openapi.yml
+  capability_id: BC-440.30
+  capability_id_l1: BC-440
+  capability_name: Discount & Promotion Management
+  confidence: 0.82
+  evidence: '"Create a custom promotion rule"; schemas: freeGiftPromotion, percentageDiscountPromotion,
+    buyXPayYPromotion, fixedAmountPromotion'
+  reason: Operations manage rules governing promotions and discounts (free gift, percentage discount,
+    buy-X-pay-Y), which is discount & promotion management rather than generic pricing strategy.
+- tag: flex_promotions
+  spec_file: commerce-layer-flex-promotions-api-openapi.yml
+  capability_id: BC-440.30
+  capability_id_l1: BC-440
+  capability_name: Discount & Promotion Management
+  confidence: 0.82
+  evidence: '"Create a flex promotion", schema flexPromotionCreate'
+  reason: Flexible rule-based promotional offer definitions — discount and promotion management.
+- tag: order_amount_promotion_rules
+  spec_file: commerce-layer-order-amount-promotion-rules-api-openapi.yml
+  capability_id: BC-440.30
+  capability_id_l1: BC-440
+  capability_name: Discount & Promotion Management
+  confidence: 0.82
+  evidence: '"Create an order amount promotion rule"; schemas: percentageDiscountPromotion, freeShippingPromotion,
+    fixedAmountPromotion, buyXPayYPromotion'
+  reason: Operations manage rules that gate promotions/discounts by order amount, with promotion type
+    schemas (percentage discount, free shipping, buy-X-pay-Y). That is discount and promotion management,
+    not order fulfilment.
+- tag: prices
+  spec_file: commerce-layer-prices-api-openapi.yml
+  capability_id: BC-440.20
+  capability_id_l1: BC-440
+  capability_name: Price List Management
+  confidence: 0.82
+  evidence: '"List all prices", "Create a price", schemas priceCreate/priceUpdate — maintenance of SKU
+    prices within price lists'
+  reason: CRUD over price records for a commerce catalogue is price book / price list maintenance, i.e.
+    Pricing Management → Price List Management. Not pricing strategy (no models or segment logic exposed).
+- tag: promotions
+  spec_file: commerce-layer-promotions-api-openapi.yml
+  capability_id: BC-440.30
+  capability_id_l1: BC-440
+  capability_name: Discount & Promotion Management
+  confidence: 0.82
+  evidence: '"List all promotions", "Retrieve a promotion", schema promotion'
+  reason: Promotions on a commerce platform are promotional offers/discounts applied to orders, matching
+    Discount & Promotion Management.
+- tag: sku_list_promotion_rules
+  spec_file: commerce-layer-sku-list-promotion-rules-api-openapi.yml
+  capability_id: BC-440.30
+  capability_id_l1: BC-440
+  capability_name: Discount & Promotion Management
+  confidence: 0.82
+  evidence: '"Create a SKU list promotion rule"; schemas percentageDiscountPromotion, freeGiftPromotion,
+    freeShippingPromotion, fixedAmountPromotion'
+  reason: Operations define rules that gate discount and promotion types against SKU lists, which is discount
+    and promotion administration.
+- tag: coupon_codes_promotion_rules
+  spec_file: commerce-layer-coupon-codes-promotion-rules-api-openapi.yml
+  capability_id: BC-440.30
+  capability_id_l1: BC-440
+  capability_name: Discount & Promotion Management
+  confidence: 0.8
+  evidence: '"Create a coupon codes promotion rule"; schemas "percentageDiscountPromotion", "freeShippingPromotion",
+    "fixedAmountPromotion"'
+  reason: Defines rules attaching coupon codes to discount promotions, which is discount and promotion
+    policy management.
+- tag: price_list_schedulers
+  spec_file: commerce-layer-price-list-schedulers-api-openapi.yml
+  capability_id: BC-440.20
+  capability_id_l1: BC-440
+  capability_name: Price List Management
+  confidence: 0.8
+  evidence: '"Create a price list scheduler" — schema priceListScheduler'
+  reason: Schedules activation of price lists for markets — price list management.
+- tag: reserved_stocks
+  spec_file: commerce-layer-reserved-stocks-api-openapi.yml
+  capability_id: BC-530.30
+  capability_id_l1: BC-530
+  capability_name: Inventory Allocation Management
+  confidence: 0.8
+  evidence: '"List all reserved stocks", "Retrieve a reserved stock", schema reservedStock'
+  reason: Reserved stock records represent inventory reservations against stock locations, which is precisely
+    Inventory Allocation Management ('allocation across the network, reservations').
+- tag: webhooks
+  spec_file: commerce-layer-webhooks-api-openapi.yml
+  capability_id: BC-4270.80
+  capability_id_l1: BC-4270
+  capability_name: Webhook & Event Subscription Management
+  confidence: 0.8
+  evidence: '"Create a webhook", "Update a webhook", "Delete a webhook"; schemas "webhookCreate", "webhookUpdate"'
+  reason: Full lifecycle CRUD over outbound webhook subscriptions exposed by the platform to integrators,
+    which is precisely the Webhook & Event Subscription Management sub-capability of the developer/API
+    ecosystem.
+- tag: promotion_rules
+  spec_file: commerce-layer-promotion-rules-api-openapi.yml
+  capability_id: BC-440.30
+  capability_id_l1: BC-440
+  capability_name: Discount & Promotion Management
+  confidence: 0.78
+  evidence: '"List all promotion rules", "Retrieve a promotion rule", schema promotionRule'
+  reason: Promotion rules define the conditions under which promotional offers/discounts apply — Discount
+    & Promotion Management. Read-only surface but semantics are unambiguous for a commerce API.
+- tag: stock_reservations
+  spec_file: commerce-layer-stock-reservations-api-openapi.yml
+  capability_id: BC-530.30
+  capability_id_l1: BC-530
+  capability_name: Inventory Allocation Management
+  confidence: 0.78
+  evidence: POST /stock_reservations  Create a stock reservation; schema stockReservation
+  reason: Creating and managing reservations of stock maps directly to Inventory Allocation Management,
+    whose definition explicitly covers reservations.
+- tag: bundles
+  spec_file: commerce-layer-bundles-api-openapi.yml
+  capability_id: BC-820.40
+  capability_id_l1: BC-820
+  capability_name: Product Configuration & Variant Management
+  confidence: 0.75
+  evidence: '"Create a bundle", schemas "bundleCreate", "bundle"; vendor lists "SKUs, bundles, prices"'
+  reason: Bundles group SKUs into sellable packages, matching Product Configuration & Variant Management
+    which explicitly covers options and bundles.
+- tag: easypost_pickups
+  spec_file: commerce-layer-easypost-pickups-api-openapi.yml
+  capability_id: BC-520.50
+  capability_id_l1: BC-520
+  capability_name: Logistics Operations Management
+  confidence: 0.75
+  evidence: '"Create an easypost pickup"; schema easypostPickup'
+  reason: Scheduling carrier (EasyPost) parcel pickups for shipments is transport/logistics execution
+    within outbound fulfilment.
+- tag: inventory_stock_locations
+  spec_file: commerce-layer-inventory-stock-locations-api-openapi.yml
+  capability_id: BC-530
+  capability_id_l1: BC-530
+  capability_name: Inventory Management
+  confidence: 0.75
+  evidence: '"List all inventory stock locations", schema "inventoryStockLocation"'
+  reason: Manages stock availability per location within the inventory model, which is inventory management;
+    specific sub-capability (stock levels vs allocation) is not named by the operations.
+- tag: price_frequency_tiers
+  spec_file: commerce-layer-price-frequency-tiers-api-openapi.yml
+  capability_id: BC-440.20
+  capability_id_l1: BC-440
+  capability_name: Price List Management
+  confidence: 0.75
+  evidence: '"Create a price frequency tier" — schema priceFrequencyTier'
+  reason: Tiered pricing rules by subscription frequency attached to price lists — price structure/price
+    book maintenance.
+- tag: price_volume_tiers
+  spec_file: commerce-layer-price-volume-tiers-api-openapi.yml
+  capability_id: BC-440.20
+  capability_id_l1: BC-440
+  capability_name: Price List Management
+  confidence: 0.75
+  evidence: '"Create a price volume tier" — schema priceVolumeTier'
+  reason: Volume-based tiered pricing definitions on prices — price structure/price list maintenance.
+- tag: customer_addresses
+  spec_file: commerce-layer-customer-addresses-api-openapi.yml
+  capability_id: BC-420.10
+  capability_id_l1: BC-420
+  capability_name: Customer Data Management
+  confidence: 0.72
+  evidence: '"List all customer addresses" ... "Create a customer address"; schema customerAddressCreate'
+  reason: CRUD over customer address records attached to customers is customer master/profile data maintenance.
+- tag: organizations
+  spec_file: commerce-layer-organizations-api-openapi.yml
+  capability_id: BC-4230.10
+  capability_id_l1: BC-4230
+  capability_name: Tenant Provisioning & Lifecycle
+  confidence: 0.72
+  evidence: '"POST /organizations  Creates an organization"; "PATCH /organizations/{organizationId}/transfer_ownership  Transfer
+    ownership of an organization"; related memberships, roles, permissions, api_credentials'
+  reason: 'This is the Provisioning API: it creates, updates and transfers ownership of organizations
+    (tenants) in the multi-tenant fleet, with links to memberships and credentials — tenant provisioning
+    and lifecycle.'
+- tag: shipments
+  spec_file: commerce-layer-shipments-api-openapi.yml
+  capability_id: BC-520.40
+  capability_id_l1: BC-520
+  capability_name: Order Fulfilment Management
+  confidence: 0.72
+  evidence: POST /shipments  "Create a shipment"; schemas shipmentCreate, shipmentUpdate
+  reason: Shipments in this commerce API represent the fulfilment records generated from orders; creating/updating
+    shipments is order fulfilment orchestration rather than a technical construct. Some ambiguity between
+    fulfilment (520.40) and logistics execution (520.50).
+- tag: tax_categories
+  spec_file: commerce-layer-tax-categories-api-openapi.yml
+  capability_id: BC-220.20
+  capability_id_l1: BC-220
+  capability_name: Indirect Tax Management
+  confidence: 0.72
+  evidence: '"Create a tax category"; schemas "avalaraAccount", "taxjarAccount", "vertexAccount", "manualTaxCalculator"'
+  reason: Tax categories bind products to tax treatment and to external tax engines (Avalara, TaxJar,
+    Vertex) for sales/VAT determination — indirect tax management within commerce. Not subscription tax,
+    so the cross-industry indirect tax capability fits best.
+- tag: api_credentials
+  spec_file: commerce-layer-api-credentials-api-openapi.yml
+  capability_id: BC-4270.40
+  capability_id_l1: BC-4270
+  capability_name: Developer Identity & Credential Management
+  confidence: 0.7
+  evidence: POST /api_credentials  Creates an API credential; GET /roles/{roleId}/api_credentials  Related
+    role
+  reason: Provisioning API surface for issuing and revoking API credentials (client credentials tied to
+    organizations, roles and application memberships) used to call the platform's APIs — developer credential
+    issuance and stewardship. Some overlap with generic IAM, so not maximal confidence.
+- tag: carrier_accounts
+  spec_file: commerce-layer-carrier-accounts-api-openapi.yml
+  capability_id: BC-520.50
+  capability_id_l1: BC-520
+  capability_name: Logistics Operations Management
+  confidence: 0.7
+  evidence: '"Create a carrier account", schema "carrierAccount"'
+  reason: Carrier accounts configure shipping carriers used to fulfil and ship orders, which falls under
+    logistics operations within the supply chain.
+- tag: coupon_recipients
+  spec_file: commerce-layer-coupon-recipients-api-openapi.yml
+  capability_id: BC-440.30
+  capability_id_l1: BC-440
+  capability_name: Discount & Promotion Management
+  confidence: 0.7
+  evidence: '"Create a coupon recipient", schema "couponRecipient"'
+  reason: Manages who receives targeted coupons, an operational part of promotional offer administration;
+    slightly lower confidence as it also touches customer data.
+- tag: discount_engines
+  spec_file: commerce-layer-discount-engines-api-openapi.yml
+  capability_id: BC-440.30
+  capability_id_l1: BC-440
+  capability_name: Discount & Promotion Management
+  confidence: 0.7
+  evidence: '"List all discount engines", "Retrieve a discount engine"; schema discountEngine'
+  reason: Configuration/exposure of engines that compute order discounts — discount management rather
+    than list price maintenance.
+- tag: inventory_models
+  spec_file: commerce-layer-inventory-models-api-openapi.yml
+  capability_id: BC-530
+  capability_id_l1: BC-530
+  capability_name: Inventory Management
+  confidence: 0.7
+  evidence: '"Create an inventory model", schema "inventoryModel"'
+  reason: Inventory models define the availability/stock-computation rules across stock locations in the
+    commerce platform, realising inventory management; evidence does not name a specific sub-capability.
+- tag: memberships
+  spec_file: commerce-layer-memberships-api-openapi.yml
+  capability_id: BC-620.20
+  capability_id_l1: BC-620
+  capability_name: Identity & Access Management
+  confidence: 0.7
+  evidence: '"POST /memberships/{membershipId}/resend  Resend invitation"; "GET /roles/{roleId}/memberships  Related
+    role"; "GET /organizations/{organizationId}/memberships"'
+  reason: Provisioning of users into an organization with roles and invitation resend — user account and
+    access administration, which is Identity & Access Management. Could alternatively be read as tenant
+    identity administration, so confidence is not maximal.
+- tag: orders
+  spec_file: commerce-layer-orders-api-openapi.yml
+  capability_id: BC-520.40
+  capability_id_l1: BC-520
+  capability_name: Order Fulfilment Management
+  confidence: 0.7
+  evidence: '"POST /orders  Create an order", "PATCH /orders/{orderId}  Update an order", schemas: order,
+    orderCreate, adyenPayment, wireTransfer'
+  reason: 'Core sales-order resource of a headless commerce platform: create/update/retrieve orders plus
+    stats and export. Closest candidate is order fulfilment/order lifecycle management; the analytics
+    endpoints are secondary.'
+- tag: parcels
+  spec_file: commerce-layer-parcels-api-openapi.yml
+  capability_id: BC-520.50
+  capability_id_l1: BC-520
+  capability_name: Logistics Operations Management
+  confidence: 0.7
+  evidence: '"POST /parcels  Create a parcel"; "GET /parcels/{parcelId}  Retrieve a parcel"'
+  reason: Parcels represent outbound shipment packages within shipments, so the surface realises transport/shipping
+    execution within the supply chain.
+- tag: payment_methods
+  spec_file: commerce-layer-payment-methods-api-openapi.yml
+  capability_id: BC-4250.40
+  capability_id_l1: BC-4250
+  capability_name: Payment Collection & Dunning
+  confidence: 0.7
+  evidence: '"List all payment methods", "Create a payment method" — schemas paymentMethodCreate, paymentMethodUpdate'
+  reason: Configures payment methods available for checkout/collection; closest candidate is Payment Collection
+    & Dunning (payment-method management). Frame lacks a native commerce payments capability, so confidence
+    moderate.
+- tag: paypal_payments
+  spec_file: commerce-layer-paypal-payments-api-openapi.yml
+  capability_id: BC-4250.40
+  capability_id_l1: BC-4250
+  capability_name: Payment Collection & Dunning
+  confidence: 0.7
+  evidence: '"List all paypal payments", "Create a paypal payment" — schema paypalPayment'
+  reason: Creates and manages PayPal payment authorisations for orders — payment authorisation/collection.
+- tag: price_tiers
+  spec_file: commerce-layer-price-tiers-api-openapi.yml
+  capability_id: BC-440.20
+  capability_id_l1: BC-440
+  capability_name: Price List Management
+  confidence: 0.7
+  evidence: '"List all price tiers", "Retrieve a price tier"'
+  reason: Read-only view of price tiers belonging to prices — part of price structure/price book management.
+- tag: tax_rules
+  spec_file: commerce-layer-tax-rules-api-openapi.yml
+  capability_id: BC-220.20
+  capability_id_l1: BC-220
+  capability_name: Indirect Tax Management
+  confidence: 0.7
+  evidence: '"Create a tax rule"; schemas "taxRule", "taxRuleUpdate"'
+  reason: CRUD over manual tax rules (rates/jurisdiction conditions) used to compute sales tax on orders
+    — indirect tax determination and compliance configuration.
