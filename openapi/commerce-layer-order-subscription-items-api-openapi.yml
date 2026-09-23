@@ -24,7 +24,6 @@ paths:
     get:
       operationId: GET/order_subscription_items
       summary: List all order subscription items
-      description: List all order subscription items
       tags:
       - order_subscription_items
       responses:
@@ -37,7 +36,6 @@ paths:
     post:
       operationId: POST/order_subscription_items
       summary: Create an order subscription item
-      description: Create an order subscription item
       tags:
       - order_subscription_items
       requestBody:
@@ -57,7 +55,6 @@ paths:
     get:
       operationId: GET/order_subscription_items/orderSubscriptionItemId
       summary: Retrieve an order subscription item
-      description: Retrieve an order subscription item
       tags:
       - order_subscription_items
       parameters:
@@ -77,7 +74,6 @@ paths:
     patch:
       operationId: PATCH/order_subscription_items/orderSubscriptionItemId
       summary: Update an order subscription item
-      description: Update an order subscription item
       tags:
       - order_subscription_items
       parameters:
@@ -103,7 +99,6 @@ paths:
     delete:
       operationId: DELETE/order_subscription_items/orderSubscriptionItemId
       summary: Delete an order subscription item
-      description: Delete an order subscription item
       tags:
       - order_subscription_items
       parameters:
@@ -118,50 +113,63 @@ paths:
           description: No content
 components:
   schemas:
-    orderSubscriptionItemUpdate:
-      required:
-      - data
+    adjustment:
       type: object
       properties:
         data:
           type: object
           required:
           - type
-          - id
           - attributes
           properties:
             type:
               type: string
               description: The resource's type
               enum:
-              - order_subscription_items
-            id:
-              type: string
-              description: Unique identifier for the resource (hash).
-              example: XAyRWNUzyN
+              - adjustments
             attributes:
               type: object
               properties:
-                sku_code:
+                name:
                   type: string
-                  description: The code of the associated SKU.
-                  example: TSHIRTMM000000FFFFFFXLXX
-                  nullable: true
-                bundle_code:
-                  type: string
-                  description: The code of the associated bundle.
-                  example: BUNDLEMM000000FFFFFFXLXX
-                  nullable: true
-                quantity:
-                  type: integer
-                  description: The subscription item quantity.
-                  example: 4
+                  description: The adjustment name.
+                  example: Additional service
                   nullable: false
-                unit_amount_cents:
+                currency_code:
+                  type: string
+                  description: The international 3-letter currency code as defined by the ISO 4217 standard.
+                  example: EUR
+                  nullable: false
+                amount_cents:
                   type: integer
-                  description: The unit amount of the subscription item, in cents.
-                  example: 9900
+                  description: The adjustment amount, in cents.
+                  example: 1500
+                  nullable: false
+                amount_float:
+                  type: number
+                  description: The adjustment amount, float.
+                  example: 15.0
+                  nullable: false
+                formatted_amount:
+                  type: string
+                  description: The adjustment amount, formatted.
+                  example: €15,00
+                  nullable: false
+                distribute_discount:
+                  type: boolean
+                  description: Indicates if negative adjustment amount is distributed for tax calculation.
+                  example: true
                   nullable: true
+                created_at:
+                  type: string
+                  description: Time at which the resource was created.
+                  example: '2018-01-01T12:00:00.000Z'
+                  nullable: false
+                updated_at:
+                  type: string
+                  description: Time at which the resource was last updated.
+                  example: '2018-01-01T12:00:00.000Z'
+                  nullable: false
                 reference:
                   type: string
                   description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
@@ -180,7 +188,22 @@ components:
                   nullable: true
             relationships:
               type: object
-              properties: {}
+              properties:
+                event_stores:
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - event_stores
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
     orderSubscriptionItemResponse:
       type: object
       properties:
@@ -368,208 +391,6 @@ components:
                         id:
                           type: string
                           description: The resource ID
-    orderSubscriptionItem:
-      type: object
-      properties:
-        data:
-          type: object
-          required:
-          - type
-          - attributes
-          properties:
-            type:
-              type: string
-              description: The resource's type
-              enum:
-              - order_subscription_items
-            attributes:
-              type: object
-              properties:
-                sku_code:
-                  type: string
-                  description: The code of the associated SKU.
-                  example: TSHIRTMM000000FFFFFFXLXX
-                  nullable: true
-                bundle_code:
-                  type: string
-                  description: The code of the associated bundle.
-                  example: BUNDLEMM000000FFFFFFXLXX
-                  nullable: true
-                quantity:
-                  type: integer
-                  description: The subscription item quantity.
-                  example: 4
-                  nullable: false
-                unit_amount_cents:
-                  type: integer
-                  description: The unit amount of the subscription item, in cents.
-                  example: 9900
-                  nullable: true
-                unit_amount_float:
-                  type: number
-                  description: The unit amount of the subscription item, float. This can be useful to track the purchase on thrid party systems, e.g Google Analyitcs Enhanced Ecommerce.
-                  example: 99.0
-                  nullable: true
-                formatted_unit_amount:
-                  type: string
-                  description: The unit amount of the subscription item, formatted. This can be useful to display the amount with currency in you views.
-                  example: €99,00
-                  nullable: true
-                total_amount_cents:
-                  type: integer
-                  description: Calculated as unit amount x quantity amount, in cents.
-                  example: 18800
-                  nullable: true
-                total_amount_float:
-                  type: number
-                  description: Calculated as unit amount x quantity amount, float. This can be useful to track the purchase on thrid party systems, e.g Google Analyitcs Enhanced Ecommerce.
-                  example: 188.0
-                  nullable: false
-                formatted_total_amount:
-                  type: string
-                  description: Calculated as unit amount x quantity amount, formatted. This can be useful to display the amount with currency in you views.
-                  example: €188,00
-                  nullable: true
-                created_at:
-                  type: string
-                  description: Time at which the resource was created.
-                  example: '2018-01-01T12:00:00.000Z'
-                  nullable: false
-                updated_at:
-                  type: string
-                  description: Time at which the resource was last updated.
-                  example: '2018-01-01T12:00:00.000Z'
-                  nullable: false
-                reference:
-                  type: string
-                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
-                  example: ANY-EXTERNAL-REFEFERNCE
-                  nullable: true
-                reference_origin:
-                  type: string
-                  description: Any identifier of the third party system that defines the reference code.
-                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
-                  nullable: true
-                metadata:
-                  type: object
-                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
-                  example:
-                    foo: bar
-                  nullable: true
-            relationships:
-              type: object
-              properties:
-                order_subscription:
-                  type: object
-                  properties:
-                    data:
-                      type: object
-                      properties:
-                        type:
-                          type: string
-                          description: The resource's type
-                          enum:
-                          - order_subscriptions
-                        id:
-                          type: string
-                          description: Unique identifier for the resource (hash).
-                          example: XAyRWNUzyN
-                item:
-                  type: object
-                  properties:
-                    data:
-                      type: object
-                      properties:
-                        type:
-                          type: string
-                          description: The resource's type
-                          enum:
-                          - skus
-                          - bundles
-                          - adjustments
-                        id:
-                          type: string
-                          description: Unique identifier for the resource (hash).
-                          example: XAyRWNUzyN
-                  oneOf:
-                  - $ref: '#/components/schemas/sku'
-                  - $ref: '#/components/schemas/bundle'
-                  - $ref: '#/components/schemas/adjustment'
-                sku:
-                  type: object
-                  properties:
-                    data:
-                      type: object
-                      properties:
-                        type:
-                          type: string
-                          description: The resource's type
-                          enum:
-                          - skus
-                        id:
-                          type: string
-                          description: Unique identifier for the resource (hash).
-                          example: XAyRWNUzyN
-                bundle:
-                  type: object
-                  properties:
-                    data:
-                      type: object
-                      properties:
-                        type:
-                          type: string
-                          description: The resource's type
-                          enum:
-                          - bundles
-                        id:
-                          type: string
-                          description: Unique identifier for the resource (hash).
-                          example: XAyRWNUzyN
-                adjustment:
-                  type: object
-                  properties:
-                    data:
-                      type: object
-                      properties:
-                        type:
-                          type: string
-                          description: The resource's type
-                          enum:
-                          - adjustments
-                        id:
-                          type: string
-                          description: Unique identifier for the resource (hash).
-                          example: XAyRWNUzyN
-                source_line_item:
-                  type: object
-                  properties:
-                    data:
-                      type: object
-                      properties:
-                        type:
-                          type: string
-                          description: The resource's type
-                          enum:
-                          - line_items
-                        id:
-                          type: string
-                          description: Unique identifier for the resource (hash).
-                          example: XAyRWNUzyN
-                event_stores:
-                  type: object
-                  properties:
-                    data:
-                      type: object
-                      properties:
-                        type:
-                          type: string
-                          description: The resource's type
-                          enum:
-                          - event_stores
-                        id:
-                          type: string
-                          description: Unique identifier for the resource (hash).
-                          example: XAyRWNUzyN
     sku:
       type: object
       properties:
@@ -979,63 +800,57 @@ components:
                           type: string
                           description: Unique identifier for the resource (hash).
                           example: XAyRWNUzyN
-    adjustment:
+    orderSubscriptionItemResponseList:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/orderSubscriptionItemResponse/properties/data'
+    orderSubscriptionItemUpdate:
+      required:
+      - data
       type: object
       properties:
         data:
           type: object
           required:
           - type
+          - id
           - attributes
           properties:
             type:
               type: string
               description: The resource's type
               enum:
-              - adjustments
+              - order_subscription_items
+            id:
+              type: string
+              description: Unique identifier for the resource (hash).
+              example: XAyRWNUzyN
             attributes:
               type: object
               properties:
-                name:
+                sku_code:
                   type: string
-                  description: The adjustment name.
-                  example: Additional service
-                  nullable: false
-                currency_code:
-                  type: string
-                  description: The international 3-letter currency code as defined by the ISO 4217 standard.
-                  example: EUR
-                  nullable: false
-                amount_cents:
-                  type: integer
-                  description: The adjustment amount, in cents.
-                  example: 1500
-                  nullable: false
-                amount_float:
-                  type: number
-                  description: The adjustment amount, float.
-                  example: 15.0
-                  nullable: false
-                formatted_amount:
-                  type: string
-                  description: The adjustment amount, formatted.
-                  example: €15,00
-                  nullable: false
-                distribute_discount:
-                  type: boolean
-                  description: Indicates if negative adjustment amount is distributed for tax calculation.
-                  example: true
+                  description: The code of the associated SKU.
+                  example: TSHIRTMM000000FFFFFFXLXX
                   nullable: true
-                created_at:
+                bundle_code:
                   type: string
-                  description: Time at which the resource was created.
-                  example: '2018-01-01T12:00:00.000Z'
+                  description: The code of the associated bundle.
+                  example: BUNDLEMM000000FFFFFFXLXX
+                  nullable: true
+                quantity:
+                  type: integer
+                  description: The subscription item quantity.
+                  example: 4
                   nullable: false
-                updated_at:
-                  type: string
-                  description: Time at which the resource was last updated.
-                  example: '2018-01-01T12:00:00.000Z'
-                  nullable: false
+                unit_amount_cents:
+                  type: integer
+                  description: The unit amount of the subscription item, in cents.
+                  example: 9900
+                  nullable: true
                 reference:
                   type: string
                   description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
@@ -1054,22 +869,7 @@ components:
                   nullable: true
             relationships:
               type: object
-              properties:
-                event_stores:
-                  type: object
-                  properties:
-                    data:
-                      type: object
-                      properties:
-                        type:
-                          type: string
-                          description: The resource's type
-                          enum:
-                          - event_stores
-                        id:
-                          type: string
-                          description: Unique identifier for the resource (hash).
-                          example: XAyRWNUzyN
+              properties: {}
     bundle:
       type: object
       properties:
@@ -1291,13 +1091,208 @@ components:
                           type: string
                           description: Unique identifier for the resource (hash).
                           example: XAyRWNUzyN
-    orderSubscriptionItemResponseList:
+    orderSubscriptionItem:
       type: object
       properties:
         data:
-          type: array
-          items:
-            $ref: '#/components/schemas/orderSubscriptionItemResponse/properties/data'
+          type: object
+          required:
+          - type
+          - attributes
+          properties:
+            type:
+              type: string
+              description: The resource's type
+              enum:
+              - order_subscription_items
+            attributes:
+              type: object
+              properties:
+                sku_code:
+                  type: string
+                  description: The code of the associated SKU.
+                  example: TSHIRTMM000000FFFFFFXLXX
+                  nullable: true
+                bundle_code:
+                  type: string
+                  description: The code of the associated bundle.
+                  example: BUNDLEMM000000FFFFFFXLXX
+                  nullable: true
+                quantity:
+                  type: integer
+                  description: The subscription item quantity.
+                  example: 4
+                  nullable: false
+                unit_amount_cents:
+                  type: integer
+                  description: The unit amount of the subscription item, in cents.
+                  example: 9900
+                  nullable: true
+                unit_amount_float:
+                  type: number
+                  description: The unit amount of the subscription item, float. This can be useful to track the purchase on thrid party systems, e.g Google Analyitcs Enhanced Ecommerce.
+                  example: 99.0
+                  nullable: true
+                formatted_unit_amount:
+                  type: string
+                  description: The unit amount of the subscription item, formatted. This can be useful to display the amount with currency in you views.
+                  example: €99,00
+                  nullable: true
+                total_amount_cents:
+                  type: integer
+                  description: Calculated as unit amount x quantity amount, in cents.
+                  example: 18800
+                  nullable: true
+                total_amount_float:
+                  type: number
+                  description: Calculated as unit amount x quantity amount, float. This can be useful to track the purchase on thrid party systems, e.g Google Analyitcs Enhanced Ecommerce.
+                  example: 188.0
+                  nullable: false
+                formatted_total_amount:
+                  type: string
+                  description: Calculated as unit amount x quantity amount, formatted. This can be useful to display the amount with currency in you views.
+                  example: €188,00
+                  nullable: true
+                created_at:
+                  type: string
+                  description: Time at which the resource was created.
+                  example: '2018-01-01T12:00:00.000Z'
+                  nullable: false
+                updated_at:
+                  type: string
+                  description: Time at which the resource was last updated.
+                  example: '2018-01-01T12:00:00.000Z'
+                  nullable: false
+                reference:
+                  type: string
+                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
+                  example: ANY-EXTERNAL-REFEFERNCE
+                  nullable: true
+                reference_origin:
+                  type: string
+                  description: Any identifier of the third party system that defines the reference code.
+                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
+                  nullable: true
+                metadata:
+                  type: object
+                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
+                  example:
+                    foo: bar
+                  nullable: true
+            relationships:
+              type: object
+              properties:
+                order_subscription:
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - order_subscriptions
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+                item:
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - skus
+                          - bundles
+                          - adjustments
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+                  oneOf:
+                  - $ref: '#/components/schemas/sku'
+                  - $ref: '#/components/schemas/bundle'
+                  - $ref: '#/components/schemas/adjustment'
+                sku:
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - skus
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+                bundle:
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - bundles
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+                adjustment:
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - adjustments
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+                source_line_item:
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - line_items
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+                event_stores:
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - event_stores
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
     orderSubscriptionItemCreate:
       required:
       - data

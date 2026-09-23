@@ -24,7 +24,6 @@ paths:
     get:
       operationId: GET/checkout_com_payments
       summary: List all checkout.com payments
-      description: List all checkout.com payments
       tags:
       - checkout_com_payments
       responses:
@@ -37,7 +36,6 @@ paths:
     post:
       operationId: POST/checkout_com_payments
       summary: Create a checkout.com payment
-      description: Create a checkout.com payment
       tags:
       - checkout_com_payments
       requestBody:
@@ -57,7 +55,6 @@ paths:
     get:
       operationId: GET/checkout_com_payments/checkoutComPaymentId
       summary: Retrieve a checkout.com payment
-      description: Retrieve a checkout.com payment
       tags:
       - checkout_com_payments
       parameters:
@@ -77,7 +74,6 @@ paths:
     patch:
       operationId: PATCH/checkout_com_payments/checkoutComPaymentId
       summary: Update a checkout.com payment
-      description: Update a checkout.com payment
       tags:
       - checkout_com_payments
       parameters:
@@ -103,7 +99,6 @@ paths:
     delete:
       operationId: DELETE/checkout_com_payments/checkoutComPaymentId
       summary: Delete a checkout.com payment
-      description: Delete a checkout.com payment
       tags:
       - checkout_com_payments
       parameters:
@@ -118,183 +113,6 @@ paths:
           description: No content
 components:
   schemas:
-    checkoutComPaymentResponse:
-      type: object
-      properties:
-        data:
-          type: object
-          properties:
-            id:
-              type: string
-              description: Unique identifier for the resource (hash).
-              example: XAyRWNUzyN
-            type:
-              type: string
-              description: The resource's type
-              enum:
-              - checkout_com_payments
-            links:
-              type: object
-              properties:
-                self:
-                  type: string
-                  description: URL
-            attributes:
-              $ref: '#/components/schemas/checkoutComPayment/properties/data/properties/attributes'
-            relationships:
-              type: object
-              properties:
-                order:
-                  type: object
-                  properties:
-                    links:
-                      type: object
-                      properties:
-                        self:
-                          type: string
-                          description: URL
-                        related:
-                          type: string
-                          description: URL
-                    data:
-                      type: object
-                      properties:
-                        type:
-                          type: string
-                          description: The resource's type
-                          enum:
-                          - order
-                        id:
-                          type: string
-                          description: The resource ID
-                payment_gateway:
-                  type: object
-                  properties:
-                    links:
-                      type: object
-                      properties:
-                        self:
-                          type: string
-                          description: URL
-                        related:
-                          type: string
-                          description: URL
-                    data:
-                      type: object
-                      properties:
-                        type:
-                          type: string
-                          description: The resource's type
-                          enum:
-                          - payment_gateway
-                        id:
-                          type: string
-                          description: The resource ID
-                event_stores:
-                  type: object
-                  properties:
-                    links:
-                      type: object
-                      properties:
-                        self:
-                          type: string
-                          description: URL
-                        related:
-                          type: string
-                          description: URL
-                    data:
-                      type: object
-                      properties:
-                        type:
-                          type: string
-                          description: The resource's type
-                          enum:
-                          - event_stores
-                        id:
-                          type: string
-                          description: The resource ID
-    checkoutComPaymentUpdate:
-      required:
-      - data
-      type: object
-      properties:
-        data:
-          type: object
-          required:
-          - type
-          - id
-          - attributes
-          properties:
-            type:
-              type: string
-              description: The resource's type
-              enum:
-              - checkout_com_payments
-            id:
-              type: string
-              description: Unique identifier for the resource (hash).
-              example: XAyRWNUzyN
-            attributes:
-              type: object
-              properties:
-                token:
-                  type: string
-                  description: The Checkout.com payment or digital wallet token.
-                  example: tok_4gzeau5o2uqubbk6fufs3m7p54
-                  nullable: false
-                _details:
-                  type: boolean
-                  description: Send this attribute if you want to send additional details the payment request (i.e. upon 3DS check).
-                  example: true
-                  nullable: false
-                _refresh:
-                  type: boolean
-                  description: Send this attribute if you want to refresh all the pending transactions, can be used as webhooks fallback logic.
-                  example: true
-                  nullable: false
-                reference:
-                  type: string
-                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
-                  example: ANY-EXTERNAL-REFEFERNCE
-                  nullable: true
-                reference_origin:
-                  type: string
-                  description: Any identifier of the third party system that defines the reference code.
-                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
-                  nullable: true
-                metadata:
-                  type: object
-                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
-                  example:
-                    foo: bar
-                  nullable: true
-            relationships:
-              type: object
-              properties:
-                order:
-                  required:
-                  - data
-                  type: object
-                  properties:
-                    data:
-                      type: object
-                      properties:
-                        type:
-                          type: string
-                          description: The resource's type
-                          enum:
-                          - orders
-                        id:
-                          type: string
-                          description: Unique identifier for the resource (hash).
-                          example: XAyRWNUzyN
-    checkoutComPaymentResponseList:
-      type: object
-      properties:
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/checkoutComPaymentResponse/properties/data'
     checkoutComPayment:
       type: object
       properties:
@@ -450,6 +268,88 @@ components:
                           type: string
                           description: Unique identifier for the resource (hash).
                           example: XAyRWNUzyN
+    checkoutComPaymentUpdate:
+      required:
+      - data
+      type: object
+      properties:
+        data:
+          type: object
+          required:
+          - type
+          - id
+          - attributes
+          properties:
+            type:
+              type: string
+              description: The resource's type
+              enum:
+              - checkout_com_payments
+            id:
+              type: string
+              description: Unique identifier for the resource (hash).
+              example: XAyRWNUzyN
+            attributes:
+              type: object
+              properties:
+                token:
+                  type: string
+                  description: The Checkout.com payment or digital wallet token.
+                  example: tok_4gzeau5o2uqubbk6fufs3m7p54
+                  nullable: false
+                _details:
+                  type: boolean
+                  description: Send this attribute if you want to send additional details the payment request (i.e. upon 3DS check).
+                  example: true
+                  nullable: false
+                _refresh:
+                  type: boolean
+                  description: Send this attribute if you want to refresh all the pending transactions, can be used as webhooks fallback logic.
+                  example: true
+                  nullable: false
+                reference:
+                  type: string
+                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
+                  example: ANY-EXTERNAL-REFEFERNCE
+                  nullable: true
+                reference_origin:
+                  type: string
+                  description: Any identifier of the third party system that defines the reference code.
+                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
+                  nullable: true
+                metadata:
+                  type: object
+                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
+                  example:
+                    foo: bar
+                  nullable: true
+            relationships:
+              type: object
+              properties:
+                order:
+                  required:
+                  - data
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - orders
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+    checkoutComPaymentResponseList:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/checkoutComPaymentResponse/properties/data'
     checkoutComPaymentCreate:
       required:
       - data
@@ -520,6 +420,101 @@ components:
                           example: XAyRWNUzyN
               required:
               - order
+    checkoutComPaymentResponse:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            id:
+              type: string
+              description: Unique identifier for the resource (hash).
+              example: XAyRWNUzyN
+            type:
+              type: string
+              description: The resource's type
+              enum:
+              - checkout_com_payments
+            links:
+              type: object
+              properties:
+                self:
+                  type: string
+                  description: URL
+            attributes:
+              $ref: '#/components/schemas/checkoutComPayment/properties/data/properties/attributes'
+            relationships:
+              type: object
+              properties:
+                order:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - order
+                        id:
+                          type: string
+                          description: The resource ID
+                payment_gateway:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - payment_gateway
+                        id:
+                          type: string
+                          description: The resource ID
+                event_stores:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - event_stores
+                        id:
+                          type: string
+                          description: The resource ID
   securitySchemes:
     bearerAuth:
       type: http

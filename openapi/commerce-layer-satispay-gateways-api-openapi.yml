@@ -24,7 +24,6 @@ paths:
     get:
       operationId: GET/satispay_gateways
       summary: List all satispay gateways
-      description: List all satispay gateways
       tags:
       - satispay_gateways
       responses:
@@ -37,7 +36,6 @@ paths:
     post:
       operationId: POST/satispay_gateways
       summary: Create a satispay gateway
-      description: Create a satispay gateway
       tags:
       - satispay_gateways
       requestBody:
@@ -57,7 +55,6 @@ paths:
     get:
       operationId: GET/satispay_gateways/satispayGatewayId
       summary: Retrieve a satispay gateway
-      description: Retrieve a satispay gateway
       tags:
       - satispay_gateways
       parameters:
@@ -77,7 +74,6 @@ paths:
     patch:
       operationId: PATCH/satispay_gateways/satispayGatewayId
       summary: Update a satispay gateway
-      description: Update a satispay gateway
       tags:
       - satispay_gateways
       parameters:
@@ -103,7 +99,6 @@ paths:
     delete:
       operationId: DELETE/satispay_gateways/satispayGatewayId
       summary: Delete a satispay gateway
-      description: Delete a satispay gateway
       tags:
       - satispay_gateways
       parameters:
@@ -118,108 +113,6 @@ paths:
           description: No content
 components:
   schemas:
-    satispayGatewayResponseList:
-      type: object
-      properties:
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/satispayGatewayResponse/properties/data'
-    satispayGatewayResponse:
-      type: object
-      properties:
-        data:
-          type: object
-          properties:
-            id:
-              type: string
-              description: Unique identifier for the resource (hash).
-              example: XAyRWNUzyN
-            type:
-              type: string
-              description: The resource's type
-              enum:
-              - satispay_gateways
-            links:
-              type: object
-              properties:
-                self:
-                  type: string
-                  description: URL
-            attributes:
-              $ref: '#/components/schemas/satispayGateway/properties/data/properties/attributes'
-            relationships:
-              type: object
-              properties:
-                payment_methods:
-                  type: object
-                  properties:
-                    links:
-                      type: object
-                      properties:
-                        self:
-                          type: string
-                          description: URL
-                        related:
-                          type: string
-                          description: URL
-                    data:
-                      type: object
-                      properties:
-                        type:
-                          type: string
-                          description: The resource's type
-                          enum:
-                          - payment_methods
-                        id:
-                          type: string
-                          description: The resource ID
-                event_stores:
-                  type: object
-                  properties:
-                    links:
-                      type: object
-                      properties:
-                        self:
-                          type: string
-                          description: URL
-                        related:
-                          type: string
-                          description: URL
-                    data:
-                      type: object
-                      properties:
-                        type:
-                          type: string
-                          description: The resource's type
-                          enum:
-                          - event_stores
-                        id:
-                          type: string
-                          description: The resource ID
-                satispay_payments:
-                  type: object
-                  properties:
-                    links:
-                      type: object
-                      properties:
-                        self:
-                          type: string
-                          description: URL
-                        related:
-                          type: string
-                          description: URL
-                    data:
-                      type: object
-                      properties:
-                        type:
-                          type: string
-                          description: The resource's type
-                          enum:
-                          - satispay_payments
-                        id:
-                          type: string
-                          description: The resource ID
     satispayGatewayUpdate:
       required:
       - data
@@ -300,6 +193,13 @@ components:
                           type: string
                           description: Unique identifier for the resource (hash).
                           example: XAyRWNUzyN
+    satispayGatewayResponseList:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/satispayGatewayResponse/properties/data'
     satispayGateway:
       type: object
       properties:
@@ -427,6 +327,101 @@ components:
                           type: string
                           description: Unique identifier for the resource (hash).
                           example: XAyRWNUzyN
+    satispayGatewayResponse:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            id:
+              type: string
+              description: Unique identifier for the resource (hash).
+              example: XAyRWNUzyN
+            type:
+              type: string
+              description: The resource's type
+              enum:
+              - satispay_gateways
+            links:
+              type: object
+              properties:
+                self:
+                  type: string
+                  description: URL
+            attributes:
+              $ref: '#/components/schemas/satispayGateway/properties/data/properties/attributes'
+            relationships:
+              type: object
+              properties:
+                payment_methods:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - payment_methods
+                        id:
+                          type: string
+                          description: The resource ID
+                event_stores:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - event_stores
+                        id:
+                          type: string
+                          description: The resource ID
+                satispay_payments:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - satispay_payments
+                        id:
+                          type: string
+                          description: The resource ID
     satispayGatewayCreate:
       required:
       - data

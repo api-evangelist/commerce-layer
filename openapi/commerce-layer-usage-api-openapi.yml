@@ -15,7 +15,7 @@ servers:
 security:
 - bearerAuth: []
 tags:
-- name: usage
+- name: Usage
   description: Operations with usage resource
 paths:
   /usage/date_breakdown:
@@ -24,7 +24,7 @@ paths:
       summary: Query date_breakdown on usage
       description: Get date_breakdown results from usage
       tags:
-      - usage
+      - Usage
       requestBody:
         required: true
         content:
@@ -92,7 +92,7 @@ paths:
       summary: Query search on usage
       description: Get search results from usage
       tags:
-      - usage
+      - Usage
       requestBody:
         required: true
         content:
@@ -190,6 +190,58 @@ paths:
                             example: LS0tCi0gJzIwMjEtMTEtMD
 components:
   schemas:
+    usage_search_request:
+      type: object
+      properties:
+        filter:
+          $ref: '#/components/schemas/usage_search_filter'
+        search:
+          type: object
+          required:
+          - sort
+          properties:
+            sort:
+              type: string
+              description: Result sorting
+              enum:
+              - asc
+              - desc
+            limit:
+              type: integer
+              description: Results limit
+        meta:
+          type: object
+          properties:
+            payload:
+              type: boolean
+              description: Set to true if you want to receive how the payload has been made
+    usage_date_breakdown_request:
+      type: object
+      properties:
+        filter:
+          $ref: '#/components/schemas/usage_date_breakdown_filter'
+        date_breakdown:
+          type: object
+          required:
+          - interval
+          - by_dimension
+          properties:
+            interval:
+              type: string
+              description: Interval to query
+              enum:
+              - day
+              - month
+              - year
+            by_dimension:
+              type: boolean
+              description: Enables a nested breakdown by dimension
+        meta:
+          type: object
+          properties:
+            payload:
+              type: boolean
+              description: Set to true if you want to receive how the payload has been made
     usage_search_filter:
       type: object
       properties:
@@ -275,58 +327,6 @@ components:
                   items:
                     type: string
                   description: To include, array of ids
-    usage_date_breakdown_request:
-      type: object
-      properties:
-        filter:
-          $ref: '#/components/schemas/usage_date_breakdown_filter'
-        date_breakdown:
-          type: object
-          required:
-          - interval
-          - by_dimension
-          properties:
-            interval:
-              type: string
-              description: Interval to query
-              enum:
-              - day
-              - month
-              - year
-            by_dimension:
-              type: boolean
-              description: Enables a nested breakdown by dimension
-        meta:
-          type: object
-          properties:
-            payload:
-              type: boolean
-              description: Set to true if you want to receive how the payload has been made
-    usage_search_request:
-      type: object
-      properties:
-        filter:
-          $ref: '#/components/schemas/usage_search_filter'
-        search:
-          type: object
-          required:
-          - sort
-          properties:
-            sort:
-              type: string
-              description: Result sorting
-              enum:
-              - asc
-              - desc
-            limit:
-              type: integer
-              description: Results limit
-        meta:
-          type: object
-          properties:
-            payload:
-              type: boolean
-              description: Set to true if you want to receive how the payload has been made
     usage_date_breakdown_filter:
       type: object
       properties:

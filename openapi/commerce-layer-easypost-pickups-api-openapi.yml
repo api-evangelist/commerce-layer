@@ -24,7 +24,6 @@ paths:
     get:
       operationId: GET/easypost_pickups
       summary: List all easypost pickups
-      description: List all easypost pickups
       tags:
       - easypost_pickups
       responses:
@@ -37,7 +36,6 @@ paths:
     post:
       operationId: POST/easypost_pickups
       summary: Create an easypost pickup
-      description: Create an easypost pickup
       tags:
       - easypost_pickups
       requestBody:
@@ -57,7 +55,6 @@ paths:
     get:
       operationId: GET/easypost_pickups/easypostPickupId
       summary: Retrieve an easypost pickup
-      description: Retrieve an easypost pickup
       tags:
       - easypost_pickups
       parameters:
@@ -77,7 +74,6 @@ paths:
     patch:
       operationId: PATCH/easypost_pickups/easypostPickupId
       summary: Update an easypost pickup
-      description: Update an easypost pickup
       tags:
       - easypost_pickups
       parameters:
@@ -103,7 +99,6 @@ paths:
     delete:
       operationId: DELETE/easypost_pickups/easypostPickupId
       summary: Delete an easypost pickup
-      description: Delete an easypost pickup
       tags:
       - easypost_pickups
       parameters:
@@ -118,7 +113,7 @@ paths:
           description: No content
 components:
   schemas:
-    easypostPickupCreate:
+    easypostPickupUpdate:
       required:
       - data
       type: object
@@ -127,6 +122,7 @@ components:
           type: object
           required:
           - type
+          - id
           - attributes
           properties:
             type:
@@ -134,6 +130,10 @@ components:
               description: The resource's type
               enum:
               - easypost_pickups
+            id:
+              type: string
+              description: Unique identifier for the resource (hash).
+              example: XAyRWNUzyN
             attributes:
               type: object
               properties:
@@ -141,30 +141,28 @@ components:
                   type: string
                   description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
                   example: ANY-EXTERNAL-REFEFERNCE
+                  nullable: true
                 reference_origin:
                   type: string
                   description: Any identifier of the third party system that defines the reference code.
                   example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
+                  nullable: true
                 metadata:
                   type: object
                   description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
                   example:
                     foo: bar
-                instructions:
+                  nullable: true
+                selected_rate_id:
                   type: string
-                  description: Additional text to help the driver successfully obtain the package, automatically enriched with parcels and package informations.
-                  example: Knock loudly
-                min_datetime:
-                  type: string
-                  description: The earliest time at which the package is available to pick up, must be larger than 2 hours from creation time.
-                  example: '2018-01-01T12:00:00.000Z'
-                max_datetime:
-                  type: string
-                  description: The latest time at which the package is available to pick up, must be smaller than 24 hours from creation time.
-                  example: '2018-01-01T12:00:00.000Z'
-              required:
-              - min_datetime
-              - max_datetime
+                  description: The selected purchase rate from the available pick up rates.
+                  example: pickuprate_a6cd2647a898410aa5d33febde44e1b2
+                  nullable: true
+                _purchase:
+                  type: boolean
+                  description: Send this attribute if you want to purchase this pick up with the selected rate.
+                  example: true
+                  nullable: false
             relationships:
               type: object
               properties:
@@ -185,8 +183,6 @@ components:
                           type: string
                           description: Unique identifier for the resource (hash).
                           example: XAyRWNUzyN
-              required:
-              - shipment
     easypostPickupResponse:
       type: object
       properties:
@@ -305,6 +301,13 @@ components:
                         id:
                           type: string
                           description: The resource ID
+    easypostPickupResponseList:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/easypostPickupResponse/properties/data'
     easypostPickup:
       type: object
       properties:
@@ -469,14 +472,7 @@ components:
                           type: string
                           description: Unique identifier for the resource (hash).
                           example: XAyRWNUzyN
-    easypostPickupResponseList:
-      type: object
-      properties:
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/easypostPickupResponse/properties/data'
-    easypostPickupUpdate:
+    easypostPickupCreate:
       required:
       - data
       type: object
@@ -485,7 +481,6 @@ components:
           type: object
           required:
           - type
-          - id
           - attributes
           properties:
             type:
@@ -493,10 +488,6 @@ components:
               description: The resource's type
               enum:
               - easypost_pickups
-            id:
-              type: string
-              description: Unique identifier for the resource (hash).
-              example: XAyRWNUzyN
             attributes:
               type: object
               properties:
@@ -504,28 +495,30 @@ components:
                   type: string
                   description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
                   example: ANY-EXTERNAL-REFEFERNCE
-                  nullable: true
                 reference_origin:
                   type: string
                   description: Any identifier of the third party system that defines the reference code.
                   example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
-                  nullable: true
                 metadata:
                   type: object
                   description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
                   example:
                     foo: bar
-                  nullable: true
-                selected_rate_id:
+                instructions:
                   type: string
-                  description: The selected purchase rate from the available pick up rates.
-                  example: pickuprate_a6cd2647a898410aa5d33febde44e1b2
-                  nullable: true
-                _purchase:
-                  type: boolean
-                  description: Send this attribute if you want to purchase this pick up with the selected rate.
-                  example: true
-                  nullable: false
+                  description: Additional text to help the driver successfully obtain the package, automatically enriched with parcels and package informations.
+                  example: Knock loudly
+                min_datetime:
+                  type: string
+                  description: The earliest time at which the package is available to pick up, must be larger than 2 hours from creation time.
+                  example: '2018-01-01T12:00:00.000Z'
+                max_datetime:
+                  type: string
+                  description: The latest time at which the package is available to pick up, must be smaller than 24 hours from creation time.
+                  example: '2018-01-01T12:00:00.000Z'
+              required:
+              - min_datetime
+              - max_datetime
             relationships:
               type: object
               properties:
@@ -546,6 +539,8 @@ components:
                           type: string
                           description: Unique identifier for the resource (hash).
                           example: XAyRWNUzyN
+              required:
+              - shipment
   securitySchemes:
     bearerAuth:
       type: http

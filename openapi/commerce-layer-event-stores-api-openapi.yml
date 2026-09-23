@@ -24,7 +24,6 @@ paths:
     get:
       operationId: GET/event_stores/eventStoreId
       summary: Retrieve an event store
-      description: Retrieve an event store
       tags:
       - event_stores
       parameters:
@@ -43,6 +42,32 @@ paths:
                 $ref: '#/components/schemas/eventStoreResponse'
 components:
   schemas:
+    eventStoreResponse:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            id:
+              type: string
+              description: The event identifier.
+              example: 1755185525941-0
+            type:
+              type: string
+              description: The resource's type
+              enum:
+              - event_stores
+            links:
+              type: object
+              properties:
+                self:
+                  type: string
+                  description: URL
+            attributes:
+              $ref: '#/components/schemas/eventStore/properties/data/properties/attributes'
+            relationships:
+              type: object
+              properties: {}
     eventStore:
       type: object
       properties:
@@ -121,32 +146,6 @@ components:
                   example:
                     foo: bar
                   nullable: true
-            relationships:
-              type: object
-              properties: {}
-    eventStoreResponse:
-      type: object
-      properties:
-        data:
-          type: object
-          properties:
-            id:
-              type: string
-              description: The event identifier.
-              example: 1755185525941-0
-            type:
-              type: string
-              description: The resource's type
-              enum:
-              - event_stores
-            links:
-              type: object
-              properties:
-                self:
-                  type: string
-                  description: URL
-            attributes:
-              $ref: '#/components/schemas/eventStore/properties/data/properties/attributes'
             relationships:
               type: object
               properties: {}

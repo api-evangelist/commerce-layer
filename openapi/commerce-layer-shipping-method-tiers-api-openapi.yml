@@ -24,7 +24,6 @@ paths:
     get:
       operationId: GET/shipping_method_tiers
       summary: List all shipping method tiers
-      description: List all shipping method tiers
       tags:
       - shipping_method_tiers
       responses:
@@ -38,7 +37,6 @@ paths:
     get:
       operationId: GET/shipping_method_tiers/shippingMethodTierId
       summary: Retrieve a shipping method tier
-      description: Retrieve a shipping method tier
       tags:
       - shipping_method_tiers
       parameters:
@@ -57,6 +55,13 @@ paths:
                 $ref: '#/components/schemas/shippingMethodTierResponse'
 components:
   schemas:
+    shippingMethodTierResponseList:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/shippingMethodTierResponse/properties/data'
     shippingMethodTier:
       type: object
       properties:
@@ -275,13 +280,6 @@ components:
                         id:
                           type: string
                           description: The resource ID
-    shippingMethodTierResponseList:
-      type: object
-      properties:
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/shippingMethodTierResponse/properties/data'
   securitySchemes:
     bearerAuth:
       type: http

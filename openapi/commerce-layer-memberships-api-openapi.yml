@@ -15,16 +15,15 @@ servers:
 security:
 - bearerAuth: []
 tags:
-- name: memberships
+- name: Memberships
   description: resource type
 paths:
   /application_memberships/{applicationMembershipId}/membership:
     get:
       operationId: GET/applicationMembershipId/membership
       summary: Related application membership
-      description: Related application membership
       tags:
-      - memberships
+      - Memberships
       parameters:
       - name: applicationMembershipId
         in: path
@@ -39,9 +38,8 @@ paths:
     post:
       operationId: POST/memberships
       summary: Creates an membership
-      description: Creates an membership
       tags:
-      - memberships
+      - Memberships
       requestBody:
         required: true
         content:
@@ -58,9 +56,8 @@ paths:
     get:
       operationId: GET/memberships
       summary: List all memberships
-      description: List all memberships
       tags:
-      - memberships
+      - Memberships
       responses:
         '200':
           description: A list of membership objects
@@ -72,7 +69,6 @@ paths:
     get:
       operationId: GET/memberships/membershipId
       summary: Retrieve an membership
-      description: Retrieve an membership
       parameters:
       - name: membershipId
         in: path
@@ -81,7 +77,7 @@ paths:
         required: true
         description: The ID of the resource.
       tags:
-      - memberships
+      - Memberships
       responses:
         '200':
           description: The membership object
@@ -92,9 +88,8 @@ paths:
     patch:
       operationId: PATCH/memberships/membershipId
       summary: Updates an membership
-      description: Updates an membership
       tags:
-      - memberships
+      - Memberships
       parameters:
       - name: membershipId
         in: path
@@ -118,9 +113,8 @@ paths:
     delete:
       operationId: DELETE/memberships/membershipId
       summary: Delete an membership
-      description: Delete an membership
       tags:
-      - memberships
+      - Memberships
       parameters:
       - name: membershipId
         in: path
@@ -137,7 +131,7 @@ paths:
       summary: Resend invitation
       description: Resend invitation for the given membership
       tags:
-      - memberships
+      - Memberships
       parameters:
       - name: membershipId
         in: path
@@ -157,9 +151,8 @@ paths:
     get:
       operationId: GET/organizationId/memberships
       summary: Related organization
-      description: Related organization
       tags:
-      - memberships
+      - Memberships
       parameters:
       - name: organizationId
         in: path
@@ -174,9 +167,8 @@ paths:
     get:
       operationId: GET/roleId/memberships
       summary: Related role
-      description: Related role
       tags:
-      - memberships
+      - Memberships
       parameters:
       - name: roleId
         in: path
@@ -189,6 +181,147 @@ paths:
           description: The memberships associated to the role
 components:
   schemas:
+    membershipResponse:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            id:
+              type: string
+              description: The ID of the resource.
+              example: XGZwpOSrWL
+            type:
+              type: string
+              description: The resource's type.
+              enum:
+              - memberships
+            links:
+              type: object
+              properties:
+                self:
+                  type: string
+                  description: URL
+            attributes:
+              $ref: '#/components/schemas/membership/properties/data/properties/attributes'
+            relationships:
+              type: object
+              properties:
+                organization:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type.
+                          enum:
+                          - organization
+                        id:
+                          type: string
+                          description: The ID of the resource.
+                role:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type.
+                          enum:
+                          - role
+                        id:
+                          type: string
+                          description: The ID of the resource.
+                application_memberships:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type.
+                          enum:
+                          - application_memberships
+                        id:
+                          type: string
+                          description: The ID of the resource.
+                membership_profile:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type.
+                          enum:
+                          - membership_profile
+                        id:
+                          type: string
+                          description: The ID of the resource.
+                versions:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type.
+                          enum:
+                          - versions
+                        id:
+                          type: string
+                          description: The ID of the resource.
     membershipCreate:
       required:
       - data
@@ -423,147 +556,6 @@ components:
                           type: string
                           description: The ID of the resource.
                           example: XGZwpOSrWL
-    membershipResponse:
-      type: object
-      properties:
-        data:
-          type: object
-          properties:
-            id:
-              type: string
-              description: The ID of the resource.
-              example: XGZwpOSrWL
-            type:
-              type: string
-              description: The resource's type.
-              enum:
-              - memberships
-            links:
-              type: object
-              properties:
-                self:
-                  type: string
-                  description: URL
-            attributes:
-              $ref: '#/components/schemas/membership/properties/data/properties/attributes'
-            relationships:
-              type: object
-              properties:
-                organization:
-                  type: object
-                  properties:
-                    links:
-                      type: object
-                      properties:
-                        self:
-                          type: string
-                          description: URL
-                        related:
-                          type: string
-                          description: URL
-                    data:
-                      type: object
-                      properties:
-                        type:
-                          type: string
-                          description: The resource's type.
-                          enum:
-                          - organization
-                        id:
-                          type: string
-                          description: The ID of the resource.
-                role:
-                  type: object
-                  properties:
-                    links:
-                      type: object
-                      properties:
-                        self:
-                          type: string
-                          description: URL
-                        related:
-                          type: string
-                          description: URL
-                    data:
-                      type: object
-                      properties:
-                        type:
-                          type: string
-                          description: The resource's type.
-                          enum:
-                          - role
-                        id:
-                          type: string
-                          description: The ID of the resource.
-                application_memberships:
-                  type: object
-                  properties:
-                    links:
-                      type: object
-                      properties:
-                        self:
-                          type: string
-                          description: URL
-                        related:
-                          type: string
-                          description: URL
-                    data:
-                      type: object
-                      properties:
-                        type:
-                          type: string
-                          description: The resource's type.
-                          enum:
-                          - application_memberships
-                        id:
-                          type: string
-                          description: The ID of the resource.
-                membership_profile:
-                  type: object
-                  properties:
-                    links:
-                      type: object
-                      properties:
-                        self:
-                          type: string
-                          description: URL
-                        related:
-                          type: string
-                          description: URL
-                    data:
-                      type: object
-                      properties:
-                        type:
-                          type: string
-                          description: The resource's type.
-                          enum:
-                          - membership_profile
-                        id:
-                          type: string
-                          description: The ID of the resource.
-                versions:
-                  type: object
-                  properties:
-                    links:
-                      type: object
-                      properties:
-                        self:
-                          type: string
-                          description: URL
-                        related:
-                          type: string
-                          description: URL
-                    data:
-                      type: object
-                      properties:
-                        type:
-                          type: string
-                          description: The resource's type.
-                          enum:
-                          - versions
-                        id:
-                          type: string
-                          description: The ID of the resource.
     membership:
       type: object
       properties:

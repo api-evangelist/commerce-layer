@@ -24,7 +24,6 @@ paths:
     get:
       operationId: GET/klarna_gateways
       summary: List all klarna gateways
-      description: List all klarna gateways
       tags:
       - klarna_gateways
       responses:
@@ -37,7 +36,6 @@ paths:
     post:
       operationId: POST/klarna_gateways
       summary: Create a klarna gateway
-      description: Create a klarna gateway
       tags:
       - klarna_gateways
       requestBody:
@@ -57,7 +55,6 @@ paths:
     get:
       operationId: GET/klarna_gateways/klarnaGatewayId
       summary: Retrieve a klarna gateway
-      description: Retrieve a klarna gateway
       tags:
       - klarna_gateways
       parameters:
@@ -77,7 +74,6 @@ paths:
     patch:
       operationId: PATCH/klarna_gateways/klarnaGatewayId
       summary: Update a klarna gateway
-      description: Update a klarna gateway
       tags:
       - klarna_gateways
       parameters:
@@ -103,7 +99,6 @@ paths:
     delete:
       operationId: DELETE/klarna_gateways/klarnaGatewayId
       summary: Delete a klarna gateway
-      description: Delete a klarna gateway
       tags:
       - klarna_gateways
       parameters:
@@ -118,108 +113,6 @@ paths:
           description: No content
 components:
   schemas:
-    klarnaGatewayResponse:
-      type: object
-      properties:
-        data:
-          type: object
-          properties:
-            id:
-              type: string
-              description: Unique identifier for the resource (hash).
-              example: XAyRWNUzyN
-            type:
-              type: string
-              description: The resource's type
-              enum:
-              - klarna_gateways
-            links:
-              type: object
-              properties:
-                self:
-                  type: string
-                  description: URL
-            attributes:
-              $ref: '#/components/schemas/klarnaGateway/properties/data/properties/attributes'
-            relationships:
-              type: object
-              properties:
-                payment_methods:
-                  type: object
-                  properties:
-                    links:
-                      type: object
-                      properties:
-                        self:
-                          type: string
-                          description: URL
-                        related:
-                          type: string
-                          description: URL
-                    data:
-                      type: object
-                      properties:
-                        type:
-                          type: string
-                          description: The resource's type
-                          enum:
-                          - payment_methods
-                        id:
-                          type: string
-                          description: The resource ID
-                event_stores:
-                  type: object
-                  properties:
-                    links:
-                      type: object
-                      properties:
-                        self:
-                          type: string
-                          description: URL
-                        related:
-                          type: string
-                          description: URL
-                    data:
-                      type: object
-                      properties:
-                        type:
-                          type: string
-                          description: The resource's type
-                          enum:
-                          - event_stores
-                        id:
-                          type: string
-                          description: The resource ID
-                klarna_payments:
-                  type: object
-                  properties:
-                    links:
-                      type: object
-                      properties:
-                        self:
-                          type: string
-                          description: URL
-                        related:
-                          type: string
-                          description: URL
-                    data:
-                      type: object
-                      properties:
-                        type:
-                          type: string
-                          description: The resource's type
-                          enum:
-                          - klarna_payments
-                        id:
-                          type: string
-                          description: The resource ID
-    klarnaGatewayResponseList:
-      type: object
-      properties:
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/klarnaGatewayResponse/properties/data'
     klarnaGatewayCreate:
       required:
       - data
@@ -397,6 +290,101 @@ components:
                           type: string
                           description: Unique identifier for the resource (hash).
                           example: XAyRWNUzyN
+    klarnaGatewayResponse:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            id:
+              type: string
+              description: Unique identifier for the resource (hash).
+              example: XAyRWNUzyN
+            type:
+              type: string
+              description: The resource's type
+              enum:
+              - klarna_gateways
+            links:
+              type: object
+              properties:
+                self:
+                  type: string
+                  description: URL
+            attributes:
+              $ref: '#/components/schemas/klarnaGateway/properties/data/properties/attributes'
+            relationships:
+              type: object
+              properties:
+                payment_methods:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - payment_methods
+                        id:
+                          type: string
+                          description: The resource ID
+                event_stores:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - event_stores
+                        id:
+                          type: string
+                          description: The resource ID
+                klarna_payments:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - klarna_payments
+                        id:
+                          type: string
+                          description: The resource ID
     klarnaGateway:
       type: object
       properties:
@@ -509,6 +497,13 @@ components:
                           type: string
                           description: Unique identifier for the resource (hash).
                           example: XAyRWNUzyN
+    klarnaGatewayResponseList:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/klarnaGatewayResponse/properties/data'
   securitySchemes:
     bearerAuth:
       type: http

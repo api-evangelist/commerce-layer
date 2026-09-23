@@ -17,16 +17,15 @@ servers:
 security:
 - bearerAuth: []
 tags:
-- name: payment_options
+- name: Payment Options
   description: resource type
 paths:
   /payment_options:
     get:
       operationId: GET/payment_options
       summary: List all payment options
-      description: List all payment options
       tags:
-      - payment_options
+      - Payment Options
       responses:
         '200':
           description: A list of payment option objects
@@ -37,9 +36,8 @@ paths:
     post:
       operationId: POST/payment_options
       summary: Create a payment option
-      description: Create a payment option
       tags:
-      - payment_options
+      - Payment Options
       requestBody:
         required: true
         content:
@@ -57,9 +55,8 @@ paths:
     get:
       operationId: GET/payment_options/paymentOptionId
       summary: Retrieve a payment option
-      description: Retrieve a payment option
       tags:
-      - payment_options
+      - Payment Options
       parameters:
       - name: paymentOptionId
         in: path
@@ -77,9 +74,8 @@ paths:
     patch:
       operationId: PATCH/payment_options/paymentOptionId
       summary: Update a payment option
-      description: Update a payment option
       tags:
-      - payment_options
+      - Payment Options
       parameters:
       - name: paymentOptionId
         in: path
@@ -103,9 +99,8 @@ paths:
     delete:
       operationId: DELETE/payment_options/paymentOptionId
       summary: Delete a payment option
-      description: Delete a payment option
       tags:
-      - payment_options
+      - Payment Options
       parameters:
       - name: paymentOptionId
         in: path
@@ -118,6 +113,85 @@ paths:
           description: No content
 components:
   schemas:
+    paymentOptionResponseList:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/paymentOptionResponse/properties/data'
+    paymentOptionUpdate:
+      required:
+      - data
+      type: object
+      properties:
+        data:
+          type: object
+          required:
+          - type
+          - id
+          - attributes
+          properties:
+            type:
+              type: string
+              description: The resource's type
+              enum:
+              - payment_options
+            id:
+              type: string
+              description: Unique identifier for the resource (hash).
+              example: XAyRWNUzyN
+            attributes:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: The payment option's name. Wehn blank is inherited by payment source type.
+                  example: Stripe Payment Option
+                  nullable: true
+                data:
+                  type: object
+                  description: The payment options data to be added to the payment source payload. Check payment specific API for more details.
+                  example:
+                    application_fee_amount: 1000
+                    on_behalf_of: pm_xxx
+                  nullable: false
+                reference:
+                  type: string
+                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
+                  example: ANY-EXTERNAL-REFEFERNCE
+                  nullable: true
+                reference_origin:
+                  type: string
+                  description: Any identifier of the third party system that defines the reference code.
+                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
+                  nullable: true
+                metadata:
+                  type: object
+                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
+                  example:
+                    foo: bar
+                  nullable: true
+            relationships:
+              type: object
+              properties:
+                order:
+                  required:
+                  - data
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - orders
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
     paymentOption:
       type: object
       properties:
@@ -332,13 +406,6 @@ components:
                         id:
                           type: string
                           description: The resource ID
-    paymentOptionResponseList:
-      type: object
-      properties:
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/paymentOptionResponse/properties/data'
     paymentOptionCreate:
       required:
       - data
@@ -421,78 +488,6 @@ components:
                           example: XAyRWNUzyN
               required:
               - order
-    paymentOptionUpdate:
-      required:
-      - data
-      type: object
-      properties:
-        data:
-          type: object
-          required:
-          - type
-          - id
-          - attributes
-          properties:
-            type:
-              type: string
-              description: The resource's type
-              enum:
-              - payment_options
-            id:
-              type: string
-              description: Unique identifier for the resource (hash).
-              example: XAyRWNUzyN
-            attributes:
-              type: object
-              properties:
-                name:
-                  type: string
-                  description: The payment option's name. Wehn blank is inherited by payment source type.
-                  example: Stripe Payment Option
-                  nullable: true
-                data:
-                  type: object
-                  description: The payment options data to be added to the payment source payload. Check payment specific API for more details.
-                  example:
-                    application_fee_amount: 1000
-                    on_behalf_of: pm_xxx
-                  nullable: false
-                reference:
-                  type: string
-                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
-                  example: ANY-EXTERNAL-REFEFERNCE
-                  nullable: true
-                reference_origin:
-                  type: string
-                  description: Any identifier of the third party system that defines the reference code.
-                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
-                  nullable: true
-                metadata:
-                  type: object
-                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
-                  example:
-                    foo: bar
-                  nullable: true
-            relationships:
-              type: object
-              properties:
-                order:
-                  required:
-                  - data
-                  type: object
-                  properties:
-                    data:
-                      type: object
-                      properties:
-                        type:
-                          type: string
-                          description: The resource's type
-                          enum:
-                          - orders
-                        id:
-                          type: string
-                          description: Unique identifier for the resource (hash).
-                          example: XAyRWNUzyN
   securitySchemes:
     bearerAuth:
       type: http

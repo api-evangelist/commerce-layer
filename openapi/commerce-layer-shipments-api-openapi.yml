@@ -17,16 +17,15 @@ servers:
 security:
 - bearerAuth: []
 tags:
-- name: shipments
+- name: Shipments
   description: resource type
 paths:
   /shipments:
     get:
       operationId: GET/shipments
       summary: List all shipments
-      description: List all shipments
       tags:
-      - shipments
+      - Shipments
       responses:
         '200':
           description: A list of shipment objects
@@ -37,9 +36,8 @@ paths:
     post:
       operationId: POST/shipments
       summary: Create a shipment
-      description: Create a shipment
       tags:
-      - shipments
+      - Shipments
       requestBody:
         required: true
         content:
@@ -57,9 +55,8 @@ paths:
     get:
       operationId: GET/shipments/shipmentId
       summary: Retrieve a shipment
-      description: Retrieve a shipment
       tags:
-      - shipments
+      - Shipments
       parameters:
       - name: shipmentId
         in: path
@@ -77,9 +74,8 @@ paths:
     patch:
       operationId: PATCH/shipments/shipmentId
       summary: Update a shipment
-      description: Update a shipment
       tags:
-      - shipments
+      - Shipments
       parameters:
       - name: shipmentId
         in: path
@@ -103,9 +99,8 @@ paths:
     delete:
       operationId: DELETE/shipments/shipmentId
       summary: Delete a shipment
-      description: Delete a shipment
       tags:
-      - shipments
+      - Shipments
       parameters:
       - name: shipmentId
         in: path
@@ -125,146 +120,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/shipmentResponse/properties/data'
-    shipmentCreate:
-      required:
-      - data
-      type: object
-      properties:
-        data:
-          type: object
-          required:
-          - type
-          - attributes
-          properties:
-            type:
-              type: string
-              description: The resource's type
-              enum:
-              - shipments
-            attributes:
-              type: object
-              properties:
-                reference:
-                  type: string
-                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
-                  example: ANY-EXTERNAL-REFEFERNCE
-                reference_origin:
-                  type: string
-                  description: Any identifier of the third party system that defines the reference code.
-                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
-                metadata:
-                  type: object
-                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
-                  example:
-                    foo: bar
-            relationships:
-              type: object
-              properties:
-                order:
-                  required:
-                  - data
-                  type: object
-                  properties:
-                    data:
-                      type: object
-                      properties:
-                        type:
-                          type: string
-                          description: The resource's type
-                          enum:
-                          - orders
-                        id:
-                          type: string
-                          description: Unique identifier for the resource (hash).
-                          example: XAyRWNUzyN
-                shipping_category:
-                  required:
-                  - data
-                  type: object
-                  properties:
-                    data:
-                      type: object
-                      properties:
-                        type:
-                          type: string
-                          description: The resource's type
-                          enum:
-                          - shipping_categories
-                        id:
-                          type: string
-                          description: Unique identifier for the resource (hash).
-                          example: XAyRWNUzyN
-                inventory_stock_location:
-                  required:
-                  - data
-                  type: object
-                  properties:
-                    data:
-                      type: object
-                      properties:
-                        type:
-                          type: string
-                          description: The resource's type
-                          enum:
-                          - inventory_stock_locations
-                        id:
-                          type: string
-                          description: Unique identifier for the resource (hash).
-                          example: XAyRWNUzyN
-                shipping_address:
-                  required:
-                  - data
-                  type: object
-                  properties:
-                    data:
-                      type: object
-                      properties:
-                        type:
-                          type: string
-                          description: The resource's type
-                          enum:
-                          - addresses
-                        id:
-                          type: string
-                          description: Unique identifier for the resource (hash).
-                          example: XAyRWNUzyN
-                shipping_method:
-                  required:
-                  - data
-                  type: object
-                  properties:
-                    data:
-                      type: object
-                      properties:
-                        type:
-                          type: string
-                          description: The resource's type
-                          enum:
-                          - shipping_methods
-                        id:
-                          type: string
-                          description: Unique identifier for the resource (hash).
-                          example: XAyRWNUzyN
-                tags:
-                  required:
-                  - data
-                  type: object
-                  properties:
-                    data:
-                      type: object
-                      properties:
-                        type:
-                          type: string
-                          description: The resource's type
-                          enum:
-                          - tags
-                        id:
-                          type: string
-                          description: Unique identifier for the resource (hash).
-                          example: XAyRWNUzyN
-              required:
-              - order
-              - inventory_stock_location
     shipmentResponse:
       type: object
       properties:
@@ -728,6 +583,355 @@ components:
                         id:
                           type: string
                           description: The resource ID
+    shipmentCreate:
+      required:
+      - data
+      type: object
+      properties:
+        data:
+          type: object
+          required:
+          - type
+          - attributes
+          properties:
+            type:
+              type: string
+              description: The resource's type
+              enum:
+              - shipments
+            attributes:
+              type: object
+              properties:
+                reference:
+                  type: string
+                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
+                  example: ANY-EXTERNAL-REFEFERNCE
+                reference_origin:
+                  type: string
+                  description: Any identifier of the third party system that defines the reference code.
+                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
+                metadata:
+                  type: object
+                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
+                  example:
+                    foo: bar
+            relationships:
+              type: object
+              properties:
+                order:
+                  required:
+                  - data
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - orders
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+                shipping_category:
+                  required:
+                  - data
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - shipping_categories
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+                inventory_stock_location:
+                  required:
+                  - data
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - inventory_stock_locations
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+                shipping_address:
+                  required:
+                  - data
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - addresses
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+                shipping_method:
+                  required:
+                  - data
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - shipping_methods
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+                tags:
+                  required:
+                  - data
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - tags
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+              required:
+              - order
+              - inventory_stock_location
+    shipmentUpdate:
+      required:
+      - data
+      type: object
+      properties:
+        data:
+          type: object
+          required:
+          - type
+          - id
+          - attributes
+          properties:
+            type:
+              type: string
+              description: The resource's type
+              enum:
+              - shipments
+            id:
+              type: string
+              description: Unique identifier for the resource (hash).
+              example: XAyRWNUzyN
+            attributes:
+              type: object
+              properties:
+                number:
+                  type: string
+                  description: Unique identifier for the shipment. Cannot be passed by sales channels.
+                  example: '#1234/S/001'
+                  nullable: false
+                _upcoming:
+                  type: boolean
+                  description: Send this attribute if you want to mark this shipment as upcoming. Cannot be passed by sales channels.
+                  example: true
+                  nullable: false
+                _cancel:
+                  type: boolean
+                  description: Send this attribute if you want to mark this shipment as cancelled (unless already shipped or delivered). Cannot be passed by sales channels.
+                  example: true
+                  nullable: false
+                _on_hold:
+                  type: boolean
+                  description: Send this attribute if you want to put this shipment on hold.
+                  example: true
+                  nullable: false
+                _picking:
+                  type: boolean
+                  description: Send this attribute if you want to start picking this shipment.
+                  example: true
+                  nullable: false
+                _packing:
+                  type: boolean
+                  description: Send this attribute if you want to start packing this shipment.
+                  example: true
+                  nullable: false
+                _ready_to_ship:
+                  type: boolean
+                  description: Send this attribute if you want to mark this shipment as ready to ship.
+                  example: true
+                  nullable: false
+                _ship:
+                  type: boolean
+                  description: Send this attribute if you want to mark this shipment as shipped.
+                  example: true
+                  nullable: false
+                _deliver:
+                  type: boolean
+                  description: Send this attribute if you want to mark this shipment as delivered.
+                  example: true
+                  nullable: false
+                _reserve_stock:
+                  type: boolean
+                  description: Send this attribute if you want to automatically reserve the stock for each of the associated stock line item. Can be done only when fulfillment is in progress. Cannot be passed by sales channels.
+                  example: true
+                  nullable: false
+                _release_stock:
+                  type: boolean
+                  description: Send this attribute if you want to automatically destroy the stock reservations for each of the associated stock line item. Can be done only when fulfillment is in progress. Cannot be passed by sales channels.
+                  example: true
+                  nullable: false
+                _decrement_stock:
+                  type: boolean
+                  description: Send this attribute if you want to automatically decrement and release the stock for each of the associated stock line item. Can be done only when fulfillment is in progress. Cannot be passed by sales channels.
+                  example: true
+                  nullable: false
+                _get_rates:
+                  type: boolean
+                  description: Send this attribute if you want get the shipping rates from the associated carrier accounts.
+                  example: true
+                  nullable: false
+                selected_rate_id:
+                  type: string
+                  description: The selected purchase rate from the available shipping rates.
+                  example: rate_f89e4663c3ed47ee94d37763f6d21d54
+                  nullable: true
+                _purchase:
+                  type: boolean
+                  description: Send this attribute if you want to purchase this shipment with the selected rate.
+                  example: true
+                  nullable: false
+                _add_tags:
+                  type: string
+                  description: Comma separated list of tags to be added. Duplicates, invalid and non existing ones are discarded. Cannot be passed by sales channels.
+                _remove_tags:
+                  type: string
+                  description: Comma separated list of tags to be removed. Duplicates, invalid and non existing ones are discarded. Cannot be passed by sales channels.
+                reference:
+                  type: string
+                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
+                  example: ANY-EXTERNAL-REFEFERNCE
+                  nullable: true
+                reference_origin:
+                  type: string
+                  description: Any identifier of the third party system that defines the reference code.
+                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
+                  nullable: true
+                metadata:
+                  type: object
+                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
+                  example:
+                    foo: bar
+                  nullable: true
+            relationships:
+              type: object
+              properties:
+                shipping_category:
+                  required:
+                  - data
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - shipping_categories
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+                inventory_stock_location:
+                  required:
+                  - data
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - inventory_stock_locations
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+                shipping_address:
+                  required:
+                  - data
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - addresses
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+                shipping_method:
+                  required:
+                  - data
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - shipping_methods
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+                tags:
+                  required:
+                  - data
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - tags
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
     shipment:
       type: object
       properties:
@@ -1191,215 +1395,6 @@ components:
                           description: The resource's type
                           enum:
                           - event_stores
-                        id:
-                          type: string
-                          description: Unique identifier for the resource (hash).
-                          example: XAyRWNUzyN
-    shipmentUpdate:
-      required:
-      - data
-      type: object
-      properties:
-        data:
-          type: object
-          required:
-          - type
-          - id
-          - attributes
-          properties:
-            type:
-              type: string
-              description: The resource's type
-              enum:
-              - shipments
-            id:
-              type: string
-              description: Unique identifier for the resource (hash).
-              example: XAyRWNUzyN
-            attributes:
-              type: object
-              properties:
-                number:
-                  type: string
-                  description: Unique identifier for the shipment. Cannot be passed by sales channels.
-                  example: '#1234/S/001'
-                  nullable: false
-                _upcoming:
-                  type: boolean
-                  description: Send this attribute if you want to mark this shipment as upcoming. Cannot be passed by sales channels.
-                  example: true
-                  nullable: false
-                _cancel:
-                  type: boolean
-                  description: Send this attribute if you want to mark this shipment as cancelled (unless already shipped or delivered). Cannot be passed by sales channels.
-                  example: true
-                  nullable: false
-                _on_hold:
-                  type: boolean
-                  description: Send this attribute if you want to put this shipment on hold.
-                  example: true
-                  nullable: false
-                _picking:
-                  type: boolean
-                  description: Send this attribute if you want to start picking this shipment.
-                  example: true
-                  nullable: false
-                _packing:
-                  type: boolean
-                  description: Send this attribute if you want to start packing this shipment.
-                  example: true
-                  nullable: false
-                _ready_to_ship:
-                  type: boolean
-                  description: Send this attribute if you want to mark this shipment as ready to ship.
-                  example: true
-                  nullable: false
-                _ship:
-                  type: boolean
-                  description: Send this attribute if you want to mark this shipment as shipped.
-                  example: true
-                  nullable: false
-                _deliver:
-                  type: boolean
-                  description: Send this attribute if you want to mark this shipment as delivered.
-                  example: true
-                  nullable: false
-                _reserve_stock:
-                  type: boolean
-                  description: Send this attribute if you want to automatically reserve the stock for each of the associated stock line item. Can be done only when fulfillment is in progress. Cannot be passed by sales channels.
-                  example: true
-                  nullable: false
-                _release_stock:
-                  type: boolean
-                  description: Send this attribute if you want to automatically destroy the stock reservations for each of the associated stock line item. Can be done only when fulfillment is in progress. Cannot be passed by sales channels.
-                  example: true
-                  nullable: false
-                _decrement_stock:
-                  type: boolean
-                  description: Send this attribute if you want to automatically decrement and release the stock for each of the associated stock line item. Can be done only when fulfillment is in progress. Cannot be passed by sales channels.
-                  example: true
-                  nullable: false
-                _get_rates:
-                  type: boolean
-                  description: Send this attribute if you want get the shipping rates from the associated carrier accounts.
-                  example: true
-                  nullable: false
-                selected_rate_id:
-                  type: string
-                  description: The selected purchase rate from the available shipping rates.
-                  example: rate_f89e4663c3ed47ee94d37763f6d21d54
-                  nullable: true
-                _purchase:
-                  type: boolean
-                  description: Send this attribute if you want to purchase this shipment with the selected rate.
-                  example: true
-                  nullable: false
-                _add_tags:
-                  type: string
-                  description: Comma separated list of tags to be added. Duplicates, invalid and non existing ones are discarded. Cannot be passed by sales channels.
-                _remove_tags:
-                  type: string
-                  description: Comma separated list of tags to be removed. Duplicates, invalid and non existing ones are discarded. Cannot be passed by sales channels.
-                reference:
-                  type: string
-                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
-                  example: ANY-EXTERNAL-REFEFERNCE
-                  nullable: true
-                reference_origin:
-                  type: string
-                  description: Any identifier of the third party system that defines the reference code.
-                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
-                  nullable: true
-                metadata:
-                  type: object
-                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
-                  example:
-                    foo: bar
-                  nullable: true
-            relationships:
-              type: object
-              properties:
-                shipping_category:
-                  required:
-                  - data
-                  type: object
-                  properties:
-                    data:
-                      type: object
-                      properties:
-                        type:
-                          type: string
-                          description: The resource's type
-                          enum:
-                          - shipping_categories
-                        id:
-                          type: string
-                          description: Unique identifier for the resource (hash).
-                          example: XAyRWNUzyN
-                inventory_stock_location:
-                  required:
-                  - data
-                  type: object
-                  properties:
-                    data:
-                      type: object
-                      properties:
-                        type:
-                          type: string
-                          description: The resource's type
-                          enum:
-                          - inventory_stock_locations
-                        id:
-                          type: string
-                          description: Unique identifier for the resource (hash).
-                          example: XAyRWNUzyN
-                shipping_address:
-                  required:
-                  - data
-                  type: object
-                  properties:
-                    data:
-                      type: object
-                      properties:
-                        type:
-                          type: string
-                          description: The resource's type
-                          enum:
-                          - addresses
-                        id:
-                          type: string
-                          description: Unique identifier for the resource (hash).
-                          example: XAyRWNUzyN
-                shipping_method:
-                  required:
-                  - data
-                  type: object
-                  properties:
-                    data:
-                      type: object
-                      properties:
-                        type:
-                          type: string
-                          description: The resource's type
-                          enum:
-                          - shipping_methods
-                        id:
-                          type: string
-                          description: Unique identifier for the resource (hash).
-                          example: XAyRWNUzyN
-                tags:
-                  required:
-                  - data
-                  type: object
-                  properties:
-                    data:
-                      type: object
-                      properties:
-                        type:
-                          type: string
-                          description: The resource's type
-                          enum:
-                          - tags
                         id:
                           type: string
                           description: Unique identifier for the resource (hash).

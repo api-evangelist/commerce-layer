@@ -17,16 +17,15 @@ servers:
 security:
 - bearerAuth: []
 tags:
-- name: carrier_accounts
+- name: Carrier Accounts
   description: resource type
 paths:
   /carrier_accounts:
     get:
       operationId: GET/carrier_accounts
       summary: List all carrier accounts
-      description: List all carrier accounts
       tags:
-      - carrier_accounts
+      - Carrier Accounts
       responses:
         '200':
           description: A list of carrier account objects
@@ -37,9 +36,8 @@ paths:
     post:
       operationId: POST/carrier_accounts
       summary: Create a carrier account
-      description: Create a carrier account
       tags:
-      - carrier_accounts
+      - Carrier Accounts
       requestBody:
         required: true
         content:
@@ -57,9 +55,8 @@ paths:
     get:
       operationId: GET/carrier_accounts/carrierAccountId
       summary: Retrieve a carrier account
-      description: Retrieve a carrier account
       tags:
-      - carrier_accounts
+      - Carrier Accounts
       parameters:
       - name: carrierAccountId
         in: path
@@ -77,9 +74,8 @@ paths:
     patch:
       operationId: PATCH/carrier_accounts/carrierAccountId
       summary: Update a carrier account
-      description: Update a carrier account
       tags:
-      - carrier_accounts
+      - Carrier Accounts
       parameters:
       - name: carrierAccountId
         in: path
@@ -103,9 +99,8 @@ paths:
     delete:
       operationId: DELETE/carrier_accounts/carrierAccountId
       summary: Delete a carrier account
-      description: Delete a carrier account
       tags:
-      - carrier_accounts
+      - Carrier Accounts
       parameters:
       - name: carrierAccountId
         in: path
@@ -118,16 +113,7 @@ paths:
           description: No content
 components:
   schemas:
-    carrierAccountResponseList:
-      type: object
-      properties:
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/carrierAccountResponse/properties/data'
-    carrierAccountCreate:
-      required:
-      - data
+    carrierAccount:
       type: object
       properties:
         data:
@@ -148,39 +134,54 @@ components:
                   type: string
                   description: The carrier account internal name.
                   example: Accurate
+                  nullable: false
                 easypost_type:
                   type: string
                   description: The Easypost service carrier type.
                   example: AccurateAccount
+                  nullable: false
+                easypost_id:
+                  type: string
+                  description: The Easypost internal reference ID.
+                  example: xxxx-yyyy-zzzz
+                  nullable: true
                 credentials:
                   type: object
                   description: The Easypost carrier accounts credentials fields.
                   example:
                     username: xxxx
                     password: secret
+                  nullable: false
+                created_at:
+                  type: string
+                  description: Time at which the resource was created.
+                  example: '2018-01-01T12:00:00.000Z'
+                  nullable: false
+                updated_at:
+                  type: string
+                  description: Time at which the resource was last updated.
+                  example: '2018-01-01T12:00:00.000Z'
+                  nullable: false
                 reference:
                   type: string
                   description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
                   example: ANY-EXTERNAL-REFEFERNCE
+                  nullable: true
                 reference_origin:
                   type: string
                   description: Any identifier of the third party system that defines the reference code.
                   example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
+                  nullable: true
                 metadata:
                   type: object
                   description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
                   example:
                     foo: bar
-              required:
-              - name
-              - easypost_type
-              - credentials
+                  nullable: true
             relationships:
               type: object
               properties:
                 market:
-                  required:
-                  - data
                   type: object
                   properties:
                     data:
@@ -191,6 +192,36 @@ components:
                           description: The resource's type
                           enum:
                           - markets
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+                attachments:
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - attachments
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+                event_stores:
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - event_stores
                         id:
                           type: string
                           description: Unique identifier for the resource (hash).
@@ -367,7 +398,16 @@ components:
                         id:
                           type: string
                           description: The resource ID
-    carrierAccount:
+    carrierAccountResponseList:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/carrierAccountResponse/properties/data'
+    carrierAccountCreate:
+      required:
+      - data
       type: object
       properties:
         data:
@@ -388,54 +428,39 @@ components:
                   type: string
                   description: The carrier account internal name.
                   example: Accurate
-                  nullable: false
                 easypost_type:
                   type: string
                   description: The Easypost service carrier type.
                   example: AccurateAccount
-                  nullable: false
-                easypost_id:
-                  type: string
-                  description: The Easypost internal reference ID.
-                  example: xxxx-yyyy-zzzz
-                  nullable: true
                 credentials:
                   type: object
                   description: The Easypost carrier accounts credentials fields.
                   example:
                     username: xxxx
                     password: secret
-                  nullable: false
-                created_at:
-                  type: string
-                  description: Time at which the resource was created.
-                  example: '2018-01-01T12:00:00.000Z'
-                  nullable: false
-                updated_at:
-                  type: string
-                  description: Time at which the resource was last updated.
-                  example: '2018-01-01T12:00:00.000Z'
-                  nullable: false
                 reference:
                   type: string
                   description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
                   example: ANY-EXTERNAL-REFEFERNCE
-                  nullable: true
                 reference_origin:
                   type: string
                   description: Any identifier of the third party system that defines the reference code.
                   example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
-                  nullable: true
                 metadata:
                   type: object
                   description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
                   example:
                     foo: bar
-                  nullable: true
+              required:
+              - name
+              - easypost_type
+              - credentials
             relationships:
               type: object
               properties:
                 market:
+                  required:
+                  - data
                   type: object
                   properties:
                     data:
@@ -446,36 +471,6 @@ components:
                           description: The resource's type
                           enum:
                           - markets
-                        id:
-                          type: string
-                          description: Unique identifier for the resource (hash).
-                          example: XAyRWNUzyN
-                attachments:
-                  type: object
-                  properties:
-                    data:
-                      type: object
-                      properties:
-                        type:
-                          type: string
-                          description: The resource's type
-                          enum:
-                          - attachments
-                        id:
-                          type: string
-                          description: Unique identifier for the resource (hash).
-                          example: XAyRWNUzyN
-                event_stores:
-                  type: object
-                  properties:
-                    data:
-                      type: object
-                      properties:
-                        type:
-                          type: string
-                          description: The resource's type
-                          enum:
-                          - event_stores
                         id:
                           type: string
                           description: Unique identifier for the resource (hash).

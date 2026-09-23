@@ -17,16 +17,15 @@ servers:
 security:
 - bearerAuth: []
 tags:
-- name: markets
+- name: Markets
   description: resource type
 paths:
   /markets:
     get:
       operationId: GET/markets
       summary: List all markets
-      description: List all markets
       tags:
-      - markets
+      - Markets
       responses:
         '200':
           description: A list of market objects
@@ -37,9 +36,8 @@ paths:
     post:
       operationId: POST/markets
       summary: Create a market
-      description: Create a market
       tags:
-      - markets
+      - Markets
       requestBody:
         required: true
         content:
@@ -57,9 +55,8 @@ paths:
     get:
       operationId: GET/markets/marketId
       summary: Retrieve a market
-      description: Retrieve a market
       tags:
-      - markets
+      - Markets
       parameters:
       - name: marketId
         in: path
@@ -77,9 +74,8 @@ paths:
     patch:
       operationId: PATCH/markets/marketId
       summary: Update a market
-      description: Update a market
       tags:
-      - markets
+      - Markets
       parameters:
       - name: marketId
         in: path
@@ -103,9 +99,8 @@ paths:
     delete:
       operationId: DELETE/markets/marketId
       summary: Delete a market
-      description: Delete a market
       tags:
-      - markets
+      - Markets
       parameters:
       - name: marketId
         in: path
@@ -118,7 +113,7 @@ paths:
           description: No content
 components:
   schemas:
-    externalTaxCalculator:
+    avalaraAccount:
       type: object
       properties:
         data:
@@ -131,7 +126,7 @@ components:
               type: string
               description: The resource's type
               enum:
-              - external_tax_calculators
+              - avalara_accounts
             attributes:
               type: object
               properties:
@@ -178,34 +173,26 @@ components:
                   example:
                     foo: bar
                   nullable: true
-                circuit_state:
+                username:
                   type: string
-                  description: The circuit breaker state, by default it is 'closed'. It can become 'open' once the number of consecutive failures overlaps the specified threshold, in such case no further calls to the failing callback are made.
-                  example: closed
-                  nullable: true
-                circuit_failure_count:
-                  type: integer
-                  description: The number of consecutive failures recorded by the circuit breaker associated to this resource, will be reset on first successful call to callback.
-                  example: 5
-                  nullable: true
-                shared_secret:
-                  type: string
-                  description: The shared secret used to sign the external request payload.
-                  example: 1c0994cc4e996e8c6ee56a2198f66f3c
+                  description: The Avalara account username.
+                  example: user@mydomain.com
                   nullable: false
-                external_includes:
-                  type: array
-                  description: List of related resources that will be included in the request to the external callback. Please do consult the documentation to check on which resource the includes are related (i.e. the order) and the defaults in case no list is provided.
-                  example:
-                  - order.line_item_options
-                  nullable: true
-                  items:
-                    type: string
-                tax_calculator_url:
+                company_code:
                   type: string
-                  description: The URL to the service that will compute the taxes.
-                  example: https://external_calculator.yourbrand.com
+                  description: The Avalara company code.
+                  example: MYCOMPANY
                   nullable: false
+                commit_invoice:
+                  type: boolean
+                  description: Indicates if the transaction will be recorded and visible on the Avalara website.
+                  example: true
+                  nullable: true
+                ddp:
+                  type: boolean
+                  description: Indicates if the seller is responsible for paying/remitting the customs duty & import tax to the customs authorities.
+                  example: true
+                  nullable: true
             relationships:
               type: object
               properties:
@@ -265,6 +252,159 @@ components:
                           description: The resource's type
                           enum:
                           - event_stores
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+                tax_categories:
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - tax_categories
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+    manualTaxCalculator:
+      type: object
+      properties:
+        data:
+          type: object
+          required:
+          - type
+          - attributes
+          properties:
+            type:
+              type: string
+              description: The resource's type
+              enum:
+              - manual_tax_calculators
+            attributes:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: The tax calculator's internal name.
+                  example: Personal tax calculator
+                  nullable: false
+                type:
+                  type: string
+                  description: The tax calculator's type.
+                  example: avalara_accounts
+                  nullable: false
+                  enum:
+                  - avalara_accounts
+                  - stripe_tax_accounts
+                  - vertex_accounts
+                  - taxjar_accounts
+                  - manual_tax_calculators
+                  - external_tax_calculators
+                created_at:
+                  type: string
+                  description: Time at which the resource was created.
+                  example: '2018-01-01T12:00:00.000Z'
+                  nullable: false
+                updated_at:
+                  type: string
+                  description: Time at which the resource was last updated.
+                  example: '2018-01-01T12:00:00.000Z'
+                  nullable: false
+                reference:
+                  type: string
+                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
+                  example: ANY-EXTERNAL-REFEFERNCE
+                  nullable: true
+                reference_origin:
+                  type: string
+                  description: Any identifier of the third party system that defines the reference code.
+                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
+                  nullable: true
+                metadata:
+                  type: object
+                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
+                  example:
+                    foo: bar
+                  nullable: true
+            relationships:
+              type: object
+              properties:
+                markets:
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - markets
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+                attachments:
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - attachments
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+                events:
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - events
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+                event_stores:
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - event_stores
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+                tax_rules:
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - tax_rules
                         id:
                           type: string
                           description: Unique identifier for the resource (hash).
@@ -640,7 +780,7 @@ components:
                         id:
                           type: string
                           description: The resource ID
-    manualTaxCalculator:
+    vertexAccount:
       type: object
       properties:
         data:
@@ -653,7 +793,7 @@ components:
               type: string
               description: The resource's type
               enum:
-              - manual_tax_calculators
+              - vertex_accounts
             attributes:
               type: object
               properties:
@@ -700,163 +840,34 @@ components:
                   example:
                     foo: bar
                   nullable: true
-            relationships:
-              type: object
-              properties:
-                markets:
-                  type: object
-                  properties:
-                    data:
-                      type: object
-                      properties:
-                        type:
-                          type: string
-                          description: The resource's type
-                          enum:
-                          - markets
-                        id:
-                          type: string
-                          description: Unique identifier for the resource (hash).
-                          example: XAyRWNUzyN
-                attachments:
-                  type: object
-                  properties:
-                    data:
-                      type: object
-                      properties:
-                        type:
-                          type: string
-                          description: The resource's type
-                          enum:
-                          - attachments
-                        id:
-                          type: string
-                          description: Unique identifier for the resource (hash).
-                          example: XAyRWNUzyN
-                events:
-                  type: object
-                  properties:
-                    data:
-                      type: object
-                      properties:
-                        type:
-                          type: string
-                          description: The resource's type
-                          enum:
-                          - events
-                        id:
-                          type: string
-                          description: Unique identifier for the resource (hash).
-                          example: XAyRWNUzyN
-                event_stores:
-                  type: object
-                  properties:
-                    data:
-                      type: object
-                      properties:
-                        type:
-                          type: string
-                          description: The resource's type
-                          enum:
-                          - event_stores
-                        id:
-                          type: string
-                          description: Unique identifier for the resource (hash).
-                          example: XAyRWNUzyN
-                tax_rules:
-                  type: object
-                  properties:
-                    data:
-                      type: object
-                      properties:
-                        type:
-                          type: string
-                          description: The resource's type
-                          enum:
-                          - tax_rules
-                        id:
-                          type: string
-                          description: Unique identifier for the resource (hash).
-                          example: XAyRWNUzyN
-    avalaraAccount:
-      type: object
-      properties:
-        data:
-          type: object
-          required:
-          - type
-          - attributes
-          properties:
-            type:
-              type: string
-              description: The resource's type
-              enum:
-              - avalara_accounts
-            attributes:
-              type: object
-              properties:
-                name:
+                kind:
                   type: string
-                  description: The tax calculator's internal name.
-                  example: Personal tax calculator
-                  nullable: false
-                type:
-                  type: string
-                  description: The tax calculator's type.
-                  example: avalara_accounts
-                  nullable: false
+                  description: The Vertex account kind. One of 'cloud', 'on_demand', or 'on_premise'.
+                  example: cloud
+                  nullable: true
                   enum:
-                  - avalara_accounts
-                  - stripe_tax_accounts
-                  - vertex_accounts
-                  - taxjar_accounts
-                  - manual_tax_calculators
-                  - external_tax_calculators
-                created_at:
+                  - cloud
+                  - on_demand
+                  - on_premise
+                baseurl:
                   type: string
-                  description: Time at which the resource was created.
-                  example: '2018-01-01T12:00:00.000Z'
-                  nullable: false
-                updated_at:
-                  type: string
-                  description: Time at which the resource was last updated.
-                  example: '2018-01-01T12:00:00.000Z'
-                  nullable: false
-                reference:
-                  type: string
-                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
-                  example: ANY-EXTERNAL-REFEFERNCE
+                  description: The Vertex API baseurl, optional for 'cloud' kind.
+                  example: yourbaseurl
                   nullable: true
-                reference_origin:
+                api_endpoint:
                   type: string
-                  description: Any identifier of the third party system that defines the reference code.
-                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
+                  description: The API endpoint as computed by specified kind and baseurl.
+                  example: https://my_baseurl.ondemand.vertexinc.com
                   nullable: true
-                metadata:
-                  type: object
-                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
-                  example:
-                    foo: bar
-                  nullable: true
-                username:
-                  type: string
-                  description: The Avalara account username.
-                  example: user@mydomain.com
-                  nullable: false
-                company_code:
-                  type: string
-                  description: The Avalara company code.
-                  example: MYCOMPANY
-                  nullable: false
                 commit_invoice:
                   type: boolean
-                  description: Indicates if the transaction will be recorded and visible on the Avalara website.
+                  description: Indicates if the transaction will be recorded and visible on the Vertex website.
                   example: true
                   nullable: true
-                ddp:
-                  type: boolean
-                  description: Indicates if the seller is responsible for paying/remitting the customs duty & import tax to the customs authorities.
-                  example: true
+                token_expires_at:
+                  type: string
+                  description: The expiration date/time of the access token.
+                  example: '2018-01-02T12:00:00.000Z'
                   nullable: true
             relationships:
               type: object
@@ -921,28 +932,6 @@ components:
                           type: string
                           description: Unique identifier for the resource (hash).
                           example: XAyRWNUzyN
-                tax_categories:
-                  type: object
-                  properties:
-                    data:
-                      type: object
-                      properties:
-                        type:
-                          type: string
-                          description: The resource's type
-                          enum:
-                          - tax_categories
-                        id:
-                          type: string
-                          description: Unique identifier for the resource (hash).
-                          example: XAyRWNUzyN
-    marketResponseList:
-      type: object
-      properties:
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/marketResponse/properties/data'
     taxjarAccount:
       type: object
       properties:
@@ -1081,272 +1070,6 @@ components:
                           type: string
                           description: Unique identifier for the resource (hash).
                           example: XAyRWNUzyN
-    marketCreate:
-      required:
-      - data
-      type: object
-      properties:
-        data:
-          type: object
-          required:
-          - type
-          - attributes
-          properties:
-            type:
-              type: string
-              description: The resource's type
-              enum:
-              - markets
-            attributes:
-              type: object
-              properties:
-                name:
-                  type: string
-                  description: The market's internal name.
-                  example: EU Market
-                code:
-                  type: string
-                  description: A string that you can use to identify the market (must be unique within the environment).
-                  example: europe1
-                facebook_pixel_id:
-                  type: string
-                  description: The Facebook Pixed ID.
-                  example: '1234567890'
-                checkout_url:
-                  type: string
-                  description: The checkout URL for this market.
-                  example: https://checkout.yourbrand.com/:order_id
-                external_prices_url:
-                  type: string
-                  description: The URL used to overwrite prices by an external source.
-                  example: https://external_prices.yourbrand.com
-                external_order_validation_url:
-                  type: string
-                  description: The URL used to validate orders by an external source.
-                  example: https://external_validation.yourbrand.com
-                shipping_cost_cutoff:
-                  type: integer
-                  description: When specified indicates the maximum number of shipping line items with cost that will be added to an order.
-                  example: 3
-                _disable:
-                  type: boolean
-                  description: Send this attribute if you want to mark this resource as disabled.
-                  example: true
-                _enable:
-                  type: boolean
-                  description: Send this attribute if you want to mark this resource as enabled.
-                  example: true
-                external_includes:
-                  type: array
-                  description: List of related resources that will be included in the request to the external callback. Please do consult the documentation to check on which resource the includes are related (i.e. the order) and the defaults in case no list is provided.
-                  example:
-                  - order.line_item_options
-                  items:
-                    type: string
-                reference:
-                  type: string
-                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
-                  example: ANY-EXTERNAL-REFEFERNCE
-                reference_origin:
-                  type: string
-                  description: Any identifier of the third party system that defines the reference code.
-                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
-                metadata:
-                  type: object
-                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
-                  example:
-                    foo: bar
-              required:
-              - name
-            relationships:
-              type: object
-              properties:
-                merchant:
-                  required:
-                  - data
-                  type: object
-                  properties:
-                    data:
-                      type: object
-                      properties:
-                        type:
-                          type: string
-                          description: The resource's type
-                          enum:
-                          - merchants
-                        id:
-                          type: string
-                          description: Unique identifier for the resource (hash).
-                          example: XAyRWNUzyN
-                price_list:
-                  required:
-                  - data
-                  type: object
-                  properties:
-                    data:
-                      type: object
-                      properties:
-                        type:
-                          type: string
-                          description: The resource's type
-                          enum:
-                          - price_lists
-                        id:
-                          type: string
-                          description: Unique identifier for the resource (hash).
-                          example: XAyRWNUzyN
-                inventory_model:
-                  required:
-                  - data
-                  type: object
-                  properties:
-                    data:
-                      type: object
-                      properties:
-                        type:
-                          type: string
-                          description: The resource's type
-                          enum:
-                          - inventory_models
-                        id:
-                          type: string
-                          description: Unique identifier for the resource (hash).
-                          example: XAyRWNUzyN
-                subscription_model:
-                  required:
-                  - data
-                  type: object
-                  properties:
-                    data:
-                      type: object
-                      properties:
-                        type:
-                          type: string
-                          description: The resource's type
-                          enum:
-                          - subscription_models
-                        id:
-                          type: string
-                          description: Unique identifier for the resource (hash).
-                          example: XAyRWNUzyN
-                discount_engine:
-                  required:
-                  - data
-                  type: object
-                  properties:
-                    data:
-                      type: object
-                      properties:
-                        type:
-                          type: string
-                          description: The resource's type
-                          enum:
-                          - discount_engines
-                        id:
-                          type: string
-                          description: Unique identifier for the resource (hash).
-                          example: XAyRWNUzyN
-                tax_calculator:
-                  required:
-                  - data
-                  type: object
-                  properties:
-                    data:
-                      type: object
-                      properties:
-                        type:
-                          type: string
-                          description: The resource's type
-                          enum:
-                          - avalara_accounts
-                          - stripe_tax_accounts
-                          - vertex_accounts
-                          - taxjar_accounts
-                          - manual_tax_calculators
-                          - external_tax_calculators
-                        id:
-                          type: string
-                          description: Unique identifier for the resource (hash).
-                          example: XAyRWNUzyN
-                  oneOf:
-                  - $ref: '#/components/schemas/avalaraAccount'
-                  - $ref: '#/components/schemas/stripeTaxAccount'
-                  - $ref: '#/components/schemas/vertexAccount'
-                  - $ref: '#/components/schemas/taxjarAccount'
-                  - $ref: '#/components/schemas/manualTaxCalculator'
-                  - $ref: '#/components/schemas/externalTaxCalculator'
-                customer_group:
-                  required:
-                  - data
-                  type: object
-                  properties:
-                    data:
-                      type: object
-                      properties:
-                        type:
-                          type: string
-                          description: The resource's type
-                          enum:
-                          - customer_groups
-                        id:
-                          type: string
-                          description: Unique identifier for the resource (hash).
-                          example: XAyRWNUzyN
-                geocoder:
-                  required:
-                  - data
-                  type: object
-                  properties:
-                    data:
-                      type: object
-                      properties:
-                        type:
-                          type: string
-                          description: The resource's type
-                          enum:
-                          - geocoders
-                        id:
-                          type: string
-                          description: Unique identifier for the resource (hash).
-                          example: XAyRWNUzyN
-                default_shipping_method:
-                  required:
-                  - data
-                  type: object
-                  properties:
-                    data:
-                      type: object
-                      properties:
-                        type:
-                          type: string
-                          description: The resource's type
-                          enum:
-                          - shipping_methods
-                        id:
-                          type: string
-                          description: Unique identifier for the resource (hash).
-                          example: XAyRWNUzyN
-                default_payment_method:
-                  required:
-                  - data
-                  type: object
-                  properties:
-                    data:
-                      type: object
-                      properties:
-                        type:
-                          type: string
-                          description: The resource's type
-                          enum:
-                          - payment_methods
-                        id:
-                          type: string
-                          description: Unique identifier for the resource (hash).
-                          example: XAyRWNUzyN
-              required:
-              - merchant
-              - price_list
-              - inventory_model
     marketUpdate:
       required:
       - data
@@ -1625,6 +1348,423 @@ components:
                           type: string
                           description: Unique identifier for the resource (hash).
                           example: XAyRWNUzyN
+    externalTaxCalculator:
+      type: object
+      properties:
+        data:
+          type: object
+          required:
+          - type
+          - attributes
+          properties:
+            type:
+              type: string
+              description: The resource's type
+              enum:
+              - external_tax_calculators
+            attributes:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: The tax calculator's internal name.
+                  example: Personal tax calculator
+                  nullable: false
+                type:
+                  type: string
+                  description: The tax calculator's type.
+                  example: avalara_accounts
+                  nullable: false
+                  enum:
+                  - avalara_accounts
+                  - stripe_tax_accounts
+                  - vertex_accounts
+                  - taxjar_accounts
+                  - manual_tax_calculators
+                  - external_tax_calculators
+                created_at:
+                  type: string
+                  description: Time at which the resource was created.
+                  example: '2018-01-01T12:00:00.000Z'
+                  nullable: false
+                updated_at:
+                  type: string
+                  description: Time at which the resource was last updated.
+                  example: '2018-01-01T12:00:00.000Z'
+                  nullable: false
+                reference:
+                  type: string
+                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
+                  example: ANY-EXTERNAL-REFEFERNCE
+                  nullable: true
+                reference_origin:
+                  type: string
+                  description: Any identifier of the third party system that defines the reference code.
+                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
+                  nullable: true
+                metadata:
+                  type: object
+                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
+                  example:
+                    foo: bar
+                  nullable: true
+                circuit_state:
+                  type: string
+                  description: The circuit breaker state, by default it is 'closed'. It can become 'open' once the number of consecutive failures overlaps the specified threshold, in such case no further calls to the failing callback are made.
+                  example: closed
+                  nullable: true
+                circuit_failure_count:
+                  type: integer
+                  description: The number of consecutive failures recorded by the circuit breaker associated to this resource, will be reset on first successful call to callback.
+                  example: 5
+                  nullable: true
+                shared_secret:
+                  type: string
+                  description: The shared secret used to sign the external request payload.
+                  example: 1c0994cc4e996e8c6ee56a2198f66f3c
+                  nullable: false
+                external_includes:
+                  type: array
+                  description: List of related resources that will be included in the request to the external callback. Please do consult the documentation to check on which resource the includes are related (i.e. the order) and the defaults in case no list is provided.
+                  example:
+                  - order.line_item_options
+                  nullable: true
+                  items:
+                    type: string
+                tax_calculator_url:
+                  type: string
+                  description: The URL to the service that will compute the taxes.
+                  example: https://external_calculator.yourbrand.com
+                  nullable: false
+            relationships:
+              type: object
+              properties:
+                markets:
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - markets
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+                attachments:
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - attachments
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+                events:
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - events
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+                event_stores:
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - event_stores
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+    marketCreate:
+      required:
+      - data
+      type: object
+      properties:
+        data:
+          type: object
+          required:
+          - type
+          - attributes
+          properties:
+            type:
+              type: string
+              description: The resource's type
+              enum:
+              - markets
+            attributes:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: The market's internal name.
+                  example: EU Market
+                code:
+                  type: string
+                  description: A string that you can use to identify the market (must be unique within the environment).
+                  example: europe1
+                facebook_pixel_id:
+                  type: string
+                  description: The Facebook Pixed ID.
+                  example: '1234567890'
+                checkout_url:
+                  type: string
+                  description: The checkout URL for this market.
+                  example: https://checkout.yourbrand.com/:order_id
+                external_prices_url:
+                  type: string
+                  description: The URL used to overwrite prices by an external source.
+                  example: https://external_prices.yourbrand.com
+                external_order_validation_url:
+                  type: string
+                  description: The URL used to validate orders by an external source.
+                  example: https://external_validation.yourbrand.com
+                shipping_cost_cutoff:
+                  type: integer
+                  description: When specified indicates the maximum number of shipping line items with cost that will be added to an order.
+                  example: 3
+                _disable:
+                  type: boolean
+                  description: Send this attribute if you want to mark this resource as disabled.
+                  example: true
+                _enable:
+                  type: boolean
+                  description: Send this attribute if you want to mark this resource as enabled.
+                  example: true
+                external_includes:
+                  type: array
+                  description: List of related resources that will be included in the request to the external callback. Please do consult the documentation to check on which resource the includes are related (i.e. the order) and the defaults in case no list is provided.
+                  example:
+                  - order.line_item_options
+                  items:
+                    type: string
+                reference:
+                  type: string
+                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
+                  example: ANY-EXTERNAL-REFEFERNCE
+                reference_origin:
+                  type: string
+                  description: Any identifier of the third party system that defines the reference code.
+                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
+                metadata:
+                  type: object
+                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
+                  example:
+                    foo: bar
+              required:
+              - name
+            relationships:
+              type: object
+              properties:
+                merchant:
+                  required:
+                  - data
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - merchants
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+                price_list:
+                  required:
+                  - data
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - price_lists
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+                inventory_model:
+                  required:
+                  - data
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - inventory_models
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+                subscription_model:
+                  required:
+                  - data
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - subscription_models
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+                discount_engine:
+                  required:
+                  - data
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - discount_engines
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+                tax_calculator:
+                  required:
+                  - data
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - avalara_accounts
+                          - stripe_tax_accounts
+                          - vertex_accounts
+                          - taxjar_accounts
+                          - manual_tax_calculators
+                          - external_tax_calculators
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+                  oneOf:
+                  - $ref: '#/components/schemas/avalaraAccount'
+                  - $ref: '#/components/schemas/stripeTaxAccount'
+                  - $ref: '#/components/schemas/vertexAccount'
+                  - $ref: '#/components/schemas/taxjarAccount'
+                  - $ref: '#/components/schemas/manualTaxCalculator'
+                  - $ref: '#/components/schemas/externalTaxCalculator'
+                customer_group:
+                  required:
+                  - data
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - customer_groups
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+                geocoder:
+                  required:
+                  - data
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - geocoders
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+                default_shipping_method:
+                  required:
+                  - data
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - shipping_methods
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+                default_payment_method:
+                  required:
+                  - data
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - payment_methods
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+              required:
+              - merchant
+              - price_list
+              - inventory_model
     market:
       type: object
       properties:
@@ -1971,158 +2111,6 @@ components:
                           type: string
                           description: Unique identifier for the resource (hash).
                           example: XAyRWNUzyN
-    vertexAccount:
-      type: object
-      properties:
-        data:
-          type: object
-          required:
-          - type
-          - attributes
-          properties:
-            type:
-              type: string
-              description: The resource's type
-              enum:
-              - vertex_accounts
-            attributes:
-              type: object
-              properties:
-                name:
-                  type: string
-                  description: The tax calculator's internal name.
-                  example: Personal tax calculator
-                  nullable: false
-                type:
-                  type: string
-                  description: The tax calculator's type.
-                  example: avalara_accounts
-                  nullable: false
-                  enum:
-                  - avalara_accounts
-                  - stripe_tax_accounts
-                  - vertex_accounts
-                  - taxjar_accounts
-                  - manual_tax_calculators
-                  - external_tax_calculators
-                created_at:
-                  type: string
-                  description: Time at which the resource was created.
-                  example: '2018-01-01T12:00:00.000Z'
-                  nullable: false
-                updated_at:
-                  type: string
-                  description: Time at which the resource was last updated.
-                  example: '2018-01-01T12:00:00.000Z'
-                  nullable: false
-                reference:
-                  type: string
-                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
-                  example: ANY-EXTERNAL-REFEFERNCE
-                  nullable: true
-                reference_origin:
-                  type: string
-                  description: Any identifier of the third party system that defines the reference code.
-                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
-                  nullable: true
-                metadata:
-                  type: object
-                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
-                  example:
-                    foo: bar
-                  nullable: true
-                kind:
-                  type: string
-                  description: The Vertex account kind. One of 'cloud', 'on_demand', or 'on_premise'.
-                  example: cloud
-                  nullable: true
-                  enum:
-                  - cloud
-                  - on_demand
-                  - on_premise
-                baseurl:
-                  type: string
-                  description: The Vertex API baseurl, optional for 'cloud' kind.
-                  example: yourbaseurl
-                  nullable: true
-                api_endpoint:
-                  type: string
-                  description: The API endpoint as computed by specified kind and baseurl.
-                  example: https://my_baseurl.ondemand.vertexinc.com
-                  nullable: true
-                commit_invoice:
-                  type: boolean
-                  description: Indicates if the transaction will be recorded and visible on the Vertex website.
-                  example: true
-                  nullable: true
-                token_expires_at:
-                  type: string
-                  description: The expiration date/time of the access token.
-                  example: '2018-01-02T12:00:00.000Z'
-                  nullable: true
-            relationships:
-              type: object
-              properties:
-                markets:
-                  type: object
-                  properties:
-                    data:
-                      type: object
-                      properties:
-                        type:
-                          type: string
-                          description: The resource's type
-                          enum:
-                          - markets
-                        id:
-                          type: string
-                          description: Unique identifier for the resource (hash).
-                          example: XAyRWNUzyN
-                attachments:
-                  type: object
-                  properties:
-                    data:
-                      type: object
-                      properties:
-                        type:
-                          type: string
-                          description: The resource's type
-                          enum:
-                          - attachments
-                        id:
-                          type: string
-                          description: Unique identifier for the resource (hash).
-                          example: XAyRWNUzyN
-                events:
-                  type: object
-                  properties:
-                    data:
-                      type: object
-                      properties:
-                        type:
-                          type: string
-                          description: The resource's type
-                          enum:
-                          - events
-                        id:
-                          type: string
-                          description: Unique identifier for the resource (hash).
-                          example: XAyRWNUzyN
-                event_stores:
-                  type: object
-                  properties:
-                    data:
-                      type: object
-                      properties:
-                        type:
-                          type: string
-                          description: The resource's type
-                          enum:
-                          - event_stores
-                        id:
-                          type: string
-                          description: Unique identifier for the resource (hash).
-                          example: XAyRWNUzyN
     stripeTaxAccount:
       type: object
       properties:
@@ -2266,6 +2254,13 @@ components:
                           type: string
                           description: Unique identifier for the resource (hash).
                           example: XAyRWNUzyN
+    marketResponseList:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/marketResponse/properties/data'
   securitySchemes:
     bearerAuth:
       type: http

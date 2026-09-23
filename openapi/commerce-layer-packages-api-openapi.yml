@@ -17,16 +17,15 @@ servers:
 security:
 - bearerAuth: []
 tags:
-- name: packages
+- name: Packages
   description: resource type
 paths:
   /packages:
     get:
       operationId: GET/packages
       summary: List all packages
-      description: List all packages
       tags:
-      - packages
+      - Packages
       responses:
         '200':
           description: A list of package objects
@@ -37,9 +36,8 @@ paths:
     post:
       operationId: POST/packages
       summary: Create a package
-      description: Create a package
       tags:
-      - packages
+      - Packages
       requestBody:
         required: true
         content:
@@ -57,9 +55,8 @@ paths:
     get:
       operationId: GET/packages/packageId
       summary: Retrieve a package
-      description: Retrieve a package
       tags:
-      - packages
+      - Packages
       parameters:
       - name: packageId
         in: path
@@ -77,9 +74,8 @@ paths:
     patch:
       operationId: PATCH/packages/packageId
       summary: Update a package
-      description: Update a package
       tags:
-      - packages
+      - Packages
       parameters:
       - name: packageId
         in: path
@@ -103,9 +99,8 @@ paths:
     delete:
       operationId: DELETE/packages/packageId
       summary: Delete a package
-      description: Delete a package
       tags:
-      - packages
+      - Packages
       parameters:
       - name: packageId
         in: path
@@ -118,44 +113,76 @@ paths:
           description: No content
 components:
   schemas:
-    packageResponse:
+    packageCreate:
+      required:
+      - data
       type: object
       properties:
         data:
           type: object
+          required:
+          - type
+          - attributes
           properties:
-            id:
-              type: string
-              description: Unique identifier for the resource (hash).
-              example: XAyRWNUzyN
             type:
               type: string
               description: The resource's type
               enum:
               - packages
-            links:
+            attributes:
               type: object
               properties:
-                self:
+                name:
                   type: string
-                  description: URL
-            attributes:
-              $ref: '#/components/schemas/package/properties/data/properties/attributes'
+                  description: Unique name for the package.
+                  example: Large (60x40x30)
+                code:
+                  type: string
+                  description: The package identifying code.
+                  example: YYYY 2000
+                length:
+                  type: number
+                  description: The package length, used to automatically calculate the tax rates from the available carrier accounts.
+                  example: 40.0
+                width:
+                  type: number
+                  description: The package width, used to automatically calculate the tax rates from the available carrier accounts.
+                  example: 40.0
+                height:
+                  type: number
+                  description: The package height, used to automatically calculate the tax rates from the available carrier accounts.
+                  example: 25.0
+                unit_of_length:
+                  type: string
+                  description: The unit of length. Can be one of 'cm', or 'in'.
+                  example: gr
+                reference:
+                  type: string
+                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
+                  example: ANY-EXTERNAL-REFEFERNCE
+                reference_origin:
+                  type: string
+                  description: Any identifier of the third party system that defines the reference code.
+                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
+                metadata:
+                  type: object
+                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
+                  example:
+                    foo: bar
+              required:
+              - name
+              - length
+              - width
+              - height
+              - unit_of_length
             relationships:
               type: object
               properties:
                 stock_location:
+                  required:
+                  - data
                   type: object
                   properties:
-                    links:
-                      type: object
-                      properties:
-                        self:
-                          type: string
-                          description: URL
-                        related:
-                          type: string
-                          description: URL
                     data:
                       type: object
                       properties:
@@ -163,79 +190,13 @@ components:
                           type: string
                           description: The resource's type
                           enum:
-                          - stock_location
+                          - stock_locations
                         id:
                           type: string
-                          description: The resource ID
-                parcels:
-                  type: object
-                  properties:
-                    links:
-                      type: object
-                      properties:
-                        self:
-                          type: string
-                          description: URL
-                        related:
-                          type: string
-                          description: URL
-                    data:
-                      type: object
-                      properties:
-                        type:
-                          type: string
-                          description: The resource's type
-                          enum:
-                          - parcels
-                        id:
-                          type: string
-                          description: The resource ID
-                attachments:
-                  type: object
-                  properties:
-                    links:
-                      type: object
-                      properties:
-                        self:
-                          type: string
-                          description: URL
-                        related:
-                          type: string
-                          description: URL
-                    data:
-                      type: object
-                      properties:
-                        type:
-                          type: string
-                          description: The resource's type
-                          enum:
-                          - attachments
-                        id:
-                          type: string
-                          description: The resource ID
-                event_stores:
-                  type: object
-                  properties:
-                    links:
-                      type: object
-                      properties:
-                        self:
-                          type: string
-                          description: URL
-                        related:
-                          type: string
-                          description: URL
-                    data:
-                      type: object
-                      properties:
-                        type:
-                          type: string
-                          description: The resource's type
-                          enum:
-                          - event_stores
-                        id:
-                          type: string
-                          description: The resource ID
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+              required:
+              - stock_location
     package:
       type: object
       properties:
@@ -372,76 +333,44 @@ components:
                           type: string
                           description: Unique identifier for the resource (hash).
                           example: XAyRWNUzyN
-    packageCreate:
-      required:
-      - data
+    packageResponse:
       type: object
       properties:
         data:
           type: object
-          required:
-          - type
-          - attributes
           properties:
+            id:
+              type: string
+              description: Unique identifier for the resource (hash).
+              example: XAyRWNUzyN
             type:
               type: string
               description: The resource's type
               enum:
               - packages
-            attributes:
+            links:
               type: object
               properties:
-                name:
+                self:
                   type: string
-                  description: Unique name for the package.
-                  example: Large (60x40x30)
-                code:
-                  type: string
-                  description: The package identifying code.
-                  example: YYYY 2000
-                length:
-                  type: number
-                  description: The package length, used to automatically calculate the tax rates from the available carrier accounts.
-                  example: 40.0
-                width:
-                  type: number
-                  description: The package width, used to automatically calculate the tax rates from the available carrier accounts.
-                  example: 40.0
-                height:
-                  type: number
-                  description: The package height, used to automatically calculate the tax rates from the available carrier accounts.
-                  example: 25.0
-                unit_of_length:
-                  type: string
-                  description: The unit of length. Can be one of 'cm', or 'in'.
-                  example: gr
-                reference:
-                  type: string
-                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
-                  example: ANY-EXTERNAL-REFEFERNCE
-                reference_origin:
-                  type: string
-                  description: Any identifier of the third party system that defines the reference code.
-                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
-                metadata:
-                  type: object
-                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
-                  example:
-                    foo: bar
-              required:
-              - name
-              - length
-              - width
-              - height
-              - unit_of_length
+                  description: URL
+            attributes:
+              $ref: '#/components/schemas/package/properties/data/properties/attributes'
             relationships:
               type: object
               properties:
                 stock_location:
-                  required:
-                  - data
                   type: object
                   properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
                     data:
                       type: object
                       properties:
@@ -449,13 +378,79 @@ components:
                           type: string
                           description: The resource's type
                           enum:
-                          - stock_locations
+                          - stock_location
                         id:
                           type: string
-                          description: Unique identifier for the resource (hash).
-                          example: XAyRWNUzyN
-              required:
-              - stock_location
+                          description: The resource ID
+                parcels:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - parcels
+                        id:
+                          type: string
+                          description: The resource ID
+                attachments:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - attachments
+                        id:
+                          type: string
+                          description: The resource ID
+                event_stores:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - event_stores
+                        id:
+                          type: string
+                          description: The resource ID
     packageResponseList:
       type: object
       properties:

@@ -24,7 +24,6 @@ paths:
     get:
       operationId: GET/order_factories
       summary: List all order factories
-      description: List all order factories
       tags:
       - order_factories
       responses:
@@ -38,7 +37,6 @@ paths:
     get:
       operationId: GET/order_factories/orderFactoryId
       summary: Retrieve an order factory
-      description: Retrieve an order factory
       tags:
       - order_factories
       parameters:
@@ -57,6 +55,13 @@ paths:
                 $ref: '#/components/schemas/orderFactoryResponse'
 components:
   schemas:
+    orderFactoryResponseList:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/orderFactoryResponse/properties/data'
     orderFactoryResponse:
       type: object
       properties:
@@ -337,13 +342,6 @@ components:
                           type: string
                           description: Unique identifier for the resource (hash).
                           example: XAyRWNUzyN
-    orderFactoryResponseList:
-      type: object
-      properties:
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/orderFactoryResponse/properties/data'
   securitySchemes:
     bearerAuth:
       type: http

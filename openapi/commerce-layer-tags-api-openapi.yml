@@ -17,16 +17,15 @@ servers:
 security:
 - bearerAuth: []
 tags:
-- name: tags
+- name: Tags
   description: resource type
 paths:
   /tags:
     get:
       operationId: GET/tags
       summary: List all tags
-      description: List all tags
       tags:
-      - tags
+      - Tags
       responses:
         '200':
           description: A list of tag objects
@@ -37,9 +36,8 @@ paths:
     post:
       operationId: POST/tags
       summary: Create a tag
-      description: Create a tag
       tags:
-      - tags
+      - Tags
       requestBody:
         required: true
         content:
@@ -57,9 +55,8 @@ paths:
     get:
       operationId: GET/tags/tagId
       summary: Retrieve a tag
-      description: Retrieve a tag
       tags:
-      - tags
+      - Tags
       parameters:
       - name: tagId
         in: path
@@ -77,9 +74,8 @@ paths:
     patch:
       operationId: PATCH/tags/tagId
       summary: Update a tag
-      description: Update a tag
       tags:
-      - tags
+      - Tags
       parameters:
       - name: tagId
         in: path
@@ -103,9 +99,8 @@ paths:
     delete:
       operationId: DELETE/tags/tagId
       summary: Delete a tag
-      description: Delete a tag
       tags:
-      - tags
+      - Tags
       parameters:
       - name: tagId
         in: path
@@ -118,7 +113,14 @@ paths:
           description: No content
 components:
   schemas:
-    tagCreate:
+    tagResponseList:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/tagResponse/properties/data'
+    tagUpdate:
       required:
       - data
       type: object
@@ -127,6 +129,7 @@ components:
           type: object
           required:
           - type
+          - id
           - attributes
           properties:
             type:
@@ -134,6 +137,10 @@ components:
               description: The resource's type
               enum:
               - tags
+            id:
+              type: string
+              description: Unique identifier for the resource (hash).
+              example: XAyRWNUzyN
             attributes:
               type: object
               properties:
@@ -141,31 +148,26 @@ components:
                   type: string
                   description: The tag name.
                   example: new_campaign
+                  nullable: false
                 reference:
                   type: string
                   description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
                   example: ANY-EXTERNAL-REFEFERNCE
+                  nullable: true
                 reference_origin:
                   type: string
                   description: Any identifier of the third party system that defines the reference code.
                   example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
+                  nullable: true
                 metadata:
                   type: object
                   description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
                   example:
                     foo: bar
-              required:
-              - name
+                  nullable: true
             relationships:
               type: object
               properties: {}
-    tagResponseList:
-      type: object
-      properties:
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/tagResponse/properties/data'
     tagResponse:
       type: object
       properties:
@@ -215,7 +217,7 @@ components:
                         id:
                           type: string
                           description: The resource ID
-    tagUpdate:
+    tagCreate:
       required:
       - data
       type: object
@@ -224,7 +226,6 @@ components:
           type: object
           required:
           - type
-          - id
           - attributes
           properties:
             type:
@@ -232,10 +233,6 @@ components:
               description: The resource's type
               enum:
               - tags
-            id:
-              type: string
-              description: Unique identifier for the resource (hash).
-              example: XAyRWNUzyN
             attributes:
               type: object
               properties:
@@ -243,23 +240,21 @@ components:
                   type: string
                   description: The tag name.
                   example: new_campaign
-                  nullable: false
                 reference:
                   type: string
                   description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
                   example: ANY-EXTERNAL-REFEFERNCE
-                  nullable: true
                 reference_origin:
                   type: string
                   description: Any identifier of the third party system that defines the reference code.
                   example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
-                  nullable: true
                 metadata:
                   type: object
                   description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
                   example:
                     foo: bar
-                  nullable: true
+              required:
+              - name
             relationships:
               type: object
               properties: {}

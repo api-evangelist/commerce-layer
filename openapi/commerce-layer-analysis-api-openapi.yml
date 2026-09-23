@@ -15,7 +15,7 @@ servers:
 security:
 - bearerAuth: []
 tags:
-- name: analysis
+- name: Analysis
   description: Operations with analysis resource
 paths:
   /analysis/fbt:
@@ -24,7 +24,7 @@ paths:
       summary: Query fbt on analysis
       description: Get fbt results from analysis
       tags:
-      - analysis
+      - Analysis
       requestBody:
         required: true
         content:
@@ -80,22 +80,6 @@ paths:
                             $ref: '#/components/schemas/analysis_fbt_request/properties/fbt'
 components:
   schemas:
-    analysis_fbt_filter:
-      type: object
-      properties:
-        line_items:
-          type: object
-          properties:
-            item_ids:
-              description: The ID of the associated item.
-              type: object
-              properties:
-                in:
-                  type: array
-                  minItems: 1
-                  items:
-                    type: string
-                  description: To include, array of item_ids
     analysis_fbt_request:
       type: object
       properties:
@@ -112,6 +96,22 @@ components:
               description: Set to true if you want to receive how the payload has been made
       required:
       - filter
+    analysis_fbt_filter:
+      type: object
+      properties:
+        line_items:
+          type: object
+          properties:
+            item_ids:
+              description: The ID of the associated item.
+              type: object
+              properties:
+                in:
+                  type: array
+                  minItems: 1
+                  items:
+                    type: string
+                  description: To include, array of item_ids
   securitySchemes:
     bearerAuth:
       type: http

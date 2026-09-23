@@ -17,16 +17,15 @@ servers:
 security:
 - bearerAuth: []
 tags:
-- name: customer_addresses
+- name: Customer Addresses
   description: resource type
 paths:
   /customer_addresses:
     get:
       operationId: GET/customer_addresses
       summary: List all customer addresses
-      description: List all customer addresses
       tags:
-      - customer_addresses
+      - Customer Addresses
       responses:
         '200':
           description: A list of customer address objects
@@ -37,9 +36,8 @@ paths:
     post:
       operationId: POST/customer_addresses
       summary: Create a customer address
-      description: Create a customer address
       tags:
-      - customer_addresses
+      - Customer Addresses
       requestBody:
         required: true
         content:
@@ -57,9 +55,8 @@ paths:
     get:
       operationId: GET/customer_addresses/customerAddressId
       summary: Retrieve a customer address
-      description: Retrieve a customer address
       tags:
-      - customer_addresses
+      - Customer Addresses
       parameters:
       - name: customerAddressId
         in: path
@@ -77,9 +74,8 @@ paths:
     patch:
       operationId: PATCH/customer_addresses/customerAddressId
       summary: Update a customer address
-      description: Update a customer address
       tags:
-      - customer_addresses
+      - Customer Addresses
       parameters:
       - name: customerAddressId
         in: path
@@ -103,9 +99,8 @@ paths:
     delete:
       operationId: DELETE/customer_addresses/customerAddressId
       summary: Delete a customer address
-      description: Delete a customer address
       tags:
-      - customer_addresses
+      - Customer Addresses
       parameters:
       - name: customerAddressId
         in: path
@@ -234,6 +229,13 @@ components:
                           type: string
                           description: Unique identifier for the resource (hash).
                           example: XAyRWNUzyN
+    customerAddressResponseList:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/customerAddressResponse/properties/data'
     customerAddressResponse:
       type: object
       properties:
@@ -429,13 +431,6 @@ components:
                           type: string
                           description: Unique identifier for the resource (hash).
                           example: XAyRWNUzyN
-    customerAddressResponseList:
-      type: object
-      properties:
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/customerAddressResponse/properties/data'
     customerAddressCreate:
       required:
       - data

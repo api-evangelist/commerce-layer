@@ -17,16 +17,15 @@ servers:
 security:
 - bearerAuth: []
 tags:
-- name: stores
+- name: Stores
   description: resource type
 paths:
   /stores:
     get:
       operationId: GET/stores
       summary: List all stores
-      description: List all stores
       tags:
-      - stores
+      - Stores
       responses:
         '200':
           description: A list of store objects
@@ -37,9 +36,8 @@ paths:
     post:
       operationId: POST/stores
       summary: Create a store
-      description: Create a store
       tags:
-      - stores
+      - Stores
       requestBody:
         required: true
         content:
@@ -57,9 +55,8 @@ paths:
     get:
       operationId: GET/stores/storeId
       summary: Retrieve a store
-      description: Retrieve a store
       tags:
-      - stores
+      - Stores
       parameters:
       - name: storeId
         in: path
@@ -77,9 +74,8 @@ paths:
     patch:
       operationId: PATCH/stores/storeId
       summary: Update a store
-      description: Update a store
       tags:
-      - stores
+      - Stores
       parameters:
       - name: storeId
         in: path
@@ -103,9 +99,8 @@ paths:
     delete:
       operationId: DELETE/stores/storeId
       summary: Delete a store
-      description: Delete a store
       tags:
-      - stores
+      - Stores
       parameters:
       - name: storeId
         in: path
@@ -118,6 +113,111 @@ paths:
           description: No content
 components:
   schemas:
+    storeCreate:
+      required:
+      - data
+      type: object
+      properties:
+        data:
+          type: object
+          required:
+          - type
+          - attributes
+          properties:
+            type:
+              type: string
+              description: The resource's type
+              enum:
+              - stores
+            attributes:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: The store's internal name.
+                  example: Rome Shop
+                code:
+                  type: string
+                  description: A string that you can use to identify the store (must be unique within the environment).
+                  example: europe1
+                reference:
+                  type: string
+                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
+                  example: ANY-EXTERNAL-REFEFERNCE
+                reference_origin:
+                  type: string
+                  description: Any identifier of the third party system that defines the reference code.
+                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
+                metadata:
+                  type: object
+                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
+                  example:
+                    foo: bar
+              required:
+              - name
+            relationships:
+              type: object
+              properties:
+                market:
+                  required:
+                  - data
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - markets
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+                merchant:
+                  required:
+                  - data
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - merchants
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+                stock_location:
+                  required:
+                  - data
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - stock_locations
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+              required:
+              - market
+    storeResponseList:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/storeResponse/properties/data'
     store:
       type: object
       properties:
@@ -466,13 +566,6 @@ components:
                         id:
                           type: string
                           description: The resource ID
-    storeResponseList:
-      type: object
-      properties:
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/storeResponse/properties/data'
     storeUpdate:
       required:
       - data
@@ -577,104 +670,6 @@ components:
                           type: string
                           description: Unique identifier for the resource (hash).
                           example: XAyRWNUzyN
-    storeCreate:
-      required:
-      - data
-      type: object
-      properties:
-        data:
-          type: object
-          required:
-          - type
-          - attributes
-          properties:
-            type:
-              type: string
-              description: The resource's type
-              enum:
-              - stores
-            attributes:
-              type: object
-              properties:
-                name:
-                  type: string
-                  description: The store's internal name.
-                  example: Rome Shop
-                code:
-                  type: string
-                  description: A string that you can use to identify the store (must be unique within the environment).
-                  example: europe1
-                reference:
-                  type: string
-                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
-                  example: ANY-EXTERNAL-REFEFERNCE
-                reference_origin:
-                  type: string
-                  description: Any identifier of the third party system that defines the reference code.
-                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
-                metadata:
-                  type: object
-                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
-                  example:
-                    foo: bar
-              required:
-              - name
-            relationships:
-              type: object
-              properties:
-                market:
-                  required:
-                  - data
-                  type: object
-                  properties:
-                    data:
-                      type: object
-                      properties:
-                        type:
-                          type: string
-                          description: The resource's type
-                          enum:
-                          - markets
-                        id:
-                          type: string
-                          description: Unique identifier for the resource (hash).
-                          example: XAyRWNUzyN
-                merchant:
-                  required:
-                  - data
-                  type: object
-                  properties:
-                    data:
-                      type: object
-                      properties:
-                        type:
-                          type: string
-                          description: The resource's type
-                          enum:
-                          - merchants
-                        id:
-                          type: string
-                          description: Unique identifier for the resource (hash).
-                          example: XAyRWNUzyN
-                stock_location:
-                  required:
-                  - data
-                  type: object
-                  properties:
-                    data:
-                      type: object
-                      properties:
-                        type:
-                          type: string
-                          description: The resource's type
-                          enum:
-                          - stock_locations
-                        id:
-                          type: string
-                          description: Unique identifier for the resource (hash).
-                          example: XAyRWNUzyN
-              required:
-              - market
   securitySchemes:
     bearerAuth:
       type: http

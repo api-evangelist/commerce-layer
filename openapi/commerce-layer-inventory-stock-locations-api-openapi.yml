@@ -24,7 +24,6 @@ paths:
     get:
       operationId: GET/inventory_stock_locations
       summary: List all inventory stock locations
-      description: List all inventory stock locations
       tags:
       - inventory_stock_locations
       responses:
@@ -37,7 +36,6 @@ paths:
     post:
       operationId: POST/inventory_stock_locations
       summary: Create an inventory stock location
-      description: Create an inventory stock location
       tags:
       - inventory_stock_locations
       requestBody:
@@ -57,7 +55,6 @@ paths:
     get:
       operationId: GET/inventory_stock_locations/inventoryStockLocationId
       summary: Retrieve an inventory stock location
-      description: Retrieve an inventory stock location
       tags:
       - inventory_stock_locations
       parameters:
@@ -77,7 +74,6 @@ paths:
     patch:
       operationId: PATCH/inventory_stock_locations/inventoryStockLocationId
       summary: Update an inventory stock location
-      description: Update an inventory stock location
       tags:
       - inventory_stock_locations
       parameters:
@@ -103,7 +99,6 @@ paths:
     delete:
       operationId: DELETE/inventory_stock_locations/inventoryStockLocationId
       summary: Delete an inventory stock location
-      description: Delete an inventory stock location
       tags:
       - inventory_stock_locations
       parameters:
@@ -118,6 +113,100 @@ paths:
           description: No content
 components:
   schemas:
+    inventoryStockLocationUpdate:
+      required:
+      - data
+      type: object
+      properties:
+        data:
+          type: object
+          required:
+          - type
+          - id
+          - attributes
+          properties:
+            type:
+              type: string
+              description: The resource's type
+              enum:
+              - inventory_stock_locations
+            id:
+              type: string
+              description: Unique identifier for the resource (hash).
+              example: XAyRWNUzyN
+            attributes:
+              type: object
+              properties:
+                priority:
+                  type: integer
+                  description: The stock location priority within the associated invetory model.
+                  example: 1
+                  nullable: false
+                on_hold:
+                  type: boolean
+                  description: Indicates if the shipment should be put on hold if fulfilled from the associated stock location. This is useful to manage use cases like back-orders, pre-orders or personalized orders that need to be customized before being fulfilled.
+                  example: false
+                  nullable: false
+                reference:
+                  type: string
+                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
+                  example: ANY-EXTERNAL-REFEFERNCE
+                  nullable: true
+                reference_origin:
+                  type: string
+                  description: Any identifier of the third party system that defines the reference code.
+                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
+                  nullable: true
+                metadata:
+                  type: object
+                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
+                  example:
+                    foo: bar
+                  nullable: true
+            relationships:
+              type: object
+              properties:
+                stock_location:
+                  required:
+                  - data
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - stock_locations
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+                inventory_model:
+                  required:
+                  - data
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - inventory_models
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+    inventoryStockLocationResponseList:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/inventoryStockLocationResponse/properties/data'
     inventoryStockLocationResponse:
       type: object
       properties:
@@ -213,88 +302,6 @@ components:
                         id:
                           type: string
                           description: The resource ID
-    inventoryStockLocationCreate:
-      required:
-      - data
-      type: object
-      properties:
-        data:
-          type: object
-          required:
-          - type
-          - attributes
-          properties:
-            type:
-              type: string
-              description: The resource's type
-              enum:
-              - inventory_stock_locations
-            attributes:
-              type: object
-              properties:
-                priority:
-                  type: integer
-                  description: The stock location priority within the associated invetory model.
-                  example: 1
-                on_hold:
-                  type: boolean
-                  description: Indicates if the shipment should be put on hold if fulfilled from the associated stock location. This is useful to manage use cases like back-orders, pre-orders or personalized orders that need to be customized before being fulfilled.
-                  example: false
-                reference:
-                  type: string
-                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
-                  example: ANY-EXTERNAL-REFEFERNCE
-                reference_origin:
-                  type: string
-                  description: Any identifier of the third party system that defines the reference code.
-                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
-                metadata:
-                  type: object
-                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
-                  example:
-                    foo: bar
-              required:
-              - priority
-            relationships:
-              type: object
-              properties:
-                stock_location:
-                  required:
-                  - data
-                  type: object
-                  properties:
-                    data:
-                      type: object
-                      properties:
-                        type:
-                          type: string
-                          description: The resource's type
-                          enum:
-                          - stock_locations
-                        id:
-                          type: string
-                          description: Unique identifier for the resource (hash).
-                          example: XAyRWNUzyN
-                inventory_model:
-                  required:
-                  - data
-                  type: object
-                  properties:
-                    data:
-                      type: object
-                      properties:
-                        type:
-                          type: string
-                          description: The resource's type
-                          enum:
-                          - inventory_models
-                        id:
-                          type: string
-                          description: Unique identifier for the resource (hash).
-                          example: XAyRWNUzyN
-              required:
-              - stock_location
-              - inventory_model
     inventoryStockLocation:
       type: object
       properties:
@@ -396,14 +403,7 @@ components:
                           type: string
                           description: Unique identifier for the resource (hash).
                           example: XAyRWNUzyN
-    inventoryStockLocationResponseList:
-      type: object
-      properties:
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/inventoryStockLocationResponse/properties/data'
-    inventoryStockLocationUpdate:
+    inventoryStockLocationCreate:
       required:
       - data
       type: object
@@ -412,7 +412,6 @@ components:
           type: object
           required:
           - type
-          - id
           - attributes
           properties:
             type:
@@ -420,10 +419,6 @@ components:
               description: The resource's type
               enum:
               - inventory_stock_locations
-            id:
-              type: string
-              description: Unique identifier for the resource (hash).
-              example: XAyRWNUzyN
             attributes:
               type: object
               properties:
@@ -431,28 +426,25 @@ components:
                   type: integer
                   description: The stock location priority within the associated invetory model.
                   example: 1
-                  nullable: false
                 on_hold:
                   type: boolean
                   description: Indicates if the shipment should be put on hold if fulfilled from the associated stock location. This is useful to manage use cases like back-orders, pre-orders or personalized orders that need to be customized before being fulfilled.
                   example: false
-                  nullable: false
                 reference:
                   type: string
                   description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
                   example: ANY-EXTERNAL-REFEFERNCE
-                  nullable: true
                 reference_origin:
                   type: string
                   description: Any identifier of the third party system that defines the reference code.
                   example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
-                  nullable: true
                 metadata:
                   type: object
                   description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
                   example:
                     foo: bar
-                  nullable: true
+              required:
+              - priority
             relationships:
               type: object
               properties:
@@ -490,6 +482,9 @@ components:
                           type: string
                           description: Unique identifier for the resource (hash).
                           example: XAyRWNUzyN
+              required:
+              - stock_location
+              - inventory_model
   securitySchemes:
     bearerAuth:
       type: http

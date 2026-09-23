@@ -24,7 +24,6 @@ paths:
     get:
       operationId: GET/inventory_models
       summary: List all inventory models
-      description: List all inventory models
       tags:
       - inventory_models
       responses:
@@ -37,7 +36,6 @@ paths:
     post:
       operationId: POST/inventory_models
       summary: Create an inventory model
-      description: Create an inventory model
       tags:
       - inventory_models
       requestBody:
@@ -57,7 +55,6 @@ paths:
     get:
       operationId: GET/inventory_models/inventoryModelId
       summary: Retrieve an inventory model
-      description: Retrieve an inventory model
       tags:
       - inventory_models
       parameters:
@@ -77,7 +74,6 @@ paths:
     patch:
       operationId: PATCH/inventory_models/inventoryModelId
       summary: Update an inventory model
-      description: Update an inventory model
       tags:
       - inventory_models
       parameters:
@@ -103,7 +99,6 @@ paths:
     delete:
       operationId: DELETE/inventory_models/inventoryModelId
       summary: Delete an inventory model
-      description: Delete an inventory model
       tags:
       - inventory_models
       parameters:
@@ -118,6 +113,147 @@ paths:
           description: No content
 components:
   schemas:
+    inventoryModelCreate:
+      required:
+      - data
+      type: object
+      properties:
+        data:
+          type: object
+          required:
+          - type
+          - attributes
+          properties:
+            type:
+              type: string
+              description: The resource's type
+              enum:
+              - inventory_models
+            attributes:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: The inventory model's internal name.
+                  example: EU Inventory Model
+                strategy:
+                  type: string
+                  description: 'The inventory model''s shipping strategy: one between ''no_split'' (default), ''split_shipments'', ''ship_from_primary'' and ''ship_from_first_available_or_primary''.'
+                  example: no_split
+                stock_locations_cutoff:
+                  type: integer
+                  description: The maximum number of stock locations used for inventory computation.
+                  example: 3
+                stock_reservation_cutoff:
+                  type: integer
+                  description: The duration in seconds of the generated stock reservations.
+                  example: 3600
+                put_stock_transfers_on_hold:
+                  type: boolean
+                  description: Indicates if the the stock transfers must be put on hold automatically with the associated shipment.
+                  example: true
+                manual_stock_decrement:
+                  type: boolean
+                  description: Indicates if the the stock will be decremented manually after the order approval.
+                  example: true
+                reference:
+                  type: string
+                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
+                  example: ANY-EXTERNAL-REFEFERNCE
+                reference_origin:
+                  type: string
+                  description: Any identifier of the third party system that defines the reference code.
+                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
+                metadata:
+                  type: object
+                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
+                  example:
+                    foo: bar
+              required:
+              - name
+            relationships:
+              type: object
+              properties: {}
+    inventoryModelResponseList:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/inventoryModelResponse/properties/data'
+    inventoryModelUpdate:
+      required:
+      - data
+      type: object
+      properties:
+        data:
+          type: object
+          required:
+          - type
+          - id
+          - attributes
+          properties:
+            type:
+              type: string
+              description: The resource's type
+              enum:
+              - inventory_models
+            id:
+              type: string
+              description: Unique identifier for the resource (hash).
+              example: XAyRWNUzyN
+            attributes:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: The inventory model's internal name.
+                  example: EU Inventory Model
+                  nullable: false
+                strategy:
+                  type: string
+                  description: 'The inventory model''s shipping strategy: one between ''no_split'' (default), ''split_shipments'', ''ship_from_primary'' and ''ship_from_first_available_or_primary''.'
+                  example: no_split
+                  nullable: true
+                stock_locations_cutoff:
+                  type: integer
+                  description: The maximum number of stock locations used for inventory computation.
+                  example: 3
+                  nullable: true
+                stock_reservation_cutoff:
+                  type: integer
+                  description: The duration in seconds of the generated stock reservations.
+                  example: 3600
+                  nullable: true
+                put_stock_transfers_on_hold:
+                  type: boolean
+                  description: Indicates if the the stock transfers must be put on hold automatically with the associated shipment.
+                  example: true
+                  nullable: false
+                manual_stock_decrement:
+                  type: boolean
+                  description: Indicates if the the stock will be decremented manually after the order approval.
+                  example: true
+                  nullable: false
+                reference:
+                  type: string
+                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
+                  example: ANY-EXTERNAL-REFEFERNCE
+                  nullable: true
+                reference_origin:
+                  type: string
+                  description: Any identifier of the third party system that defines the reference code.
+                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
+                  nullable: true
+                metadata:
+                  type: object
+                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
+                  example:
+                    foo: bar
+                  nullable: true
+            relationships:
+              type: object
+              properties: {}
     inventoryModelResponse:
       type: object
       properties:
@@ -372,147 +508,6 @@ components:
                           type: string
                           description: Unique identifier for the resource (hash).
                           example: XAyRWNUzyN
-    inventoryModelCreate:
-      required:
-      - data
-      type: object
-      properties:
-        data:
-          type: object
-          required:
-          - type
-          - attributes
-          properties:
-            type:
-              type: string
-              description: The resource's type
-              enum:
-              - inventory_models
-            attributes:
-              type: object
-              properties:
-                name:
-                  type: string
-                  description: The inventory model's internal name.
-                  example: EU Inventory Model
-                strategy:
-                  type: string
-                  description: 'The inventory model''s shipping strategy: one between ''no_split'' (default), ''split_shipments'', ''ship_from_primary'' and ''ship_from_first_available_or_primary''.'
-                  example: no_split
-                stock_locations_cutoff:
-                  type: integer
-                  description: The maximum number of stock locations used for inventory computation.
-                  example: 3
-                stock_reservation_cutoff:
-                  type: integer
-                  description: The duration in seconds of the generated stock reservations.
-                  example: 3600
-                put_stock_transfers_on_hold:
-                  type: boolean
-                  description: Indicates if the the stock transfers must be put on hold automatically with the associated shipment.
-                  example: true
-                manual_stock_decrement:
-                  type: boolean
-                  description: Indicates if the the stock will be decremented manually after the order approval.
-                  example: true
-                reference:
-                  type: string
-                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
-                  example: ANY-EXTERNAL-REFEFERNCE
-                reference_origin:
-                  type: string
-                  description: Any identifier of the third party system that defines the reference code.
-                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
-                metadata:
-                  type: object
-                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
-                  example:
-                    foo: bar
-              required:
-              - name
-            relationships:
-              type: object
-              properties: {}
-    inventoryModelResponseList:
-      type: object
-      properties:
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/inventoryModelResponse/properties/data'
-    inventoryModelUpdate:
-      required:
-      - data
-      type: object
-      properties:
-        data:
-          type: object
-          required:
-          - type
-          - id
-          - attributes
-          properties:
-            type:
-              type: string
-              description: The resource's type
-              enum:
-              - inventory_models
-            id:
-              type: string
-              description: Unique identifier for the resource (hash).
-              example: XAyRWNUzyN
-            attributes:
-              type: object
-              properties:
-                name:
-                  type: string
-                  description: The inventory model's internal name.
-                  example: EU Inventory Model
-                  nullable: false
-                strategy:
-                  type: string
-                  description: 'The inventory model''s shipping strategy: one between ''no_split'' (default), ''split_shipments'', ''ship_from_primary'' and ''ship_from_first_available_or_primary''.'
-                  example: no_split
-                  nullable: true
-                stock_locations_cutoff:
-                  type: integer
-                  description: The maximum number of stock locations used for inventory computation.
-                  example: 3
-                  nullable: true
-                stock_reservation_cutoff:
-                  type: integer
-                  description: The duration in seconds of the generated stock reservations.
-                  example: 3600
-                  nullable: true
-                put_stock_transfers_on_hold:
-                  type: boolean
-                  description: Indicates if the the stock transfers must be put on hold automatically with the associated shipment.
-                  example: true
-                  nullable: false
-                manual_stock_decrement:
-                  type: boolean
-                  description: Indicates if the the stock will be decremented manually after the order approval.
-                  example: true
-                  nullable: false
-                reference:
-                  type: string
-                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
-                  example: ANY-EXTERNAL-REFEFERNCE
-                  nullable: true
-                reference_origin:
-                  type: string
-                  description: Any identifier of the third party system that defines the reference code.
-                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
-                  nullable: true
-                metadata:
-                  type: object
-                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
-                  example:
-                    foo: bar
-                  nullable: true
-            relationships:
-              type: object
-              properties: {}
   securitySchemes:
     bearerAuth:
       type: http

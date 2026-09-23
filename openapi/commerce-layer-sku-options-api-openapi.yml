@@ -24,7 +24,6 @@ paths:
     get:
       operationId: GET/sku_options
       summary: List all SKU options
-      description: List all SKU options
       tags:
       - sku_options
       responses:
@@ -37,7 +36,6 @@ paths:
     post:
       operationId: POST/sku_options
       summary: Create a SKU option
-      description: Create a SKU option
       tags:
       - sku_options
       requestBody:
@@ -57,7 +55,6 @@ paths:
     get:
       operationId: GET/sku_options/skuOptionId
       summary: Retrieve a SKU option
-      description: Retrieve a SKU option
       tags:
       - sku_options
       parameters:
@@ -77,7 +74,6 @@ paths:
     patch:
       operationId: PATCH/sku_options/skuOptionId
       summary: Update a SKU option
-      description: Update a SKU option
       tags:
       - sku_options
       parameters:
@@ -103,7 +99,6 @@ paths:
     delete:
       operationId: DELETE/sku_options/skuOptionId
       summary: Delete a SKU option
-      description: Delete a SKU option
       tags:
       - sku_options
       parameters:
@@ -259,7 +254,14 @@ components:
                         id:
                           type: string
                           description: The resource ID
-    skuOptionCreate:
+    skuOptionResponseList:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/skuOptionResponse/properties/data'
+    skuOptionUpdate:
       required:
       - data
       type: object
@@ -268,6 +270,7 @@ components:
           type: object
           required:
           - type
+          - id
           - attributes
           properties:
             type:
@@ -275,6 +278,10 @@ components:
               description: The resource's type
               enum:
               - sku_options
+            id:
+              type: string
+              description: Unique identifier for the resource (hash).
+              example: XAyRWNUzyN
             attributes:
               type: object
               properties:
@@ -282,41 +289,54 @@ components:
                   type: string
                   description: The SKU option's internal name.
                   example: Embossing
+                  nullable: false
                 currency_code:
                   type: string
                   description: The international 3-letter currency code as defined by the ISO 4217 standard.
                   example: EUR
+                  nullable: true
                 description:
                   type: string
                   description: An internal description of the SKU option.
                   example: Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                  nullable: true
                 price_amount_cents:
                   type: integer
                   description: The price of this shipping method, in cents.
                   example: 1000
+                  nullable: true
                 delay_hours:
                   type: integer
                   description: The delay time (in hours) that should be added to the delivery lead time when this option is purchased.
                   example: 48
+                  nullable: true
                 sku_code_regex:
                   type: string
                   description: The regex that will be evaluated to match the SKU codes, max size is 5000.
                   example: ^(A|B).*$
+                  nullable: true
+                _add_tags:
+                  type: string
+                  description: Comma separated list of tags to be added. Duplicates, invalid and non existing ones are discarded. Cannot be passed by sales channels.
+                _remove_tags:
+                  type: string
+                  description: Comma separated list of tags to be removed. Duplicates, invalid and non existing ones are discarded. Cannot be passed by sales channels.
                 reference:
                   type: string
                   description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
                   example: ANY-EXTERNAL-REFEFERNCE
+                  nullable: true
                 reference_origin:
                   type: string
                   description: Any identifier of the third party system that defines the reference code.
                   example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
+                  nullable: true
                 metadata:
                   type: object
                   description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
                   example:
                     foo: bar
-              required:
-              - name
+                  nullable: true
             relationships:
               type: object
               properties:
@@ -520,7 +540,7 @@ components:
                           type: string
                           description: Unique identifier for the resource (hash).
                           example: XAyRWNUzyN
-    skuOptionUpdate:
+    skuOptionCreate:
       required:
       - data
       type: object
@@ -529,7 +549,6 @@ components:
           type: object
           required:
           - type
-          - id
           - attributes
           properties:
             type:
@@ -537,10 +556,6 @@ components:
               description: The resource's type
               enum:
               - sku_options
-            id:
-              type: string
-              description: Unique identifier for the resource (hash).
-              example: XAyRWNUzyN
             attributes:
               type: object
               properties:
@@ -548,54 +563,41 @@ components:
                   type: string
                   description: The SKU option's internal name.
                   example: Embossing
-                  nullable: false
                 currency_code:
                   type: string
                   description: The international 3-letter currency code as defined by the ISO 4217 standard.
                   example: EUR
-                  nullable: true
                 description:
                   type: string
                   description: An internal description of the SKU option.
                   example: Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                  nullable: true
                 price_amount_cents:
                   type: integer
                   description: The price of this shipping method, in cents.
                   example: 1000
-                  nullable: true
                 delay_hours:
                   type: integer
                   description: The delay time (in hours) that should be added to the delivery lead time when this option is purchased.
                   example: 48
-                  nullable: true
                 sku_code_regex:
                   type: string
                   description: The regex that will be evaluated to match the SKU codes, max size is 5000.
                   example: ^(A|B).*$
-                  nullable: true
-                _add_tags:
-                  type: string
-                  description: Comma separated list of tags to be added. Duplicates, invalid and non existing ones are discarded. Cannot be passed by sales channels.
-                _remove_tags:
-                  type: string
-                  description: Comma separated list of tags to be removed. Duplicates, invalid and non existing ones are discarded. Cannot be passed by sales channels.
                 reference:
                   type: string
                   description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
                   example: ANY-EXTERNAL-REFEFERNCE
-                  nullable: true
                 reference_origin:
                   type: string
                   description: Any identifier of the third party system that defines the reference code.
                   example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
-                  nullable: true
                 metadata:
                   type: object
                   description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
                   example:
                     foo: bar
-                  nullable: true
+              required:
+              - name
             relationships:
               type: object
               properties:
@@ -633,13 +635,6 @@ components:
                           type: string
                           description: Unique identifier for the resource (hash).
                           example: XAyRWNUzyN
-    skuOptionResponseList:
-      type: object
-      properties:
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/skuOptionResponse/properties/data'
   securitySchemes:
     bearerAuth:
       type: http

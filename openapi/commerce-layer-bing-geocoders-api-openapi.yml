@@ -24,7 +24,6 @@ paths:
     get:
       operationId: GET/bing_geocoders
       summary: List all bing geocoders
-      description: List all bing geocoders
       tags:
       - bing_geocoders
       responses:
@@ -37,7 +36,6 @@ paths:
     post:
       operationId: POST/bing_geocoders
       summary: Create a bing geocoder
-      description: Create a bing geocoder
       tags:
       - bing_geocoders
       requestBody:
@@ -57,7 +55,6 @@ paths:
     get:
       operationId: GET/bing_geocoders/bingGeocoderId
       summary: Retrieve a bing geocoder
-      description: Retrieve a bing geocoder
       tags:
       - bing_geocoders
       parameters:
@@ -77,7 +74,6 @@ paths:
     patch:
       operationId: PATCH/bing_geocoders/bingGeocoderId
       summary: Update a bing geocoder
-      description: Update a bing geocoder
       tags:
       - bing_geocoders
       parameters:
@@ -103,7 +99,6 @@ paths:
     delete:
       operationId: DELETE/bing_geocoders/bingGeocoderId
       summary: Delete a bing geocoder
-      description: Delete a bing geocoder
       tags:
       - bing_geocoders
       parameters:
@@ -118,6 +113,52 @@ paths:
           description: No content
 components:
   schemas:
+    bingGeocoderCreate:
+      required:
+      - data
+      type: object
+      properties:
+        data:
+          type: object
+          required:
+          - type
+          - attributes
+          properties:
+            type:
+              type: string
+              description: The resource's type
+              enum:
+              - bing_geocoders
+            attributes:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: The geocoder's internal name.
+                  example: Default geocoder
+                reference:
+                  type: string
+                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
+                  example: ANY-EXTERNAL-REFEFERNCE
+                reference_origin:
+                  type: string
+                  description: Any identifier of the third party system that defines the reference code.
+                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
+                metadata:
+                  type: object
+                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
+                  example:
+                    foo: bar
+                key:
+                  type: string
+                  description: The Bing Virtualearth key.
+                  example: xxxx-yyyy-zzzz
+              required:
+              - name
+              - key
+            relationships:
+              type: object
+              properties: {}
     bingGeocoder:
       type: object
       properties:
@@ -237,52 +278,6 @@ components:
                           type: string
                           description: Unique identifier for the resource (hash).
                           example: XAyRWNUzyN
-    bingGeocoderCreate:
-      required:
-      - data
-      type: object
-      properties:
-        data:
-          type: object
-          required:
-          - type
-          - attributes
-          properties:
-            type:
-              type: string
-              description: The resource's type
-              enum:
-              - bing_geocoders
-            attributes:
-              type: object
-              properties:
-                name:
-                  type: string
-                  description: The geocoder's internal name.
-                  example: Default geocoder
-                reference:
-                  type: string
-                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
-                  example: ANY-EXTERNAL-REFEFERNCE
-                reference_origin:
-                  type: string
-                  description: Any identifier of the third party system that defines the reference code.
-                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
-                metadata:
-                  type: object
-                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
-                  example:
-                    foo: bar
-                key:
-                  type: string
-                  description: The Bing Virtualearth key.
-                  example: xxxx-yyyy-zzzz
-              required:
-              - name
-              - key
-            relationships:
-              type: object
-              properties: {}
     bingGeocoderResponse:
       type: object
       properties:

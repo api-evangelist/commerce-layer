@@ -24,7 +24,6 @@ paths:
     get:
       operationId: GET/stock_reservations
       summary: List all stock reservations
-      description: List all stock reservations
       tags:
       - stock_reservations
       responses:
@@ -37,7 +36,6 @@ paths:
     post:
       operationId: POST/stock_reservations
       summary: Create a stock reservation
-      description: Create a stock reservation
       tags:
       - stock_reservations
       requestBody:
@@ -57,7 +55,6 @@ paths:
     get:
       operationId: GET/stock_reservations/stockReservationId
       summary: Retrieve a stock reservation
-      description: Retrieve a stock reservation
       tags:
       - stock_reservations
       parameters:
@@ -77,7 +74,6 @@ paths:
     patch:
       operationId: PATCH/stock_reservations/stockReservationId
       summary: Update a stock reservation
-      description: Update a stock reservation
       tags:
       - stock_reservations
       parameters:
@@ -103,7 +99,6 @@ paths:
     delete:
       operationId: DELETE/stock_reservations/stockReservationId
       summary: Delete a stock reservation
-      description: Delete a stock reservation
       tags:
       - stock_reservations
       parameters:
@@ -118,73 +113,6 @@ paths:
           description: No content
 components:
   schemas:
-    stockReservationResponseList:
-      type: object
-      properties:
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/stockReservationResponse/properties/data'
-    stockReservationCreate:
-      required:
-      - data
-      type: object
-      properties:
-        data:
-          type: object
-          required:
-          - type
-          - attributes
-          properties:
-            type:
-              type: string
-              description: The resource's type
-              enum:
-              - stock_reservations
-            attributes:
-              type: object
-              properties:
-                quantity:
-                  type: integer
-                  description: The stock reservation quantity.
-                  example: 4
-                reference:
-                  type: string
-                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
-                  example: ANY-EXTERNAL-REFEFERNCE
-                reference_origin:
-                  type: string
-                  description: Any identifier of the third party system that defines the reference code.
-                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
-                metadata:
-                  type: object
-                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
-                  example:
-                    foo: bar
-              required:
-              - quantity
-            relationships:
-              type: object
-              properties:
-                stock_item:
-                  required:
-                  - data
-                  type: object
-                  properties:
-                    data:
-                      type: object
-                      properties:
-                        type:
-                          type: string
-                          description: The resource's type
-                          enum:
-                          - stock_items
-                        id:
-                          type: string
-                          description: Unique identifier for the resource (hash).
-                          example: XAyRWNUzyN
-              required:
-              - stock_item
     stockReservation:
       type: object
       properties:
@@ -369,6 +297,126 @@ components:
                           type: string
                           description: Unique identifier for the resource (hash).
                           example: XAyRWNUzyN
+    stockReservationCreate:
+      required:
+      - data
+      type: object
+      properties:
+        data:
+          type: object
+          required:
+          - type
+          - attributes
+          properties:
+            type:
+              type: string
+              description: The resource's type
+              enum:
+              - stock_reservations
+            attributes:
+              type: object
+              properties:
+                quantity:
+                  type: integer
+                  description: The stock reservation quantity.
+                  example: 4
+                reference:
+                  type: string
+                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
+                  example: ANY-EXTERNAL-REFEFERNCE
+                reference_origin:
+                  type: string
+                  description: Any identifier of the third party system that defines the reference code.
+                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
+                metadata:
+                  type: object
+                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
+                  example:
+                    foo: bar
+              required:
+              - quantity
+            relationships:
+              type: object
+              properties:
+                stock_item:
+                  required:
+                  - data
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - stock_items
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+              required:
+              - stock_item
+    stockReservationResponseList:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/stockReservationResponse/properties/data'
+    stockReservationUpdate:
+      required:
+      - data
+      type: object
+      properties:
+        data:
+          type: object
+          required:
+          - type
+          - id
+          - attributes
+          properties:
+            type:
+              type: string
+              description: The resource's type
+              enum:
+              - stock_reservations
+            id:
+              type: string
+              description: Unique identifier for the resource (hash).
+              example: XAyRWNUzyN
+            attributes:
+              type: object
+              properties:
+                quantity:
+                  type: integer
+                  description: The stock reservation quantity.
+                  example: 4
+                  nullable: false
+                _pending:
+                  type: boolean
+                  description: Send this attribute if you want to mark this stock reservation as pending.
+                  example: true
+                  nullable: false
+                reference:
+                  type: string
+                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
+                  example: ANY-EXTERNAL-REFEFERNCE
+                  nullable: true
+                reference_origin:
+                  type: string
+                  description: Any identifier of the third party system that defines the reference code.
+                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
+                  nullable: true
+                metadata:
+                  type: object
+                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
+                  example:
+                    foo: bar
+                  nullable: true
+            relationships:
+              type: object
+              properties: {}
     stockReservationResponse:
       type: object
       properties:
@@ -579,59 +627,6 @@ components:
                         id:
                           type: string
                           description: The resource ID
-    stockReservationUpdate:
-      required:
-      - data
-      type: object
-      properties:
-        data:
-          type: object
-          required:
-          - type
-          - id
-          - attributes
-          properties:
-            type:
-              type: string
-              description: The resource's type
-              enum:
-              - stock_reservations
-            id:
-              type: string
-              description: Unique identifier for the resource (hash).
-              example: XAyRWNUzyN
-            attributes:
-              type: object
-              properties:
-                quantity:
-                  type: integer
-                  description: The stock reservation quantity.
-                  example: 4
-                  nullable: false
-                _pending:
-                  type: boolean
-                  description: Send this attribute if you want to mark this stock reservation as pending.
-                  example: true
-                  nullable: false
-                reference:
-                  type: string
-                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
-                  example: ANY-EXTERNAL-REFEFERNCE
-                  nullable: true
-                reference_origin:
-                  type: string
-                  description: Any identifier of the third party system that defines the reference code.
-                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
-                  nullable: true
-                metadata:
-                  type: object
-                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
-                  example:
-                    foo: bar
-                  nullable: true
-            relationships:
-              type: object
-              properties: {}
   securitySchemes:
     bearerAuth:
       type: http

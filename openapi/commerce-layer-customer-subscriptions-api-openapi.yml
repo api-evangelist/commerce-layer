@@ -17,16 +17,15 @@ servers:
 security:
 - bearerAuth: []
 tags:
-- name: customer_subscriptions
+- name: Customer > Subscriptions
   description: resource type
 paths:
   /customer_subscriptions:
     get:
       operationId: GET/customer_subscriptions
       summary: List all customer subscriptions
-      description: List all customer subscriptions
       tags:
-      - customer_subscriptions
+      - Customer > Subscriptions
       responses:
         '200':
           description: A list of customer subscription objects
@@ -37,9 +36,8 @@ paths:
     post:
       operationId: POST/customer_subscriptions
       summary: Create a customer subscription
-      description: Create a customer subscription
       tags:
-      - customer_subscriptions
+      - Customer > Subscriptions
       requestBody:
         required: true
         content:
@@ -57,9 +55,8 @@ paths:
     get:
       operationId: GET/customer_subscriptions/customerSubscriptionId
       summary: Retrieve a customer subscription
-      description: Retrieve a customer subscription
       tags:
-      - customer_subscriptions
+      - Customer > Subscriptions
       parameters:
       - name: customerSubscriptionId
         in: path
@@ -77,9 +74,8 @@ paths:
     patch:
       operationId: PATCH/customer_subscriptions/customerSubscriptionId
       summary: Update a customer subscription
-      description: Update a customer subscription
       tags:
-      - customer_subscriptions
+      - Customer > Subscriptions
       parameters:
       - name: customerSubscriptionId
         in: path
@@ -103,9 +99,8 @@ paths:
     delete:
       operationId: DELETE/customer_subscriptions/customerSubscriptionId
       summary: Delete a customer subscription
-      description: Delete a customer subscription
       tags:
-      - customer_subscriptions
+      - Customer > Subscriptions
       parameters:
       - name: customerSubscriptionId
         in: path
@@ -125,101 +120,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/customerSubscriptionResponse/properties/data'
-    customerSubscriptionResponse:
-      type: object
-      properties:
-        data:
-          type: object
-          properties:
-            id:
-              type: string
-              description: Unique identifier for the resource (hash).
-              example: XAyRWNUzyN
-            type:
-              type: string
-              description: The resource's type
-              enum:
-              - customer_subscriptions
-            links:
-              type: object
-              properties:
-                self:
-                  type: string
-                  description: URL
-            attributes:
-              $ref: '#/components/schemas/customerSubscription/properties/data/properties/attributes'
-            relationships:
-              type: object
-              properties:
-                customer:
-                  type: object
-                  properties:
-                    links:
-                      type: object
-                      properties:
-                        self:
-                          type: string
-                          description: URL
-                        related:
-                          type: string
-                          description: URL
-                    data:
-                      type: object
-                      properties:
-                        type:
-                          type: string
-                          description: The resource's type
-                          enum:
-                          - customer
-                        id:
-                          type: string
-                          description: The resource ID
-                events:
-                  type: object
-                  properties:
-                    links:
-                      type: object
-                      properties:
-                        self:
-                          type: string
-                          description: URL
-                        related:
-                          type: string
-                          description: URL
-                    data:
-                      type: object
-                      properties:
-                        type:
-                          type: string
-                          description: The resource's type
-                          enum:
-                          - events
-                        id:
-                          type: string
-                          description: The resource ID
-                event_stores:
-                  type: object
-                  properties:
-                    links:
-                      type: object
-                      properties:
-                        self:
-                          type: string
-                          description: URL
-                        related:
-                          type: string
-                          description: URL
-                    data:
-                      type: object
-                      properties:
-                        type:
-                          type: string
-                          description: The resource's type
-                          enum:
-                          - event_stores
-                        id:
-                          type: string
-                          description: The resource ID
     customerSubscription:
       type: object
       properties:
@@ -358,6 +258,101 @@ components:
             relationships:
               type: object
               properties: {}
+    customerSubscriptionResponse:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            id:
+              type: string
+              description: Unique identifier for the resource (hash).
+              example: XAyRWNUzyN
+            type:
+              type: string
+              description: The resource's type
+              enum:
+              - customer_subscriptions
+            links:
+              type: object
+              properties:
+                self:
+                  type: string
+                  description: URL
+            attributes:
+              $ref: '#/components/schemas/customerSubscription/properties/data/properties/attributes'
+            relationships:
+              type: object
+              properties:
+                customer:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - customer
+                        id:
+                          type: string
+                          description: The resource ID
+                events:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - events
+                        id:
+                          type: string
+                          description: The resource ID
+                event_stores:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - event_stores
+                        id:
+                          type: string
+                          description: The resource ID
     customerSubscriptionUpdate:
       required:
       - data

@@ -17,16 +17,15 @@ servers:
 security:
 - bearerAuth: []
 tags:
-- name: price_lists
+- name: Price Lists
   description: resource type
 paths:
   /price_lists:
     get:
       operationId: GET/price_lists
       summary: List all price lists
-      description: List all price lists
       tags:
-      - price_lists
+      - Price Lists
       responses:
         '200':
           description: A list of price list objects
@@ -37,9 +36,8 @@ paths:
     post:
       operationId: POST/price_lists
       summary: Create a price list
-      description: Create a price list
       tags:
-      - price_lists
+      - Price Lists
       requestBody:
         required: true
         content:
@@ -57,9 +55,8 @@ paths:
     get:
       operationId: GET/price_lists/priceListId
       summary: Retrieve a price list
-      description: Retrieve a price list
       tags:
-      - price_lists
+      - Price Lists
       parameters:
       - name: priceListId
         in: path
@@ -77,9 +74,8 @@ paths:
     patch:
       operationId: PATCH/price_lists/priceListId
       summary: Update a price list
-      description: Update a price list
       tags:
-      - price_lists
+      - Price Lists
       parameters:
       - name: priceListId
         in: path
@@ -103,9 +99,8 @@ paths:
     delete:
       operationId: DELETE/price_lists/priceListId
       summary: Delete a price list
-      description: Delete a price list
       tags:
-      - price_lists
+      - Price Lists
       parameters:
       - name: priceListId
         in: path
@@ -118,13 +113,6 @@ paths:
           description: No content
 components:
   schemas:
-    priceListResponseList:
-      type: object
-      properties:
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/priceListResponse/properties/data'
     priceListResponse:
       type: object
       properties:
@@ -311,64 +299,6 @@ components:
             relationships:
               type: object
               properties: {}
-    priceListCreate:
-      required:
-      - data
-      type: object
-      properties:
-        data:
-          type: object
-          required:
-          - type
-          - attributes
-          properties:
-            type:
-              type: string
-              description: The resource's type
-              enum:
-              - price_lists
-            attributes:
-              type: object
-              properties:
-                name:
-                  type: string
-                  description: The price list's internal name.
-                  example: EU Price list
-                code:
-                  type: string
-                  description: A string that you can use to identify the price list (must be unique within the environment).
-                  example: europe1
-                currency_code:
-                  type: string
-                  description: The international 3-letter currency code as defined by the ISO 4217 standard.
-                  example: EUR
-                tax_included:
-                  type: boolean
-                  description: Indicates if the associated prices include taxes.
-                  example: true
-                reference:
-                  type: string
-                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
-                  example: ANY-EXTERNAL-REFEFERNCE
-                reference_origin:
-                  type: string
-                  description: Any identifier of the third party system that defines the reference code.
-                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
-                rules:
-                  type: object
-                  description: The rules (using Rules Engine) to be applied.
-                  example: {}
-                metadata:
-                  type: object
-                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
-                  example:
-                    foo: bar
-              required:
-              - name
-              - currency_code
-            relationships:
-              type: object
-              properties: {}
     priceList:
       type: object
       properties:
@@ -510,6 +440,71 @@ components:
                           type: string
                           description: Unique identifier for the resource (hash).
                           example: XAyRWNUzyN
+    priceListCreate:
+      required:
+      - data
+      type: object
+      properties:
+        data:
+          type: object
+          required:
+          - type
+          - attributes
+          properties:
+            type:
+              type: string
+              description: The resource's type
+              enum:
+              - price_lists
+            attributes:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: The price list's internal name.
+                  example: EU Price list
+                code:
+                  type: string
+                  description: A string that you can use to identify the price list (must be unique within the environment).
+                  example: europe1
+                currency_code:
+                  type: string
+                  description: The international 3-letter currency code as defined by the ISO 4217 standard.
+                  example: EUR
+                tax_included:
+                  type: boolean
+                  description: Indicates if the associated prices include taxes.
+                  example: true
+                reference:
+                  type: string
+                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
+                  example: ANY-EXTERNAL-REFEFERNCE
+                reference_origin:
+                  type: string
+                  description: Any identifier of the third party system that defines the reference code.
+                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
+                rules:
+                  type: object
+                  description: The rules (using Rules Engine) to be applied.
+                  example: {}
+                metadata:
+                  type: object
+                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
+                  example:
+                    foo: bar
+              required:
+              - name
+              - currency_code
+            relationships:
+              type: object
+              properties: {}
+    priceListResponseList:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/priceListResponse/properties/data'
   securitySchemes:
     bearerAuth:
       type: http

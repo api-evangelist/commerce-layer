@@ -24,7 +24,6 @@ paths:
     get:
       operationId: GET/sku_lists
       summary: List all SKU lists
-      description: List all SKU lists
       tags:
       - sku_lists
       responses:
@@ -37,7 +36,6 @@ paths:
     post:
       operationId: POST/sku_lists
       summary: Create a SKU list
-      description: Create a SKU list
       tags:
       - sku_lists
       requestBody:
@@ -57,7 +55,6 @@ paths:
     get:
       operationId: GET/sku_lists/skuListId
       summary: Retrieve a SKU list
-      description: Retrieve a SKU list
       tags:
       - sku_lists
       parameters:
@@ -77,7 +74,6 @@ paths:
     patch:
       operationId: PATCH/sku_lists/skuListId
       summary: Update a SKU list
-      description: Update a SKU list
       tags:
       - sku_lists
       parameters:
@@ -103,7 +99,6 @@ paths:
     delete:
       operationId: DELETE/sku_lists/skuListId
       summary: Delete a SKU list
-      description: Delete a SKU list
       tags:
       - sku_lists
       parameters:
@@ -118,187 +113,6 @@ paths:
           description: No content
 components:
   schemas:
-    skuList:
-      type: object
-      properties:
-        data:
-          type: object
-          required:
-          - type
-          - attributes
-          properties:
-            type:
-              type: string
-              description: The resource's type
-              enum:
-              - sku_lists
-            attributes:
-              type: object
-              properties:
-                name:
-                  type: string
-                  description: The SKU list's internal name.
-                  example: Personal list
-                  nullable: false
-                slug:
-                  type: string
-                  description: The SKU list's internal slug.
-                  example: personal-list-1
-                  nullable: false
-                description:
-                  type: string
-                  description: An internal description of the SKU list.
-                  example: Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                  nullable: true
-                image_url:
-                  type: string
-                  description: The URL of an image that represents the SKU list.
-                  example: https://img.yourdomain.com/skus/xYZkjABcde.png
-                  nullable: true
-                manual:
-                  type: boolean
-                  description: Indicates if the SKU list is populated manually.
-                  example: false
-                  nullable: true
-                sku_code_regex:
-                  type: string
-                  description: The regex that will be evaluated to match the SKU codes, max size is 5000.
-                  example: ^(A|B).*$
-                  nullable: true
-                created_at:
-                  type: string
-                  description: Time at which the resource was created.
-                  example: '2018-01-01T12:00:00.000Z'
-                  nullable: false
-                updated_at:
-                  type: string
-                  description: Time at which the resource was last updated.
-                  example: '2018-01-01T12:00:00.000Z'
-                  nullable: false
-                reference:
-                  type: string
-                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
-                  example: ANY-EXTERNAL-REFEFERNCE
-                  nullable: true
-                reference_origin:
-                  type: string
-                  description: Any identifier of the third party system that defines the reference code.
-                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
-                  nullable: true
-                metadata:
-                  type: object
-                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
-                  example:
-                    foo: bar
-                  nullable: true
-            relationships:
-              type: object
-              properties:
-                customer:
-                  type: object
-                  properties:
-                    data:
-                      type: object
-                      properties:
-                        type:
-                          type: string
-                          description: The resource's type
-                          enum:
-                          - customers
-                        id:
-                          type: string
-                          description: Unique identifier for the resource (hash).
-                          example: XAyRWNUzyN
-                skus:
-                  type: object
-                  properties:
-                    data:
-                      type: object
-                      properties:
-                        type:
-                          type: string
-                          description: The resource's type
-                          enum:
-                          - skus
-                        id:
-                          type: string
-                          description: Unique identifier for the resource (hash).
-                          example: XAyRWNUzyN
-                sku_list_items:
-                  type: object
-                  properties:
-                    data:
-                      type: object
-                      properties:
-                        type:
-                          type: string
-                          description: The resource's type
-                          enum:
-                          - sku_list_items
-                        id:
-                          type: string
-                          description: Unique identifier for the resource (hash).
-                          example: XAyRWNUzyN
-                bundles:
-                  type: object
-                  properties:
-                    data:
-                      type: object
-                      properties:
-                        type:
-                          type: string
-                          description: The resource's type
-                          enum:
-                          - bundles
-                        id:
-                          type: string
-                          description: Unique identifier for the resource (hash).
-                          example: XAyRWNUzyN
-                attachments:
-                  type: object
-                  properties:
-                    data:
-                      type: object
-                      properties:
-                        type:
-                          type: string
-                          description: The resource's type
-                          enum:
-                          - attachments
-                        id:
-                          type: string
-                          description: Unique identifier for the resource (hash).
-                          example: XAyRWNUzyN
-                links:
-                  type: object
-                  properties:
-                    data:
-                      type: object
-                      properties:
-                        type:
-                          type: string
-                          description: The resource's type
-                          enum:
-                          - links
-                        id:
-                          type: string
-                          description: Unique identifier for the resource (hash).
-                          example: XAyRWNUzyN
-                event_stores:
-                  type: object
-                  properties:
-                    data:
-                      type: object
-                      properties:
-                        type:
-                          type: string
-                          description: The resource's type
-                          enum:
-                          - event_stores
-                        id:
-                          type: string
-                          description: Unique identifier for the resource (hash).
-                          example: XAyRWNUzyN
     skuListResponse:
       type: object
       properties:
@@ -486,6 +300,13 @@ components:
                         id:
                           type: string
                           description: The resource ID
+    skuListResponseList:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/skuListResponse/properties/data'
     skuListCreate:
       required:
       - data
@@ -560,13 +381,187 @@ components:
                           type: string
                           description: Unique identifier for the resource (hash).
                           example: XAyRWNUzyN
-    skuListResponseList:
+    skuList:
       type: object
       properties:
         data:
-          type: array
-          items:
-            $ref: '#/components/schemas/skuListResponse/properties/data'
+          type: object
+          required:
+          - type
+          - attributes
+          properties:
+            type:
+              type: string
+              description: The resource's type
+              enum:
+              - sku_lists
+            attributes:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: The SKU list's internal name.
+                  example: Personal list
+                  nullable: false
+                slug:
+                  type: string
+                  description: The SKU list's internal slug.
+                  example: personal-list-1
+                  nullable: false
+                description:
+                  type: string
+                  description: An internal description of the SKU list.
+                  example: Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                  nullable: true
+                image_url:
+                  type: string
+                  description: The URL of an image that represents the SKU list.
+                  example: https://img.yourdomain.com/skus/xYZkjABcde.png
+                  nullable: true
+                manual:
+                  type: boolean
+                  description: Indicates if the SKU list is populated manually.
+                  example: false
+                  nullable: true
+                sku_code_regex:
+                  type: string
+                  description: The regex that will be evaluated to match the SKU codes, max size is 5000.
+                  example: ^(A|B).*$
+                  nullable: true
+                created_at:
+                  type: string
+                  description: Time at which the resource was created.
+                  example: '2018-01-01T12:00:00.000Z'
+                  nullable: false
+                updated_at:
+                  type: string
+                  description: Time at which the resource was last updated.
+                  example: '2018-01-01T12:00:00.000Z'
+                  nullable: false
+                reference:
+                  type: string
+                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
+                  example: ANY-EXTERNAL-REFEFERNCE
+                  nullable: true
+                reference_origin:
+                  type: string
+                  description: Any identifier of the third party system that defines the reference code.
+                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
+                  nullable: true
+                metadata:
+                  type: object
+                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
+                  example:
+                    foo: bar
+                  nullable: true
+            relationships:
+              type: object
+              properties:
+                customer:
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - customers
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+                skus:
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - skus
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+                sku_list_items:
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - sku_list_items
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+                bundles:
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - bundles
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+                attachments:
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - attachments
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+                links:
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - links
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+                event_stores:
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - event_stores
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
     skuListUpdate:
       required:
       - data

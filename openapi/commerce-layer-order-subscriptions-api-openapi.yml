@@ -24,7 +24,6 @@ paths:
     get:
       operationId: GET/order_subscriptions
       summary: List all order subscriptions
-      description: List all order subscriptions
       tags:
       - order_subscriptions
       responses:
@@ -37,7 +36,6 @@ paths:
     post:
       operationId: POST/order_subscriptions
       summary: Create an order subscription
-      description: Create an order subscription
       tags:
       - order_subscriptions
       requestBody:
@@ -57,7 +55,6 @@ paths:
     get:
       operationId: GET/order_subscriptions/orderSubscriptionId
       summary: Retrieve an order subscription
-      description: Retrieve an order subscription
       tags:
       - order_subscriptions
       parameters:
@@ -77,7 +74,6 @@ paths:
     patch:
       operationId: PATCH/order_subscriptions/orderSubscriptionId
       summary: Update an order subscription
-      description: Update an order subscription
       tags:
       - order_subscriptions
       parameters:
@@ -103,7 +99,6 @@ paths:
     delete:
       operationId: DELETE/order_subscriptions/orderSubscriptionId
       summary: Delete an order subscription
-      description: Delete an order subscription
       tags:
       - order_subscriptions
       parameters:
@@ -420,6 +415,127 @@ components:
                         id:
                           type: string
                           description: The resource ID
+    orderSubscriptionResponseList:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/orderSubscriptionResponse/properties/data'
+    orderSubscriptionCreate:
+      required:
+      - data
+      type: object
+      properties:
+        data:
+          type: object
+          required:
+          - type
+          - attributes
+          properties:
+            type:
+              type: string
+              description: The resource's type
+              enum:
+              - order_subscriptions
+            attributes:
+              type: object
+              properties:
+                frequency:
+                  type: string
+                  description: The frequency of the subscription. Use one of the supported within 'hourly', 'daily', 'weekly', 'monthly', 'two-month', 'three-month', 'four-month', 'six-month', 'yearly', or provide your custom crontab expression (min unit is hour). Must be supported by existing associated subscription_model.
+                  example: monthly
+                activate_by_source_order:
+                  type: boolean
+                  description: Indicates if the subscription will be activated considering the placed source order as its first run.
+                  example: true
+                place_target_order:
+                  type: boolean
+                  description: Indicates if the subscription created orders are automatically placed at the end of the copy.
+                  example: true
+                renewal_alert_period:
+                  type: integer
+                  description: Indicates the number of hours the renewal alert will be triggered before the subscription next run. Must be included between 1 and 720 hours.
+                  example: 1
+                starts_at:
+                  type: string
+                  description: The activation date/time of this subscription.
+                  example: '2018-01-01T12:00:00.000Z'
+                expires_at:
+                  type: string
+                  description: The expiration date/time of this subscription (must be after starts_at).
+                  example: '2018-01-02T12:00:00.000Z'
+                reference:
+                  type: string
+                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
+                  example: ANY-EXTERNAL-REFEFERNCE
+                reference_origin:
+                  type: string
+                  description: Any identifier of the third party system that defines the reference code.
+                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
+                metadata:
+                  type: object
+                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
+                  example:
+                    foo: bar
+              required:
+              - frequency
+            relationships:
+              type: object
+              properties:
+                market:
+                  required:
+                  - data
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - markets
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+                source_order:
+                  required:
+                  - data
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - orders
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+                tags:
+                  required:
+                  - data
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - tags
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+              required:
+              - source_order
     orderSubscription:
       type: object
       properties:
@@ -722,127 +838,6 @@ components:
                           type: string
                           description: Unique identifier for the resource (hash).
                           example: XAyRWNUzyN
-    orderSubscriptionCreate:
-      required:
-      - data
-      type: object
-      properties:
-        data:
-          type: object
-          required:
-          - type
-          - attributes
-          properties:
-            type:
-              type: string
-              description: The resource's type
-              enum:
-              - order_subscriptions
-            attributes:
-              type: object
-              properties:
-                frequency:
-                  type: string
-                  description: The frequency of the subscription. Use one of the supported within 'hourly', 'daily', 'weekly', 'monthly', 'two-month', 'three-month', 'four-month', 'six-month', 'yearly', or provide your custom crontab expression (min unit is hour). Must be supported by existing associated subscription_model.
-                  example: monthly
-                activate_by_source_order:
-                  type: boolean
-                  description: Indicates if the subscription will be activated considering the placed source order as its first run.
-                  example: true
-                place_target_order:
-                  type: boolean
-                  description: Indicates if the subscription created orders are automatically placed at the end of the copy.
-                  example: true
-                renewal_alert_period:
-                  type: integer
-                  description: Indicates the number of hours the renewal alert will be triggered before the subscription next run. Must be included between 1 and 720 hours.
-                  example: 1
-                starts_at:
-                  type: string
-                  description: The activation date/time of this subscription.
-                  example: '2018-01-01T12:00:00.000Z'
-                expires_at:
-                  type: string
-                  description: The expiration date/time of this subscription (must be after starts_at).
-                  example: '2018-01-02T12:00:00.000Z'
-                reference:
-                  type: string
-                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
-                  example: ANY-EXTERNAL-REFEFERNCE
-                reference_origin:
-                  type: string
-                  description: Any identifier of the third party system that defines the reference code.
-                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
-                metadata:
-                  type: object
-                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
-                  example:
-                    foo: bar
-              required:
-              - frequency
-            relationships:
-              type: object
-              properties:
-                market:
-                  required:
-                  - data
-                  type: object
-                  properties:
-                    data:
-                      type: object
-                      properties:
-                        type:
-                          type: string
-                          description: The resource's type
-                          enum:
-                          - markets
-                        id:
-                          type: string
-                          description: Unique identifier for the resource (hash).
-                          example: XAyRWNUzyN
-                source_order:
-                  required:
-                  - data
-                  type: object
-                  properties:
-                    data:
-                      type: object
-                      properties:
-                        type:
-                          type: string
-                          description: The resource's type
-                          enum:
-                          - orders
-                        id:
-                          type: string
-                          description: Unique identifier for the resource (hash).
-                          example: XAyRWNUzyN
-                tags:
-                  required:
-                  - data
-                  type: object
-                  properties:
-                    data:
-                      type: object
-                      properties:
-                        type:
-                          type: string
-                          description: The resource's type
-                          enum:
-                          - tags
-                        id:
-                          type: string
-                          description: Unique identifier for the resource (hash).
-                          example: XAyRWNUzyN
-              required:
-              - source_order
-    orderSubscriptionResponseList:
-      type: object
-      properties:
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/orderSubscriptionResponse/properties/data'
     orderSubscriptionUpdate:
       required:
       - data

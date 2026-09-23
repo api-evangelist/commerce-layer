@@ -17,16 +17,15 @@ servers:
 security:
 - bearerAuth: []
 tags:
-- name: customers
+- name: Customers
   description: resource type
 paths:
   /customers:
     get:
       operationId: GET/customers
       summary: List all customers
-      description: List all customers
       tags:
-      - customers
+      - Customers
       responses:
         '200':
           description: A list of customer objects
@@ -37,9 +36,8 @@ paths:
     post:
       operationId: POST/customers
       summary: Create a customer
-      description: Create a customer
       tags:
-      - customers
+      - Customers
       requestBody:
         required: true
         content:
@@ -57,9 +55,8 @@ paths:
     get:
       operationId: GET/customers/customerId
       summary: Retrieve a customer
-      description: Retrieve a customer
       tags:
-      - customers
+      - Customers
       parameters:
       - name: customerId
         in: path
@@ -77,9 +74,8 @@ paths:
     patch:
       operationId: PATCH/customers/customerId
       summary: Update a customer
-      description: Update a customer
       tags:
-      - customers
+      - Customers
       parameters:
       - name: customerId
         in: path
@@ -103,9 +99,8 @@ paths:
     delete:
       operationId: DELETE/customers/customerId
       summary: Delete a customer
-      description: Delete a customer
       tags:
-      - customers
+      - Customers
       parameters:
       - name: customerId
         in: path
@@ -198,6 +193,486 @@ components:
                   description: Send this attribute if you want to trigger a cancellation of anonymization. Cannot be passed by sales channels.
                   example: true
                   nullable: false
+            relationships:
+              type: object
+              properties:
+                customer_group:
+                  required:
+                  - data
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - customer_groups
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+                tags:
+                  required:
+                  - data
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - tags
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+    customer:
+      type: object
+      properties:
+        data:
+          type: object
+          required:
+          - type
+          - attributes
+          properties:
+            type:
+              type: string
+              description: The resource's type
+              enum:
+              - customers
+            attributes:
+              type: object
+              properties:
+                email:
+                  type: string
+                  description: The customer's email address.
+                  example: john@example.com
+                  nullable: false
+                status:
+                  type: string
+                  description: The customer's status. One of 'prospect' (default), 'acquired', or 'repeat'.
+                  example: prospect
+                  nullable: false
+                  enum:
+                  - prospect
+                  - acquired
+                  - repeat
+                has_password:
+                  type: boolean
+                  description: Indicates if the customer has a password.
+                  example: false
+                  nullable: true
+                total_orders_count:
+                  type: integer
+                  description: The total number of orders for the customer.
+                  example: 6
+                  nullable: true
+                shopper_reference:
+                  type: string
+                  description: A reference to uniquely identify the shopper during payment sessions.
+                  example: xxx-yyy-zzz
+                  nullable: true
+                profile_id:
+                  type: string
+                  description: A reference to uniquely identify the customer on any connected external services.
+                  example: xxx-yyy-zzz
+                  nullable: true
+                tax_exemption_code:
+                  type: string
+                  description: A specific code to identify the tax exemption reason for this customer.
+                  example: xxx-yyy-zzz
+                  nullable: true
+                created_at:
+                  type: string
+                  description: Time at which the resource was created.
+                  example: '2018-01-01T12:00:00.000Z'
+                  nullable: false
+                updated_at:
+                  type: string
+                  description: Time at which the resource was last updated.
+                  example: '2018-01-01T12:00:00.000Z'
+                  nullable: false
+                reference:
+                  type: string
+                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
+                  example: ANY-EXTERNAL-REFEFERNCE
+                  nullable: true
+                reference_origin:
+                  type: string
+                  description: Any identifier of the third party system that defines the reference code.
+                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
+                  nullable: true
+                jwt_custom_claim:
+                  type: object
+                  description: The custom_claim attached to the current JWT (if any).
+                  example: {}
+                  nullable: true
+                metadata:
+                  type: object
+                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
+                  example:
+                    foo: bar
+                  nullable: true
+                anonymization_info:
+                  type: object
+                  description: The anonymization info object.
+                  example:
+                    status: requested
+                    requested_at: 2025-03-15 11:39:21 UTC
+                    requester:
+                      id: fdgt56hh
+                      first_name: Travis
+                      last_name: Muller
+                      email: test@labadie.test
+                  properties:
+                    status:
+                      type: string
+                      description: The status of the anonymization.
+                    requested_at:
+                      type: string
+                      description: The time when the anonymization was requested.
+                    started_at:
+                      type: string
+                      description: The time when the anonymization request was started.
+                    completed_at:
+                      type: string
+                      description: The time when the anonymization request was completed.
+                    failed_at:
+                      type: string
+                      description: The time when the anonymization request failed.
+                    cancelled_at:
+                      type: string
+                      description: The time when the anonymization request was cancelled.
+                    requester:
+                      type: object
+                      description: The user who requested the anonymization.
+                      properties:
+                        id:
+                          type: string
+                          description: The ID of the user.
+                        first_name:
+                          type: string
+                          description: First name of the user.
+                        last_name:
+                          type: string
+                          description: Last name of the user.
+                        email:
+                          type: string
+                          description: Email of the user.
+                    cancellation_requester:
+                      type: object
+                      description: The user who requested the cancellation of the anonymization.
+                      properties:
+                        id:
+                          type: string
+                          description: The ID of the user.
+                        first_name:
+                          type: string
+                          description: First name of the user.
+                        last_name:
+                          type: string
+                          description: Last name of the user.
+                        email:
+                          type: string
+                          description: Email of the user.
+                  nullable: true
+                anonymization_status:
+                  type: string
+                  description: Status of the current anonymization request (if any). One of 'requested', 'started', 'completed', 'failed', or 'cancelled'.
+                  example: requested
+                  nullable: true
+                  enum:
+                  - requested
+                  - started
+                  - completed
+                  - failed
+                  - cancelled
+            relationships:
+              type: object
+              properties:
+                customer_group:
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - customer_groups
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+                customer_addresses:
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - customer_addresses
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+                customer_payment_sources:
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - customer_payment_sources
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+                customer_subscriptions:
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - customer_subscriptions
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+                orders:
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - orders
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+                order_subscriptions:
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - order_subscriptions
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+                returns:
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - returns
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+                sku_lists:
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - sku_lists
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+                attachments:
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - attachments
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+                events:
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - events
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+                tags:
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - tags
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+                jwt_customer:
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - customers
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+                jwt_markets:
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - markets
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+                jwt_stock_locations:
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - stock_locations
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+                event_stores:
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - event_stores
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+    customerCreate:
+      required:
+      - data
+      type: object
+      properties:
+        data:
+          type: object
+          required:
+          - type
+          - attributes
+          properties:
+            type:
+              type: string
+              description: The resource's type
+              enum:
+              - customers
+            attributes:
+              type: object
+              properties:
+                email:
+                  type: string
+                  description: The customer's email address.
+                  example: john@example.com
+                password:
+                  type: string
+                  description: The customer's password. Initiate a customer password reset flow if you need to change it.
+                  example: secret
+                shopper_reference:
+                  type: string
+                  description: A reference to uniquely identify the shopper during payment sessions.
+                  example: xxx-yyy-zzz
+                profile_id:
+                  type: string
+                  description: A reference to uniquely identify the customer on any connected external services.
+                  example: xxx-yyy-zzz
+                tax_exemption_code:
+                  type: string
+                  description: A specific code to identify the tax exemption reason for this customer.
+                  example: xxx-yyy-zzz
+                reference:
+                  type: string
+                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
+                  example: ANY-EXTERNAL-REFEFERNCE
+                reference_origin:
+                  type: string
+                  description: Any identifier of the third party system that defines the reference code.
+                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
+                metadata:
+                  type: object
+                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
+                  example:
+                    foo: bar
+              required:
+              - email
             relationships:
               type: object
               properties:
@@ -606,395 +1081,6 @@ components:
                         id:
                           type: string
                           description: The resource ID
-    customer:
-      type: object
-      properties:
-        data:
-          type: object
-          required:
-          - type
-          - attributes
-          properties:
-            type:
-              type: string
-              description: The resource's type
-              enum:
-              - customers
-            attributes:
-              type: object
-              properties:
-                email:
-                  type: string
-                  description: The customer's email address.
-                  example: john@example.com
-                  nullable: false
-                status:
-                  type: string
-                  description: The customer's status. One of 'prospect' (default), 'acquired', or 'repeat'.
-                  example: prospect
-                  nullable: false
-                  enum:
-                  - prospect
-                  - acquired
-                  - repeat
-                has_password:
-                  type: boolean
-                  description: Indicates if the customer has a password.
-                  example: false
-                  nullable: true
-                total_orders_count:
-                  type: integer
-                  description: The total number of orders for the customer.
-                  example: 6
-                  nullable: true
-                shopper_reference:
-                  type: string
-                  description: A reference to uniquely identify the shopper during payment sessions.
-                  example: xxx-yyy-zzz
-                  nullable: true
-                profile_id:
-                  type: string
-                  description: A reference to uniquely identify the customer on any connected external services.
-                  example: xxx-yyy-zzz
-                  nullable: true
-                tax_exemption_code:
-                  type: string
-                  description: A specific code to identify the tax exemption reason for this customer.
-                  example: xxx-yyy-zzz
-                  nullable: true
-                created_at:
-                  type: string
-                  description: Time at which the resource was created.
-                  example: '2018-01-01T12:00:00.000Z'
-                  nullable: false
-                updated_at:
-                  type: string
-                  description: Time at which the resource was last updated.
-                  example: '2018-01-01T12:00:00.000Z'
-                  nullable: false
-                reference:
-                  type: string
-                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
-                  example: ANY-EXTERNAL-REFEFERNCE
-                  nullable: true
-                reference_origin:
-                  type: string
-                  description: Any identifier of the third party system that defines the reference code.
-                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
-                  nullable: true
-                jwt_custom_claim:
-                  type: object
-                  description: The custom_claim attached to the current JWT (if any).
-                  example: {}
-                  nullable: true
-                metadata:
-                  type: object
-                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
-                  example:
-                    foo: bar
-                  nullable: true
-                anonymization_info:
-                  type: object
-                  description: The anonymization info object.
-                  example:
-                    status: requested
-                    requested_at: 2025-03-15 11:39:21 UTC
-                    requester:
-                      id: fdgt56hh
-                      first_name: Travis
-                      last_name: Muller
-                      email: test@labadie.test
-                  properties:
-                    status:
-                      type: string
-                      description: The status of the anonymization.
-                    requested_at:
-                      type: string
-                      description: The time when the anonymization was requested.
-                    started_at:
-                      type: string
-                      description: The time when the anonymization request was started.
-                    completed_at:
-                      type: string
-                      description: The time when the anonymization request was completed.
-                    failed_at:
-                      type: string
-                      description: The time when the anonymization request failed.
-                    cancelled_at:
-                      type: string
-                      description: The time when the anonymization request was cancelled.
-                    requester:
-                      type: object
-                      description: The user who requested the anonymization.
-                      properties:
-                        id:
-                          type: string
-                          description: The ID of the user.
-                        first_name:
-                          type: string
-                          description: First name of the user.
-                        last_name:
-                          type: string
-                          description: Last name of the user.
-                        email:
-                          type: string
-                          description: Email of the user.
-                    cancellation_requester:
-                      type: object
-                      description: The user who requested the cancellation of the anonymization.
-                      properties:
-                        id:
-                          type: string
-                          description: The ID of the user.
-                        first_name:
-                          type: string
-                          description: First name of the user.
-                        last_name:
-                          type: string
-                          description: Last name of the user.
-                        email:
-                          type: string
-                          description: Email of the user.
-                  nullable: true
-                anonymization_status:
-                  type: string
-                  description: Status of the current anonymization request (if any). One of 'requested', 'started', 'completed', 'failed', or 'cancelled'.
-                  example: requested
-                  nullable: true
-                  enum:
-                  - requested
-                  - started
-                  - completed
-                  - failed
-                  - cancelled
-            relationships:
-              type: object
-              properties:
-                customer_group:
-                  type: object
-                  properties:
-                    data:
-                      type: object
-                      properties:
-                        type:
-                          type: string
-                          description: The resource's type
-                          enum:
-                          - customer_groups
-                        id:
-                          type: string
-                          description: Unique identifier for the resource (hash).
-                          example: XAyRWNUzyN
-                customer_addresses:
-                  type: object
-                  properties:
-                    data:
-                      type: object
-                      properties:
-                        type:
-                          type: string
-                          description: The resource's type
-                          enum:
-                          - customer_addresses
-                        id:
-                          type: string
-                          description: Unique identifier for the resource (hash).
-                          example: XAyRWNUzyN
-                customer_payment_sources:
-                  type: object
-                  properties:
-                    data:
-                      type: object
-                      properties:
-                        type:
-                          type: string
-                          description: The resource's type
-                          enum:
-                          - customer_payment_sources
-                        id:
-                          type: string
-                          description: Unique identifier for the resource (hash).
-                          example: XAyRWNUzyN
-                customer_subscriptions:
-                  type: object
-                  properties:
-                    data:
-                      type: object
-                      properties:
-                        type:
-                          type: string
-                          description: The resource's type
-                          enum:
-                          - customer_subscriptions
-                        id:
-                          type: string
-                          description: Unique identifier for the resource (hash).
-                          example: XAyRWNUzyN
-                orders:
-                  type: object
-                  properties:
-                    data:
-                      type: object
-                      properties:
-                        type:
-                          type: string
-                          description: The resource's type
-                          enum:
-                          - orders
-                        id:
-                          type: string
-                          description: Unique identifier for the resource (hash).
-                          example: XAyRWNUzyN
-                order_subscriptions:
-                  type: object
-                  properties:
-                    data:
-                      type: object
-                      properties:
-                        type:
-                          type: string
-                          description: The resource's type
-                          enum:
-                          - order_subscriptions
-                        id:
-                          type: string
-                          description: Unique identifier for the resource (hash).
-                          example: XAyRWNUzyN
-                returns:
-                  type: object
-                  properties:
-                    data:
-                      type: object
-                      properties:
-                        type:
-                          type: string
-                          description: The resource's type
-                          enum:
-                          - returns
-                        id:
-                          type: string
-                          description: Unique identifier for the resource (hash).
-                          example: XAyRWNUzyN
-                sku_lists:
-                  type: object
-                  properties:
-                    data:
-                      type: object
-                      properties:
-                        type:
-                          type: string
-                          description: The resource's type
-                          enum:
-                          - sku_lists
-                        id:
-                          type: string
-                          description: Unique identifier for the resource (hash).
-                          example: XAyRWNUzyN
-                attachments:
-                  type: object
-                  properties:
-                    data:
-                      type: object
-                      properties:
-                        type:
-                          type: string
-                          description: The resource's type
-                          enum:
-                          - attachments
-                        id:
-                          type: string
-                          description: Unique identifier for the resource (hash).
-                          example: XAyRWNUzyN
-                events:
-                  type: object
-                  properties:
-                    data:
-                      type: object
-                      properties:
-                        type:
-                          type: string
-                          description: The resource's type
-                          enum:
-                          - events
-                        id:
-                          type: string
-                          description: Unique identifier for the resource (hash).
-                          example: XAyRWNUzyN
-                tags:
-                  type: object
-                  properties:
-                    data:
-                      type: object
-                      properties:
-                        type:
-                          type: string
-                          description: The resource's type
-                          enum:
-                          - tags
-                        id:
-                          type: string
-                          description: Unique identifier for the resource (hash).
-                          example: XAyRWNUzyN
-                jwt_customer:
-                  type: object
-                  properties:
-                    data:
-                      type: object
-                      properties:
-                        type:
-                          type: string
-                          description: The resource's type
-                          enum:
-                          - customers
-                        id:
-                          type: string
-                          description: Unique identifier for the resource (hash).
-                          example: XAyRWNUzyN
-                jwt_markets:
-                  type: object
-                  properties:
-                    data:
-                      type: object
-                      properties:
-                        type:
-                          type: string
-                          description: The resource's type
-                          enum:
-                          - markets
-                        id:
-                          type: string
-                          description: Unique identifier for the resource (hash).
-                          example: XAyRWNUzyN
-                jwt_stock_locations:
-                  type: object
-                  properties:
-                    data:
-                      type: object
-                      properties:
-                        type:
-                          type: string
-                          description: The resource's type
-                          enum:
-                          - stock_locations
-                        id:
-                          type: string
-                          description: Unique identifier for the resource (hash).
-                          example: XAyRWNUzyN
-                event_stores:
-                  type: object
-                  properties:
-                    data:
-                      type: object
-                      properties:
-                        type:
-                          type: string
-                          description: The resource's type
-                          enum:
-                          - event_stores
-                        id:
-                          type: string
-                          description: Unique identifier for the resource (hash).
-                          example: XAyRWNUzyN
     customerResponseList:
       type: object
       properties:
@@ -1002,97 +1088,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/customerResponse/properties/data'
-    customerCreate:
-      required:
-      - data
-      type: object
-      properties:
-        data:
-          type: object
-          required:
-          - type
-          - attributes
-          properties:
-            type:
-              type: string
-              description: The resource's type
-              enum:
-              - customers
-            attributes:
-              type: object
-              properties:
-                email:
-                  type: string
-                  description: The customer's email address.
-                  example: john@example.com
-                password:
-                  type: string
-                  description: The customer's password. Initiate a customer password reset flow if you need to change it.
-                  example: secret
-                shopper_reference:
-                  type: string
-                  description: A reference to uniquely identify the shopper during payment sessions.
-                  example: xxx-yyy-zzz
-                profile_id:
-                  type: string
-                  description: A reference to uniquely identify the customer on any connected external services.
-                  example: xxx-yyy-zzz
-                tax_exemption_code:
-                  type: string
-                  description: A specific code to identify the tax exemption reason for this customer.
-                  example: xxx-yyy-zzz
-                reference:
-                  type: string
-                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
-                  example: ANY-EXTERNAL-REFEFERNCE
-                reference_origin:
-                  type: string
-                  description: Any identifier of the third party system that defines the reference code.
-                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
-                metadata:
-                  type: object
-                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
-                  example:
-                    foo: bar
-              required:
-              - email
-            relationships:
-              type: object
-              properties:
-                customer_group:
-                  required:
-                  - data
-                  type: object
-                  properties:
-                    data:
-                      type: object
-                      properties:
-                        type:
-                          type: string
-                          description: The resource's type
-                          enum:
-                          - customer_groups
-                        id:
-                          type: string
-                          description: Unique identifier for the resource (hash).
-                          example: XAyRWNUzyN
-                tags:
-                  required:
-                  - data
-                  type: object
-                  properties:
-                    data:
-                      type: object
-                      properties:
-                        type:
-                          type: string
-                          description: The resource's type
-                          enum:
-                          - tags
-                        id:
-                          type: string
-                          description: Unique identifier for the resource (hash).
-                          example: XAyRWNUzyN
   securitySchemes:
     bearerAuth:
       type: http

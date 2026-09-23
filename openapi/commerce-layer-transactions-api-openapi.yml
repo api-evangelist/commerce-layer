@@ -17,16 +17,15 @@ servers:
 security:
 - bearerAuth: []
 tags:
-- name: transactions
+- name: Transactions
   description: resource type
 paths:
   /transactions:
     get:
       operationId: GET/transactions
       summary: List all transactions
-      description: List all transactions
       tags:
-      - transactions
+      - Transactions
       responses:
         '200':
           description: A list of transaction objects
@@ -38,9 +37,8 @@ paths:
     get:
       operationId: GET/transactions/transactionId
       summary: Retrieve a transaction
-      description: Retrieve a transaction
       tags:
-      - transactions
+      - Transactions
       parameters:
       - name: transactionId
         in: path
@@ -57,6 +55,13 @@ paths:
                 $ref: '#/components/schemas/transactionResponse'
 components:
   schemas:
+    transactionResponseList:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/transactionResponse/properties/data'
     transactionResponse:
       type: object
       properties:
@@ -409,13 +414,6 @@ components:
                           type: string
                           description: Unique identifier for the resource (hash).
                           example: XAyRWNUzyN
-    transactionResponseList:
-      type: object
-      properties:
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/transactionResponse/properties/data'
   securitySchemes:
     bearerAuth:
       type: http

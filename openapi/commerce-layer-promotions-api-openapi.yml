@@ -17,16 +17,15 @@ servers:
 security:
 - bearerAuth: []
 tags:
-- name: promotions
+- name: Promotions
   description: resource type
 paths:
   /promotions:
     get:
       operationId: GET/promotions
       summary: List all promotions
-      description: List all promotions
       tags:
-      - promotions
+      - Promotions
       responses:
         '200':
           description: A list of promotion objects
@@ -38,9 +37,8 @@ paths:
     get:
       operationId: GET/promotions/promotionId
       summary: Retrieve a promotion
-      description: Retrieve a promotion
       tags:
-      - promotions
+      - Promotions
       parameters:
       - name: promotionId
         in: path
@@ -57,13 +55,6 @@ paths:
                 $ref: '#/components/schemas/promotionResponse'
 components:
   schemas:
-    promotionResponseList:
-      type: object
-      properties:
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/promotionResponse/properties/data'
     promotionResponse:
       type: object
       properties:
@@ -366,6 +357,13 @@ components:
                         id:
                           type: string
                           description: The resource ID
+    promotionResponseList:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/promotionResponse/properties/data'
     promotion:
       type: object
       properties:

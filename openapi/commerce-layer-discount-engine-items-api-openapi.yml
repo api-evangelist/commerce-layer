@@ -24,7 +24,6 @@ paths:
     get:
       operationId: GET/discount_engine_items
       summary: List all discount engine items
-      description: List all discount engine items
       tags:
       - discount_engine_items
       responses:
@@ -38,7 +37,6 @@ paths:
     get:
       operationId: GET/discount_engine_items/discountEngineItemId
       summary: Retrieve a discount engine item
-      description: Retrieve a discount engine item
       tags:
       - discount_engine_items
       parameters:
@@ -57,6 +55,13 @@ paths:
                 $ref: '#/components/schemas/discountEngineItemResponse'
 components:
   schemas:
+    discountEngineItemResponseList:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/discountEngineItemResponse/properties/data'
     discountEngineItemResponse:
       type: object
       properties:
@@ -249,13 +254,6 @@ components:
                           type: string
                           description: Unique identifier for the resource (hash).
                           example: XAyRWNUzyN
-    discountEngineItemResponseList:
-      type: object
-      properties:
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/discountEngineItemResponse/properties/data'
   securitySchemes:
     bearerAuth:
       type: http

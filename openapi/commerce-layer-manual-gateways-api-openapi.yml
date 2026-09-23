@@ -24,7 +24,6 @@ paths:
     get:
       operationId: GET/manual_gateways
       summary: List all manual gateways
-      description: List all manual gateways
       tags:
       - manual_gateways
       responses:
@@ -37,7 +36,6 @@ paths:
     post:
       operationId: POST/manual_gateways
       summary: Create a manual gateway
-      description: Create a manual gateway
       tags:
       - manual_gateways
       requestBody:
@@ -57,7 +55,6 @@ paths:
     get:
       operationId: GET/manual_gateways/manualGatewayId
       summary: Retrieve a manual gateway
-      description: Retrieve a manual gateway
       tags:
       - manual_gateways
       parameters:
@@ -77,7 +74,6 @@ paths:
     patch:
       operationId: PATCH/manual_gateways/manualGatewayId
       summary: Update a manual gateway
-      description: Update a manual gateway
       tags:
       - manual_gateways
       parameters:
@@ -103,7 +99,6 @@ paths:
     delete:
       operationId: DELETE/manual_gateways/manualGatewayId
       summary: Delete a manual gateway
-      description: Delete a manual gateway
       tags:
       - manual_gateways
       parameters:
@@ -243,13 +238,6 @@ components:
             relationships:
               type: object
               properties: {}
-    manualGatewayResponseList:
-      type: object
-      properties:
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/manualGatewayResponse/properties/data'
     manualGatewayUpdate:
       required:
       - data
@@ -410,6 +398,13 @@ components:
                           type: string
                           description: Unique identifier for the resource (hash).
                           example: XAyRWNUzyN
+    manualGatewayResponseList:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/manualGatewayResponse/properties/data'
   securitySchemes:
     bearerAuth:
       type: http

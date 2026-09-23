@@ -15,16 +15,91 @@ servers:
 security:
 - bearerAuth: []
 tags:
-- name: carts
+- name: Carts
   description: Operations with carts resource
 paths:
   /carts/breakdown:
     post:
       operationId: POST/carts/breakdown
       summary: Query breakdown on carts
-      description: "Breakdowns are aggregations that summarize your data as metrics (based on specific operators) or statistics, computed on field values. When performing a breakdown query on the Metrics API endpoint you get in the response the value of the computation (based on the selected operator) on the selected field, aggregated by another field.\n\n### Nesting breakdowns\nBreakdowns can be nested recursively one into the other, up to one level (see example). The valid values allowed for the by key of the nested breakdown are strictly dependent on the value you specified in the by key of the parent breakdown. Hence, they are different for each resource you’re doing statistics on (see orders, returns, and carts for the related lists).You cannot group the nested breakdown by the same field by which you’re already grouping the parent breakdown.\n\nSingle breakdown request\n\n`{\n\t\"breakdown\": {\n\t  \"by\": \"market.name\",\n\t  \"field\": \"order.id\",\n\t  \"operator\": \"value_count\",\n\t  \"condition\": {\n\t    \"gte_lte\": [ 10000, 100000 ]\n\t  },\n\t  \"sort\": \"desc\",\n\t  \"limit\": 2\n\t}\n}`\n  \n  \n Nested breakdown request\n \n` {\n    \"breakdown\": {\n      \"by\": \"market.name\",\n      \"field\": \"order.id\",\n      \"operator\": \"value_count\",\n      \"condition\": {\n        \"gte_lte\": [ 10000, 100000 ]  \n      },\n      \"sort\": \"desc\",\n      \"limit\": 3,\n      \"breakdown\": {\n        \"by\": \"order.currency_code\",\n        \"field\": \"order.total_amount_with_taxes\",\n        \"operator\": \"sum\"\n        \"sort\": \"desc\",\n        \"limit\": 2\n      }\n    }\n  }`"
+      description: 'Breakdowns are aggregations that summarize your data as metrics (based on specific operators) or statistics, computed on field values. When performing a breakdown query on the Metrics API endpoint you get in the response the value of the computation (based on the selected operator) on the selected field, aggregated by another field.
+
+
+        ### Nesting breakdowns
+
+        Breakdowns can be nested recursively one into the other, up to one level (see example). The valid values allowed for the by key of the nested breakdown are strictly dependent on the value you specified in the by key of the parent breakdown. Hence, they are different for each resource you’re doing statistics on (see orders, returns, and carts for the related lists).You cannot group the nested breakdown by the same field by which you’re already grouping the parent breakdown.
+
+
+        Single breakdown request
+
+
+        `{
+
+        "breakdown": {
+
+        "by": "market.name",
+
+        "field": "order.id",
+
+        "operator": "value_count",
+
+        "condition": {
+
+        "gte_lte": [ 10000, 100000 ]
+
+        },
+
+        "sort": "desc",
+
+        "limit": 2
+
+        }
+
+        }`
+
+
+        Nested breakdown request
+
+
+        ` {
+
+        "breakdown": {
+
+        "by": "market.name",
+
+        "field": "order.id",
+
+        "operator": "value_count",
+
+        "condition": {
+
+        "gte_lte": [ 10000, 100000 ]
+
+        },
+
+        "sort": "desc",
+
+        "limit": 3,
+
+        "breakdown": {
+
+        "by": "order.currency_code",
+
+        "field": "order.total_amount_with_taxes",
+
+        "operator": "sum"
+
+        "sort": "desc",
+
+        "limit": 2
+
+        }
+
+        }
+
+        }`'
       tags:
-      - carts
+      - Carts
       requestBody:
         required: true
         content:
@@ -3436,9 +3511,113 @@ paths:
     post:
       operationId: POST/carts/date_breakdown
       summary: Query date_breakdown on carts
-      description: "Date breakdowns summarizes metrics data grouped by time intervals on a defined time range. They also support support breakdowns over the main date breakdown query and also supports all breakdown queries capabilities through the \"breakdown\" key, this also includes the possibility of nesting the breakdown over the main breakdown. \n\n\nSingle date breakdown request (no breakdown)\n\n`{\n\t\"date_breakdown\": {\n        \"by\": \"order.created_at\",\n        \"field\": \"order.total_amount_with_taxes\",\n        \"operator\": \"stats\",\n        \"interval\": \"year\"\n    }\n}`\n  \n  \nSingle date breakdown request with one breakdown\n \n` \n{\n\t\"date_breakdown\": {\n        \"by\": \"order.created_at\",\n        \"field\": \"order.total_amount_with_taxes\",\n        \"operator\": \"stats\",\n        \"interval\": \"year\",\n        \"breakdown\": {\n            \"by\": \"order.customer_type\",\n            \"field\": \"line_items.total_amount\",\n            \"operator\": \"sum\",\n            \"sort\": \"desc\",\n            \"limit\": 20\n        }\n    }\n  }`\n  \n  \nSingle date breakdown request with breakdown with a nested breakdown\n\n` \n\"date_breakdown\": {\n        \"by\": \"order.created_at\",\n        \"field\": \"order.total_amount_with_taxes\",\n        \"operator\": \"stats\",\n        \"interval\": \"year\",\n        \"breakdown\": {\n            \"by\": \"order.customer_type\",\n            \"field\": \"line_items.total_amount\",\n            \"operator\": \"sum\",\n            \"sort\": \"desc\",\n            \"limit\": 20,\n            \"breakdown\": {\n                \"by\": \"order.currency_code\",\n                \"field\": \"line_items.total_amount\",\n                \"operator\": \"sum\",\n                \"sort\": \"desc\",\n                \"limit\": 21\n            }\n        }\n    }\n }`"
+      description: 'Date breakdowns summarizes metrics data grouped by time intervals on a defined time range. They also support support breakdowns over the main date breakdown query and also supports all breakdown queries capabilities through the "breakdown" key, this also includes the possibility of nesting the breakdown over the main breakdown.
+
+
+        Single date breakdown request (no breakdown)
+
+
+        `{
+
+        "date_breakdown": {
+
+        "by": "order.created_at",
+
+        "field": "order.total_amount_with_taxes",
+
+        "operator": "stats",
+
+        "interval": "year"
+
+        }
+
+        }`
+
+
+        Single date breakdown request with one breakdown
+
+
+        `
+
+        {
+
+        "date_breakdown": {
+
+        "by": "order.created_at",
+
+        "field": "order.total_amount_with_taxes",
+
+        "operator": "stats",
+
+        "interval": "year",
+
+        "breakdown": {
+
+        "by": "order.customer_type",
+
+        "field": "line_items.total_amount",
+
+        "operator": "sum",
+
+        "sort": "desc",
+
+        "limit": 20
+
+        }
+
+        }
+
+        }`
+
+
+        Single date breakdown request with breakdown with a nested breakdown
+
+
+        `
+
+        "date_breakdown": {
+
+        "by": "order.created_at",
+
+        "field": "order.total_amount_with_taxes",
+
+        "operator": "stats",
+
+        "interval": "year",
+
+        "breakdown": {
+
+        "by": "order.customer_type",
+
+        "field": "line_items.total_amount",
+
+        "operator": "sum",
+
+        "sort": "desc",
+
+        "limit": 20,
+
+        "breakdown": {
+
+        "by": "order.currency_code",
+
+        "field": "line_items.total_amount",
+
+        "operator": "sum",
+
+        "sort": "desc",
+
+        "limit": 21
+
+        }
+
+        }
+
+        }
+
+        }`'
       tags:
-      - carts
+      - Carts
       requestBody:
         required: true
         content:
@@ -3544,9 +3723,25 @@ paths:
     post:
       operationId: POST/carts/stats
       summary: Query stats on carts
-      description: "Stats are aggregations that summarize your data within an operator (depending of the field, some of them could not be available), such as: value_count, cardinality, avg, min, max, sum or stats (which returns avg, min, max, sum) computed on the field specificed. When performing a stats query on the Metrics API endpoint you get in the response the value of the computation (based on the selected operator) on the selected field.\n\nStats request\n\n`{\n\t \"stats\": {\n        \"field\": \"order.total_amount_cents\",\n        \"operator\": \"stats\"\n    }\n}`"
+      description: 'Stats are aggregations that summarize your data within an operator (depending of the field, some of them could not be available), such as: value_count, cardinality, avg, min, max, sum or stats (which returns avg, min, max, sum) computed on the field specificed. When performing a stats query on the Metrics API endpoint you get in the response the value of the computation (based on the selected operator) on the selected field.
+
+
+        Stats request
+
+
+        `{
+
+        "stats": {
+
+        "field": "order.total_amount_cents",
+
+        "operator": "stats"
+
+        }
+
+        }`'
       tags:
-      - carts
+      - Carts
       requestBody:
         required: true
         content:
@@ -4847,7 +5042,7 @@ paths:
       summary: Query search on carts
       description: Get search results from carts
       tags:
-      - carts
+      - Carts
       requestBody:
         required: true
         content:
@@ -5320,7 +5515,7 @@ paths:
       summary: Query export on carts
       description: Get export results from carts
       tags:
-      - carts
+      - Carts
       requestBody:
         required: true
         content:
@@ -5338,6 +5533,39 @@ paths:
                 description: CSV file with exported records (text/csv)
 components:
   schemas:
+    carts_search_request:
+      type: object
+      properties:
+        filter:
+          $ref: '#/components/schemas/carts_filter'
+        search:
+          type: object
+          required:
+          - fields
+          properties:
+            sort:
+              type: string
+              description: Result sorting
+              enum:
+              - asc
+              - desc
+            limit:
+              type: integer
+              description: Results limit
+              default: 50
+              maximum: 100
+            sort_by:
+              $ref: '#/components/schemas/carts_search_fields'
+            fields:
+              type: array
+              items:
+                $ref: '#/components/schemas/carts_search_fields'
+        meta:
+          type: object
+          properties:
+            payload:
+              type: boolean
+              description: Set to true if you want to receive how the payload has been made
     carts_stats_request:
       type: object
       properties:
@@ -5826,6 +6054,114 @@ components:
             payload:
               type: boolean
               description: Set to true if you want to receive how the payload has been made
+    carts_search_fields:
+      type: string
+      enum:
+      - billing_address.business
+      - billing_address.city
+      - billing_address.country_code
+      - billing_address.geocoded
+      - billing_address.localized
+      - billing_address.state_code
+      - billing_address.zip_code
+      - customer.id
+      - customer.email
+      - customer.group_name
+      - customer.reference
+      - customer.reference_origin
+      - line_items.code
+      - line_items.discount
+      - line_items.id
+      - line_items.item_id
+      - line_items.item_type
+      - line_items.name
+      - line_items.options_amount
+      - line_items.quantity
+      - line_items.tax_amount
+      - line_items.tax_rate
+      - line_items.total_amount
+      - line_items.unit_amount
+      - line_items.updated_at
+      - line_items.options.id
+      - line_items.options.name
+      - line_items.options.quantity
+      - line_items.options.total_amount
+      - line_items.options.unit_amount
+      - market.id
+      - market.name
+      - market.number
+      - organization.id
+      - organization.name
+      - organization.slug
+      - order.discounted
+      - order.gift_card
+      - order.payment_status
+      - order.fulfillment_status
+      - order.coupon
+      - order.customer_type
+      - order.options
+      - order.adjustment_amount
+      - order.adjustment_tax_amount
+      - order.adjustment_taxable_amount
+      - order.country_code
+      - order.coupon_code
+      - order.created_at
+      - order.currency_code
+      - order.discount_amount
+      - order.duty_amount
+      - order.freight_taxable
+      - order.gift_card_code
+      - order.gift_card_amount
+      - order.guest
+      - order.id
+      - order.language_code
+      - order.line_item_options_count
+      - order.mode
+      - order.number
+      - order.payment_method_amount
+      - order.payment_method_tax_amount
+      - order.payment_method_taxable_amount
+      - order.reference
+      - order.reference_origin
+      - order.shipments_count
+      - order.shipping_amount
+      - order.shipping_taxable_amount
+      - order.skus_count
+      - order.status
+      - order.subtotal_amount
+      - order.subtotal_tax_amount
+      - order.subtotal_taxable_amount
+      - order.tax_included
+      - order.total_amount
+      - order.total_amount_with_taxes
+      - order.total_tax_amount
+      - order.total_taxable_amount
+      - order.updated_at
+      - order.current_date
+      - order.aggregated_details
+      - order.link_id
+      - order.user_id
+      - order.store_id
+      - order.affiliate_code
+      - payment_method.id
+      - payment_method.source_type
+      - payment_method.name
+      - payment_method.moto
+      - shipping_address.business
+      - shipping_address.city
+      - shipping_address.country_code
+      - shipping_address.geocoded
+      - shipping_address.localized
+      - shipping_address.state_code
+      - shipping_address.zip_code
+      - tags.id
+      - tags.name
+      - resource_errors.code
+      - resource_errors.name
+      - resource_errors.id
+      - resource_errors.message
+      - resource_errors.created_at
+      - resource_errors.updated_at
     carts_filter:
       type: object
       properties:
@@ -9620,7 +9956,7 @@ components:
                     minItems: 2
                     maxItems: 2
                     description: Greater than, less than equal updated_at
-    carts_search_fields:
+    carts_export_fields:
       type: string
       enum:
       - billing_address.business
@@ -9635,24 +9971,6 @@ components:
       - customer.group_name
       - customer.reference
       - customer.reference_origin
-      - line_items.code
-      - line_items.discount
-      - line_items.id
-      - line_items.item_id
-      - line_items.item_type
-      - line_items.name
-      - line_items.options_amount
-      - line_items.quantity
-      - line_items.tax_amount
-      - line_items.tax_rate
-      - line_items.total_amount
-      - line_items.unit_amount
-      - line_items.updated_at
-      - line_items.options.id
-      - line_items.options.name
-      - line_items.options.quantity
-      - line_items.options.total_amount
-      - line_items.options.unit_amount
       - market.id
       - market.name
       - market.number
@@ -9722,12 +10040,36 @@ components:
       - shipping_address.zip_code
       - tags.id
       - tags.name
-      - resource_errors.code
-      - resource_errors.name
-      - resource_errors.id
-      - resource_errors.message
-      - resource_errors.created_at
-      - resource_errors.updated_at
+    carts_export_request:
+      type: object
+      properties:
+        filter:
+          $ref: '#/components/schemas/carts_filter'
+        search:
+          type: object
+          required:
+          - fields
+          properties:
+            sort:
+              type: string
+              description: Result sorting
+              enum:
+              - asc
+              - desc
+              default: desc
+            sort_by:
+              $ref: '#/components/schemas/carts_export_fields'
+            fields:
+              type: array
+              items:
+                $ref: '#/components/schemas/carts_export_fields'
+              description: Fields to export (order/return and single-level references only, no line_items). tags.name and tags.id return joined values.
+        meta:
+          type: object
+          properties:
+            payload:
+              type: boolean
+              description: Set to true if you want to receive how the payload has been made
     carts_date_breakdown_request:
       type: object
       properties:
@@ -10225,153 +10567,6 @@ components:
             payload:
               type: boolean
               description: Set to true if you want to receive how the payload has been made
-    carts_search_request:
-      type: object
-      properties:
-        filter:
-          $ref: '#/components/schemas/carts_filter'
-        search:
-          type: object
-          required:
-          - fields
-          properties:
-            sort:
-              type: string
-              description: Result sorting
-              enum:
-              - asc
-              - desc
-            limit:
-              type: integer
-              description: Results limit
-              default: 50
-              maximum: 100
-            sort_by:
-              $ref: '#/components/schemas/carts_search_fields'
-            fields:
-              type: array
-              items:
-                $ref: '#/components/schemas/carts_search_fields'
-        meta:
-          type: object
-          properties:
-            payload:
-              type: boolean
-              description: Set to true if you want to receive how the payload has been made
-    carts_export_request:
-      type: object
-      properties:
-        filter:
-          $ref: '#/components/schemas/carts_filter'
-        search:
-          type: object
-          required:
-          - fields
-          properties:
-            sort:
-              type: string
-              description: Result sorting
-              enum:
-              - asc
-              - desc
-              default: desc
-            sort_by:
-              $ref: '#/components/schemas/carts_export_fields'
-            fields:
-              type: array
-              items:
-                $ref: '#/components/schemas/carts_export_fields'
-              description: Fields to export (order/return and single-level references only, no line_items). tags.name and tags.id return joined values.
-        meta:
-          type: object
-          properties:
-            payload:
-              type: boolean
-              description: Set to true if you want to receive how the payload has been made
-    carts_export_fields:
-      type: string
-      enum:
-      - billing_address.business
-      - billing_address.city
-      - billing_address.country_code
-      - billing_address.geocoded
-      - billing_address.localized
-      - billing_address.state_code
-      - billing_address.zip_code
-      - customer.id
-      - customer.email
-      - customer.group_name
-      - customer.reference
-      - customer.reference_origin
-      - market.id
-      - market.name
-      - market.number
-      - organization.id
-      - organization.name
-      - organization.slug
-      - order.discounted
-      - order.gift_card
-      - order.payment_status
-      - order.fulfillment_status
-      - order.coupon
-      - order.customer_type
-      - order.options
-      - order.adjustment_amount
-      - order.adjustment_tax_amount
-      - order.adjustment_taxable_amount
-      - order.country_code
-      - order.coupon_code
-      - order.created_at
-      - order.currency_code
-      - order.discount_amount
-      - order.duty_amount
-      - order.freight_taxable
-      - order.gift_card_code
-      - order.gift_card_amount
-      - order.guest
-      - order.id
-      - order.language_code
-      - order.line_item_options_count
-      - order.mode
-      - order.number
-      - order.payment_method_amount
-      - order.payment_method_tax_amount
-      - order.payment_method_taxable_amount
-      - order.reference
-      - order.reference_origin
-      - order.shipments_count
-      - order.shipping_amount
-      - order.shipping_taxable_amount
-      - order.skus_count
-      - order.status
-      - order.subtotal_amount
-      - order.subtotal_tax_amount
-      - order.subtotal_taxable_amount
-      - order.tax_included
-      - order.total_amount
-      - order.total_amount_with_taxes
-      - order.total_tax_amount
-      - order.total_taxable_amount
-      - order.updated_at
-      - order.current_date
-      - order.aggregated_details
-      - order.link_id
-      - order.user_id
-      - order.store_id
-      - order.affiliate_code
-      - payment_method.id
-      - payment_method.source_type
-      - payment_method.name
-      - payment_method.moto
-      - shipping_address.business
-      - shipping_address.city
-      - shipping_address.country_code
-      - shipping_address.geocoded
-      - shipping_address.localized
-      - shipping_address.state_code
-      - shipping_address.zip_code
-      - tags.id
-      - tags.name
   securitySchemes:
     bearerAuth:
       type: http

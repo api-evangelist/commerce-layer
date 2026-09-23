@@ -17,16 +17,15 @@ servers:
 security:
 - bearerAuth: []
 tags:
-- name: pickups
+- name: Pickups
   description: resource type
 paths:
   /pickups:
     get:
       operationId: GET/pickups
       summary: List all pickups
-      description: List all pickups
       tags:
-      - pickups
+      - Pickups
       responses:
         '200':
           description: A list of pickup objects
@@ -38,9 +37,8 @@ paths:
     get:
       operationId: GET/pickups/pickupId
       summary: Retrieve a pickup
-      description: Retrieve a pickup
       tags:
-      - pickups
+      - Pickups
       parameters:
       - name: pickupId
         in: path
@@ -57,6 +55,13 @@ paths:
                 $ref: '#/components/schemas/pickupResponse'
 components:
   schemas:
+    pickupResponseList:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/pickupResponse/properties/data'
     pickupResponse:
       type: object
       properties:
@@ -298,13 +303,6 @@ components:
                           type: string
                           description: Unique identifier for the resource (hash).
                           example: XAyRWNUzyN
-    pickupResponseList:
-      type: object
-      properties:
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/pickupResponse/properties/data'
   securitySchemes:
     bearerAuth:
       type: http

@@ -17,16 +17,15 @@ servers:
 security:
 - bearerAuth: []
 tags:
-- name: voids
+- name: Voids
   description: resource type
 paths:
   /voids:
     get:
       operationId: GET/voids
       summary: List all voids
-      description: List all voids
       tags:
-      - voids
+      - Voids
       responses:
         '200':
           description: A list of void objects
@@ -38,9 +37,8 @@ paths:
     get:
       operationId: GET/voids/voidId
       summary: Retrieve a void
-      description: Retrieve a void
       tags:
-      - voids
+      - Voids
       parameters:
       - name: voidId
         in: path
@@ -58,9 +56,8 @@ paths:
     patch:
       operationId: PATCH/voids/voidId
       summary: Update a void
-      description: Update a void
       tags:
-      - voids
+      - Voids
       parameters:
       - name: voidId
         in: path
@@ -83,13 +80,6 @@ paths:
                 $ref: '#/components/schemas/voidResponse'
 components:
   schemas:
-    voidResponseList:
-      type: object
-      properties:
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/voidResponse/properties/data'
     voidResponse:
       type: object
       properties:
@@ -254,59 +244,6 @@ components:
                         id:
                           type: string
                           description: The resource ID
-    voidUpdate:
-      required:
-      - data
-      type: object
-      properties:
-        data:
-          type: object
-          required:
-          - type
-          - id
-          - attributes
-          properties:
-            type:
-              type: string
-              description: The resource's type
-              enum:
-              - voids
-            id:
-              type: string
-              description: Unique identifier for the resource (hash).
-              example: XAyRWNUzyN
-            attributes:
-              type: object
-              properties:
-                succeeded:
-                  type: boolean
-                  description: Indicates if the transaction is successful.
-                  example: false
-                  nullable: false
-                _forward:
-                  type: boolean
-                  description: Send this attribute if you want to forward a stuck transaction to succeeded and update associated order states accordingly.
-                  example: true
-                  nullable: false
-                reference:
-                  type: string
-                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
-                  example: ANY-EXTERNAL-REFEFERNCE
-                  nullable: true
-                reference_origin:
-                  type: string
-                  description: Any identifier of the third party system that defines the reference code.
-                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
-                  nullable: true
-                metadata:
-                  type: object
-                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
-                  example:
-                    foo: bar
-                  nullable: true
-            relationships:
-              type: object
-              properties: {}
     void:
       type: object
       properties:
@@ -533,6 +470,66 @@ components:
                           type: string
                           description: Unique identifier for the resource (hash).
                           example: XAyRWNUzyN
+    voidUpdate:
+      required:
+      - data
+      type: object
+      properties:
+        data:
+          type: object
+          required:
+          - type
+          - id
+          - attributes
+          properties:
+            type:
+              type: string
+              description: The resource's type
+              enum:
+              - voids
+            id:
+              type: string
+              description: Unique identifier for the resource (hash).
+              example: XAyRWNUzyN
+            attributes:
+              type: object
+              properties:
+                succeeded:
+                  type: boolean
+                  description: Indicates if the transaction is successful.
+                  example: false
+                  nullable: false
+                _forward:
+                  type: boolean
+                  description: Send this attribute if you want to forward a stuck transaction to succeeded and update associated order states accordingly.
+                  example: true
+                  nullable: false
+                reference:
+                  type: string
+                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
+                  example: ANY-EXTERNAL-REFEFERNCE
+                  nullable: true
+                reference_origin:
+                  type: string
+                  description: Any identifier of the third party system that defines the reference code.
+                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
+                  nullable: true
+                metadata:
+                  type: object
+                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
+                  example:
+                    foo: bar
+                  nullable: true
+            relationships:
+              type: object
+              properties: {}
+    voidResponseList:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/voidResponse/properties/data'
   securitySchemes:
     bearerAuth:
       type: http

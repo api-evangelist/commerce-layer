@@ -24,7 +24,6 @@ paths:
     get:
       operationId: GET/gift_card_recipients
       summary: List all gift card recipients
-      description: List all gift card recipients
       tags:
       - gift_card_recipients
       responses:
@@ -37,7 +36,6 @@ paths:
     post:
       operationId: POST/gift_card_recipients
       summary: Create a gift card recipient
-      description: Create a gift card recipient
       tags:
       - gift_card_recipients
       requestBody:
@@ -57,7 +55,6 @@ paths:
     get:
       operationId: GET/gift_card_recipients/giftCardRecipientId
       summary: Retrieve a gift card recipient
-      description: Retrieve a gift card recipient
       tags:
       - gift_card_recipients
       parameters:
@@ -77,7 +74,6 @@ paths:
     patch:
       operationId: PATCH/gift_card_recipients/giftCardRecipientId
       summary: Update a gift card recipient
-      description: Update a gift card recipient
       tags:
       - gift_card_recipients
       parameters:
@@ -103,7 +99,6 @@ paths:
     delete:
       operationId: DELETE/gift_card_recipients/giftCardRecipientId
       summary: Delete a gift card recipient
-      description: Delete a gift card recipient
       tags:
       - gift_card_recipients
       parameters:
@@ -118,88 +113,6 @@ paths:
           description: No content
 components:
   schemas:
-    giftCardRecipientResponseList:
-      type: object
-      properties:
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/giftCardRecipientResponse/properties/data'
-    giftCardRecipientUpdate:
-      required:
-      - data
-      type: object
-      properties:
-        data:
-          type: object
-          required:
-          - type
-          - id
-          - attributes
-          properties:
-            type:
-              type: string
-              description: The resource's type
-              enum:
-              - gift_card_recipients
-            id:
-              type: string
-              description: Unique identifier for the resource (hash).
-              example: XAyRWNUzyN
-            attributes:
-              type: object
-              properties:
-                email:
-                  type: string
-                  description: The recipient email address.
-                  example: john@example.com
-                  nullable: false
-                first_name:
-                  type: string
-                  description: The recipient first name.
-                  example: John
-                  nullable: true
-                last_name:
-                  type: string
-                  description: The recipient last name.
-                  example: Smith
-                  nullable: true
-                reference:
-                  type: string
-                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
-                  example: ANY-EXTERNAL-REFEFERNCE
-                  nullable: true
-                reference_origin:
-                  type: string
-                  description: Any identifier of the third party system that defines the reference code.
-                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
-                  nullable: true
-                metadata:
-                  type: object
-                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
-                  example:
-                    foo: bar
-                  nullable: true
-            relationships:
-              type: object
-              properties:
-                customer:
-                  required:
-                  - data
-                  type: object
-                  properties:
-                    data:
-                      type: object
-                      properties:
-                        type:
-                          type: string
-                          description: The resource's type
-                          enum:
-                          - customers
-                        id:
-                          type: string
-                          description: Unique identifier for the resource (hash).
-                          example: XAyRWNUzyN
     giftCardRecipientResponse:
       type: object
       properties:
@@ -295,6 +208,79 @@ components:
                         id:
                           type: string
                           description: The resource ID
+    giftCardRecipientResponseList:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/giftCardRecipientResponse/properties/data'
+    giftCardRecipientCreate:
+      required:
+      - data
+      type: object
+      properties:
+        data:
+          type: object
+          required:
+          - type
+          - attributes
+          properties:
+            type:
+              type: string
+              description: The resource's type
+              enum:
+              - gift_card_recipients
+            attributes:
+              type: object
+              properties:
+                email:
+                  type: string
+                  description: The recipient email address.
+                  example: john@example.com
+                first_name:
+                  type: string
+                  description: The recipient first name.
+                  example: John
+                last_name:
+                  type: string
+                  description: The recipient last name.
+                  example: Smith
+                reference:
+                  type: string
+                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
+                  example: ANY-EXTERNAL-REFEFERNCE
+                reference_origin:
+                  type: string
+                  description: Any identifier of the third party system that defines the reference code.
+                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
+                metadata:
+                  type: object
+                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
+                  example:
+                    foo: bar
+              required:
+              - email
+            relationships:
+              type: object
+              properties:
+                customer:
+                  required:
+                  - data
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - customers
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
     giftCardRecipient:
       type: object
       properties:
@@ -401,7 +387,7 @@ components:
                           type: string
                           description: Unique identifier for the resource (hash).
                           example: XAyRWNUzyN
-    giftCardRecipientCreate:
+    giftCardRecipientUpdate:
       required:
       - data
       type: object
@@ -410,6 +396,7 @@ components:
           type: object
           required:
           - type
+          - id
           - attributes
           properties:
             type:
@@ -417,6 +404,10 @@ components:
               description: The resource's type
               enum:
               - gift_card_recipients
+            id:
+              type: string
+              description: Unique identifier for the resource (hash).
+              example: XAyRWNUzyN
             attributes:
               type: object
               properties:
@@ -424,29 +415,33 @@ components:
                   type: string
                   description: The recipient email address.
                   example: john@example.com
+                  nullable: false
                 first_name:
                   type: string
                   description: The recipient first name.
                   example: John
+                  nullable: true
                 last_name:
                   type: string
                   description: The recipient last name.
                   example: Smith
+                  nullable: true
                 reference:
                   type: string
                   description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
                   example: ANY-EXTERNAL-REFEFERNCE
+                  nullable: true
                 reference_origin:
                   type: string
                   description: Any identifier of the third party system that defines the reference code.
                   example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
+                  nullable: true
                 metadata:
                   type: object
                   description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
                   example:
                     foo: bar
-              required:
-              - email
+                  nullable: true
             relationships:
               type: object
               properties:

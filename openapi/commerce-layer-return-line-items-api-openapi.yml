@@ -24,7 +24,6 @@ paths:
     get:
       operationId: GET/return_line_items
       summary: List all return line items
-      description: List all return line items
       tags:
       - return_line_items
       responses:
@@ -37,7 +36,6 @@ paths:
     post:
       operationId: POST/return_line_items
       summary: Create a return line item
-      description: Create a return line item
       tags:
       - return_line_items
       requestBody:
@@ -57,7 +55,6 @@ paths:
     get:
       operationId: GET/return_line_items/returnLineItemId
       summary: Retrieve a return line item
-      description: Retrieve a return line item
       tags:
       - return_line_items
       parameters:
@@ -77,7 +74,6 @@ paths:
     patch:
       operationId: PATCH/return_line_items/returnLineItemId
       summary: Update a return line item
-      description: Update a return line item
       tags:
       - return_line_items
       parameters:
@@ -103,7 +99,6 @@ paths:
     delete:
       operationId: DELETE/return_line_items/returnLineItemId
       summary: Delete a return line item
-      description: Delete a return line item
       tags:
       - return_line_items
       parameters:
@@ -213,65 +208,6 @@ components:
                         id:
                           type: string
                           description: The resource ID
-    returnLineItemUpdate:
-      required:
-      - data
-      type: object
-      properties:
-        data:
-          type: object
-          required:
-          - type
-          - id
-          - attributes
-          properties:
-            type:
-              type: string
-              description: The resource's type
-              enum:
-              - return_line_items
-            id:
-              type: string
-              description: Unique identifier for the resource (hash).
-              example: XAyRWNUzyN
-            attributes:
-              type: object
-              properties:
-                quantity:
-                  type: integer
-                  description: The return line item quantity.
-                  example: 4
-                  nullable: false
-                _restock:
-                  type: boolean
-                  description: Send this attribute if you want to restock the line item.
-                  example: true
-                  nullable: false
-                return_reason:
-                  type: object
-                  description: Set of key-value pairs that you can use to add details about return reason.
-                  example:
-                    size: was wrong
-                  nullable: true
-                reference:
-                  type: string
-                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
-                  example: ANY-EXTERNAL-REFEFERNCE
-                  nullable: true
-                reference_origin:
-                  type: string
-                  description: Any identifier of the third party system that defines the reference code.
-                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
-                  nullable: true
-                metadata:
-                  type: object
-                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
-                  example:
-                    foo: bar
-                  nullable: true
-            relationships:
-              type: object
-              properties: {}
     returnLineItemCreate:
       required:
       - data
@@ -355,13 +291,6 @@ components:
               required:
               - return
               - line_item
-    returnLineItemResponseList:
-      type: object
-      properties:
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/returnLineItemResponse/properties/data'
     returnLineItem:
       type: object
       properties:
@@ -504,6 +433,72 @@ components:
                           type: string
                           description: Unique identifier for the resource (hash).
                           example: XAyRWNUzyN
+    returnLineItemUpdate:
+      required:
+      - data
+      type: object
+      properties:
+        data:
+          type: object
+          required:
+          - type
+          - id
+          - attributes
+          properties:
+            type:
+              type: string
+              description: The resource's type
+              enum:
+              - return_line_items
+            id:
+              type: string
+              description: Unique identifier for the resource (hash).
+              example: XAyRWNUzyN
+            attributes:
+              type: object
+              properties:
+                quantity:
+                  type: integer
+                  description: The return line item quantity.
+                  example: 4
+                  nullable: false
+                _restock:
+                  type: boolean
+                  description: Send this attribute if you want to restock the line item.
+                  example: true
+                  nullable: false
+                return_reason:
+                  type: object
+                  description: Set of key-value pairs that you can use to add details about return reason.
+                  example:
+                    size: was wrong
+                  nullable: true
+                reference:
+                  type: string
+                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
+                  example: ANY-EXTERNAL-REFEFERNCE
+                  nullable: true
+                reference_origin:
+                  type: string
+                  description: Any identifier of the third party system that defines the reference code.
+                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
+                  nullable: true
+                metadata:
+                  type: object
+                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
+                  example:
+                    foo: bar
+                  nullable: true
+            relationships:
+              type: object
+              properties: {}
+    returnLineItemResponseList:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/returnLineItemResponse/properties/data'
   securitySchemes:
     bearerAuth:
       type: http

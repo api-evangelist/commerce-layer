@@ -17,16 +17,15 @@ servers:
 security:
 - bearerAuth: []
 tags:
-- name: payment_gateways
+- name: Payment Gateways
   description: resource type
 paths:
   /payment_gateways:
     get:
       operationId: GET/payment_gateways
       summary: List all payment gateways
-      description: List all payment gateways
       tags:
-      - payment_gateways
+      - Payment Gateways
       responses:
         '200':
           description: A list of payment gateway objects
@@ -38,9 +37,8 @@ paths:
     get:
       operationId: GET/payment_gateways/paymentGatewayId
       summary: Retrieve a payment gateway
-      description: Retrieve a payment gateway
       tags:
-      - payment_gateways
+      - Payment Gateways
       parameters:
       - name: paymentGatewayId
         in: path
@@ -57,13 +55,6 @@ paths:
                 $ref: '#/components/schemas/paymentGatewayResponse'
 components:
   schemas:
-    paymentGatewayResponseList:
-      type: object
-      properties:
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/paymentGatewayResponse/properties/data'
     paymentGatewayResponse:
       type: object
       properties:
@@ -233,6 +224,13 @@ components:
                           type: string
                           description: Unique identifier for the resource (hash).
                           example: XAyRWNUzyN
+    paymentGatewayResponseList:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/paymentGatewayResponse/properties/data'
   securitySchemes:
     bearerAuth:
       type: http

@@ -17,16 +17,15 @@ servers:
 security:
 - bearerAuth: []
 tags:
-- name: parcels
+- name: Parcels
   description: resource type
 paths:
   /parcels:
     get:
       operationId: GET/parcels
       summary: List all parcels
-      description: List all parcels
       tags:
-      - parcels
+      - Parcels
       responses:
         '200':
           description: A list of parcel objects
@@ -37,9 +36,8 @@ paths:
     post:
       operationId: POST/parcels
       summary: Create a parcel
-      description: Create a parcel
       tags:
-      - parcels
+      - Parcels
       requestBody:
         required: true
         content:
@@ -57,9 +55,8 @@ paths:
     get:
       operationId: GET/parcels/parcelId
       summary: Retrieve a parcel
-      description: Retrieve a parcel
       tags:
-      - parcels
+      - Parcels
       parameters:
       - name: parcelId
         in: path
@@ -77,9 +74,8 @@ paths:
     patch:
       operationId: PATCH/parcels/parcelId
       summary: Update a parcel
-      description: Update a parcel
       tags:
-      - parcels
+      - Parcels
       parameters:
       - name: parcelId
         in: path
@@ -103,9 +99,8 @@ paths:
     delete:
       operationId: DELETE/parcels/parcelId
       summary: Delete a parcel
-      description: Delete a parcel
       tags:
-      - parcels
+      - Parcels
       parameters:
       - name: parcelId
         in: path
@@ -118,23 +113,13 @@ paths:
           description: No content
 components:
   schemas:
-    parcelResponseList:
-      type: object
-      properties:
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/parcelResponse/properties/data'
-    parcelUpdate:
-      required:
-      - data
+    parcel:
       type: object
       properties:
         data:
           type: object
           required:
           - type
-          - id
           - attributes
           properties:
             type:
@@ -142,13 +127,14 @@ components:
               description: The resource's type
               enum:
               - parcels
-            id:
-              type: string
-              description: Unique identifier for the resource (hash).
-              example: XAyRWNUzyN
             attributes:
               type: object
               properties:
+                number:
+                  type: string
+                  description: Unique identifier for the parcel.
+                  example: '#1234/S/001/P/001'
+                  nullable: true
                 weight:
                   type: number
                   description: The parcel weight, used to automatically calculate the tax rates from the available carrier accounts.
@@ -182,7 +168,7 @@ components:
                   type: boolean
                   description: Indicates if the provided information is accurate.
                   example: false
-                  nullable: false
+                  nullable: true
                 customs_signer:
                   type: string
                   description: This is the name of the person who is certifying that the information provided on the customs form is accurate. Use a name of the person in your organization who is responsible for this.
@@ -207,7 +193,7 @@ components:
                   type: boolean
                   description: Indicates if the parcel requires customs info to get the shipping rates.
                   example: false
-                  nullable: false
+                  nullable: true
                 shipping_label_url:
                   type: string
                   description: The shipping label url, ready to be downloaded and printed.
@@ -282,6 +268,16 @@ components:
                   description: The type of delivery confirmation option upon delivery.
                   example: SIGNATURE
                   nullable: true
+                created_at:
+                  type: string
+                  description: Time at which the resource was created.
+                  example: '2018-01-01T12:00:00.000Z'
+                  nullable: false
+                updated_at:
+                  type: string
+                  description: Time at which the resource was last updated.
+                  example: '2018-01-01T12:00:00.000Z'
+                  nullable: false
                 reference:
                   type: string
                   description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
@@ -302,8 +298,6 @@ components:
               type: object
               properties:
                 shipment:
-                  required:
-                  - data
                   type: object
                   properties:
                     data:
@@ -319,8 +313,6 @@ components:
                           description: Unique identifier for the resource (hash).
                           example: XAyRWNUzyN
                 package:
-                  required:
-                  - data
                   type: object
                   properties:
                     data:
@@ -331,6 +323,66 @@ components:
                           description: The resource's type
                           enum:
                           - packages
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+                parcel_line_items:
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - parcel_line_items
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+                attachments:
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - attachments
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+                events:
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - events
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+                event_stores:
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - event_stores
                         id:
                           type: string
                           description: Unique identifier for the resource (hash).
@@ -683,13 +735,16 @@ components:
                         id:
                           type: string
                           description: The resource ID
-    parcel:
+    parcelUpdate:
+      required:
+      - data
       type: object
       properties:
         data:
           type: object
           required:
           - type
+          - id
           - attributes
           properties:
             type:
@@ -697,14 +752,13 @@ components:
               description: The resource's type
               enum:
               - parcels
+            id:
+              type: string
+              description: Unique identifier for the resource (hash).
+              example: XAyRWNUzyN
             attributes:
               type: object
               properties:
-                number:
-                  type: string
-                  description: Unique identifier for the parcel.
-                  example: '#1234/S/001/P/001'
-                  nullable: true
                 weight:
                   type: number
                   description: The parcel weight, used to automatically calculate the tax rates from the available carrier accounts.
@@ -738,7 +792,7 @@ components:
                   type: boolean
                   description: Indicates if the provided information is accurate.
                   example: false
-                  nullable: true
+                  nullable: false
                 customs_signer:
                   type: string
                   description: This is the name of the person who is certifying that the information provided on the customs form is accurate. Use a name of the person in your organization who is responsible for this.
@@ -763,7 +817,7 @@ components:
                   type: boolean
                   description: Indicates if the parcel requires customs info to get the shipping rates.
                   example: false
-                  nullable: true
+                  nullable: false
                 shipping_label_url:
                   type: string
                   description: The shipping label url, ready to be downloaded and printed.
@@ -838,16 +892,6 @@ components:
                   description: The type of delivery confirmation option upon delivery.
                   example: SIGNATURE
                   nullable: true
-                created_at:
-                  type: string
-                  description: Time at which the resource was created.
-                  example: '2018-01-01T12:00:00.000Z'
-                  nullable: false
-                updated_at:
-                  type: string
-                  description: Time at which the resource was last updated.
-                  example: '2018-01-01T12:00:00.000Z'
-                  nullable: false
                 reference:
                   type: string
                   description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
@@ -868,6 +912,8 @@ components:
               type: object
               properties:
                 shipment:
+                  required:
+                  - data
                   type: object
                   properties:
                     data:
@@ -883,6 +929,8 @@ components:
                           description: Unique identifier for the resource (hash).
                           example: XAyRWNUzyN
                 package:
+                  required:
+                  - data
                   type: object
                   properties:
                     data:
@@ -897,66 +945,13 @@ components:
                           type: string
                           description: Unique identifier for the resource (hash).
                           example: XAyRWNUzyN
-                parcel_line_items:
-                  type: object
-                  properties:
-                    data:
-                      type: object
-                      properties:
-                        type:
-                          type: string
-                          description: The resource's type
-                          enum:
-                          - parcel_line_items
-                        id:
-                          type: string
-                          description: Unique identifier for the resource (hash).
-                          example: XAyRWNUzyN
-                attachments:
-                  type: object
-                  properties:
-                    data:
-                      type: object
-                      properties:
-                        type:
-                          type: string
-                          description: The resource's type
-                          enum:
-                          - attachments
-                        id:
-                          type: string
-                          description: Unique identifier for the resource (hash).
-                          example: XAyRWNUzyN
-                events:
-                  type: object
-                  properties:
-                    data:
-                      type: object
-                      properties:
-                        type:
-                          type: string
-                          description: The resource's type
-                          enum:
-                          - events
-                        id:
-                          type: string
-                          description: Unique identifier for the resource (hash).
-                          example: XAyRWNUzyN
-                event_stores:
-                  type: object
-                  properties:
-                    data:
-                      type: object
-                      properties:
-                        type:
-                          type: string
-                          description: The resource's type
-                          enum:
-                          - event_stores
-                        id:
-                          type: string
-                          description: Unique identifier for the resource (hash).
-                          example: XAyRWNUzyN
+    parcelResponseList:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/parcelResponse/properties/data'
   securitySchemes:
     bearerAuth:
       type: http

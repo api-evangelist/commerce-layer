@@ -24,7 +24,6 @@ paths:
     get:
       operationId: GET/price_tiers
       summary: List all price tiers
-      description: List all price tiers
       tags:
       - price_tiers
       responses:
@@ -38,7 +37,6 @@ paths:
     get:
       operationId: GET/price_tiers/priceTierId
       summary: Retrieve a price tier
-      description: Retrieve a price tier
       tags:
       - price_tiers
       parameters:
@@ -152,6 +150,13 @@ components:
                         id:
                           type: string
                           description: The resource ID
+    priceTierResponseList:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/priceTierResponse/properties/data'
     priceTier:
       type: object
       properties:
@@ -276,13 +281,6 @@ components:
                           type: string
                           description: Unique identifier for the resource (hash).
                           example: XAyRWNUzyN
-    priceTierResponseList:
-      type: object
-      properties:
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/priceTierResponse/properties/data'
   securitySchemes:
     bearerAuth:
       type: http

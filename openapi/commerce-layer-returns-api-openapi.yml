@@ -21,16 +21,15 @@ servers:
 security:
 - bearerAuth: []
 tags:
-- name: returns
+- name: Returns
   description: resource type
 paths:
   /returns:
     get:
       operationId: GET/returns
       summary: List all returns
-      description: List all returns
       tags:
-      - returns
+      - Returns
       responses:
         '200':
           description: A list of return objects
@@ -41,9 +40,8 @@ paths:
     post:
       operationId: POST/returns
       summary: Create a return
-      description: Create a return
       tags:
-      - returns
+      - Returns
       requestBody:
         required: true
         content:
@@ -68,9 +66,8 @@ paths:
     get:
       operationId: GET/returns/returnId
       summary: Retrieve a return
-      description: Retrieve a return
       tags:
-      - returns
+      - Returns
       parameters:
       - name: returnId
         in: path
@@ -88,9 +85,8 @@ paths:
     patch:
       operationId: PATCH/returns/returnId
       summary: Update a return
-      description: Update a return
       tags:
-      - returns
+      - Returns
       parameters:
       - name: returnId
         in: path
@@ -114,9 +110,8 @@ paths:
     delete:
       operationId: DELETE/returns/returnId
       summary: Delete a return
-      description: Delete a return
       tags:
-      - returns
+      - Returns
       parameters:
       - name: returnId
         in: path
@@ -138,9 +133,72 @@ paths:
     post:
       operationId: POST/returns/breakdown
       summary: Query breakdown on returns
-      description: "Breakdowns are aggregations that summarize your data as metrics (based on specific operators) or statistics, computed on field values. When performing a breakdown query on the Metrics API endpoint you get in the response the value of the computation (based on the selected operator) on the selected field, aggregated by another field.\n\n### Nesting breakdowns\nBreakdowns can be nested recursively one into the other, up to one level (see example). The valid values allowed for the by key of the nested breakdown are strictly dependent on the value you specified in the by key of the parent breakdown. Hence, they are different for each resource you’re doing statistics on (see orders, returns, and carts for the related lists).You cannot group the nested breakdown by the same field by which you’re already grouping the parent breakdown.\n\nSingle breakdown request\n\n`{\n\t\"breakdown\": {\n\t  \"by\": \"organization.id\",\n     \"field\": \"order.id\",\n     \"operator\": \"value_count\",\n     \"sort\": \"desc\",\n     \"limit\": 5\n\t}\n}`\n  \n  \n Nested breakdown request\n \n` {\n\t\"breakdown\": {\n        \"by\": \"organization.id\",\n        \"field\": \"order.id\",\n        \"operator\": \"value_count\",\n        \"sort\": \"desc\",\n        \"limit\": 5,\n        \"breakdown\": {\n            \"by\": \"line_items.name\",\n            \"field\": \"line_items.id\",\n            \"operator\": \"value_count\",\n            \"sort\": \"desc\",\n            \"limit\": 20\n        }\n    }\n  }`"
+      description: 'Breakdowns are aggregations that summarize your data as metrics (based on specific operators) or statistics, computed on field values. When performing a breakdown query on the Metrics API endpoint you get in the response the value of the computation (based on the selected operator) on the selected field, aggregated by another field.
+
+
+        ### Nesting breakdowns
+
+        Breakdowns can be nested recursively one into the other, up to one level (see example). The valid values allowed for the by key of the nested breakdown are strictly dependent on the value you specified in the by key of the parent breakdown. Hence, they are different for each resource you’re doing statistics on (see orders, returns, and carts for the related lists).You cannot group the nested breakdown by the same field by which you’re already grouping the parent breakdown.
+
+
+        Single breakdown request
+
+
+        `{
+
+        "breakdown": {
+
+        "by": "organization.id",
+
+        "field": "order.id",
+
+        "operator": "value_count",
+
+        "sort": "desc",
+
+        "limit": 5
+
+        }
+
+        }`
+
+
+        Nested breakdown request
+
+
+        ` {
+
+        "breakdown": {
+
+        "by": "organization.id",
+
+        "field": "order.id",
+
+        "operator": "value_count",
+
+        "sort": "desc",
+
+        "limit": 5,
+
+        "breakdown": {
+
+        "by": "line_items.name",
+
+        "field": "line_items.id",
+
+        "operator": "value_count",
+
+        "sort": "desc",
+
+        "limit": 20
+
+        }
+
+        }
+
+        }`'
       tags:
-      - returns
+      - Returns
       requestBody:
         required: true
         content:
@@ -2223,9 +2281,113 @@ paths:
     post:
       operationId: POST/returns/date_breakdown
       summary: Query date_breakdown on returns
-      description: "Date breakdowns summarizes metrics data grouped by time intervals on a defined time range. They also support support breakdowns over the main date breakdown query and also supports all breakdown queries capabilities through the \"breakdown\" key, this also includes the possibility of nesting the breakdown over the main breakdown. \n\n\nSingle date breakdown request (no breakdown)\n\n`{\n\t\"date_breakdown\": {\n        \"by\": \"return.created_at\",\n        \"field\": \"return_line_items.line_item_total_amount\",\n        \"operator\": \"stats\",\n        \"interval\": \"month\"\n    }\n}`\n  \n  \nSingle date breakdown request with one breakdown\n \n` \n{\n\t\"date_breakdown\": {\n        \"by\": \"return.created_at\",\n        \"field\": \"return_line_items.line_item_total_amount\",\n        \"operator\": \"stats\",\n        \"interval\": \"month\",\n        \"breakdown\": {\n            \"by\": \"return.reference\",\n            \"field\": \"return_line_items.line_item_total_amount\",\n            \"operator\": \"sum\",\n            \"sort\": \"desc\",\n            \"limit\": 20\n        }\n    }\n  }`\n  \n  \nSingle date breakdown request with breakdown with a nested breakdown\n\n` \n\"date_breakdown\": {\n        \"by\": \"return.created_at\",\n        \"field\": \"return_line_items.line_item_total_amount\",\n        \"operator\": \"stats\",\n        \"interval\": \"month\",\n        \"breakdown\": {\n            \"by\": \"return.reference\",\n            \"field\": \"return_line_items.line_item_total_amount\",\n            \"operator\": \"sum\",\n            \"sort\": \"desc\",\n            \"limit\": 20,\n            \"breakdown\": {\n                \"by\": \"return.status\",\n                \"field\": \"return_line_items.line_item_total_amount\",\n                \"operator\": \"sum\",\n                \"sort\": \"desc\",\n                \"limit\": 21\n            }\n        }\n    }\n }`\n  "
+      description: 'Date breakdowns summarizes metrics data grouped by time intervals on a defined time range. They also support support breakdowns over the main date breakdown query and also supports all breakdown queries capabilities through the "breakdown" key, this also includes the possibility of nesting the breakdown over the main breakdown.
+
+
+        Single date breakdown request (no breakdown)
+
+
+        `{
+
+        "date_breakdown": {
+
+        "by": "return.created_at",
+
+        "field": "return_line_items.line_item_total_amount",
+
+        "operator": "stats",
+
+        "interval": "month"
+
+        }
+
+        }`
+
+
+        Single date breakdown request with one breakdown
+
+
+        `
+
+        {
+
+        "date_breakdown": {
+
+        "by": "return.created_at",
+
+        "field": "return_line_items.line_item_total_amount",
+
+        "operator": "stats",
+
+        "interval": "month",
+
+        "breakdown": {
+
+        "by": "return.reference",
+
+        "field": "return_line_items.line_item_total_amount",
+
+        "operator": "sum",
+
+        "sort": "desc",
+
+        "limit": 20
+
+        }
+
+        }
+
+        }`
+
+
+        Single date breakdown request with breakdown with a nested breakdown
+
+
+        `
+
+        "date_breakdown": {
+
+        "by": "return.created_at",
+
+        "field": "return_line_items.line_item_total_amount",
+
+        "operator": "stats",
+
+        "interval": "month",
+
+        "breakdown": {
+
+        "by": "return.reference",
+
+        "field": "return_line_items.line_item_total_amount",
+
+        "operator": "sum",
+
+        "sort": "desc",
+
+        "limit": 20,
+
+        "breakdown": {
+
+        "by": "return.status",
+
+        "field": "return_line_items.line_item_total_amount",
+
+        "operator": "sum",
+
+        "sort": "desc",
+
+        "limit": 21
+
+        }
+
+        }
+
+        }
+
+        }`'
       tags:
-      - returns
+      - Returns
       requestBody:
         required: true
         content:
@@ -2336,9 +2498,25 @@ paths:
     post:
       operationId: POST/returns/stats
       summary: Query stats on returns
-      description: "Stats are aggregations that summarize your data within an operator (depending of the field, some of them could not be available), such as: value_count, cardinality, avg, min, max, sum or stats (which returns avg, min, max, sum) computed on the field specificed. When performing a stats query on the Metrics API endpoint you get in the response the value of the computation (based on the selected operator) on the selected field.\n\nStats request\n\n`{\n\t \"stats\": {\n        \"field\": \"return_line_items.line_item_total_amount\",\n        \"operator\": \"stats\"\n    }\n}`"
+      description: 'Stats are aggregations that summarize your data within an operator (depending of the field, some of them could not be available), such as: value_count, cardinality, avg, min, max, sum or stats (which returns avg, min, max, sum) computed on the field specificed. When performing a stats query on the Metrics API endpoint you get in the response the value of the computation (based on the selected operator) on the selected field.
+
+
+        Stats request
+
+
+        `{
+
+        "stats": {
+
+        "field": "return_line_items.line_item_total_amount",
+
+        "operator": "stats"
+
+        }
+
+        }`'
       tags:
-      - returns
+      - Returns
       requestBody:
         required: true
         content:
@@ -3369,7 +3547,7 @@ paths:
       summary: Query search on returns
       description: Get search results from returns
       tags:
-      - returns
+      - Returns
       requestBody:
         required: true
         content:
@@ -3703,7 +3881,7 @@ paths:
       summary: Query export on returns
       description: Get export results from returns
       tags:
-      - returns
+      - Returns
       requestBody:
         required: true
         content:
@@ -4046,6 +4224,111 @@ components:
                           type: string
                           description: Unique identifier for the resource (hash).
                           example: XAyRWNUzyN
+    returnCreate:
+      required:
+      - data
+      type: object
+      properties:
+        data:
+          type: object
+          required:
+          - type
+          - attributes
+          properties:
+            type:
+              type: string
+              description: The resource's type
+              enum:
+              - returns
+            attributes:
+              type: object
+              properties:
+                reference:
+                  type: string
+                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
+                  example: ANY-EXTERNAL-REFEFERNCE
+                reference_origin:
+                  type: string
+                  description: Any identifier of the third party system that defines the reference code.
+                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
+                metadata:
+                  type: object
+                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
+                  example:
+                    foo: bar
+            relationships:
+              type: object
+              properties:
+                order:
+                  required:
+                  - data
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - orders
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+                stock_location:
+                  required:
+                  - data
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - stock_locations
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+                reference_capture:
+                  required:
+                  - data
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - captures
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+                tags:
+                  required:
+                  - data
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - tags
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+              required:
+              - order
     returnResponse:
       type: object
       properties:
@@ -4371,118 +4654,6 @@ components:
                         id:
                           type: string
                           description: The resource ID
-    returnCreate:
-      required:
-      - data
-      type: object
-      properties:
-        data:
-          type: object
-          required:
-          - type
-          - attributes
-          properties:
-            type:
-              type: string
-              description: The resource's type
-              enum:
-              - returns
-            attributes:
-              type: object
-              properties:
-                reference:
-                  type: string
-                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
-                  example: ANY-EXTERNAL-REFEFERNCE
-                reference_origin:
-                  type: string
-                  description: Any identifier of the third party system that defines the reference code.
-                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
-                metadata:
-                  type: object
-                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
-                  example:
-                    foo: bar
-            relationships:
-              type: object
-              properties:
-                order:
-                  required:
-                  - data
-                  type: object
-                  properties:
-                    data:
-                      type: object
-                      properties:
-                        type:
-                          type: string
-                          description: The resource's type
-                          enum:
-                          - orders
-                        id:
-                          type: string
-                          description: Unique identifier for the resource (hash).
-                          example: XAyRWNUzyN
-                stock_location:
-                  required:
-                  - data
-                  type: object
-                  properties:
-                    data:
-                      type: object
-                      properties:
-                        type:
-                          type: string
-                          description: The resource's type
-                          enum:
-                          - stock_locations
-                        id:
-                          type: string
-                          description: Unique identifier for the resource (hash).
-                          example: XAyRWNUzyN
-                reference_capture:
-                  required:
-                  - data
-                  type: object
-                  properties:
-                    data:
-                      type: object
-                      properties:
-                        type:
-                          type: string
-                          description: The resource's type
-                          enum:
-                          - captures
-                        id:
-                          type: string
-                          description: Unique identifier for the resource (hash).
-                          example: XAyRWNUzyN
-                tags:
-                  required:
-                  - data
-                  type: object
-                  properties:
-                    data:
-                      type: object
-                      properties:
-                        type:
-                          type: string
-                          description: The resource's type
-                          enum:
-                          - tags
-                        id:
-                          type: string
-                          description: Unique identifier for the resource (hash).
-                          example: XAyRWNUzyN
-              required:
-              - order
-    returnResponseList:
-      type: object
-      properties:
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/returnResponse/properties/data'
     returnUpdate:
       required:
       - data
@@ -4637,6 +4808,13 @@ components:
                           type: string
                           description: Unique identifier for the resource (hash).
                           example: XAyRWNUzyN
+    returnResponseList:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/returnResponse/properties/data'
     returns_search_request:
       type: object
       properties:
@@ -4664,77 +4842,6 @@ components:
               type: array
               items:
                 $ref: '#/components/schemas/returns_search_fields'
-        meta:
-          type: object
-          properties:
-            payload:
-              type: boolean
-              description: Set to true if you want to receive how the payload has been made
-    returns_stats_request:
-      type: object
-      properties:
-        filter:
-          $ref: '#/components/schemas/returns_filter'
-        stats:
-          type: object
-          description: Check available [fields](#/components/schemas/returns_stats_request/properties/stats/properties/field/description)
-          required:
-          - field
-          properties:
-            field:
-              type: string
-              description: "These are the valid values you can specify for the field key of the stats query and the related valid operators, based on that key:\n\n\n        \n| Value | Operators |\n| --- | --------- |\n|**`customer.id`** | <p>`value_count`</p>|\n|**`customer.email`** | <p>`value_count`</p>|\n|**`customer.group_name`** | <p>`value_count`</p>|\n|**`destination_address.business`** | <p>`value_count`</p>|\n|**`destination_address.city`** | <p>`value_count`</p>|\n|**`destination_address.country_code`** | <p>`value_count`</p>|\n|**`destination_address.geocoded`** | <p>`value_count`</p>|\n|**`destination_address.localized`** | <p>`value_count`</p>|\n|**`destination_address.state_code`** | <p>`value_count`</p>|\n|**`destination_address.zip_code`** | <p>`value_count`</p>|\n|**`origin_address.business`** | <p>`value_count`</p>|\n|**`origin_address.city`** | <p>`value_count`</p>|\n|**`origin_address.country_code`** | <p>`value_count`</p>|\n|**`origin_address.geocoded`** | <p>`value_count`</p>|\n|**`origin_address.localized`** | <p>`value_count`</p>|\n|**`origin_address.state_code`** | <p>`value_count`</p>|\n|**`origin_address.zip_code`** | <p>`value_count`</p>|\n|**`market.id`** | <p>`cardinality`</p><p>`value_count`</p>|\n|**`market.number`** | <p>`cardinality`</p><p>`value_count`</p>|\n|**`return.number`** | <p>`value_count`</p>|\n|**`return.reference`** | <p>`value_count`</p>|\n|**`return.reference_origin`** | <p>`value_count`</p>|\n|**`return.status`** | <p>`value_count`</p>|\n|**`return.id`** | <p>`cardinality`</p><p>`value_count`</p>|\n|**`return.order_id`** | <p>`value_count`</p>|\n|**`return.skus_count`** | <p>`avg`</p><p>`max`</p><p>`min`</p><p>`sum`</p><p>`stats`</p>|\n|**`return_line_items.quantity`** | <p>`avg`</p><p>`max`</p><p>`min`</p><p>`sum`</p><p>`stats`</p>|\n|**`return_line_items.line_item_id`** | <p>`value_count`</p>|\n|**`return_line_items.line_item_name`** | <p>`value_count`</p>|\n|**`return_line_items.line_item_code`** | <p>`value_count`</p>|\n|**`return_line_items.line_item_item_type`** | <p>`value_count`</p>|\n|**`return_line_items.line_item_total_amount`** | <p>`avg`</p><p>`max`</p><p>`min`</p><p>`sum`</p><p>`stats`</p>|\n|**`return_line_items.line_item_tax_amount`** | <p>`avg`</p><p>`max`</p><p>`min`</p><p>`sum`</p><p>`stats`</p>|\n|**`return_line_items.line_item_tax_rate`** | <p>`avg`</p><p>`max`</p><p>`min`</p><p>`sum`</p><p>`stats`</p>|\n|**`stock_location.id`** | <p>`value_count`</p>|\n|**`stock_location.name`** | <p>`value_count`</p>|\n|**`stock_location.reference`** | <p>`value_count`</p>|\n|**`stock_location.reference_origin`** | <p>`value_count`</p>|\n"
-              enum:
-              - customer.id
-              - customer.email
-              - customer.group_name
-              - destination_address.business
-              - destination_address.city
-              - destination_address.country_code
-              - destination_address.geocoded
-              - destination_address.localized
-              - destination_address.state_code
-              - destination_address.zip_code
-              - origin_address.business
-              - origin_address.city
-              - origin_address.country_code
-              - origin_address.geocoded
-              - origin_address.localized
-              - origin_address.state_code
-              - origin_address.zip_code
-              - market.id
-              - market.number
-              - return.number
-              - return.reference
-              - return.reference_origin
-              - return.status
-              - return.mode
-              - return.id
-              - return.order_id
-              - return.skus_count
-              - return_line_items.quantity
-              - return_line_items.line_item_id
-              - return_line_items.line_item_name
-              - return_line_items.line_item_code
-              - return_line_items.line_item_item_type
-              - return_line_items.line_item_total_amount
-              - return_line_items.line_item_tax_amount
-              - return_line_items.line_item_tax_rate
-              - stock_location.id
-              - stock_location.name
-              - stock_location.reference
-              - stock_location.reference_origin
-            operator:
-              type: string
-              description: Operator to apply
-              enum:
-              - value_count
-              - cardinality
-              - avg
-              - max
-              - min
-              - sum
-              - stats
         meta:
           type: object
           properties:
@@ -6874,58 +6981,77 @@ components:
             payload:
               type: boolean
               description: Set to true if you want to receive how the payload has been made
-    returns_export_fields:
-      type: string
-      enum:
-      - customer.id
-      - customer.email
-      - customer.group_name
-      - destination_address.business
-      - destination_address.city
-      - destination_address.country_code
-      - destination_address.geocoded
-      - destination_address.localized
-      - destination_address.state_code
-      - destination_address.zip_code
-      - origin_address.business
-      - origin_address.city
-      - origin_address.country_code
-      - origin_address.geocoded
-      - origin_address.localized
-      - origin_address.state_code
-      - origin_address.zip_code
-      - market.id
-      - market.name
-      - market.number
-      - organization.id
-      - organization.name
-      - organization.slug
-      - return.aggregated_details
-      - return.approved_at
-      - return.archived_at
-      - return.archived
-      - return.cancelled_at
-      - return.created_at
-      - return.number
-      - return.received_at
-      - return.reference
-      - return.reference_origin
-      - return.rejected_at
-      - return.shipped_at
-      - return.status
-      - return.mode
-      - return.updated_at
-      - return.current_date
-      - return.id
-      - return.order_id
-      - return.skus_count
-      - return.currency_code
-      - stock_location.id
-      - stock_location.name
-      - stock_location.reference
-      - stock_location.reference_origin
-      - tags.id
-      - tags.name
+    returns_stats_request:
+      type: object
+      properties:
+        filter:
+          $ref: '#/components/schemas/returns_filter'
+        stats:
+          type: object
+          description: Check available [fields](#/components/schemas/returns_stats_request/properties/stats/properties/field/description)
+          required:
+          - field
+          properties:
+            field:
+              type: string
+              description: "These are the valid values you can specify for the field key of the stats query and the related valid operators, based on that key:\n\n\n        \n| Value | Operators |\n| --- | --------- |\n|**`customer.id`** | <p>`value_count`</p>|\n|**`customer.email`** | <p>`value_count`</p>|\n|**`customer.group_name`** | <p>`value_count`</p>|\n|**`destination_address.business`** | <p>`value_count`</p>|\n|**`destination_address.city`** | <p>`value_count`</p>|\n|**`destination_address.country_code`** | <p>`value_count`</p>|\n|**`destination_address.geocoded`** | <p>`value_count`</p>|\n|**`destination_address.localized`** | <p>`value_count`</p>|\n|**`destination_address.state_code`** | <p>`value_count`</p>|\n|**`destination_address.zip_code`** | <p>`value_count`</p>|\n|**`origin_address.business`** | <p>`value_count`</p>|\n|**`origin_address.city`** | <p>`value_count`</p>|\n|**`origin_address.country_code`** | <p>`value_count`</p>|\n|**`origin_address.geocoded`** | <p>`value_count`</p>|\n|**`origin_address.localized`** | <p>`value_count`</p>|\n|**`origin_address.state_code`** | <p>`value_count`</p>|\n|**`origin_address.zip_code`** | <p>`value_count`</p>|\n|**`market.id`** | <p>`cardinality`</p><p>`value_count`</p>|\n|**`market.number`** | <p>`cardinality`</p><p>`value_count`</p>|\n|**`return.number`** | <p>`value_count`</p>|\n|**`return.reference`** | <p>`value_count`</p>|\n|**`return.reference_origin`** | <p>`value_count`</p>|\n|**`return.status`** | <p>`value_count`</p>|\n|**`return.id`** | <p>`cardinality`</p><p>`value_count`</p>|\n|**`return.order_id`** | <p>`value_count`</p>|\n|**`return.skus_count`** | <p>`avg`</p><p>`max`</p><p>`min`</p><p>`sum`</p><p>`stats`</p>|\n|**`return_line_items.quantity`** | <p>`avg`</p><p>`max`</p><p>`min`</p><p>`sum`</p><p>`stats`</p>|\n|**`return_line_items.line_item_id`** | <p>`value_count`</p>|\n|**`return_line_items.line_item_name`** | <p>`value_count`</p>|\n|**`return_line_items.line_item_code`** | <p>`value_count`</p>|\n|**`return_line_items.line_item_item_type`** | <p>`value_count`</p>|\n|**`return_line_items.line_item_total_amount`** | <p>`avg`</p><p>`max`</p><p>`min`</p><p>`sum`</p><p>`stats`</p>|\n|**`return_line_items.line_item_tax_amount`** | <p>`avg`</p><p>`max`</p><p>`min`</p><p>`sum`</p><p>`stats`</p>|\n|**`return_line_items.line_item_tax_rate`** | <p>`avg`</p><p>`max`</p><p>`min`</p><p>`sum`</p><p>`stats`</p>|\n|**`stock_location.id`** | <p>`value_count`</p>|\n|**`stock_location.name`** | <p>`value_count`</p>|\n|**`stock_location.reference`** | <p>`value_count`</p>|\n|**`stock_location.reference_origin`** | <p>`value_count`</p>|\n"
+              enum:
+              - customer.id
+              - customer.email
+              - customer.group_name
+              - destination_address.business
+              - destination_address.city
+              - destination_address.country_code
+              - destination_address.geocoded
+              - destination_address.localized
+              - destination_address.state_code
+              - destination_address.zip_code
+              - origin_address.business
+              - origin_address.city
+              - origin_address.country_code
+              - origin_address.geocoded
+              - origin_address.localized
+              - origin_address.state_code
+              - origin_address.zip_code
+              - market.id
+              - market.number
+              - return.number
+              - return.reference
+              - return.reference_origin
+              - return.status
+              - return.mode
+              - return.id
+              - return.order_id
+              - return.skus_count
+              - return_line_items.quantity
+              - return_line_items.line_item_id
+              - return_line_items.line_item_name
+              - return_line_items.line_item_code
+              - return_line_items.line_item_item_type
+              - return_line_items.line_item_total_amount
+              - return_line_items.line_item_tax_amount
+              - return_line_items.line_item_tax_rate
+              - stock_location.id
+              - stock_location.name
+              - stock_location.reference
+              - stock_location.reference_origin
+            operator:
+              type: string
+              description: Operator to apply
+              enum:
+              - value_count
+              - cardinality
+              - avg
+              - max
+              - min
+              - sum
+              - stats
+        meta:
+          type: object
+          properties:
+            payload:
+              type: boolean
+              description: Set to true if you want to receive how the payload has been made
     returns_breakdown_request:
       type: object
       properties:
@@ -7264,6 +7390,122 @@ components:
             payload:
               type: boolean
               description: Set to true if you want to receive how the payload has been made
+    returns_export_fields:
+      type: string
+      enum:
+      - customer.id
+      - customer.email
+      - customer.group_name
+      - destination_address.business
+      - destination_address.city
+      - destination_address.country_code
+      - destination_address.geocoded
+      - destination_address.localized
+      - destination_address.state_code
+      - destination_address.zip_code
+      - origin_address.business
+      - origin_address.city
+      - origin_address.country_code
+      - origin_address.geocoded
+      - origin_address.localized
+      - origin_address.state_code
+      - origin_address.zip_code
+      - market.id
+      - market.name
+      - market.number
+      - organization.id
+      - organization.name
+      - organization.slug
+      - return.aggregated_details
+      - return.approved_at
+      - return.archived_at
+      - return.archived
+      - return.cancelled_at
+      - return.created_at
+      - return.number
+      - return.received_at
+      - return.reference
+      - return.reference_origin
+      - return.rejected_at
+      - return.shipped_at
+      - return.status
+      - return.mode
+      - return.updated_at
+      - return.current_date
+      - return.id
+      - return.order_id
+      - return.skus_count
+      - return.currency_code
+      - stock_location.id
+      - stock_location.name
+      - stock_location.reference
+      - stock_location.reference_origin
+      - tags.id
+      - tags.name
+    returns_search_fields:
+      type: string
+      enum:
+      - customer.id
+      - customer.email
+      - customer.group_name
+      - destination_address.business
+      - destination_address.city
+      - destination_address.country_code
+      - destination_address.geocoded
+      - destination_address.localized
+      - destination_address.state_code
+      - destination_address.zip_code
+      - origin_address.business
+      - origin_address.city
+      - origin_address.country_code
+      - origin_address.geocoded
+      - origin_address.localized
+      - origin_address.state_code
+      - origin_address.zip_code
+      - market.id
+      - market.name
+      - market.number
+      - organization.id
+      - organization.name
+      - organization.slug
+      - return.aggregated_details
+      - return.approved_at
+      - return.archived_at
+      - return.archived
+      - return.cancelled_at
+      - return.created_at
+      - return.number
+      - return.received_at
+      - return.reference
+      - return.reference_origin
+      - return.rejected_at
+      - return.shipped_at
+      - return.status
+      - return.mode
+      - return.updated_at
+      - return.current_date
+      - return.id
+      - return.order_id
+      - return.skus_count
+      - return.currency_code
+      - return_line_items.created_at
+      - return_line_items.quantity
+      - return_line_items.restocked_at
+      - return_line_items.updated_at
+      - return_line_items.line_item_id
+      - return_line_items.line_item_name
+      - return_line_items.line_item_code
+      - return_line_items.line_item_item_type
+      - return_line_items.line_item_total_amount
+      - return_line_items.line_item_tax_amount
+      - return_line_items.line_item_tax_rate
+      - return_line_items.line_item_updated_at
+      - stock_location.id
+      - stock_location.name
+      - stock_location.reference
+      - stock_location.reference_origin
+      - tags.id
+      - tags.name
     returns_date_breakdown_request:
       type: object
       properties:
@@ -7686,70 +7928,6 @@ components:
             payload:
               type: boolean
               description: Set to true if you want to receive how the payload has been made
-    returns_search_fields:
-      type: string
-      enum:
-      - customer.id
-      - customer.email
-      - customer.group_name
-      - destination_address.business
-      - destination_address.city
-      - destination_address.country_code
-      - destination_address.geocoded
-      - destination_address.localized
-      - destination_address.state_code
-      - destination_address.zip_code
-      - origin_address.business
-      - origin_address.city
-      - origin_address.country_code
-      - origin_address.geocoded
-      - origin_address.localized
-      - origin_address.state_code
-      - origin_address.zip_code
-      - market.id
-      - market.name
-      - market.number
-      - organization.id
-      - organization.name
-      - organization.slug
-      - return.aggregated_details
-      - return.approved_at
-      - return.archived_at
-      - return.archived
-      - return.cancelled_at
-      - return.created_at
-      - return.number
-      - return.received_at
-      - return.reference
-      - return.reference_origin
-      - return.rejected_at
-      - return.shipped_at
-      - return.status
-      - return.mode
-      - return.updated_at
-      - return.current_date
-      - return.id
-      - return.order_id
-      - return.skus_count
-      - return.currency_code
-      - return_line_items.created_at
-      - return_line_items.quantity
-      - return_line_items.restocked_at
-      - return_line_items.updated_at
-      - return_line_items.line_item_id
-      - return_line_items.line_item_name
-      - return_line_items.line_item_code
-      - return_line_items.line_item_item_type
-      - return_line_items.line_item_total_amount
-      - return_line_items.line_item_tax_amount
-      - return_line_items.line_item_tax_rate
-      - return_line_items.line_item_updated_at
-      - stock_location.id
-      - stock_location.name
-      - stock_location.reference
-      - stock_location.reference_origin
-      - tags.id
-      - tags.name
   securitySchemes:
     bearerAuth:
       type: http
