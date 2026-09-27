@@ -230,6 +230,475 @@ components:
                           type: string
                           description: Unique identifier for the resource (hash).
                           example: XAyRWNUzyN
+    customerResponseList:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/customerResponse/properties/data'
+    customerResponse:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            id:
+              type: string
+              description: Unique identifier for the resource (hash).
+              example: XAyRWNUzyN
+            type:
+              type: string
+              description: The resource's type
+              enum:
+              - customers
+            links:
+              type: object
+              properties:
+                self:
+                  type: string
+                  description: URL
+            attributes:
+              $ref: '#/components/schemas/customer/properties/data/properties/attributes'
+            relationships:
+              type: object
+              properties:
+                customer_group:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - customer_group
+                        id:
+                          type: string
+                          description: The resource ID
+                customer_addresses:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - customer_addresses
+                        id:
+                          type: string
+                          description: The resource ID
+                customer_payment_sources:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - customer_payment_sources
+                        id:
+                          type: string
+                          description: The resource ID
+                customer_subscriptions:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - customer_subscriptions
+                        id:
+                          type: string
+                          description: The resource ID
+                orders:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - orders
+                        id:
+                          type: string
+                          description: The resource ID
+                order_subscriptions:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - order_subscriptions
+                        id:
+                          type: string
+                          description: The resource ID
+                returns:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - returns
+                        id:
+                          type: string
+                          description: The resource ID
+                sku_lists:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - sku_lists
+                        id:
+                          type: string
+                          description: The resource ID
+                attachments:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - attachments
+                        id:
+                          type: string
+                          description: The resource ID
+                events:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - events
+                        id:
+                          type: string
+                          description: The resource ID
+                tags:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - tags
+                        id:
+                          type: string
+                          description: The resource ID
+                jwt_customer:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - jwt_customer
+                        id:
+                          type: string
+                          description: The resource ID
+                jwt_markets:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - jwt_markets
+                        id:
+                          type: string
+                          description: The resource ID
+                jwt_stock_locations:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - jwt_stock_locations
+                        id:
+                          type: string
+                          description: The resource ID
+                event_stores:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - event_stores
+                        id:
+                          type: string
+                          description: The resource ID
+    customerCreate:
+      required:
+      - data
+      type: object
+      properties:
+        data:
+          type: object
+          required:
+          - type
+          - attributes
+          properties:
+            type:
+              type: string
+              description: The resource's type
+              enum:
+              - customers
+            attributes:
+              type: object
+              properties:
+                email:
+                  type: string
+                  description: The customer's email address.
+                  example: john@example.com
+                password:
+                  type: string
+                  description: The customer's password. Initiate a customer password reset flow if you need to change it.
+                  example: secret
+                shopper_reference:
+                  type: string
+                  description: A reference to uniquely identify the shopper during payment sessions.
+                  example: xxx-yyy-zzz
+                profile_id:
+                  type: string
+                  description: A reference to uniquely identify the customer on any connected external services.
+                  example: xxx-yyy-zzz
+                tax_exemption_code:
+                  type: string
+                  description: A specific code to identify the tax exemption reason for this customer.
+                  example: xxx-yyy-zzz
+                reference:
+                  type: string
+                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
+                  example: ANY-EXTERNAL-REFEFERNCE
+                reference_origin:
+                  type: string
+                  description: Any identifier of the third party system that defines the reference code.
+                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
+                metadata:
+                  type: object
+                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
+                  example:
+                    foo: bar
+              required:
+              - email
+            relationships:
+              type: object
+              properties:
+                customer_group:
+                  required:
+                  - data
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - customer_groups
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+                tags:
+                  required:
+                  - data
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - tags
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
     customer:
       type: object
       properties:
@@ -619,475 +1088,6 @@ components:
                           type: string
                           description: Unique identifier for the resource (hash).
                           example: XAyRWNUzyN
-    customerCreate:
-      required:
-      - data
-      type: object
-      properties:
-        data:
-          type: object
-          required:
-          - type
-          - attributes
-          properties:
-            type:
-              type: string
-              description: The resource's type
-              enum:
-              - customers
-            attributes:
-              type: object
-              properties:
-                email:
-                  type: string
-                  description: The customer's email address.
-                  example: john@example.com
-                password:
-                  type: string
-                  description: The customer's password. Initiate a customer password reset flow if you need to change it.
-                  example: secret
-                shopper_reference:
-                  type: string
-                  description: A reference to uniquely identify the shopper during payment sessions.
-                  example: xxx-yyy-zzz
-                profile_id:
-                  type: string
-                  description: A reference to uniquely identify the customer on any connected external services.
-                  example: xxx-yyy-zzz
-                tax_exemption_code:
-                  type: string
-                  description: A specific code to identify the tax exemption reason for this customer.
-                  example: xxx-yyy-zzz
-                reference:
-                  type: string
-                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
-                  example: ANY-EXTERNAL-REFEFERNCE
-                reference_origin:
-                  type: string
-                  description: Any identifier of the third party system that defines the reference code.
-                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
-                metadata:
-                  type: object
-                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
-                  example:
-                    foo: bar
-              required:
-              - email
-            relationships:
-              type: object
-              properties:
-                customer_group:
-                  required:
-                  - data
-                  type: object
-                  properties:
-                    data:
-                      type: object
-                      properties:
-                        type:
-                          type: string
-                          description: The resource's type
-                          enum:
-                          - customer_groups
-                        id:
-                          type: string
-                          description: Unique identifier for the resource (hash).
-                          example: XAyRWNUzyN
-                tags:
-                  required:
-                  - data
-                  type: object
-                  properties:
-                    data:
-                      type: object
-                      properties:
-                        type:
-                          type: string
-                          description: The resource's type
-                          enum:
-                          - tags
-                        id:
-                          type: string
-                          description: Unique identifier for the resource (hash).
-                          example: XAyRWNUzyN
-    customerResponse:
-      type: object
-      properties:
-        data:
-          type: object
-          properties:
-            id:
-              type: string
-              description: Unique identifier for the resource (hash).
-              example: XAyRWNUzyN
-            type:
-              type: string
-              description: The resource's type
-              enum:
-              - customers
-            links:
-              type: object
-              properties:
-                self:
-                  type: string
-                  description: URL
-            attributes:
-              $ref: '#/components/schemas/customer/properties/data/properties/attributes'
-            relationships:
-              type: object
-              properties:
-                customer_group:
-                  type: object
-                  properties:
-                    links:
-                      type: object
-                      properties:
-                        self:
-                          type: string
-                          description: URL
-                        related:
-                          type: string
-                          description: URL
-                    data:
-                      type: object
-                      properties:
-                        type:
-                          type: string
-                          description: The resource's type
-                          enum:
-                          - customer_group
-                        id:
-                          type: string
-                          description: The resource ID
-                customer_addresses:
-                  type: object
-                  properties:
-                    links:
-                      type: object
-                      properties:
-                        self:
-                          type: string
-                          description: URL
-                        related:
-                          type: string
-                          description: URL
-                    data:
-                      type: object
-                      properties:
-                        type:
-                          type: string
-                          description: The resource's type
-                          enum:
-                          - customer_addresses
-                        id:
-                          type: string
-                          description: The resource ID
-                customer_payment_sources:
-                  type: object
-                  properties:
-                    links:
-                      type: object
-                      properties:
-                        self:
-                          type: string
-                          description: URL
-                        related:
-                          type: string
-                          description: URL
-                    data:
-                      type: object
-                      properties:
-                        type:
-                          type: string
-                          description: The resource's type
-                          enum:
-                          - customer_payment_sources
-                        id:
-                          type: string
-                          description: The resource ID
-                customer_subscriptions:
-                  type: object
-                  properties:
-                    links:
-                      type: object
-                      properties:
-                        self:
-                          type: string
-                          description: URL
-                        related:
-                          type: string
-                          description: URL
-                    data:
-                      type: object
-                      properties:
-                        type:
-                          type: string
-                          description: The resource's type
-                          enum:
-                          - customer_subscriptions
-                        id:
-                          type: string
-                          description: The resource ID
-                orders:
-                  type: object
-                  properties:
-                    links:
-                      type: object
-                      properties:
-                        self:
-                          type: string
-                          description: URL
-                        related:
-                          type: string
-                          description: URL
-                    data:
-                      type: object
-                      properties:
-                        type:
-                          type: string
-                          description: The resource's type
-                          enum:
-                          - orders
-                        id:
-                          type: string
-                          description: The resource ID
-                order_subscriptions:
-                  type: object
-                  properties:
-                    links:
-                      type: object
-                      properties:
-                        self:
-                          type: string
-                          description: URL
-                        related:
-                          type: string
-                          description: URL
-                    data:
-                      type: object
-                      properties:
-                        type:
-                          type: string
-                          description: The resource's type
-                          enum:
-                          - order_subscriptions
-                        id:
-                          type: string
-                          description: The resource ID
-                returns:
-                  type: object
-                  properties:
-                    links:
-                      type: object
-                      properties:
-                        self:
-                          type: string
-                          description: URL
-                        related:
-                          type: string
-                          description: URL
-                    data:
-                      type: object
-                      properties:
-                        type:
-                          type: string
-                          description: The resource's type
-                          enum:
-                          - returns
-                        id:
-                          type: string
-                          description: The resource ID
-                sku_lists:
-                  type: object
-                  properties:
-                    links:
-                      type: object
-                      properties:
-                        self:
-                          type: string
-                          description: URL
-                        related:
-                          type: string
-                          description: URL
-                    data:
-                      type: object
-                      properties:
-                        type:
-                          type: string
-                          description: The resource's type
-                          enum:
-                          - sku_lists
-                        id:
-                          type: string
-                          description: The resource ID
-                attachments:
-                  type: object
-                  properties:
-                    links:
-                      type: object
-                      properties:
-                        self:
-                          type: string
-                          description: URL
-                        related:
-                          type: string
-                          description: URL
-                    data:
-                      type: object
-                      properties:
-                        type:
-                          type: string
-                          description: The resource's type
-                          enum:
-                          - attachments
-                        id:
-                          type: string
-                          description: The resource ID
-                events:
-                  type: object
-                  properties:
-                    links:
-                      type: object
-                      properties:
-                        self:
-                          type: string
-                          description: URL
-                        related:
-                          type: string
-                          description: URL
-                    data:
-                      type: object
-                      properties:
-                        type:
-                          type: string
-                          description: The resource's type
-                          enum:
-                          - events
-                        id:
-                          type: string
-                          description: The resource ID
-                tags:
-                  type: object
-                  properties:
-                    links:
-                      type: object
-                      properties:
-                        self:
-                          type: string
-                          description: URL
-                        related:
-                          type: string
-                          description: URL
-                    data:
-                      type: object
-                      properties:
-                        type:
-                          type: string
-                          description: The resource's type
-                          enum:
-                          - tags
-                        id:
-                          type: string
-                          description: The resource ID
-                jwt_customer:
-                  type: object
-                  properties:
-                    links:
-                      type: object
-                      properties:
-                        self:
-                          type: string
-                          description: URL
-                        related:
-                          type: string
-                          description: URL
-                    data:
-                      type: object
-                      properties:
-                        type:
-                          type: string
-                          description: The resource's type
-                          enum:
-                          - jwt_customer
-                        id:
-                          type: string
-                          description: The resource ID
-                jwt_markets:
-                  type: object
-                  properties:
-                    links:
-                      type: object
-                      properties:
-                        self:
-                          type: string
-                          description: URL
-                        related:
-                          type: string
-                          description: URL
-                    data:
-                      type: object
-                      properties:
-                        type:
-                          type: string
-                          description: The resource's type
-                          enum:
-                          - jwt_markets
-                        id:
-                          type: string
-                          description: The resource ID
-                jwt_stock_locations:
-                  type: object
-                  properties:
-                    links:
-                      type: object
-                      properties:
-                        self:
-                          type: string
-                          description: URL
-                        related:
-                          type: string
-                          description: URL
-                    data:
-                      type: object
-                      properties:
-                        type:
-                          type: string
-                          description: The resource's type
-                          enum:
-                          - jwt_stock_locations
-                        id:
-                          type: string
-                          description: The resource ID
-                event_stores:
-                  type: object
-                  properties:
-                    links:
-                      type: object
-                      properties:
-                        self:
-                          type: string
-                          description: URL
-                        related:
-                          type: string
-                          description: URL
-                    data:
-                      type: object
-                      properties:
-                        type:
-                          type: string
-                          description: The resource's type
-                          enum:
-                          - event_stores
-                        id:
-                          type: string
-                          description: The resource ID
-    customerResponseList:
-      type: object
-      properties:
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/customerResponse/properties/data'
   securitySchemes:
     bearerAuth:
       type: http

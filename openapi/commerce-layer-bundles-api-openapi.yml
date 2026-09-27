@@ -300,6 +300,117 @@ components:
                         id:
                           type: string
                           description: The resource ID
+    bundleUpdate:
+      required:
+      - data
+      type: object
+      properties:
+        data:
+          type: object
+          required:
+          - type
+          - id
+          - attributes
+          properties:
+            type:
+              type: string
+              description: The resource's type
+              enum:
+              - bundles
+            id:
+              type: string
+              description: Unique identifier for the resource (hash).
+              example: XAyRWNUzyN
+            attributes:
+              type: object
+              properties:
+                code:
+                  type: string
+                  description: The bundle code, that uniquely identifies the bundle within the market.
+                  example: BUNDMM000000FFFFFFXLXX
+                  nullable: false
+                name:
+                  type: string
+                  description: The internal name of the bundle.
+                  example: Men's Black T-shirt (XL) with Black Cap and Socks, all with White Logo
+                  nullable: false
+                currency_code:
+                  type: string
+                  description: The international 3-letter currency code as defined by the ISO 4217 standard.
+                  example: EUR
+                  nullable: true
+                description:
+                  type: string
+                  description: An internal description of the bundle.
+                  example: Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                  nullable: true
+                image_url:
+                  type: string
+                  description: The URL of an image that represents the bundle.
+                  example: https://img.yourdomain.com/bundles/xYZkjABcde.png
+                  nullable: true
+                price_amount_cents:
+                  type: integer
+                  description: The bundle price amount for the associated market, in cents.
+                  example: 10000
+                  nullable: true
+                compare_at_amount_cents:
+                  type: integer
+                  description: The compared price amount, in cents. Useful to display a percentage discount.
+                  example: 13000
+                  nullable: true
+                _compute_price_amount:
+                  type: boolean
+                  description: Send this attribute if you want to compute the price_amount_cents as the sum of the prices of the bundle SKUs for the market.
+                  example: true
+                  nullable: false
+                _compute_compare_at_amount:
+                  type: boolean
+                  description: Send this attribute if you want to compute the compare_at_amount_cents as the sum of the prices of the bundle SKUs for the market.
+                  example: true
+                  nullable: false
+                _add_tags:
+                  type: string
+                  description: Comma separated list of tags to be added. Duplicates, invalid and non existing ones are discarded. Cannot be passed by sales channels.
+                _remove_tags:
+                  type: string
+                  description: Comma separated list of tags to be removed. Duplicates, invalid and non existing ones are discarded. Cannot be passed by sales channels.
+                reference:
+                  type: string
+                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
+                  example: ANY-EXTERNAL-REFEFERNCE
+                  nullable: true
+                reference_origin:
+                  type: string
+                  description: Any identifier of the third party system that defines the reference code.
+                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
+                  nullable: true
+                metadata:
+                  type: object
+                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
+                  example:
+                    foo: bar
+                  nullable: true
+            relationships:
+              type: object
+              properties:
+                tags:
+                  required:
+                  - data
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - tags
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
     bundle:
       type: object
       properties:
@@ -521,6 +632,13 @@ components:
                           type: string
                           description: Unique identifier for the resource (hash).
                           example: XAyRWNUzyN
+    bundleResponseList:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/bundleResponse/properties/data'
     bundleCreate:
       required:
       - data
@@ -648,124 +766,6 @@ components:
                           example: XAyRWNUzyN
               required:
               - sku_list
-    bundleResponseList:
-      type: object
-      properties:
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/bundleResponse/properties/data'
-    bundleUpdate:
-      required:
-      - data
-      type: object
-      properties:
-        data:
-          type: object
-          required:
-          - type
-          - id
-          - attributes
-          properties:
-            type:
-              type: string
-              description: The resource's type
-              enum:
-              - bundles
-            id:
-              type: string
-              description: Unique identifier for the resource (hash).
-              example: XAyRWNUzyN
-            attributes:
-              type: object
-              properties:
-                code:
-                  type: string
-                  description: The bundle code, that uniquely identifies the bundle within the market.
-                  example: BUNDMM000000FFFFFFXLXX
-                  nullable: false
-                name:
-                  type: string
-                  description: The internal name of the bundle.
-                  example: Men's Black T-shirt (XL) with Black Cap and Socks, all with White Logo
-                  nullable: false
-                currency_code:
-                  type: string
-                  description: The international 3-letter currency code as defined by the ISO 4217 standard.
-                  example: EUR
-                  nullable: true
-                description:
-                  type: string
-                  description: An internal description of the bundle.
-                  example: Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                  nullable: true
-                image_url:
-                  type: string
-                  description: The URL of an image that represents the bundle.
-                  example: https://img.yourdomain.com/bundles/xYZkjABcde.png
-                  nullable: true
-                price_amount_cents:
-                  type: integer
-                  description: The bundle price amount for the associated market, in cents.
-                  example: 10000
-                  nullable: true
-                compare_at_amount_cents:
-                  type: integer
-                  description: The compared price amount, in cents. Useful to display a percentage discount.
-                  example: 13000
-                  nullable: true
-                _compute_price_amount:
-                  type: boolean
-                  description: Send this attribute if you want to compute the price_amount_cents as the sum of the prices of the bundle SKUs for the market.
-                  example: true
-                  nullable: false
-                _compute_compare_at_amount:
-                  type: boolean
-                  description: Send this attribute if you want to compute the compare_at_amount_cents as the sum of the prices of the bundle SKUs for the market.
-                  example: true
-                  nullable: false
-                _add_tags:
-                  type: string
-                  description: Comma separated list of tags to be added. Duplicates, invalid and non existing ones are discarded. Cannot be passed by sales channels.
-                _remove_tags:
-                  type: string
-                  description: Comma separated list of tags to be removed. Duplicates, invalid and non existing ones are discarded. Cannot be passed by sales channels.
-                reference:
-                  type: string
-                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
-                  example: ANY-EXTERNAL-REFEFERNCE
-                  nullable: true
-                reference_origin:
-                  type: string
-                  description: Any identifier of the third party system that defines the reference code.
-                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
-                  nullable: true
-                metadata:
-                  type: object
-                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
-                  example:
-                    foo: bar
-                  nullable: true
-            relationships:
-              type: object
-              properties:
-                tags:
-                  required:
-                  - data
-                  type: object
-                  properties:
-                    data:
-                      type: object
-                      properties:
-                        type:
-                          type: string
-                          description: The resource's type
-                          enum:
-                          - tags
-                        id:
-                          type: string
-                          description: Unique identifier for the resource (hash).
-                          example: XAyRWNUzyN
   securitySchemes:
     bearerAuth:
       type: http

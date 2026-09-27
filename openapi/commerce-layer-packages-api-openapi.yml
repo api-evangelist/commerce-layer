@@ -113,90 +113,6 @@ paths:
           description: No content
 components:
   schemas:
-    packageCreate:
-      required:
-      - data
-      type: object
-      properties:
-        data:
-          type: object
-          required:
-          - type
-          - attributes
-          properties:
-            type:
-              type: string
-              description: The resource's type
-              enum:
-              - packages
-            attributes:
-              type: object
-              properties:
-                name:
-                  type: string
-                  description: Unique name for the package.
-                  example: Large (60x40x30)
-                code:
-                  type: string
-                  description: The package identifying code.
-                  example: YYYY 2000
-                length:
-                  type: number
-                  description: The package length, used to automatically calculate the tax rates from the available carrier accounts.
-                  example: 40.0
-                width:
-                  type: number
-                  description: The package width, used to automatically calculate the tax rates from the available carrier accounts.
-                  example: 40.0
-                height:
-                  type: number
-                  description: The package height, used to automatically calculate the tax rates from the available carrier accounts.
-                  example: 25.0
-                unit_of_length:
-                  type: string
-                  description: The unit of length. Can be one of 'cm', or 'in'.
-                  example: gr
-                reference:
-                  type: string
-                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
-                  example: ANY-EXTERNAL-REFEFERNCE
-                reference_origin:
-                  type: string
-                  description: Any identifier of the third party system that defines the reference code.
-                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
-                metadata:
-                  type: object
-                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
-                  example:
-                    foo: bar
-              required:
-              - name
-              - length
-              - width
-              - height
-              - unit_of_length
-            relationships:
-              type: object
-              properties:
-                stock_location:
-                  required:
-                  - data
-                  type: object
-                  properties:
-                    data:
-                      type: object
-                      properties:
-                        type:
-                          type: string
-                          description: The resource's type
-                          enum:
-                          - stock_locations
-                        id:
-                          type: string
-                          description: Unique identifier for the resource (hash).
-                          example: XAyRWNUzyN
-              required:
-              - stock_location
     package:
       type: object
       properties:
@@ -333,6 +249,180 @@ components:
                           type: string
                           description: Unique identifier for the resource (hash).
                           example: XAyRWNUzyN
+    packageCreate:
+      required:
+      - data
+      type: object
+      properties:
+        data:
+          type: object
+          required:
+          - type
+          - attributes
+          properties:
+            type:
+              type: string
+              description: The resource's type
+              enum:
+              - packages
+            attributes:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: Unique name for the package.
+                  example: Large (60x40x30)
+                code:
+                  type: string
+                  description: The package identifying code.
+                  example: YYYY 2000
+                length:
+                  type: number
+                  description: The package length, used to automatically calculate the tax rates from the available carrier accounts.
+                  example: 40.0
+                width:
+                  type: number
+                  description: The package width, used to automatically calculate the tax rates from the available carrier accounts.
+                  example: 40.0
+                height:
+                  type: number
+                  description: The package height, used to automatically calculate the tax rates from the available carrier accounts.
+                  example: 25.0
+                unit_of_length:
+                  type: string
+                  description: The unit of length. Can be one of 'cm', or 'in'.
+                  example: gr
+                reference:
+                  type: string
+                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
+                  example: ANY-EXTERNAL-REFEFERNCE
+                reference_origin:
+                  type: string
+                  description: Any identifier of the third party system that defines the reference code.
+                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
+                metadata:
+                  type: object
+                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
+                  example:
+                    foo: bar
+              required:
+              - name
+              - length
+              - width
+              - height
+              - unit_of_length
+            relationships:
+              type: object
+              properties:
+                stock_location:
+                  required:
+                  - data
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - stock_locations
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+              required:
+              - stock_location
+    packageUpdate:
+      required:
+      - data
+      type: object
+      properties:
+        data:
+          type: object
+          required:
+          - type
+          - id
+          - attributes
+          properties:
+            type:
+              type: string
+              description: The resource's type
+              enum:
+              - packages
+            id:
+              type: string
+              description: Unique identifier for the resource (hash).
+              example: XAyRWNUzyN
+            attributes:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: Unique name for the package.
+                  example: Large (60x40x30)
+                  nullable: false
+                code:
+                  type: string
+                  description: The package identifying code.
+                  example: YYYY 2000
+                  nullable: true
+                length:
+                  type: number
+                  description: The package length, used to automatically calculate the tax rates from the available carrier accounts.
+                  example: 40.0
+                  nullable: false
+                width:
+                  type: number
+                  description: The package width, used to automatically calculate the tax rates from the available carrier accounts.
+                  example: 40.0
+                  nullable: false
+                height:
+                  type: number
+                  description: The package height, used to automatically calculate the tax rates from the available carrier accounts.
+                  example: 25.0
+                  nullable: false
+                unit_of_length:
+                  type: string
+                  description: The unit of length. Can be one of 'cm', or 'in'.
+                  example: gr
+                  nullable: false
+                reference:
+                  type: string
+                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
+                  example: ANY-EXTERNAL-REFEFERNCE
+                  nullable: true
+                reference_origin:
+                  type: string
+                  description: Any identifier of the third party system that defines the reference code.
+                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
+                  nullable: true
+                metadata:
+                  type: object
+                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
+                  example:
+                    foo: bar
+                  nullable: true
+            relationships:
+              type: object
+              properties:
+                stock_location:
+                  required:
+                  - data
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - stock_locations
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
     packageResponse:
       type: object
       properties:
@@ -458,96 +548,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/packageResponse/properties/data'
-    packageUpdate:
-      required:
-      - data
-      type: object
-      properties:
-        data:
-          type: object
-          required:
-          - type
-          - id
-          - attributes
-          properties:
-            type:
-              type: string
-              description: The resource's type
-              enum:
-              - packages
-            id:
-              type: string
-              description: Unique identifier for the resource (hash).
-              example: XAyRWNUzyN
-            attributes:
-              type: object
-              properties:
-                name:
-                  type: string
-                  description: Unique name for the package.
-                  example: Large (60x40x30)
-                  nullable: false
-                code:
-                  type: string
-                  description: The package identifying code.
-                  example: YYYY 2000
-                  nullable: true
-                length:
-                  type: number
-                  description: The package length, used to automatically calculate the tax rates from the available carrier accounts.
-                  example: 40.0
-                  nullable: false
-                width:
-                  type: number
-                  description: The package width, used to automatically calculate the tax rates from the available carrier accounts.
-                  example: 40.0
-                  nullable: false
-                height:
-                  type: number
-                  description: The package height, used to automatically calculate the tax rates from the available carrier accounts.
-                  example: 25.0
-                  nullable: false
-                unit_of_length:
-                  type: string
-                  description: The unit of length. Can be one of 'cm', or 'in'.
-                  example: gr
-                  nullable: false
-                reference:
-                  type: string
-                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
-                  example: ANY-EXTERNAL-REFEFERNCE
-                  nullable: true
-                reference_origin:
-                  type: string
-                  description: Any identifier of the third party system that defines the reference code.
-                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
-                  nullable: true
-                metadata:
-                  type: object
-                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
-                  example:
-                    foo: bar
-                  nullable: true
-            relationships:
-              type: object
-              properties:
-                stock_location:
-                  required:
-                  - data
-                  type: object
-                  properties:
-                    data:
-                      type: object
-                      properties:
-                        type:
-                          type: string
-                          description: The resource's type
-                          enum:
-                          - stock_locations
-                        id:
-                          type: string
-                          description: Unique identifier for the resource (hash).
-                          example: XAyRWNUzyN
   securitySchemes:
     bearerAuth:
       type: http

@@ -128,101 +128,75 @@ paths:
           description: The permissions associated to the role
 components:
   schemas:
-    permissionResponse:
+    permissionResponseList:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/permissionResponse/properties/data'
+    permissionUpdate:
+      required:
+      - data
       type: object
       properties:
         data:
           type: object
+          required:
+          - type
+          - id
+          - attributes
           properties:
-            id:
-              type: string
-              description: The ID of the resource.
-              example: XGZwpOSrWL
             type:
               type: string
               description: The resource's type.
               enum:
               - permissions
-            links:
+            id:
+              type: string
+              description: The ID of the resource.
+              example: XGZwpOSrWL
+            attributes:
               type: object
               properties:
-                self:
-                  type: string
-                  description: URL
-            attributes:
-              $ref: '#/components/schemas/permission/properties/data/properties/attributes'
+                can_create:
+                  type: boolean
+                  description: Determines if the permission have access to create rights.
+                  example: false
+                can_read:
+                  type: boolean
+                  description: Determines if the permission have access to read rights.
+                  example: false
+                can_update:
+                  type: boolean
+                  description: Determines if the permission have access to update rights.
+                  example: false
+                can_destroy:
+                  type: boolean
+                  description: Determines if the permission have access to destroy rights.
+                  example: false
+                reference:
+                  type:
+                  - string
+                  - 'null'
+                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
+                  example: ANY-EXTERNAL-REFEFERNCE
+                reference_origin:
+                  type:
+                  - string
+                  - 'null'
+                  description: Any identifier of the third party system that defines the reference code.
+                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
+                metadata:
+                  type:
+                  - object
+                  - 'null'
+                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
+                  example:
+                    foo: bar
             relationships:
               type: object
-              properties:
-                organization:
-                  type: object
-                  properties:
-                    links:
-                      type: object
-                      properties:
-                        self:
-                          type: string
-                          description: URL
-                        related:
-                          type: string
-                          description: URL
-                    data:
-                      type: object
-                      properties:
-                        type:
-                          type: string
-                          description: The resource's type.
-                          enum:
-                          - organization
-                        id:
-                          type: string
-                          description: The ID of the resource.
-                role:
-                  type: object
-                  properties:
-                    links:
-                      type: object
-                      properties:
-                        self:
-                          type: string
-                          description: URL
-                        related:
-                          type: string
-                          description: URL
-                    data:
-                      type: object
-                      properties:
-                        type:
-                          type: string
-                          description: The resource's type.
-                          enum:
-                          - role
-                        id:
-                          type: string
-                          description: The ID of the resource.
-                versions:
-                  type: object
-                  properties:
-                    links:
-                      type: object
-                      properties:
-                        self:
-                          type: string
-                          description: URL
-                        related:
-                          type: string
-                          description: URL
-                    data:
-                      type: object
-                      properties:
-                        type:
-                          type: string
-                          description: The resource's type.
-                          enum:
-                          - versions
-                        id:
-                          type: string
-                          description: The ID of the resource.
+              properties: {}
     permission:
       type: object
       properties:
@@ -343,75 +317,6 @@ components:
                           type: string
                           description: The ID of the resource.
                           example: XGZwpOSrWL
-    permissionResponseList:
-      type: object
-      properties:
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/permissionResponse/properties/data'
-    permissionUpdate:
-      required:
-      - data
-      type: object
-      properties:
-        data:
-          type: object
-          required:
-          - type
-          - id
-          - attributes
-          properties:
-            type:
-              type: string
-              description: The resource's type.
-              enum:
-              - permissions
-            id:
-              type: string
-              description: The ID of the resource.
-              example: XGZwpOSrWL
-            attributes:
-              type: object
-              properties:
-                can_create:
-                  type: boolean
-                  description: Determines if the permission have access to create rights.
-                  example: false
-                can_read:
-                  type: boolean
-                  description: Determines if the permission have access to read rights.
-                  example: false
-                can_update:
-                  type: boolean
-                  description: Determines if the permission have access to update rights.
-                  example: false
-                can_destroy:
-                  type: boolean
-                  description: Determines if the permission have access to destroy rights.
-                  example: false
-                reference:
-                  type:
-                  - string
-                  - 'null'
-                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
-                  example: ANY-EXTERNAL-REFEFERNCE
-                reference_origin:
-                  type:
-                  - string
-                  - 'null'
-                  description: Any identifier of the third party system that defines the reference code.
-                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
-                metadata:
-                  type:
-                  - object
-                  - 'null'
-                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
-                  example:
-                    foo: bar
-            relationships:
-              type: object
-              properties: {}
     permissionCreate:
       required:
       - data
@@ -492,6 +397,101 @@ components:
                           example: XGZwpOSrWL
               required:
               - role
+    permissionResponse:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            id:
+              type: string
+              description: The ID of the resource.
+              example: XGZwpOSrWL
+            type:
+              type: string
+              description: The resource's type.
+              enum:
+              - permissions
+            links:
+              type: object
+              properties:
+                self:
+                  type: string
+                  description: URL
+            attributes:
+              $ref: '#/components/schemas/permission/properties/data/properties/attributes'
+            relationships:
+              type: object
+              properties:
+                organization:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type.
+                          enum:
+                          - organization
+                        id:
+                          type: string
+                          description: The ID of the resource.
+                role:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type.
+                          enum:
+                          - role
+                        id:
+                          type: string
+                          description: The ID of the resource.
+                versions:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type.
+                          enum:
+                          - versions
+                        id:
+                          type: string
+                          description: The ID of the resource.
   securitySchemes:
     bearerAuth:
       type: http

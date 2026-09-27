@@ -80,6 +80,290 @@ paths:
                 $ref: '#/components/schemas/captureResponse'
 components:
   schemas:
+    captureResponse:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            id:
+              type: string
+              description: Unique identifier for the resource (hash).
+              example: XAyRWNUzyN
+            type:
+              type: string
+              description: The resource's type
+              enum:
+              - captures
+            links:
+              type: object
+              properties:
+                self:
+                  type: string
+                  description: URL
+            attributes:
+              $ref: '#/components/schemas/capture/properties/data/properties/attributes'
+            relationships:
+              type: object
+              properties:
+                order:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - order
+                        id:
+                          type: string
+                          description: The resource ID
+                payment_source:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - payment_source
+                        id:
+                          type: string
+                          description: The resource ID
+                attachments:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - attachments
+                        id:
+                          type: string
+                          description: The resource ID
+                events:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - events
+                        id:
+                          type: string
+                          description: The resource ID
+                event_stores:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - event_stores
+                        id:
+                          type: string
+                          description: The resource ID
+                reference_authorization:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - reference_authorization
+                        id:
+                          type: string
+                          description: The resource ID
+                refunds:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - refunds
+                        id:
+                          type: string
+                          description: The resource ID
+                return:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - return
+                        id:
+                          type: string
+                          description: The resource ID
+    captureUpdate:
+      required:
+      - data
+      type: object
+      properties:
+        data:
+          type: object
+          required:
+          - type
+          - id
+          - attributes
+          properties:
+            type:
+              type: string
+              description: The resource's type
+              enum:
+              - captures
+            id:
+              type: string
+              description: Unique identifier for the resource (hash).
+              example: XAyRWNUzyN
+            attributes:
+              type: object
+              properties:
+                succeeded:
+                  type: boolean
+                  description: Indicates if the transaction is successful.
+                  example: false
+                  nullable: false
+                _forward:
+                  type: boolean
+                  description: Send this attribute if you want to forward a stuck transaction to succeeded and update associated order states accordingly.
+                  example: true
+                  nullable: false
+                reference:
+                  type: string
+                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
+                  example: ANY-EXTERNAL-REFEFERNCE
+                  nullable: true
+                reference_origin:
+                  type: string
+                  description: Any identifier of the third party system that defines the reference code.
+                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
+                  nullable: true
+                metadata:
+                  type: object
+                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
+                  example:
+                    foo: bar
+                  nullable: true
+                _refund:
+                  type: boolean
+                  description: Send this attribute if you want to create a refund for this capture.
+                  example: true
+                  nullable: false
+                _refund_amount_cents:
+                  type: integer
+                  description: Send this attribute as a value in cents if you want to overwrite the amount to be refunded.
+                  example: 500
+                _cancel:
+                  type: boolean
+                  description: Send this attribute if you want to refund a succeeded capture of a pending order (which is left unpaid).
+                  example: true
+                  nullable: false
+            relationships:
+              type: object
+              properties: {}
+    captureResponseList:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/captureResponse/properties/data'
     capture:
       type: object
       properties:
@@ -366,290 +650,6 @@ components:
                           type: string
                           description: Unique identifier for the resource (hash).
                           example: XAyRWNUzyN
-    captureResponse:
-      type: object
-      properties:
-        data:
-          type: object
-          properties:
-            id:
-              type: string
-              description: Unique identifier for the resource (hash).
-              example: XAyRWNUzyN
-            type:
-              type: string
-              description: The resource's type
-              enum:
-              - captures
-            links:
-              type: object
-              properties:
-                self:
-                  type: string
-                  description: URL
-            attributes:
-              $ref: '#/components/schemas/capture/properties/data/properties/attributes'
-            relationships:
-              type: object
-              properties:
-                order:
-                  type: object
-                  properties:
-                    links:
-                      type: object
-                      properties:
-                        self:
-                          type: string
-                          description: URL
-                        related:
-                          type: string
-                          description: URL
-                    data:
-                      type: object
-                      properties:
-                        type:
-                          type: string
-                          description: The resource's type
-                          enum:
-                          - order
-                        id:
-                          type: string
-                          description: The resource ID
-                payment_source:
-                  type: object
-                  properties:
-                    links:
-                      type: object
-                      properties:
-                        self:
-                          type: string
-                          description: URL
-                        related:
-                          type: string
-                          description: URL
-                    data:
-                      type: object
-                      properties:
-                        type:
-                          type: string
-                          description: The resource's type
-                          enum:
-                          - payment_source
-                        id:
-                          type: string
-                          description: The resource ID
-                attachments:
-                  type: object
-                  properties:
-                    links:
-                      type: object
-                      properties:
-                        self:
-                          type: string
-                          description: URL
-                        related:
-                          type: string
-                          description: URL
-                    data:
-                      type: object
-                      properties:
-                        type:
-                          type: string
-                          description: The resource's type
-                          enum:
-                          - attachments
-                        id:
-                          type: string
-                          description: The resource ID
-                events:
-                  type: object
-                  properties:
-                    links:
-                      type: object
-                      properties:
-                        self:
-                          type: string
-                          description: URL
-                        related:
-                          type: string
-                          description: URL
-                    data:
-                      type: object
-                      properties:
-                        type:
-                          type: string
-                          description: The resource's type
-                          enum:
-                          - events
-                        id:
-                          type: string
-                          description: The resource ID
-                event_stores:
-                  type: object
-                  properties:
-                    links:
-                      type: object
-                      properties:
-                        self:
-                          type: string
-                          description: URL
-                        related:
-                          type: string
-                          description: URL
-                    data:
-                      type: object
-                      properties:
-                        type:
-                          type: string
-                          description: The resource's type
-                          enum:
-                          - event_stores
-                        id:
-                          type: string
-                          description: The resource ID
-                reference_authorization:
-                  type: object
-                  properties:
-                    links:
-                      type: object
-                      properties:
-                        self:
-                          type: string
-                          description: URL
-                        related:
-                          type: string
-                          description: URL
-                    data:
-                      type: object
-                      properties:
-                        type:
-                          type: string
-                          description: The resource's type
-                          enum:
-                          - reference_authorization
-                        id:
-                          type: string
-                          description: The resource ID
-                refunds:
-                  type: object
-                  properties:
-                    links:
-                      type: object
-                      properties:
-                        self:
-                          type: string
-                          description: URL
-                        related:
-                          type: string
-                          description: URL
-                    data:
-                      type: object
-                      properties:
-                        type:
-                          type: string
-                          description: The resource's type
-                          enum:
-                          - refunds
-                        id:
-                          type: string
-                          description: The resource ID
-                return:
-                  type: object
-                  properties:
-                    links:
-                      type: object
-                      properties:
-                        self:
-                          type: string
-                          description: URL
-                        related:
-                          type: string
-                          description: URL
-                    data:
-                      type: object
-                      properties:
-                        type:
-                          type: string
-                          description: The resource's type
-                          enum:
-                          - return
-                        id:
-                          type: string
-                          description: The resource ID
-    captureUpdate:
-      required:
-      - data
-      type: object
-      properties:
-        data:
-          type: object
-          required:
-          - type
-          - id
-          - attributes
-          properties:
-            type:
-              type: string
-              description: The resource's type
-              enum:
-              - captures
-            id:
-              type: string
-              description: Unique identifier for the resource (hash).
-              example: XAyRWNUzyN
-            attributes:
-              type: object
-              properties:
-                succeeded:
-                  type: boolean
-                  description: Indicates if the transaction is successful.
-                  example: false
-                  nullable: false
-                _forward:
-                  type: boolean
-                  description: Send this attribute if you want to forward a stuck transaction to succeeded and update associated order states accordingly.
-                  example: true
-                  nullable: false
-                reference:
-                  type: string
-                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
-                  example: ANY-EXTERNAL-REFEFERNCE
-                  nullable: true
-                reference_origin:
-                  type: string
-                  description: Any identifier of the third party system that defines the reference code.
-                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
-                  nullable: true
-                metadata:
-                  type: object
-                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
-                  example:
-                    foo: bar
-                  nullable: true
-                _refund:
-                  type: boolean
-                  description: Send this attribute if you want to create a refund for this capture.
-                  example: true
-                  nullable: false
-                _refund_amount_cents:
-                  type: integer
-                  description: Send this attribute as a value in cents if you want to overwrite the amount to be refunded.
-                  example: 500
-                _cancel:
-                  type: boolean
-                  description: Send this attribute if you want to refund a succeeded capture of a pending order (which is left unpaid).
-                  example: true
-                  nullable: false
-            relationships:
-              type: object
-              properties: {}
-    captureResponseList:
-      type: object
-      properties:
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/captureResponse/properties/data'
   securitySchemes:
     bearerAuth:
       type: http

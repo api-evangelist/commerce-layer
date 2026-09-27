@@ -52,65 +52,6 @@ paths:
                 $ref: '#/components/schemas/userResponse'
 components:
   schemas:
-    userUpdate:
-      required:
-      - data
-      type: object
-      properties:
-        data:
-          type: object
-          required:
-          - type
-          - attributes
-          properties:
-            type:
-              type: string
-              description: The resource's type.
-              enum:
-              - users
-            attributes:
-              type: object
-              properties:
-                email:
-                  type: string
-                  description: The user email.
-                  example: user@commercelayer.io
-                first_name:
-                  type: string
-                  description: The user first name.
-                  example: John
-                last_name:
-                  type: string
-                  description: The user last name.
-                  example: Doe
-                time_zone:
-                  type:
-                  - string
-                  - 'null'
-                  description: The user preferred timezone.
-                  example: UTC
-                reference:
-                  type:
-                  - string
-                  - 'null'
-                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
-                  example: ANY-EXTERNAL-REFEFERNCE
-                reference_origin:
-                  type:
-                  - string
-                  - 'null'
-                  description: Any identifier of the third party system that defines the reference code.
-                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
-                metadata:
-                  type:
-                  - object
-                  - 'null'
-                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
-                  example:
-                    foo: bar
-            relationships:
-              type: object
-              properties: {}
     user:
       type: object
       properties:
@@ -206,6 +147,65 @@ components:
                   description: URL
             attributes:
               $ref: '#/components/schemas/user/properties/data/properties/attributes'
+            relationships:
+              type: object
+              properties: {}
+    userUpdate:
+      required:
+      - data
+      type: object
+      properties:
+        data:
+          type: object
+          required:
+          - type
+          - attributes
+          properties:
+            type:
+              type: string
+              description: The resource's type.
+              enum:
+              - users
+            attributes:
+              type: object
+              properties:
+                email:
+                  type: string
+                  description: The user email.
+                  example: user@commercelayer.io
+                first_name:
+                  type: string
+                  description: The user first name.
+                  example: John
+                last_name:
+                  type: string
+                  description: The user last name.
+                  example: Doe
+                time_zone:
+                  type:
+                  - string
+                  - 'null'
+                  description: The user preferred timezone.
+                  example: UTC
+                reference:
+                  type:
+                  - string
+                  - 'null'
+                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
+                  example: ANY-EXTERNAL-REFEFERNCE
+                reference_origin:
+                  type:
+                  - string
+                  - 'null'
+                  description: Any identifier of the third party system that defines the reference code.
+                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
+                metadata:
+                  type:
+                  - object
+                  - 'null'
+                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
+                  example:
+                    foo: bar
             relationships:
               type: object
               properties: {}

@@ -113,73 +113,124 @@ paths:
           description: No content
 components:
   schemas:
-    vertexAccountCreate:
-      required:
-      - data
+    vertexAccountResponse:
       type: object
       properties:
         data:
           type: object
-          required:
-          - type
-          - attributes
           properties:
+            id:
+              type: string
+              description: Unique identifier for the resource (hash).
+              example: XAyRWNUzyN
             type:
               type: string
               description: The resource's type
               enum:
               - vertex_accounts
-            attributes:
+            links:
               type: object
               properties:
-                name:
+                self:
                   type: string
-                  description: The tax calculator's internal name.
-                  example: Personal tax calculator
-                reference:
-                  type: string
-                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
-                  example: ANY-EXTERNAL-REFEFERNCE
-                reference_origin:
-                  type: string
-                  description: Any identifier of the third party system that defines the reference code.
-                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
-                metadata:
-                  type: object
-                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
-                  example:
-                    foo: bar
-                kind:
-                  type: string
-                  description: The Vertex account kind. One of 'cloud', 'on_demand', or 'on_premise'.
-                  example: cloud
-                  enum:
-                  - cloud
-                  - on_demand
-                  - on_premise
-                baseurl:
-                  type: string
-                  description: The Vertex API baseurl, optional for 'cloud' kind.
-                  example: yourbaseurl
-                client_id:
-                  type: string
-                  description: The Vertex account client ID.
-                  example: xxx-yyy-zzz
-                client_secret:
-                  type: string
-                  description: The Vertex account client secret.
-                  example: xxx-yyy-zzz
-                commit_invoice:
-                  type: boolean
-                  description: Indicates if the transaction will be recorded and visible on the Vertex website.
-                  example: true
-              required:
-              - name
-              - client_id
-              - client_secret
+                  description: URL
+            attributes:
+              $ref: '#/components/schemas/vertexAccount/properties/data/properties/attributes'
             relationships:
               type: object
-              properties: {}
+              properties:
+                markets:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - markets
+                        id:
+                          type: string
+                          description: The resource ID
+                attachments:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - attachments
+                        id:
+                          type: string
+                          description: The resource ID
+                events:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - events
+                        id:
+                          type: string
+                          description: The resource ID
+                event_stores:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - event_stores
+                        id:
+                          type: string
+                          description: The resource ID
     vertexAccountUpdate:
       required:
       - data
@@ -260,13 +311,73 @@ components:
             relationships:
               type: object
               properties: {}
-    vertexAccountResponseList:
+    vertexAccountCreate:
+      required:
+      - data
       type: object
       properties:
         data:
-          type: array
-          items:
-            $ref: '#/components/schemas/vertexAccountResponse/properties/data'
+          type: object
+          required:
+          - type
+          - attributes
+          properties:
+            type:
+              type: string
+              description: The resource's type
+              enum:
+              - vertex_accounts
+            attributes:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: The tax calculator's internal name.
+                  example: Personal tax calculator
+                reference:
+                  type: string
+                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
+                  example: ANY-EXTERNAL-REFEFERNCE
+                reference_origin:
+                  type: string
+                  description: Any identifier of the third party system that defines the reference code.
+                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
+                metadata:
+                  type: object
+                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
+                  example:
+                    foo: bar
+                kind:
+                  type: string
+                  description: The Vertex account kind. One of 'cloud', 'on_demand', or 'on_premise'.
+                  example: cloud
+                  enum:
+                  - cloud
+                  - on_demand
+                  - on_premise
+                baseurl:
+                  type: string
+                  description: The Vertex API baseurl, optional for 'cloud' kind.
+                  example: yourbaseurl
+                client_id:
+                  type: string
+                  description: The Vertex account client ID.
+                  example: xxx-yyy-zzz
+                client_secret:
+                  type: string
+                  description: The Vertex account client secret.
+                  example: xxx-yyy-zzz
+                commit_invoice:
+                  type: boolean
+                  description: Indicates if the transaction will be recorded and visible on the Vertex website.
+                  example: true
+              required:
+              - name
+              - client_id
+              - client_secret
+            relationships:
+              type: object
+              properties: {}
     vertexAccount:
       type: object
       properties:
@@ -419,124 +530,13 @@ components:
                           type: string
                           description: Unique identifier for the resource (hash).
                           example: XAyRWNUzyN
-    vertexAccountResponse:
+    vertexAccountResponseList:
       type: object
       properties:
         data:
-          type: object
-          properties:
-            id:
-              type: string
-              description: Unique identifier for the resource (hash).
-              example: XAyRWNUzyN
-            type:
-              type: string
-              description: The resource's type
-              enum:
-              - vertex_accounts
-            links:
-              type: object
-              properties:
-                self:
-                  type: string
-                  description: URL
-            attributes:
-              $ref: '#/components/schemas/vertexAccount/properties/data/properties/attributes'
-            relationships:
-              type: object
-              properties:
-                markets:
-                  type: object
-                  properties:
-                    links:
-                      type: object
-                      properties:
-                        self:
-                          type: string
-                          description: URL
-                        related:
-                          type: string
-                          description: URL
-                    data:
-                      type: object
-                      properties:
-                        type:
-                          type: string
-                          description: The resource's type
-                          enum:
-                          - markets
-                        id:
-                          type: string
-                          description: The resource ID
-                attachments:
-                  type: object
-                  properties:
-                    links:
-                      type: object
-                      properties:
-                        self:
-                          type: string
-                          description: URL
-                        related:
-                          type: string
-                          description: URL
-                    data:
-                      type: object
-                      properties:
-                        type:
-                          type: string
-                          description: The resource's type
-                          enum:
-                          - attachments
-                        id:
-                          type: string
-                          description: The resource ID
-                events:
-                  type: object
-                  properties:
-                    links:
-                      type: object
-                      properties:
-                        self:
-                          type: string
-                          description: URL
-                        related:
-                          type: string
-                          description: URL
-                    data:
-                      type: object
-                      properties:
-                        type:
-                          type: string
-                          description: The resource's type
-                          enum:
-                          - events
-                        id:
-                          type: string
-                          description: The resource ID
-                event_stores:
-                  type: object
-                  properties:
-                    links:
-                      type: object
-                      properties:
-                        self:
-                          type: string
-                          description: URL
-                        related:
-                          type: string
-                          description: URL
-                    data:
-                      type: object
-                      properties:
-                        type:
-                          type: string
-                          description: The resource's type
-                          enum:
-                          - event_stores
-                        id:
-                          type: string
-                          description: The resource ID
+          type: array
+          items:
+            $ref: '#/components/schemas/vertexAccountResponse/properties/data'
   securitySchemes:
     bearerAuth:
       type: http

@@ -113,6 +113,58 @@ paths:
           description: No content
 components:
   schemas:
+    bingGeocoderUpdate:
+      required:
+      - data
+      type: object
+      properties:
+        data:
+          type: object
+          required:
+          - type
+          - id
+          - attributes
+          properties:
+            type:
+              type: string
+              description: The resource's type
+              enum:
+              - bing_geocoders
+            id:
+              type: string
+              description: Unique identifier for the resource (hash).
+              example: XAyRWNUzyN
+            attributes:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: The geocoder's internal name.
+                  example: Default geocoder
+                  nullable: false
+                reference:
+                  type: string
+                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
+                  example: ANY-EXTERNAL-REFEFERNCE
+                  nullable: true
+                reference_origin:
+                  type: string
+                  description: Any identifier of the third party system that defines the reference code.
+                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
+                  nullable: true
+                metadata:
+                  type: object
+                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
+                  example:
+                    foo: bar
+                  nullable: true
+                key:
+                  type: string
+                  description: The Bing Virtualearth key.
+                  example: xxxx-yyyy-zzzz
+            relationships:
+              type: object
+              properties: {}
     bingGeocoderCreate:
       required:
       - data
@@ -159,6 +211,131 @@ components:
             relationships:
               type: object
               properties: {}
+    bingGeocoderResponse:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            id:
+              type: string
+              description: Unique identifier for the resource (hash).
+              example: XAyRWNUzyN
+            type:
+              type: string
+              description: The resource's type
+              enum:
+              - bing_geocoders
+            links:
+              type: object
+              properties:
+                self:
+                  type: string
+                  description: URL
+            attributes:
+              $ref: '#/components/schemas/bingGeocoder/properties/data/properties/attributes'
+            relationships:
+              type: object
+              properties:
+                markets:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - markets
+                        id:
+                          type: string
+                          description: The resource ID
+                addresses:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - addresses
+                        id:
+                          type: string
+                          description: The resource ID
+                attachments:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - attachments
+                        id:
+                          type: string
+                          description: The resource ID
+                event_stores:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - event_stores
+                        id:
+                          type: string
+                          description: The resource ID
+    bingGeocoderResponseList:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/bingGeocoderResponse/properties/data'
     bingGeocoder:
       type: object
       properties:
@@ -278,183 +455,6 @@ components:
                           type: string
                           description: Unique identifier for the resource (hash).
                           example: XAyRWNUzyN
-    bingGeocoderResponse:
-      type: object
-      properties:
-        data:
-          type: object
-          properties:
-            id:
-              type: string
-              description: Unique identifier for the resource (hash).
-              example: XAyRWNUzyN
-            type:
-              type: string
-              description: The resource's type
-              enum:
-              - bing_geocoders
-            links:
-              type: object
-              properties:
-                self:
-                  type: string
-                  description: URL
-            attributes:
-              $ref: '#/components/schemas/bingGeocoder/properties/data/properties/attributes'
-            relationships:
-              type: object
-              properties:
-                markets:
-                  type: object
-                  properties:
-                    links:
-                      type: object
-                      properties:
-                        self:
-                          type: string
-                          description: URL
-                        related:
-                          type: string
-                          description: URL
-                    data:
-                      type: object
-                      properties:
-                        type:
-                          type: string
-                          description: The resource's type
-                          enum:
-                          - markets
-                        id:
-                          type: string
-                          description: The resource ID
-                addresses:
-                  type: object
-                  properties:
-                    links:
-                      type: object
-                      properties:
-                        self:
-                          type: string
-                          description: URL
-                        related:
-                          type: string
-                          description: URL
-                    data:
-                      type: object
-                      properties:
-                        type:
-                          type: string
-                          description: The resource's type
-                          enum:
-                          - addresses
-                        id:
-                          type: string
-                          description: The resource ID
-                attachments:
-                  type: object
-                  properties:
-                    links:
-                      type: object
-                      properties:
-                        self:
-                          type: string
-                          description: URL
-                        related:
-                          type: string
-                          description: URL
-                    data:
-                      type: object
-                      properties:
-                        type:
-                          type: string
-                          description: The resource's type
-                          enum:
-                          - attachments
-                        id:
-                          type: string
-                          description: The resource ID
-                event_stores:
-                  type: object
-                  properties:
-                    links:
-                      type: object
-                      properties:
-                        self:
-                          type: string
-                          description: URL
-                        related:
-                          type: string
-                          description: URL
-                    data:
-                      type: object
-                      properties:
-                        type:
-                          type: string
-                          description: The resource's type
-                          enum:
-                          - event_stores
-                        id:
-                          type: string
-                          description: The resource ID
-    bingGeocoderUpdate:
-      required:
-      - data
-      type: object
-      properties:
-        data:
-          type: object
-          required:
-          - type
-          - id
-          - attributes
-          properties:
-            type:
-              type: string
-              description: The resource's type
-              enum:
-              - bing_geocoders
-            id:
-              type: string
-              description: Unique identifier for the resource (hash).
-              example: XAyRWNUzyN
-            attributes:
-              type: object
-              properties:
-                name:
-                  type: string
-                  description: The geocoder's internal name.
-                  example: Default geocoder
-                  nullable: false
-                reference:
-                  type: string
-                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
-                  example: ANY-EXTERNAL-REFEFERNCE
-                  nullable: true
-                reference_origin:
-                  type: string
-                  description: Any identifier of the third party system that defines the reference code.
-                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
-                  nullable: true
-                metadata:
-                  type: object
-                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
-                  example:
-                    foo: bar
-                  nullable: true
-                key:
-                  type: string
-                  description: The Bing Virtualearth key.
-                  example: xxxx-yyyy-zzzz
-            relationships:
-              type: object
-              properties: {}
-    bingGeocoderResponseList:
-      type: object
-      properties:
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/bingGeocoderResponse/properties/data'
   securitySchemes:
     bearerAuth:
       type: http

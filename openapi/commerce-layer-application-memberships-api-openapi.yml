@@ -424,95 +424,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/applicationMembershipResponse/properties/data'
-    applicationMembershipUpdate:
-      required:
-      - data
-      type: object
-      properties:
-        data:
-          type: object
-          required:
-          - type
-          - id
-          - attributes
-          properties:
-            type:
-              type: string
-              description: The resource's type.
-              enum:
-              - application_memberships
-            id:
-              type: string
-              description: The ID of the resource.
-              example: XGZwpOSrWL
-            attributes:
-              type: object
-              properties:
-                filters:
-                  type:
-                  - object
-                  - 'null'
-                  description: Set of key-value pairs that contains restrictions and scopes of the application membership.
-                  example:
-                    market_id_in:
-                    - 202
-                    - 203
-                reference:
-                  type:
-                  - string
-                  - 'null'
-                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
-                  example: ANY-EXTERNAL-REFEFERNCE
-                reference_origin:
-                  type:
-                  - string
-                  - 'null'
-                  description: Any identifier of the third party system that defines the reference code.
-                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
-                metadata:
-                  type:
-                  - object
-                  - 'null'
-                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
-                  example:
-                    foo: bar
-            relationships:
-              type: object
-              properties:
-                membership_profile:
-                  required:
-                  - data
-                  type: object
-                  properties:
-                    data:
-                      type: object
-                      properties:
-                        type:
-                          type: string
-                          description: The resource's type.
-                          enum:
-                          - membership_profiles
-                        id:
-                          type: string
-                          description: The ID of the resource.
-                          example: XGZwpOSrWL
-                role:
-                  required:
-                  - data
-                  type: object
-                  properties:
-                    data:
-                      type: object
-                      properties:
-                        type:
-                          type: string
-                          description: The resource's type.
-                          enum:
-                          - roles
-                        id:
-                          type: string
-                          description: The ID of the resource.
-                          example: XGZwpOSrWL
     applicationMembershipCreate:
       required:
       - data
@@ -644,6 +555,95 @@ components:
               - api_credential
               - organization
               - role
+    applicationMembershipUpdate:
+      required:
+      - data
+      type: object
+      properties:
+        data:
+          type: object
+          required:
+          - type
+          - id
+          - attributes
+          properties:
+            type:
+              type: string
+              description: The resource's type.
+              enum:
+              - application_memberships
+            id:
+              type: string
+              description: The ID of the resource.
+              example: XGZwpOSrWL
+            attributes:
+              type: object
+              properties:
+                filters:
+                  type:
+                  - object
+                  - 'null'
+                  description: Set of key-value pairs that contains restrictions and scopes of the application membership.
+                  example:
+                    market_id_in:
+                    - 202
+                    - 203
+                reference:
+                  type:
+                  - string
+                  - 'null'
+                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
+                  example: ANY-EXTERNAL-REFEFERNCE
+                reference_origin:
+                  type:
+                  - string
+                  - 'null'
+                  description: Any identifier of the third party system that defines the reference code.
+                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
+                metadata:
+                  type:
+                  - object
+                  - 'null'
+                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
+                  example:
+                    foo: bar
+            relationships:
+              type: object
+              properties:
+                membership_profile:
+                  required:
+                  - data
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type.
+                          enum:
+                          - membership_profiles
+                        id:
+                          type: string
+                          description: The ID of the resource.
+                          example: XGZwpOSrWL
+                role:
+                  required:
+                  - data
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type.
+                          enum:
+                          - roles
+                        id:
+                          type: string
+                          description: The ID of the resource.
+                          example: XGZwpOSrWL
   securitySchemes:
     bearerAuth:
       type: http

@@ -113,6 +113,72 @@ paths:
           description: No content
 components:
   schemas:
+    returnLineItemUpdate:
+      required:
+      - data
+      type: object
+      properties:
+        data:
+          type: object
+          required:
+          - type
+          - id
+          - attributes
+          properties:
+            type:
+              type: string
+              description: The resource's type
+              enum:
+              - return_line_items
+            id:
+              type: string
+              description: Unique identifier for the resource (hash).
+              example: XAyRWNUzyN
+            attributes:
+              type: object
+              properties:
+                quantity:
+                  type: integer
+                  description: The return line item quantity.
+                  example: 4
+                  nullable: false
+                _restock:
+                  type: boolean
+                  description: Send this attribute if you want to restock the line item.
+                  example: true
+                  nullable: false
+                return_reason:
+                  type: object
+                  description: Set of key-value pairs that you can use to add details about return reason.
+                  example:
+                    size: was wrong
+                  nullable: true
+                reference:
+                  type: string
+                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
+                  example: ANY-EXTERNAL-REFEFERNCE
+                  nullable: true
+                reference_origin:
+                  type: string
+                  description: Any identifier of the third party system that defines the reference code.
+                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
+                  nullable: true
+                metadata:
+                  type: object
+                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
+                  example:
+                    foo: bar
+                  nullable: true
+            relationships:
+              type: object
+              properties: {}
+    returnLineItemResponseList:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/returnLineItemResponse/properties/data'
     returnLineItemResponse:
       type: object
       properties:
@@ -433,72 +499,6 @@ components:
                           type: string
                           description: Unique identifier for the resource (hash).
                           example: XAyRWNUzyN
-    returnLineItemUpdate:
-      required:
-      - data
-      type: object
-      properties:
-        data:
-          type: object
-          required:
-          - type
-          - id
-          - attributes
-          properties:
-            type:
-              type: string
-              description: The resource's type
-              enum:
-              - return_line_items
-            id:
-              type: string
-              description: Unique identifier for the resource (hash).
-              example: XAyRWNUzyN
-            attributes:
-              type: object
-              properties:
-                quantity:
-                  type: integer
-                  description: The return line item quantity.
-                  example: 4
-                  nullable: false
-                _restock:
-                  type: boolean
-                  description: Send this attribute if you want to restock the line item.
-                  example: true
-                  nullable: false
-                return_reason:
-                  type: object
-                  description: Set of key-value pairs that you can use to add details about return reason.
-                  example:
-                    size: was wrong
-                  nullable: true
-                reference:
-                  type: string
-                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
-                  example: ANY-EXTERNAL-REFEFERNCE
-                  nullable: true
-                reference_origin:
-                  type: string
-                  description: Any identifier of the third party system that defines the reference code.
-                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
-                  nullable: true
-                metadata:
-                  type: object
-                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
-                  example:
-                    foo: bar
-                  nullable: true
-            relationships:
-              type: object
-              properties: {}
-    returnLineItemResponseList:
-      type: object
-      properties:
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/returnLineItemResponse/properties/data'
   securitySchemes:
     bearerAuth:
       type: http

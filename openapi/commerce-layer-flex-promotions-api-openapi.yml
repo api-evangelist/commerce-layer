@@ -113,123 +113,6 @@ paths:
           description: No content
 components:
   schemas:
-    flexPromotionResponseList:
-      type: object
-      properties:
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/flexPromotionResponse/properties/data'
-    flexPromotionCreate:
-      required:
-      - data
-      type: object
-      properties:
-        data:
-          type: object
-          required:
-          - type
-          - attributes
-          properties:
-            type:
-              type: string
-              description: The resource's type
-              enum:
-              - flex_promotions
-            attributes:
-              type: object
-              properties:
-                name:
-                  type: string
-                  description: The promotion's internal name.
-                  example: Personal promotion
-                exclusive:
-                  type: boolean
-                  description: Indicates if the promotion will be applied exclusively, based on its priority score.
-                  example: true
-                priority:
-                  type: integer
-                  description: The priority assigned to the promotion (lower means higher priority).
-                  example: 2
-                starts_at:
-                  type: string
-                  description: The activation date/time of this promotion.
-                  example: '2018-01-01T12:00:00.000Z'
-                expires_at:
-                  type: string
-                  description: The expiration date/time of this promotion (must be after starts_at).
-                  example: '2018-01-02T12:00:00.000Z'
-                total_usage_limit:
-                  type: integer
-                  description: The total number of times this promotion can be applied. When 'null' it means promotion can be applied infinite times.
-                  example: 5
-                rules:
-                  type: object
-                  description: The discount rule to be applied.
-                  example: {}
-                _disable:
-                  type: boolean
-                  description: Send this attribute if you want to mark this resource as disabled.
-                  example: true
-                _enable:
-                  type: boolean
-                  description: Send this attribute if you want to mark this resource as enabled.
-                  example: true
-                reference:
-                  type: string
-                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
-                  example: ANY-EXTERNAL-REFEFERNCE
-                reference_origin:
-                  type: string
-                  description: Any identifier of the third party system that defines the reference code.
-                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
-                metadata:
-                  type: object
-                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
-                  example:
-                    foo: bar
-              required:
-              - name
-              - starts_at
-              - expires_at
-              - rules
-            relationships:
-              type: object
-              properties:
-                coupon_codes_promotion_rule:
-                  required:
-                  - data
-                  type: object
-                  properties:
-                    data:
-                      type: object
-                      properties:
-                        type:
-                          type: string
-                          description: The resource's type
-                          enum:
-                          - coupon_codes_promotion_rules
-                        id:
-                          type: string
-                          description: Unique identifier for the resource (hash).
-                          example: XAyRWNUzyN
-                tags:
-                  required:
-                  - data
-                  type: object
-                  properties:
-                    data:
-                      type: object
-                      properties:
-                        type:
-                          type: string
-                          description: The resource's type
-                          enum:
-                          - tags
-                        id:
-                          type: string
-                          description: Unique identifier for the resource (hash).
-                          example: XAyRWNUzyN
     flexPromotionResponse:
       type: object
       properties:
@@ -394,134 +277,6 @@ components:
                         id:
                           type: string
                           description: The resource ID
-    flexPromotionUpdate:
-      required:
-      - data
-      type: object
-      properties:
-        data:
-          type: object
-          required:
-          - type
-          - id
-          - attributes
-          properties:
-            type:
-              type: string
-              description: The resource's type
-              enum:
-              - flex_promotions
-            id:
-              type: string
-              description: Unique identifier for the resource (hash).
-              example: XAyRWNUzyN
-            attributes:
-              type: object
-              properties:
-                name:
-                  type: string
-                  description: The promotion's internal name.
-                  example: Personal promotion
-                  nullable: false
-                exclusive:
-                  type: boolean
-                  description: Indicates if the promotion will be applied exclusively, based on its priority score.
-                  example: true
-                  nullable: false
-                priority:
-                  type: integer
-                  description: The priority assigned to the promotion (lower means higher priority).
-                  example: 2
-                  nullable: true
-                starts_at:
-                  type: string
-                  description: The activation date/time of this promotion.
-                  example: '2018-01-01T12:00:00.000Z'
-                  nullable: false
-                expires_at:
-                  type: string
-                  description: The expiration date/time of this promotion (must be after starts_at).
-                  example: '2018-01-02T12:00:00.000Z'
-                  nullable: false
-                total_usage_limit:
-                  type: integer
-                  description: The total number of times this promotion can be applied. When 'null' it means promotion can be applied infinite times.
-                  example: 5
-                  nullable: true
-                rules:
-                  type: object
-                  description: The discount rule to be applied.
-                  example: {}
-                  nullable: false
-                _disable:
-                  type: boolean
-                  description: Send this attribute if you want to mark this resource as disabled.
-                  example: true
-                  nullable: false
-                _enable:
-                  type: boolean
-                  description: Send this attribute if you want to mark this resource as enabled.
-                  example: true
-                  nullable: false
-                _add_tags:
-                  type: string
-                  description: Comma separated list of tags to be added. Duplicates, invalid and non existing ones are discarded. Cannot be passed by sales channels.
-                _remove_tags:
-                  type: string
-                  description: Comma separated list of tags to be removed. Duplicates, invalid and non existing ones are discarded. Cannot be passed by sales channels.
-                reference:
-                  type: string
-                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
-                  example: ANY-EXTERNAL-REFEFERNCE
-                  nullable: true
-                reference_origin:
-                  type: string
-                  description: Any identifier of the third party system that defines the reference code.
-                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
-                  nullable: true
-                metadata:
-                  type: object
-                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
-                  example:
-                    foo: bar
-                  nullable: true
-            relationships:
-              type: object
-              properties:
-                coupon_codes_promotion_rule:
-                  required:
-                  - data
-                  type: object
-                  properties:
-                    data:
-                      type: object
-                      properties:
-                        type:
-                          type: string
-                          description: The resource's type
-                          enum:
-                          - coupon_codes_promotion_rules
-                        id:
-                          type: string
-                          description: Unique identifier for the resource (hash).
-                          example: XAyRWNUzyN
-                tags:
-                  required:
-                  - data
-                  type: object
-                  properties:
-                    data:
-                      type: object
-                      properties:
-                        type:
-                          type: string
-                          description: The resource's type
-                          enum:
-                          - tags
-                        id:
-                          type: string
-                          description: Unique identifier for the resource (hash).
-                          example: XAyRWNUzyN
     flexPromotion:
       type: object
       properties:
@@ -743,6 +498,251 @@ components:
                           type: string
                           description: Unique identifier for the resource (hash).
                           example: XAyRWNUzyN
+    flexPromotionCreate:
+      required:
+      - data
+      type: object
+      properties:
+        data:
+          type: object
+          required:
+          - type
+          - attributes
+          properties:
+            type:
+              type: string
+              description: The resource's type
+              enum:
+              - flex_promotions
+            attributes:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: The promotion's internal name.
+                  example: Personal promotion
+                exclusive:
+                  type: boolean
+                  description: Indicates if the promotion will be applied exclusively, based on its priority score.
+                  example: true
+                priority:
+                  type: integer
+                  description: The priority assigned to the promotion (lower means higher priority).
+                  example: 2
+                starts_at:
+                  type: string
+                  description: The activation date/time of this promotion.
+                  example: '2018-01-01T12:00:00.000Z'
+                expires_at:
+                  type: string
+                  description: The expiration date/time of this promotion (must be after starts_at).
+                  example: '2018-01-02T12:00:00.000Z'
+                total_usage_limit:
+                  type: integer
+                  description: The total number of times this promotion can be applied. When 'null' it means promotion can be applied infinite times.
+                  example: 5
+                rules:
+                  type: object
+                  description: The discount rule to be applied.
+                  example: {}
+                _disable:
+                  type: boolean
+                  description: Send this attribute if you want to mark this resource as disabled.
+                  example: true
+                _enable:
+                  type: boolean
+                  description: Send this attribute if you want to mark this resource as enabled.
+                  example: true
+                reference:
+                  type: string
+                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
+                  example: ANY-EXTERNAL-REFEFERNCE
+                reference_origin:
+                  type: string
+                  description: Any identifier of the third party system that defines the reference code.
+                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
+                metadata:
+                  type: object
+                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
+                  example:
+                    foo: bar
+              required:
+              - name
+              - starts_at
+              - expires_at
+              - rules
+            relationships:
+              type: object
+              properties:
+                coupon_codes_promotion_rule:
+                  required:
+                  - data
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - coupon_codes_promotion_rules
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+                tags:
+                  required:
+                  - data
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - tags
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+    flexPromotionUpdate:
+      required:
+      - data
+      type: object
+      properties:
+        data:
+          type: object
+          required:
+          - type
+          - id
+          - attributes
+          properties:
+            type:
+              type: string
+              description: The resource's type
+              enum:
+              - flex_promotions
+            id:
+              type: string
+              description: Unique identifier for the resource (hash).
+              example: XAyRWNUzyN
+            attributes:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: The promotion's internal name.
+                  example: Personal promotion
+                  nullable: false
+                exclusive:
+                  type: boolean
+                  description: Indicates if the promotion will be applied exclusively, based on its priority score.
+                  example: true
+                  nullable: false
+                priority:
+                  type: integer
+                  description: The priority assigned to the promotion (lower means higher priority).
+                  example: 2
+                  nullable: true
+                starts_at:
+                  type: string
+                  description: The activation date/time of this promotion.
+                  example: '2018-01-01T12:00:00.000Z'
+                  nullable: false
+                expires_at:
+                  type: string
+                  description: The expiration date/time of this promotion (must be after starts_at).
+                  example: '2018-01-02T12:00:00.000Z'
+                  nullable: false
+                total_usage_limit:
+                  type: integer
+                  description: The total number of times this promotion can be applied. When 'null' it means promotion can be applied infinite times.
+                  example: 5
+                  nullable: true
+                rules:
+                  type: object
+                  description: The discount rule to be applied.
+                  example: {}
+                  nullable: false
+                _disable:
+                  type: boolean
+                  description: Send this attribute if you want to mark this resource as disabled.
+                  example: true
+                  nullable: false
+                _enable:
+                  type: boolean
+                  description: Send this attribute if you want to mark this resource as enabled.
+                  example: true
+                  nullable: false
+                _add_tags:
+                  type: string
+                  description: Comma separated list of tags to be added. Duplicates, invalid and non existing ones are discarded. Cannot be passed by sales channels.
+                _remove_tags:
+                  type: string
+                  description: Comma separated list of tags to be removed. Duplicates, invalid and non existing ones are discarded. Cannot be passed by sales channels.
+                reference:
+                  type: string
+                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
+                  example: ANY-EXTERNAL-REFEFERNCE
+                  nullable: true
+                reference_origin:
+                  type: string
+                  description: Any identifier of the third party system that defines the reference code.
+                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
+                  nullable: true
+                metadata:
+                  type: object
+                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
+                  example:
+                    foo: bar
+                  nullable: true
+            relationships:
+              type: object
+              properties:
+                coupon_codes_promotion_rule:
+                  required:
+                  - data
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - coupon_codes_promotion_rules
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+                tags:
+                  required:
+                  - data
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - tags
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+    flexPromotionResponseList:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/flexPromotionResponse/properties/data'
   securitySchemes:
     bearerAuth:
       type: http

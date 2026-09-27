@@ -113,13 +113,6 @@ paths:
           description: No content
 components:
   schemas:
-    paymentOptionResponseList:
-      type: object
-      properties:
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/paymentOptionResponse/properties/data'
     paymentOptionUpdate:
       required:
       - data
@@ -192,6 +185,101 @@ components:
                           type: string
                           description: Unique identifier for the resource (hash).
                           example: XAyRWNUzyN
+    paymentOptionResponse:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            id:
+              type: string
+              description: Unique identifier for the resource (hash).
+              example: XAyRWNUzyN
+            type:
+              type: string
+              description: The resource's type
+              enum:
+              - payment_options
+            links:
+              type: object
+              properties:
+                self:
+                  type: string
+                  description: URL
+            attributes:
+              $ref: '#/components/schemas/paymentOption/properties/data/properties/attributes'
+            relationships:
+              type: object
+              properties:
+                order:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - order
+                        id:
+                          type: string
+                          description: The resource ID
+                attachments:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - attachments
+                        id:
+                          type: string
+                          description: The resource ID
+                event_stores:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - event_stores
+                        id:
+                          type: string
+                          description: The resource ID
     paymentOption:
       type: object
       properties:
@@ -311,101 +399,13 @@ components:
                           type: string
                           description: Unique identifier for the resource (hash).
                           example: XAyRWNUzyN
-    paymentOptionResponse:
+    paymentOptionResponseList:
       type: object
       properties:
         data:
-          type: object
-          properties:
-            id:
-              type: string
-              description: Unique identifier for the resource (hash).
-              example: XAyRWNUzyN
-            type:
-              type: string
-              description: The resource's type
-              enum:
-              - payment_options
-            links:
-              type: object
-              properties:
-                self:
-                  type: string
-                  description: URL
-            attributes:
-              $ref: '#/components/schemas/paymentOption/properties/data/properties/attributes'
-            relationships:
-              type: object
-              properties:
-                order:
-                  type: object
-                  properties:
-                    links:
-                      type: object
-                      properties:
-                        self:
-                          type: string
-                          description: URL
-                        related:
-                          type: string
-                          description: URL
-                    data:
-                      type: object
-                      properties:
-                        type:
-                          type: string
-                          description: The resource's type
-                          enum:
-                          - order
-                        id:
-                          type: string
-                          description: The resource ID
-                attachments:
-                  type: object
-                  properties:
-                    links:
-                      type: object
-                      properties:
-                        self:
-                          type: string
-                          description: URL
-                        related:
-                          type: string
-                          description: URL
-                    data:
-                      type: object
-                      properties:
-                        type:
-                          type: string
-                          description: The resource's type
-                          enum:
-                          - attachments
-                        id:
-                          type: string
-                          description: The resource ID
-                event_stores:
-                  type: object
-                  properties:
-                    links:
-                      type: object
-                      properties:
-                        self:
-                          type: string
-                          description: URL
-                        related:
-                          type: string
-                          description: URL
-                    data:
-                      type: object
-                      properties:
-                        type:
-                          type: string
-                          description: The resource's type
-                          enum:
-                          - event_stores
-                        id:
-                          type: string
-                          description: The resource ID
+          type: array
+          items:
+            $ref: '#/components/schemas/paymentOptionResponse/properties/data'
     paymentOptionCreate:
       required:
       - data

@@ -208,14 +208,7 @@ components:
                         id:
                           type: string
                           description: The resource ID
-    skuListItemResponseList:
-      type: object
-      properties:
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/skuListItemResponse/properties/data'
-    skuListItemCreate:
+    skuListItemUpdate:
       required:
       - data
       type: object
@@ -224,6 +217,7 @@ components:
           type: object
           required:
           - type
+          - id
           - attributes
           properties:
             type:
@@ -231,6 +225,10 @@ components:
               description: The resource's type
               enum:
               - sku_list_items
+            id:
+              type: string
+              description: Unique identifier for the resource (hash).
+              example: XAyRWNUzyN
             attributes:
               type: object
               properties:
@@ -238,67 +236,36 @@ components:
                   type: integer
                   description: The SKU list item's position.
                   example: 2
+                  nullable: true
                 sku_code:
                   type: string
                   description: The code of the associated SKU.
                   example: TSHIRTMM000000FFFFFFXLXX
+                  nullable: true
                 quantity:
                   type: integer
                   description: The SKU quantity for this SKU list item.
                   example: 1
+                  nullable: true
                 reference:
                   type: string
                   description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
                   example: ANY-EXTERNAL-REFEFERNCE
+                  nullable: true
                 reference_origin:
                   type: string
                   description: Any identifier of the third party system that defines the reference code.
                   example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
+                  nullable: true
                 metadata:
                   type: object
                   description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
                   example:
                     foo: bar
+                  nullable: true
             relationships:
               type: object
-              properties:
-                sku_list:
-                  required:
-                  - data
-                  type: object
-                  properties:
-                    data:
-                      type: object
-                      properties:
-                        type:
-                          type: string
-                          description: The resource's type
-                          enum:
-                          - sku_lists
-                        id:
-                          type: string
-                          description: Unique identifier for the resource (hash).
-                          example: XAyRWNUzyN
-                sku:
-                  required:
-                  - data
-                  type: object
-                  properties:
-                    data:
-                      type: object
-                      properties:
-                        type:
-                          type: string
-                          description: The resource's type
-                          enum:
-                          - skus
-                        id:
-                          type: string
-                          description: Unique identifier for the resource (hash).
-                          example: XAyRWNUzyN
-              required:
-              - sku_list
-              - sku
+              properties: {}
     skuListItem:
       type: object
       properties:
@@ -405,7 +372,14 @@ components:
                           type: string
                           description: Unique identifier for the resource (hash).
                           example: XAyRWNUzyN
-    skuListItemUpdate:
+    skuListItemResponseList:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/skuListItemResponse/properties/data'
+    skuListItemCreate:
       required:
       - data
       type: object
@@ -414,7 +388,6 @@ components:
           type: object
           required:
           - type
-          - id
           - attributes
           properties:
             type:
@@ -422,10 +395,6 @@ components:
               description: The resource's type
               enum:
               - sku_list_items
-            id:
-              type: string
-              description: Unique identifier for the resource (hash).
-              example: XAyRWNUzyN
             attributes:
               type: object
               properties:
@@ -433,36 +402,67 @@ components:
                   type: integer
                   description: The SKU list item's position.
                   example: 2
-                  nullable: true
                 sku_code:
                   type: string
                   description: The code of the associated SKU.
                   example: TSHIRTMM000000FFFFFFXLXX
-                  nullable: true
                 quantity:
                   type: integer
                   description: The SKU quantity for this SKU list item.
                   example: 1
-                  nullable: true
                 reference:
                   type: string
                   description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
                   example: ANY-EXTERNAL-REFEFERNCE
-                  nullable: true
                 reference_origin:
                   type: string
                   description: Any identifier of the third party system that defines the reference code.
                   example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
-                  nullable: true
                 metadata:
                   type: object
                   description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
                   example:
                     foo: bar
-                  nullable: true
             relationships:
               type: object
-              properties: {}
+              properties:
+                sku_list:
+                  required:
+                  - data
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - sku_lists
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+                sku:
+                  required:
+                  - data
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - skus
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+              required:
+              - sku_list
+              - sku
   securitySchemes:
     bearerAuth:
       type: http

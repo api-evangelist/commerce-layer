@@ -113,6 +113,108 @@ paths:
           description: No content
 components:
   schemas:
+    checkoutComPaymentResponseList:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/checkoutComPaymentResponse/properties/data'
+    checkoutComPaymentResponse:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            id:
+              type: string
+              description: Unique identifier for the resource (hash).
+              example: XAyRWNUzyN
+            type:
+              type: string
+              description: The resource's type
+              enum:
+              - checkout_com_payments
+            links:
+              type: object
+              properties:
+                self:
+                  type: string
+                  description: URL
+            attributes:
+              $ref: '#/components/schemas/checkoutComPayment/properties/data/properties/attributes'
+            relationships:
+              type: object
+              properties:
+                order:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - order
+                        id:
+                          type: string
+                          description: The resource ID
+                payment_gateway:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - payment_gateway
+                        id:
+                          type: string
+                          description: The resource ID
+                event_stores:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - event_stores
+                        id:
+                          type: string
+                          description: The resource ID
     checkoutComPayment:
       type: object
       properties:
@@ -268,6 +370,76 @@ components:
                           type: string
                           description: Unique identifier for the resource (hash).
                           example: XAyRWNUzyN
+    checkoutComPaymentCreate:
+      required:
+      - data
+      type: object
+      properties:
+        data:
+          type: object
+          required:
+          - type
+          - attributes
+          properties:
+            type:
+              type: string
+              description: The resource's type
+              enum:
+              - checkout_com_payments
+            attributes:
+              type: object
+              properties:
+                token:
+                  type: string
+                  description: The Checkout.com payment or digital wallet token.
+                  example: tok_4gzeau5o2uqubbk6fufs3m7p54
+                success_url:
+                  type: string
+                  description: The URL to redirect your customer upon 3DS succeeded authentication.
+                  example: http://commercelayer.dev/checkout_com/success
+                failure_url:
+                  type: string
+                  description: The URL to redirect your customer upon 3DS failed authentication.
+                  example: http://commercelayer.dev/checkout_com/failure
+                reference:
+                  type: string
+                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
+                  example: ANY-EXTERNAL-REFEFERNCE
+                reference_origin:
+                  type: string
+                  description: Any identifier of the third party system that defines the reference code.
+                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
+                metadata:
+                  type: object
+                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
+                  example:
+                    foo: bar
+              required:
+              - token
+              - success_url
+              - failure_url
+            relationships:
+              type: object
+              properties:
+                order:
+                  required:
+                  - data
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - orders
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+              required:
+              - order
     checkoutComPaymentUpdate:
       required:
       - data
@@ -343,178 +515,6 @@ components:
                           type: string
                           description: Unique identifier for the resource (hash).
                           example: XAyRWNUzyN
-    checkoutComPaymentResponseList:
-      type: object
-      properties:
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/checkoutComPaymentResponse/properties/data'
-    checkoutComPaymentCreate:
-      required:
-      - data
-      type: object
-      properties:
-        data:
-          type: object
-          required:
-          - type
-          - attributes
-          properties:
-            type:
-              type: string
-              description: The resource's type
-              enum:
-              - checkout_com_payments
-            attributes:
-              type: object
-              properties:
-                token:
-                  type: string
-                  description: The Checkout.com payment or digital wallet token.
-                  example: tok_4gzeau5o2uqubbk6fufs3m7p54
-                success_url:
-                  type: string
-                  description: The URL to redirect your customer upon 3DS succeeded authentication.
-                  example: http://commercelayer.dev/checkout_com/success
-                failure_url:
-                  type: string
-                  description: The URL to redirect your customer upon 3DS failed authentication.
-                  example: http://commercelayer.dev/checkout_com/failure
-                reference:
-                  type: string
-                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
-                  example: ANY-EXTERNAL-REFEFERNCE
-                reference_origin:
-                  type: string
-                  description: Any identifier of the third party system that defines the reference code.
-                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
-                metadata:
-                  type: object
-                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
-                  example:
-                    foo: bar
-              required:
-              - token
-              - success_url
-              - failure_url
-            relationships:
-              type: object
-              properties:
-                order:
-                  required:
-                  - data
-                  type: object
-                  properties:
-                    data:
-                      type: object
-                      properties:
-                        type:
-                          type: string
-                          description: The resource's type
-                          enum:
-                          - orders
-                        id:
-                          type: string
-                          description: Unique identifier for the resource (hash).
-                          example: XAyRWNUzyN
-              required:
-              - order
-    checkoutComPaymentResponse:
-      type: object
-      properties:
-        data:
-          type: object
-          properties:
-            id:
-              type: string
-              description: Unique identifier for the resource (hash).
-              example: XAyRWNUzyN
-            type:
-              type: string
-              description: The resource's type
-              enum:
-              - checkout_com_payments
-            links:
-              type: object
-              properties:
-                self:
-                  type: string
-                  description: URL
-            attributes:
-              $ref: '#/components/schemas/checkoutComPayment/properties/data/properties/attributes'
-            relationships:
-              type: object
-              properties:
-                order:
-                  type: object
-                  properties:
-                    links:
-                      type: object
-                      properties:
-                        self:
-                          type: string
-                          description: URL
-                        related:
-                          type: string
-                          description: URL
-                    data:
-                      type: object
-                      properties:
-                        type:
-                          type: string
-                          description: The resource's type
-                          enum:
-                          - order
-                        id:
-                          type: string
-                          description: The resource ID
-                payment_gateway:
-                  type: object
-                  properties:
-                    links:
-                      type: object
-                      properties:
-                        self:
-                          type: string
-                          description: URL
-                        related:
-                          type: string
-                          description: URL
-                    data:
-                      type: object
-                      properties:
-                        type:
-                          type: string
-                          description: The resource's type
-                          enum:
-                          - payment_gateway
-                        id:
-                          type: string
-                          description: The resource ID
-                event_stores:
-                  type: object
-                  properties:
-                    links:
-                      type: object
-                      properties:
-                        self:
-                          type: string
-                          description: URL
-                        related:
-                          type: string
-                          description: URL
-                    data:
-                      type: object
-                      properties:
-                        type:
-                          type: string
-                          description: The resource's type
-                          enum:
-                          - event_stores
-                        id:
-                          type: string
-                          description: The resource ID
   securitySchemes:
     bearerAuth:
       type: http

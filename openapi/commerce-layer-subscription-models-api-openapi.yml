@@ -113,81 +113,124 @@ paths:
           description: No content
 components:
   schemas:
-    subscriptionModelUpdate:
-      required:
-      - data
+    subscriptionModelResponse:
       type: object
       properties:
         data:
           type: object
-          required:
-          - type
-          - id
-          - attributes
           properties:
+            id:
+              type: string
+              description: Unique identifier for the resource (hash).
+              example: XAyRWNUzyN
             type:
               type: string
               description: The resource's type
               enum:
               - subscription_models
-            id:
-              type: string
-              description: Unique identifier for the resource (hash).
-              example: XAyRWNUzyN
-            attributes:
+            links:
               type: object
               properties:
-                name:
+                self:
                   type: string
-                  description: The subscription model's internal name.
-                  example: EU Subscription Model
-                  nullable: false
-                strategy:
-                  type: string
-                  description: 'The subscription model''s strategy used to generate order subscriptions: one between ''by_frequency'' (default) and ''by_line_items''.'
-                  example: by_frequency
-                  nullable: true
-                frequencies:
-                  type: array
-                  description: An object that contains the frequencies available for this subscription model. Supported ones are 'hourly', 'daily', 'weekly', 'monthly', 'two-month', 'three-month', 'four-month', 'six-month', 'yearly', or your custom crontab expression (min unit is hour).
-                  example:
-                  - hourly
-                  - 10 * * * *
-                  - weekly
-                  - monthly
-                  - two-month
-                  nullable: false
-                  items:
-                    type: string
-                auto_activate:
-                  type: boolean
-                  description: Indicates if the created subscriptions will be activated considering the placed source order as its first run, default to true.
-                  example: true
-                  nullable: false
-                auto_cancel:
-                  type: boolean
-                  description: Indicates if the created subscriptions will be cancelled in case the source order is cancelled, default to false.
-                  example: false
-                  nullable: false
-                reference:
-                  type: string
-                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
-                  example: ANY-EXTERNAL-REFEFERNCE
-                  nullable: true
-                reference_origin:
-                  type: string
-                  description: Any identifier of the third party system that defines the reference code.
-                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
-                  nullable: true
-                metadata:
-                  type: object
-                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
-                  example:
-                    foo: bar
-                  nullable: true
+                  description: URL
+            attributes:
+              $ref: '#/components/schemas/subscriptionModel/properties/data/properties/attributes'
             relationships:
               type: object
-              properties: {}
+              properties:
+                markets:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - markets
+                        id:
+                          type: string
+                          description: The resource ID
+                order_subscriptions:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - order_subscriptions
+                        id:
+                          type: string
+                          description: The resource ID
+                attachments:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - attachments
+                        id:
+                          type: string
+                          description: The resource ID
+                event_stores:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - event_stores
+                        id:
+                          type: string
+                          description: The resource ID
     subscriptionModel:
       type: object
       properties:
@@ -326,6 +369,81 @@ components:
                           type: string
                           description: Unique identifier for the resource (hash).
                           example: XAyRWNUzyN
+    subscriptionModelUpdate:
+      required:
+      - data
+      type: object
+      properties:
+        data:
+          type: object
+          required:
+          - type
+          - id
+          - attributes
+          properties:
+            type:
+              type: string
+              description: The resource's type
+              enum:
+              - subscription_models
+            id:
+              type: string
+              description: Unique identifier for the resource (hash).
+              example: XAyRWNUzyN
+            attributes:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: The subscription model's internal name.
+                  example: EU Subscription Model
+                  nullable: false
+                strategy:
+                  type: string
+                  description: 'The subscription model''s strategy used to generate order subscriptions: one between ''by_frequency'' (default) and ''by_line_items''.'
+                  example: by_frequency
+                  nullable: true
+                frequencies:
+                  type: array
+                  description: An object that contains the frequencies available for this subscription model. Supported ones are 'hourly', 'daily', 'weekly', 'monthly', 'two-month', 'three-month', 'four-month', 'six-month', 'yearly', or your custom crontab expression (min unit is hour).
+                  example:
+                  - hourly
+                  - 10 * * * *
+                  - weekly
+                  - monthly
+                  - two-month
+                  nullable: false
+                  items:
+                    type: string
+                auto_activate:
+                  type: boolean
+                  description: Indicates if the created subscriptions will be activated considering the placed source order as its first run, default to true.
+                  example: true
+                  nullable: false
+                auto_cancel:
+                  type: boolean
+                  description: Indicates if the created subscriptions will be cancelled in case the source order is cancelled, default to false.
+                  example: false
+                  nullable: false
+                reference:
+                  type: string
+                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
+                  example: ANY-EXTERNAL-REFEFERNCE
+                  nullable: true
+                reference_origin:
+                  type: string
+                  description: Any identifier of the third party system that defines the reference code.
+                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
+                  nullable: true
+                metadata:
+                  type: object
+                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
+                  example:
+                    foo: bar
+                  nullable: true
+            relationships:
+              type: object
+              properties: {}
     subscriptionModelCreate:
       required:
       - data
@@ -391,124 +509,6 @@ components:
             relationships:
               type: object
               properties: {}
-    subscriptionModelResponse:
-      type: object
-      properties:
-        data:
-          type: object
-          properties:
-            id:
-              type: string
-              description: Unique identifier for the resource (hash).
-              example: XAyRWNUzyN
-            type:
-              type: string
-              description: The resource's type
-              enum:
-              - subscription_models
-            links:
-              type: object
-              properties:
-                self:
-                  type: string
-                  description: URL
-            attributes:
-              $ref: '#/components/schemas/subscriptionModel/properties/data/properties/attributes'
-            relationships:
-              type: object
-              properties:
-                markets:
-                  type: object
-                  properties:
-                    links:
-                      type: object
-                      properties:
-                        self:
-                          type: string
-                          description: URL
-                        related:
-                          type: string
-                          description: URL
-                    data:
-                      type: object
-                      properties:
-                        type:
-                          type: string
-                          description: The resource's type
-                          enum:
-                          - markets
-                        id:
-                          type: string
-                          description: The resource ID
-                order_subscriptions:
-                  type: object
-                  properties:
-                    links:
-                      type: object
-                      properties:
-                        self:
-                          type: string
-                          description: URL
-                        related:
-                          type: string
-                          description: URL
-                    data:
-                      type: object
-                      properties:
-                        type:
-                          type: string
-                          description: The resource's type
-                          enum:
-                          - order_subscriptions
-                        id:
-                          type: string
-                          description: The resource ID
-                attachments:
-                  type: object
-                  properties:
-                    links:
-                      type: object
-                      properties:
-                        self:
-                          type: string
-                          description: URL
-                        related:
-                          type: string
-                          description: URL
-                    data:
-                      type: object
-                      properties:
-                        type:
-                          type: string
-                          description: The resource's type
-                          enum:
-                          - attachments
-                        id:
-                          type: string
-                          description: The resource ID
-                event_stores:
-                  type: object
-                  properties:
-                    links:
-                      type: object
-                      properties:
-                        self:
-                          type: string
-                          description: URL
-                        related:
-                          type: string
-                          description: URL
-                    data:
-                      type: object
-                      properties:
-                        type:
-                          type: string
-                          description: The resource's type
-                          enum:
-                          - event_stores
-                        id:
-                          type: string
-                          description: The resource ID
     subscriptionModelResponseList:
       type: object
       properties:

@@ -55,6 +55,13 @@ paths:
                 $ref: '#/components/schemas/promotionRuleResponse'
 components:
   schemas:
+    promotionRuleResponseList:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/promotionRuleResponse/properties/data'
     promotionRuleResponse:
       type: object
       properties:
@@ -229,13 +236,6 @@ components:
                           type: string
                           description: Unique identifier for the resource (hash).
                           example: XAyRWNUzyN
-    promotionRuleResponseList:
-      type: object
-      properties:
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/promotionRuleResponse/properties/data'
   securitySchemes:
     bearerAuth:
       type: http

@@ -113,20 +113,16 @@ paths:
           description: No content
 components:
   schemas:
-    customerSubscriptionResponseList:
-      type: object
-      properties:
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/customerSubscriptionResponse/properties/data'
-    customerSubscription:
+    customerSubscriptionUpdate:
+      required:
+      - data
       type: object
       properties:
         data:
           type: object
           required:
           - type
+          - id
           - attributes
           properties:
             type:
@@ -134,28 +130,17 @@ components:
               description: The resource's type
               enum:
               - customer_subscriptions
+            id:
+              type: string
+              description: Unique identifier for the resource (hash).
+              example: XAyRWNUzyN
             attributes:
               type: object
               properties:
-                customer_email:
-                  type: string
-                  description: The email of the customer that owns the subscription.
-                  example: john@example.com
-                  nullable: false
                 reference:
                   type: string
                   description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
                   example: ANY-EXTERNAL-REFEFERNCE
-                  nullable: false
-                created_at:
-                  type: string
-                  description: Time at which the resource was created.
-                  example: '2018-01-01T12:00:00.000Z'
-                  nullable: false
-                updated_at:
-                  type: string
-                  description: Time at which the resource was last updated.
-                  example: '2018-01-01T12:00:00.000Z'
                   nullable: false
                 reference_origin:
                   type: string
@@ -170,52 +155,7 @@ components:
                   nullable: true
             relationships:
               type: object
-              properties:
-                customer:
-                  type: object
-                  properties:
-                    data:
-                      type: object
-                      properties:
-                        type:
-                          type: string
-                          description: The resource's type
-                          enum:
-                          - customers
-                        id:
-                          type: string
-                          description: Unique identifier for the resource (hash).
-                          example: XAyRWNUzyN
-                events:
-                  type: object
-                  properties:
-                    data:
-                      type: object
-                      properties:
-                        type:
-                          type: string
-                          description: The resource's type
-                          enum:
-                          - events
-                        id:
-                          type: string
-                          description: Unique identifier for the resource (hash).
-                          example: XAyRWNUzyN
-                event_stores:
-                  type: object
-                  properties:
-                    data:
-                      type: object
-                      properties:
-                        type:
-                          type: string
-                          description: The resource's type
-                          enum:
-                          - event_stores
-                        id:
-                          type: string
-                          description: Unique identifier for the resource (hash).
-                          example: XAyRWNUzyN
+              properties: {}
     customerSubscriptionCreate:
       required:
       - data
@@ -353,16 +293,13 @@ components:
                         id:
                           type: string
                           description: The resource ID
-    customerSubscriptionUpdate:
-      required:
-      - data
+    customerSubscription:
       type: object
       properties:
         data:
           type: object
           required:
           - type
-          - id
           - attributes
           properties:
             type:
@@ -370,17 +307,28 @@ components:
               description: The resource's type
               enum:
               - customer_subscriptions
-            id:
-              type: string
-              description: Unique identifier for the resource (hash).
-              example: XAyRWNUzyN
             attributes:
               type: object
               properties:
+                customer_email:
+                  type: string
+                  description: The email of the customer that owns the subscription.
+                  example: john@example.com
+                  nullable: false
                 reference:
                   type: string
                   description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
                   example: ANY-EXTERNAL-REFEFERNCE
+                  nullable: false
+                created_at:
+                  type: string
+                  description: Time at which the resource was created.
+                  example: '2018-01-01T12:00:00.000Z'
+                  nullable: false
+                updated_at:
+                  type: string
+                  description: Time at which the resource was last updated.
+                  example: '2018-01-01T12:00:00.000Z'
                   nullable: false
                 reference_origin:
                   type: string
@@ -395,7 +343,59 @@ components:
                   nullable: true
             relationships:
               type: object
-              properties: {}
+              properties:
+                customer:
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - customers
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+                events:
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - events
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+                event_stores:
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - event_stores
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+    customerSubscriptionResponseList:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/customerSubscriptionResponse/properties/data'
   securitySchemes:
     bearerAuth:
       type: http

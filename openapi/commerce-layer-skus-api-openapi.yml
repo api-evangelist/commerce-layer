@@ -113,124 +113,6 @@ paths:
           description: No content
 components:
   schemas:
-    skuCreate:
-      required:
-      - data
-      type: object
-      properties:
-        data:
-          type: object
-          required:
-          - type
-          - attributes
-          properties:
-            type:
-              type: string
-              description: The resource's type
-              enum:
-              - skus
-            attributes:
-              type: object
-              properties:
-                code:
-                  type: string
-                  description: The SKU code, that uniquely identifies the SKU within the organization.
-                  example: TSHIRTMM000000FFFFFFXLXX
-                name:
-                  type: string
-                  description: The internal name of the SKU.
-                  example: Men's Black T-shirt with White Logo (XL)
-                description:
-                  type: string
-                  description: An internal description of the SKU.
-                  example: Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                image_url:
-                  type: string
-                  description: The URL of an image that represents the SKU.
-                  example: https://img.yourdomain.com/skus/xYZkjABcde.png
-                pieces_per_pack:
-                  type: integer
-                  description: The number of pieces that compose the SKU. This is useful to describe sets and bundles.
-                  example: 6
-                weight:
-                  type: number
-                  description: The weight of the SKU. If present, it will be used to calculate the shipping rates.
-                  example: 300.0
-                unit_of_weight:
-                  type: string
-                  description: The unit of weight. One of 'gr', 'oz', or 'lb'.
-                  example: gr
-                  enum:
-                  - gr
-                  - oz
-                  - lb
-                hs_tariff_number:
-                  type: string
-                  description: The Harmonized System Code used by customs to identify the products shipped across international borders.
-                  example: 4901.91.0020
-                do_not_ship:
-                  type: boolean
-                  description: Indicates if the SKU doesn't generate shipments.
-                  example: false
-                do_not_track:
-                  type: boolean
-                  description: Indicates if the SKU doesn't track the stock inventory.
-                  example: false
-                reference:
-                  type: string
-                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
-                  example: ANY-EXTERNAL-REFEFERNCE
-                reference_origin:
-                  type: string
-                  description: Any identifier of the third party system that defines the reference code.
-                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
-                metadata:
-                  type: object
-                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
-                  example:
-                    foo: bar
-              required:
-              - code
-              - name
-            relationships:
-              type: object
-              properties:
-                shipping_category:
-                  required:
-                  - data
-                  type: object
-                  properties:
-                    data:
-                      type: object
-                      properties:
-                        type:
-                          type: string
-                          description: The resource's type
-                          enum:
-                          - shipping_categories
-                        id:
-                          type: string
-                          description: Unique identifier for the resource (hash).
-                          example: XAyRWNUzyN
-                tags:
-                  required:
-                  - data
-                  type: object
-                  properties:
-                    data:
-                      type: object
-                      properties:
-                        type:
-                          type: string
-                          description: The resource's type
-                          enum:
-                          - tags
-                        id:
-                          type: string
-                          description: Unique identifier for the resource (hash).
-                          example: XAyRWNUzyN
-              required:
-              - shipping_category
     skuResponse:
       type: object
       properties:
@@ -625,6 +507,261 @@ components:
                         id:
                           type: string
                           description: The resource ID
+    skuCreate:
+      required:
+      - data
+      type: object
+      properties:
+        data:
+          type: object
+          required:
+          - type
+          - attributes
+          properties:
+            type:
+              type: string
+              description: The resource's type
+              enum:
+              - skus
+            attributes:
+              type: object
+              properties:
+                code:
+                  type: string
+                  description: The SKU code, that uniquely identifies the SKU within the organization.
+                  example: TSHIRTMM000000FFFFFFXLXX
+                name:
+                  type: string
+                  description: The internal name of the SKU.
+                  example: Men's Black T-shirt with White Logo (XL)
+                description:
+                  type: string
+                  description: An internal description of the SKU.
+                  example: Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                image_url:
+                  type: string
+                  description: The URL of an image that represents the SKU.
+                  example: https://img.yourdomain.com/skus/xYZkjABcde.png
+                pieces_per_pack:
+                  type: integer
+                  description: The number of pieces that compose the SKU. This is useful to describe sets and bundles.
+                  example: 6
+                weight:
+                  type: number
+                  description: The weight of the SKU. If present, it will be used to calculate the shipping rates.
+                  example: 300.0
+                unit_of_weight:
+                  type: string
+                  description: The unit of weight. One of 'gr', 'oz', or 'lb'.
+                  example: gr
+                  enum:
+                  - gr
+                  - oz
+                  - lb
+                hs_tariff_number:
+                  type: string
+                  description: The Harmonized System Code used by customs to identify the products shipped across international borders.
+                  example: 4901.91.0020
+                do_not_ship:
+                  type: boolean
+                  description: Indicates if the SKU doesn't generate shipments.
+                  example: false
+                do_not_track:
+                  type: boolean
+                  description: Indicates if the SKU doesn't track the stock inventory.
+                  example: false
+                reference:
+                  type: string
+                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
+                  example: ANY-EXTERNAL-REFEFERNCE
+                reference_origin:
+                  type: string
+                  description: Any identifier of the third party system that defines the reference code.
+                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
+                metadata:
+                  type: object
+                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
+                  example:
+                    foo: bar
+              required:
+              - code
+              - name
+            relationships:
+              type: object
+              properties:
+                shipping_category:
+                  required:
+                  - data
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - shipping_categories
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+                tags:
+                  required:
+                  - data
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - tags
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+              required:
+              - shipping_category
+    skuUpdate:
+      required:
+      - data
+      type: object
+      properties:
+        data:
+          type: object
+          required:
+          - type
+          - id
+          - attributes
+          properties:
+            type:
+              type: string
+              description: The resource's type
+              enum:
+              - skus
+            id:
+              type: string
+              description: Unique identifier for the resource (hash).
+              example: XAyRWNUzyN
+            attributes:
+              type: object
+              properties:
+                code:
+                  type: string
+                  description: The SKU code, that uniquely identifies the SKU within the organization.
+                  example: TSHIRTMM000000FFFFFFXLXX
+                  nullable: false
+                name:
+                  type: string
+                  description: The internal name of the SKU.
+                  example: Men's Black T-shirt with White Logo (XL)
+                  nullable: false
+                description:
+                  type: string
+                  description: An internal description of the SKU.
+                  example: Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                  nullable: true
+                image_url:
+                  type: string
+                  description: The URL of an image that represents the SKU.
+                  example: https://img.yourdomain.com/skus/xYZkjABcde.png
+                  nullable: true
+                pieces_per_pack:
+                  type: integer
+                  description: The number of pieces that compose the SKU. This is useful to describe sets and bundles.
+                  example: 6
+                  nullable: true
+                weight:
+                  type: number
+                  description: The weight of the SKU. If present, it will be used to calculate the shipping rates.
+                  example: 300.0
+                  nullable: true
+                unit_of_weight:
+                  type: string
+                  description: The unit of weight. One of 'gr', 'oz', or 'lb'.
+                  example: gr
+                  nullable: true
+                  enum:
+                  - gr
+                  - oz
+                  - lb
+                hs_tariff_number:
+                  type: string
+                  description: The Harmonized System Code used by customs to identify the products shipped across international borders.
+                  example: 4901.91.0020
+                  nullable: true
+                do_not_ship:
+                  type: boolean
+                  description: Indicates if the SKU doesn't generate shipments.
+                  example: false
+                  nullable: false
+                do_not_track:
+                  type: boolean
+                  description: Indicates if the SKU doesn't track the stock inventory.
+                  example: false
+                  nullable: false
+                _add_tags:
+                  type: string
+                  description: Comma separated list of tags to be added. Duplicates, invalid and non existing ones are discarded. Cannot be passed by sales channels.
+                _remove_tags:
+                  type: string
+                  description: Comma separated list of tags to be removed. Duplicates, invalid and non existing ones are discarded. Cannot be passed by sales channels.
+                reference:
+                  type: string
+                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
+                  example: ANY-EXTERNAL-REFEFERNCE
+                  nullable: true
+                reference_origin:
+                  type: string
+                  description: Any identifier of the third party system that defines the reference code.
+                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
+                  nullable: true
+                metadata:
+                  type: object
+                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
+                  example:
+                    foo: bar
+                  nullable: true
+            relationships:
+              type: object
+              properties:
+                shipping_category:
+                  required:
+                  - data
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - shipping_categories
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+                tags:
+                  required:
+                  - data
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - tags
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
     skuResponseList:
       type: object
       properties:
@@ -1037,143 +1174,6 @@ components:
                           description: The resource's type
                           enum:
                           - event_stores
-                        id:
-                          type: string
-                          description: Unique identifier for the resource (hash).
-                          example: XAyRWNUzyN
-    skuUpdate:
-      required:
-      - data
-      type: object
-      properties:
-        data:
-          type: object
-          required:
-          - type
-          - id
-          - attributes
-          properties:
-            type:
-              type: string
-              description: The resource's type
-              enum:
-              - skus
-            id:
-              type: string
-              description: Unique identifier for the resource (hash).
-              example: XAyRWNUzyN
-            attributes:
-              type: object
-              properties:
-                code:
-                  type: string
-                  description: The SKU code, that uniquely identifies the SKU within the organization.
-                  example: TSHIRTMM000000FFFFFFXLXX
-                  nullable: false
-                name:
-                  type: string
-                  description: The internal name of the SKU.
-                  example: Men's Black T-shirt with White Logo (XL)
-                  nullable: false
-                description:
-                  type: string
-                  description: An internal description of the SKU.
-                  example: Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                  nullable: true
-                image_url:
-                  type: string
-                  description: The URL of an image that represents the SKU.
-                  example: https://img.yourdomain.com/skus/xYZkjABcde.png
-                  nullable: true
-                pieces_per_pack:
-                  type: integer
-                  description: The number of pieces that compose the SKU. This is useful to describe sets and bundles.
-                  example: 6
-                  nullable: true
-                weight:
-                  type: number
-                  description: The weight of the SKU. If present, it will be used to calculate the shipping rates.
-                  example: 300.0
-                  nullable: true
-                unit_of_weight:
-                  type: string
-                  description: The unit of weight. One of 'gr', 'oz', or 'lb'.
-                  example: gr
-                  nullable: true
-                  enum:
-                  - gr
-                  - oz
-                  - lb
-                hs_tariff_number:
-                  type: string
-                  description: The Harmonized System Code used by customs to identify the products shipped across international borders.
-                  example: 4901.91.0020
-                  nullable: true
-                do_not_ship:
-                  type: boolean
-                  description: Indicates if the SKU doesn't generate shipments.
-                  example: false
-                  nullable: false
-                do_not_track:
-                  type: boolean
-                  description: Indicates if the SKU doesn't track the stock inventory.
-                  example: false
-                  nullable: false
-                _add_tags:
-                  type: string
-                  description: Comma separated list of tags to be added. Duplicates, invalid and non existing ones are discarded. Cannot be passed by sales channels.
-                _remove_tags:
-                  type: string
-                  description: Comma separated list of tags to be removed. Duplicates, invalid and non existing ones are discarded. Cannot be passed by sales channels.
-                reference:
-                  type: string
-                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
-                  example: ANY-EXTERNAL-REFEFERNCE
-                  nullable: true
-                reference_origin:
-                  type: string
-                  description: Any identifier of the third party system that defines the reference code.
-                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
-                  nullable: true
-                metadata:
-                  type: object
-                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
-                  example:
-                    foo: bar
-                  nullable: true
-            relationships:
-              type: object
-              properties:
-                shipping_category:
-                  required:
-                  - data
-                  type: object
-                  properties:
-                    data:
-                      type: object
-                      properties:
-                        type:
-                          type: string
-                          description: The resource's type
-                          enum:
-                          - shipping_categories
-                        id:
-                          type: string
-                          description: Unique identifier for the resource (hash).
-                          example: XAyRWNUzyN
-                tags:
-                  required:
-                  - data
-                  type: object
-                  properties:
-                    data:
-                      type: object
-                      properties:
-                        type:
-                          type: string
-                          description: The resource's type
-                          enum:
-                          - tags
                         id:
                           type: string
                           description: Unique identifier for the resource (hash).

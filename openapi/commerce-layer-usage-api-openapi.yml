@@ -215,33 +215,6 @@ components:
             payload:
               type: boolean
               description: Set to true if you want to receive how the payload has been made
-    usage_date_breakdown_request:
-      type: object
-      properties:
-        filter:
-          $ref: '#/components/schemas/usage_date_breakdown_filter'
-        date_breakdown:
-          type: object
-          required:
-          - interval
-          - by_dimension
-          properties:
-            interval:
-              type: string
-              description: Interval to query
-              enum:
-              - day
-              - month
-              - year
-            by_dimension:
-              type: boolean
-              description: Enables a nested breakdown by dimension
-        meta:
-          type: object
-          properties:
-            payload:
-              type: boolean
-              description: Set to true if you want to receive how the payload has been made
     usage_search_filter:
       type: object
       properties:
@@ -412,6 +385,33 @@ components:
                   items:
                     type: string
                   description: To include, array of ids
+    usage_date_breakdown_request:
+      type: object
+      properties:
+        filter:
+          $ref: '#/components/schemas/usage_date_breakdown_filter'
+        date_breakdown:
+          type: object
+          required:
+          - interval
+          - by_dimension
+          properties:
+            interval:
+              type: string
+              description: Interval to query
+              enum:
+              - day
+              - month
+              - year
+            by_dimension:
+              type: boolean
+              description: Enables a nested breakdown by dimension
+        meta:
+          type: object
+          properties:
+            payload:
+              type: boolean
+              description: Set to true if you want to receive how the payload has been made
   securitySchemes:
     bearerAuth:
       type: http

@@ -113,13 +113,307 @@ paths:
           description: No content
 components:
   schemas:
-    addressResponseList:
+    addressUpdate:
+      required:
+      - data
       type: object
       properties:
         data:
-          type: array
-          items:
-            $ref: '#/components/schemas/addressResponse/properties/data'
+          type: object
+          required:
+          - type
+          - id
+          - attributes
+          properties:
+            type:
+              type: string
+              description: The resource's type
+              enum:
+              - addresses
+            id:
+              type: string
+              description: Unique identifier for the resource (hash).
+              example: XAyRWNUzyN
+            attributes:
+              type: object
+              properties:
+                business:
+                  type: boolean
+                  description: Indicates if it's a business or a personal address.
+                  example: false
+                  nullable: false
+                first_name:
+                  type: string
+                  description: Address first name (personal).
+                  example: John
+                  nullable: true
+                last_name:
+                  type: string
+                  description: Address last name (personal).
+                  example: Smith
+                  nullable: true
+                company:
+                  type: string
+                  description: Address company name (business).
+                  example: The Red Brand Inc.
+                  nullable: true
+                line_1:
+                  type: string
+                  description: Address line 1, i.e. Street address, PO Box.
+                  example: 2883 Geraldine Lane
+                  nullable: false
+                line_2:
+                  type: string
+                  description: Address line 2, i.e. Apartment, Suite, Building.
+                  example: Apt.23
+                  nullable: true
+                city:
+                  type: string
+                  description: Address city.
+                  example: New York
+                  nullable: false
+                zip_code:
+                  type: string
+                  description: ZIP or postal code.
+                  example: '10013'
+                  nullable: true
+                state_code:
+                  type: string
+                  description: State, province or region code.
+                  example: NY
+                  nullable: true
+                country_code:
+                  type: string
+                  description: The international 2-letter country code as defined by the ISO 3166-1 standard.
+                  example: US
+                  nullable: false
+                phone:
+                  type: string
+                  description: Phone number (including extension).
+                  example: (212) 646-338-1228
+                  nullable: false
+                email:
+                  type: string
+                  description: Email address.
+                  example: john@example.com
+                  nullable: true
+                notes:
+                  type: string
+                  description: A free notes attached to the address. When used as a shipping address, this can be useful to let the customers add specific delivery instructions.
+                  example: Please ring the bell twice
+                  nullable: true
+                lat:
+                  type: number
+                  description: The address geocoded latitude. This is automatically generated when creating a shipping/billing address for an order and a valid geocoder is attached to the order's market.
+                  example: 40.6971494
+                  nullable: true
+                lng:
+                  type: number
+                  description: The address geocoded longitude. This is automatically generated when creating a shipping/billing address for an order and a valid geocoder is attached to the order's market.
+                  example: -74.2598672
+                  nullable: true
+                billing_info:
+                  type: string
+                  description: Customer's billing information (i.e. VAT number, codice fiscale).
+                  example: VAT ID IT02382940977
+                  nullable: true
+                _add_tags:
+                  type: string
+                  description: Comma separated list of tags to be added. Duplicates, invalid and non existing ones are discarded. Cannot be passed by sales channels.
+                _remove_tags:
+                  type: string
+                  description: Comma separated list of tags to be removed. Duplicates, invalid and non existing ones are discarded. Cannot be passed by sales channels.
+                reference:
+                  type: string
+                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
+                  example: ANY-EXTERNAL-REFEFERNCE
+                  nullable: true
+                reference_origin:
+                  type: string
+                  description: Any identifier of the third party system that defines the reference code.
+                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
+                  nullable: true
+                metadata:
+                  type: object
+                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
+                  example:
+                    foo: bar
+                  nullable: true
+            relationships:
+              type: object
+              properties:
+                geocoder:
+                  required:
+                  - data
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - geocoders
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+                tags:
+                  required:
+                  - data
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - tags
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+    addressCreate:
+      required:
+      - data
+      type: object
+      properties:
+        data:
+          type: object
+          required:
+          - type
+          - attributes
+          properties:
+            type:
+              type: string
+              description: The resource's type
+              enum:
+              - addresses
+            attributes:
+              type: object
+              properties:
+                business:
+                  type: boolean
+                  description: Indicates if it's a business or a personal address.
+                  example: false
+                first_name:
+                  type: string
+                  description: Address first name (personal).
+                  example: John
+                last_name:
+                  type: string
+                  description: Address last name (personal).
+                  example: Smith
+                company:
+                  type: string
+                  description: Address company name (business).
+                  example: The Red Brand Inc.
+                line_1:
+                  type: string
+                  description: Address line 1, i.e. Street address, PO Box.
+                  example: 2883 Geraldine Lane
+                line_2:
+                  type: string
+                  description: Address line 2, i.e. Apartment, Suite, Building.
+                  example: Apt.23
+                city:
+                  type: string
+                  description: Address city.
+                  example: New York
+                zip_code:
+                  type: string
+                  description: ZIP or postal code.
+                  example: '10013'
+                state_code:
+                  type: string
+                  description: State, province or region code.
+                  example: NY
+                country_code:
+                  type: string
+                  description: The international 2-letter country code as defined by the ISO 3166-1 standard.
+                  example: US
+                phone:
+                  type: string
+                  description: Phone number (including extension).
+                  example: (212) 646-338-1228
+                email:
+                  type: string
+                  description: Email address.
+                  example: john@example.com
+                notes:
+                  type: string
+                  description: A free notes attached to the address. When used as a shipping address, this can be useful to let the customers add specific delivery instructions.
+                  example: Please ring the bell twice
+                lat:
+                  type: number
+                  description: The address geocoded latitude. This is automatically generated when creating a shipping/billing address for an order and a valid geocoder is attached to the order's market.
+                  example: 40.6971494
+                lng:
+                  type: number
+                  description: The address geocoded longitude. This is automatically generated when creating a shipping/billing address for an order and a valid geocoder is attached to the order's market.
+                  example: -74.2598672
+                billing_info:
+                  type: string
+                  description: Customer's billing information (i.e. VAT number, codice fiscale).
+                  example: VAT ID IT02382940977
+                reference:
+                  type: string
+                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
+                  example: ANY-EXTERNAL-REFEFERNCE
+                reference_origin:
+                  type: string
+                  description: Any identifier of the third party system that defines the reference code.
+                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
+                metadata:
+                  type: object
+                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
+                  example:
+                    foo: bar
+              required:
+              - line_1
+              - city
+              - country_code
+              - phone
+            relationships:
+              type: object
+              properties:
+                geocoder:
+                  required:
+                  - data
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - geocoders
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+                tags:
+                  required:
+                  - data
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - tags
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
     addressResponse:
       type: object
       properties:
@@ -464,307 +758,13 @@ components:
                           type: string
                           description: Unique identifier for the resource (hash).
                           example: XAyRWNUzyN
-    addressCreate:
-      required:
-      - data
+    addressResponseList:
       type: object
       properties:
         data:
-          type: object
-          required:
-          - type
-          - attributes
-          properties:
-            type:
-              type: string
-              description: The resource's type
-              enum:
-              - addresses
-            attributes:
-              type: object
-              properties:
-                business:
-                  type: boolean
-                  description: Indicates if it's a business or a personal address.
-                  example: false
-                first_name:
-                  type: string
-                  description: Address first name (personal).
-                  example: John
-                last_name:
-                  type: string
-                  description: Address last name (personal).
-                  example: Smith
-                company:
-                  type: string
-                  description: Address company name (business).
-                  example: The Red Brand Inc.
-                line_1:
-                  type: string
-                  description: Address line 1, i.e. Street address, PO Box.
-                  example: 2883 Geraldine Lane
-                line_2:
-                  type: string
-                  description: Address line 2, i.e. Apartment, Suite, Building.
-                  example: Apt.23
-                city:
-                  type: string
-                  description: Address city.
-                  example: New York
-                zip_code:
-                  type: string
-                  description: ZIP or postal code.
-                  example: '10013'
-                state_code:
-                  type: string
-                  description: State, province or region code.
-                  example: NY
-                country_code:
-                  type: string
-                  description: The international 2-letter country code as defined by the ISO 3166-1 standard.
-                  example: US
-                phone:
-                  type: string
-                  description: Phone number (including extension).
-                  example: (212) 646-338-1228
-                email:
-                  type: string
-                  description: Email address.
-                  example: john@example.com
-                notes:
-                  type: string
-                  description: A free notes attached to the address. When used as a shipping address, this can be useful to let the customers add specific delivery instructions.
-                  example: Please ring the bell twice
-                lat:
-                  type: number
-                  description: The address geocoded latitude. This is automatically generated when creating a shipping/billing address for an order and a valid geocoder is attached to the order's market.
-                  example: 40.6971494
-                lng:
-                  type: number
-                  description: The address geocoded longitude. This is automatically generated when creating a shipping/billing address for an order and a valid geocoder is attached to the order's market.
-                  example: -74.2598672
-                billing_info:
-                  type: string
-                  description: Customer's billing information (i.e. VAT number, codice fiscale).
-                  example: VAT ID IT02382940977
-                reference:
-                  type: string
-                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
-                  example: ANY-EXTERNAL-REFEFERNCE
-                reference_origin:
-                  type: string
-                  description: Any identifier of the third party system that defines the reference code.
-                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
-                metadata:
-                  type: object
-                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
-                  example:
-                    foo: bar
-              required:
-              - line_1
-              - city
-              - country_code
-              - phone
-            relationships:
-              type: object
-              properties:
-                geocoder:
-                  required:
-                  - data
-                  type: object
-                  properties:
-                    data:
-                      type: object
-                      properties:
-                        type:
-                          type: string
-                          description: The resource's type
-                          enum:
-                          - geocoders
-                        id:
-                          type: string
-                          description: Unique identifier for the resource (hash).
-                          example: XAyRWNUzyN
-                tags:
-                  required:
-                  - data
-                  type: object
-                  properties:
-                    data:
-                      type: object
-                      properties:
-                        type:
-                          type: string
-                          description: The resource's type
-                          enum:
-                          - tags
-                        id:
-                          type: string
-                          description: Unique identifier for the resource (hash).
-                          example: XAyRWNUzyN
-    addressUpdate:
-      required:
-      - data
-      type: object
-      properties:
-        data:
-          type: object
-          required:
-          - type
-          - id
-          - attributes
-          properties:
-            type:
-              type: string
-              description: The resource's type
-              enum:
-              - addresses
-            id:
-              type: string
-              description: Unique identifier for the resource (hash).
-              example: XAyRWNUzyN
-            attributes:
-              type: object
-              properties:
-                business:
-                  type: boolean
-                  description: Indicates if it's a business or a personal address.
-                  example: false
-                  nullable: false
-                first_name:
-                  type: string
-                  description: Address first name (personal).
-                  example: John
-                  nullable: true
-                last_name:
-                  type: string
-                  description: Address last name (personal).
-                  example: Smith
-                  nullable: true
-                company:
-                  type: string
-                  description: Address company name (business).
-                  example: The Red Brand Inc.
-                  nullable: true
-                line_1:
-                  type: string
-                  description: Address line 1, i.e. Street address, PO Box.
-                  example: 2883 Geraldine Lane
-                  nullable: false
-                line_2:
-                  type: string
-                  description: Address line 2, i.e. Apartment, Suite, Building.
-                  example: Apt.23
-                  nullable: true
-                city:
-                  type: string
-                  description: Address city.
-                  example: New York
-                  nullable: false
-                zip_code:
-                  type: string
-                  description: ZIP or postal code.
-                  example: '10013'
-                  nullable: true
-                state_code:
-                  type: string
-                  description: State, province or region code.
-                  example: NY
-                  nullable: true
-                country_code:
-                  type: string
-                  description: The international 2-letter country code as defined by the ISO 3166-1 standard.
-                  example: US
-                  nullable: false
-                phone:
-                  type: string
-                  description: Phone number (including extension).
-                  example: (212) 646-338-1228
-                  nullable: false
-                email:
-                  type: string
-                  description: Email address.
-                  example: john@example.com
-                  nullable: true
-                notes:
-                  type: string
-                  description: A free notes attached to the address. When used as a shipping address, this can be useful to let the customers add specific delivery instructions.
-                  example: Please ring the bell twice
-                  nullable: true
-                lat:
-                  type: number
-                  description: The address geocoded latitude. This is automatically generated when creating a shipping/billing address for an order and a valid geocoder is attached to the order's market.
-                  example: 40.6971494
-                  nullable: true
-                lng:
-                  type: number
-                  description: The address geocoded longitude. This is automatically generated when creating a shipping/billing address for an order and a valid geocoder is attached to the order's market.
-                  example: -74.2598672
-                  nullable: true
-                billing_info:
-                  type: string
-                  description: Customer's billing information (i.e. VAT number, codice fiscale).
-                  example: VAT ID IT02382940977
-                  nullable: true
-                _add_tags:
-                  type: string
-                  description: Comma separated list of tags to be added. Duplicates, invalid and non existing ones are discarded. Cannot be passed by sales channels.
-                _remove_tags:
-                  type: string
-                  description: Comma separated list of tags to be removed. Duplicates, invalid and non existing ones are discarded. Cannot be passed by sales channels.
-                reference:
-                  type: string
-                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
-                  example: ANY-EXTERNAL-REFEFERNCE
-                  nullable: true
-                reference_origin:
-                  type: string
-                  description: Any identifier of the third party system that defines the reference code.
-                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
-                  nullable: true
-                metadata:
-                  type: object
-                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
-                  example:
-                    foo: bar
-                  nullable: true
-            relationships:
-              type: object
-              properties:
-                geocoder:
-                  required:
-                  - data
-                  type: object
-                  properties:
-                    data:
-                      type: object
-                      properties:
-                        type:
-                          type: string
-                          description: The resource's type
-                          enum:
-                          - geocoders
-                        id:
-                          type: string
-                          description: Unique identifier for the resource (hash).
-                          example: XAyRWNUzyN
-                tags:
-                  required:
-                  - data
-                  type: object
-                  properties:
-                    data:
-                      type: object
-                      properties:
-                        type:
-                          type: string
-                          description: The resource's type
-                          enum:
-                          - tags
-                        id:
-                          type: string
-                          description: Unique identifier for the resource (hash).
-                          example: XAyRWNUzyN
+          type: array
+          items:
+            $ref: '#/components/schemas/addressResponse/properties/data'
   securitySchemes:
     bearerAuth:
       type: http
