@@ -113,13 +113,116 @@ paths:
           description: No content
 components:
   schemas:
-    couponResponseList:
+    couponCreate:
+      required:
+      - data
       type: object
       properties:
         data:
-          type: array
-          items:
-            $ref: '#/components/schemas/couponResponse/properties/data'
+          type: object
+          required:
+          - type
+          - attributes
+          properties:
+            type:
+              type: string
+              description: The resource's type
+              enum:
+              - coupons
+            attributes:
+              type: object
+              properties:
+                code:
+                  type: string
+                  description: The coupon code, that uniquely identifies the coupon within the promotion rule.
+                  example: 04371af2-70b3-48d7-8f4e-316b374224c3
+                customer_single_use:
+                  type: boolean
+                  description: Indicates if the coupon can be used just once per customer.
+                  example: false
+                usage_limit:
+                  type: integer
+                  description: The total number of times this coupon can be used.
+                  example: 50
+                recipient_email:
+                  type: string
+                  description: The email address of the associated recipient. When creating or updating a coupon, this is a shortcut to find or create the associated recipient by email.
+                  example: john@example.com
+                expires_at:
+                  type: string
+                  description: Time at which the coupon will expire.
+                  example: '2018-01-01T12:00:00.000Z'
+                reference:
+                  type: string
+                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
+                  example: ANY-EXTERNAL-REFEFERNCE
+                reference_origin:
+                  type: string
+                  description: Any identifier of the third party system that defines the reference code.
+                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
+                metadata:
+                  type: object
+                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
+                  example:
+                    foo: bar
+              required:
+              - code
+            relationships:
+              type: object
+              properties:
+                promotion_rule:
+                  required:
+                  - data
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - coupon_codes_promotion_rules
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+                coupon_recipient:
+                  required:
+                  - data
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - coupon_recipients
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+                tags:
+                  required:
+                  - data
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - tags
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+              required:
+              - promotion_rule
     couponResponse:
       type: object
       properties:
@@ -261,116 +364,6 @@ components:
                         id:
                           type: string
                           description: The resource ID
-    couponCreate:
-      required:
-      - data
-      type: object
-      properties:
-        data:
-          type: object
-          required:
-          - type
-          - attributes
-          properties:
-            type:
-              type: string
-              description: The resource's type
-              enum:
-              - coupons
-            attributes:
-              type: object
-              properties:
-                code:
-                  type: string
-                  description: The coupon code, that uniquely identifies the coupon within the promotion rule.
-                  example: 04371af2-70b3-48d7-8f4e-316b374224c3
-                customer_single_use:
-                  type: boolean
-                  description: Indicates if the coupon can be used just once per customer.
-                  example: false
-                usage_limit:
-                  type: integer
-                  description: The total number of times this coupon can be used.
-                  example: 50
-                recipient_email:
-                  type: string
-                  description: The email address of the associated recipient. When creating or updating a coupon, this is a shortcut to find or create the associated recipient by email.
-                  example: john@example.com
-                expires_at:
-                  type: string
-                  description: Time at which the coupon will expire.
-                  example: '2018-01-01T12:00:00.000Z'
-                reference:
-                  type: string
-                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
-                  example: ANY-EXTERNAL-REFEFERNCE
-                reference_origin:
-                  type: string
-                  description: Any identifier of the third party system that defines the reference code.
-                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
-                metadata:
-                  type: object
-                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
-                  example:
-                    foo: bar
-              required:
-              - code
-            relationships:
-              type: object
-              properties:
-                promotion_rule:
-                  required:
-                  - data
-                  type: object
-                  properties:
-                    data:
-                      type: object
-                      properties:
-                        type:
-                          type: string
-                          description: The resource's type
-                          enum:
-                          - coupon_codes_promotion_rules
-                        id:
-                          type: string
-                          description: Unique identifier for the resource (hash).
-                          example: XAyRWNUzyN
-                coupon_recipient:
-                  required:
-                  - data
-                  type: object
-                  properties:
-                    data:
-                      type: object
-                      properties:
-                        type:
-                          type: string
-                          description: The resource's type
-                          enum:
-                          - coupon_recipients
-                        id:
-                          type: string
-                          description: Unique identifier for the resource (hash).
-                          example: XAyRWNUzyN
-                tags:
-                  required:
-                  - data
-                  type: object
-                  properties:
-                    data:
-                      type: object
-                      properties:
-                        type:
-                          type: string
-                          description: The resource's type
-                          enum:
-                          - tags
-                        id:
-                          type: string
-                          description: Unique identifier for the resource (hash).
-                          example: XAyRWNUzyN
-              required:
-              - promotion_rule
     coupon:
       type: object
       properties:
@@ -522,6 +515,13 @@ components:
                           type: string
                           description: Unique identifier for the resource (hash).
                           example: XAyRWNUzyN
+    couponResponseList:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/couponResponse/properties/data'
     couponUpdate:
       required:
       - data

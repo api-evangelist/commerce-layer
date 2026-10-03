@@ -230,13 +230,6 @@ components:
                           type: string
                           description: Unique identifier for the resource (hash).
                           example: XAyRWNUzyN
-    customerResponseList:
-      type: object
-      properties:
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/customerResponse/properties/data'
     customerResponse:
       type: object
       properties:
@@ -608,97 +601,6 @@ components:
                         id:
                           type: string
                           description: The resource ID
-    customerCreate:
-      required:
-      - data
-      type: object
-      properties:
-        data:
-          type: object
-          required:
-          - type
-          - attributes
-          properties:
-            type:
-              type: string
-              description: The resource's type
-              enum:
-              - customers
-            attributes:
-              type: object
-              properties:
-                email:
-                  type: string
-                  description: The customer's email address.
-                  example: john@example.com
-                password:
-                  type: string
-                  description: The customer's password. Initiate a customer password reset flow if you need to change it.
-                  example: secret
-                shopper_reference:
-                  type: string
-                  description: A reference to uniquely identify the shopper during payment sessions.
-                  example: xxx-yyy-zzz
-                profile_id:
-                  type: string
-                  description: A reference to uniquely identify the customer on any connected external services.
-                  example: xxx-yyy-zzz
-                tax_exemption_code:
-                  type: string
-                  description: A specific code to identify the tax exemption reason for this customer.
-                  example: xxx-yyy-zzz
-                reference:
-                  type: string
-                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
-                  example: ANY-EXTERNAL-REFEFERNCE
-                reference_origin:
-                  type: string
-                  description: Any identifier of the third party system that defines the reference code.
-                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
-                metadata:
-                  type: object
-                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
-                  example:
-                    foo: bar
-              required:
-              - email
-            relationships:
-              type: object
-              properties:
-                customer_group:
-                  required:
-                  - data
-                  type: object
-                  properties:
-                    data:
-                      type: object
-                      properties:
-                        type:
-                          type: string
-                          description: The resource's type
-                          enum:
-                          - customer_groups
-                        id:
-                          type: string
-                          description: Unique identifier for the resource (hash).
-                          example: XAyRWNUzyN
-                tags:
-                  required:
-                  - data
-                  type: object
-                  properties:
-                    data:
-                      type: object
-                      properties:
-                        type:
-                          type: string
-                          description: The resource's type
-                          enum:
-                          - tags
-                        id:
-                          type: string
-                          description: Unique identifier for the resource (hash).
-                          example: XAyRWNUzyN
     customer:
       type: object
       properties:
@@ -1084,6 +986,104 @@ components:
                           description: The resource's type
                           enum:
                           - event_stores
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+    customerResponseList:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/customerResponse/properties/data'
+    customerCreate:
+      required:
+      - data
+      type: object
+      properties:
+        data:
+          type: object
+          required:
+          - type
+          - attributes
+          properties:
+            type:
+              type: string
+              description: The resource's type
+              enum:
+              - customers
+            attributes:
+              type: object
+              properties:
+                email:
+                  type: string
+                  description: The customer's email address.
+                  example: john@example.com
+                password:
+                  type: string
+                  description: The customer's password. Initiate a customer password reset flow if you need to change it.
+                  example: secret
+                shopper_reference:
+                  type: string
+                  description: A reference to uniquely identify the shopper during payment sessions.
+                  example: xxx-yyy-zzz
+                profile_id:
+                  type: string
+                  description: A reference to uniquely identify the customer on any connected external services.
+                  example: xxx-yyy-zzz
+                tax_exemption_code:
+                  type: string
+                  description: A specific code to identify the tax exemption reason for this customer.
+                  example: xxx-yyy-zzz
+                reference:
+                  type: string
+                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
+                  example: ANY-EXTERNAL-REFEFERNCE
+                reference_origin:
+                  type: string
+                  description: Any identifier of the third party system that defines the reference code.
+                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
+                metadata:
+                  type: object
+                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
+                  example:
+                    foo: bar
+              required:
+              - email
+            relationships:
+              type: object
+              properties:
+                customer_group:
+                  required:
+                  - data
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - customer_groups
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+                tags:
+                  required:
+                  - data
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - tags
                         id:
                           type: string
                           description: Unique identifier for the resource (hash).

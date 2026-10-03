@@ -101,32 +101,6 @@ paths:
                 $ref: '#/components/schemas/versionResponse'
 components:
   schemas:
-    versionResponse:
-      type: object
-      properties:
-        data:
-          type: object
-          properties:
-            id:
-              type: string
-              description: The ID of the resource.
-              example: XGZwpOSrWL
-            type:
-              type: string
-              description: The resource's type.
-              enum:
-              - versions
-            links:
-              type: object
-              properties:
-                self:
-                  type: string
-                  description: URL
-            attributes:
-              $ref: '#/components/schemas/version/properties/data/properties/attributes'
-            relationships:
-              type: object
-              properties: {}
     version:
       type: object
       properties:
@@ -205,6 +179,32 @@ components:
                   description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
                   example:
                     foo: bar
+            relationships:
+              type: object
+              properties: {}
+    versionResponse:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            id:
+              type: string
+              description: The ID of the resource.
+              example: XGZwpOSrWL
+            type:
+              type: string
+              description: The resource's type.
+              enum:
+              - versions
+            links:
+              type: object
+              properties:
+                self:
+                  type: string
+                  description: URL
+            attributes:
+              $ref: '#/components/schemas/version/properties/data/properties/attributes'
             relationships:
               type: object
               properties: {}

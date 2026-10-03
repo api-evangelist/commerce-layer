@@ -113,76 +113,44 @@ paths:
           description: No content
 components:
   schemas:
-    stripePaymentUpdate:
-      required:
-      - data
+    stripePaymentResponse:
       type: object
       properties:
         data:
           type: object
-          required:
-          - type
-          - id
-          - attributes
           properties:
+            id:
+              type: string
+              description: Unique identifier for the resource (hash).
+              example: XAyRWNUzyN
             type:
               type: string
               description: The resource's type
               enum:
               - stripe_payments
-            id:
-              type: string
-              description: Unique identifier for the resource (hash).
-              example: XAyRWNUzyN
-            attributes:
+            links:
               type: object
               properties:
-                options:
-                  type: object
-                  description: 'Stripe payment options: ''customer'', ''payment_method'', ''return_url'', etc. Check Stripe payment intent API for more details.'
-                  example:
-                    customer: cus_xxx
-                    payment_method: pm_xxx
-                  nullable: true
-                return_url:
+                self:
                   type: string
-                  description: The URL to return to when a redirect payment is completed.
-                  example: https://yourdomain.com/thankyou
-                  nullable: true
-                _update:
-                  type: boolean
-                  description: Send this attribute if you want to update the created payment intent with fresh order data.
-                  example: true
-                  nullable: false
-                _refresh:
-                  type: boolean
-                  description: Send this attribute if you want to refresh the payment status, can be used as webhooks fallback logic.
-                  example: true
-                  nullable: false
-                reference:
-                  type: string
-                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
-                  example: ANY-EXTERNAL-REFEFERNCE
-                  nullable: true
-                reference_origin:
-                  type: string
-                  description: Any identifier of the third party system that defines the reference code.
-                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
-                  nullable: true
-                metadata:
-                  type: object
-                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
-                  example:
-                    foo: bar
-                  nullable: true
+                  description: URL
+            attributes:
+              $ref: '#/components/schemas/stripePayment/properties/data/properties/attributes'
             relationships:
               type: object
               properties:
                 order:
-                  required:
-                  - data
                   type: object
                   properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
                     data:
                       type: object
                       properties:
@@ -190,11 +158,56 @@ components:
                           type: string
                           description: The resource's type
                           enum:
-                          - orders
+                          - order
                         id:
                           type: string
-                          description: Unique identifier for the resource (hash).
-                          example: XAyRWNUzyN
+                          description: The resource ID
+                payment_gateway:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - payment_gateway
+                        id:
+                          type: string
+                          description: The resource ID
+                event_stores:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - event_stores
+                        id:
+                          type: string
+                          description: The resource ID
     stripePayment:
       type: object
       properties:
@@ -356,108 +369,6 @@ components:
                           type: string
                           description: Unique identifier for the resource (hash).
                           example: XAyRWNUzyN
-    stripePaymentResponse:
-      type: object
-      properties:
-        data:
-          type: object
-          properties:
-            id:
-              type: string
-              description: Unique identifier for the resource (hash).
-              example: XAyRWNUzyN
-            type:
-              type: string
-              description: The resource's type
-              enum:
-              - stripe_payments
-            links:
-              type: object
-              properties:
-                self:
-                  type: string
-                  description: URL
-            attributes:
-              $ref: '#/components/schemas/stripePayment/properties/data/properties/attributes'
-            relationships:
-              type: object
-              properties:
-                order:
-                  type: object
-                  properties:
-                    links:
-                      type: object
-                      properties:
-                        self:
-                          type: string
-                          description: URL
-                        related:
-                          type: string
-                          description: URL
-                    data:
-                      type: object
-                      properties:
-                        type:
-                          type: string
-                          description: The resource's type
-                          enum:
-                          - order
-                        id:
-                          type: string
-                          description: The resource ID
-                payment_gateway:
-                  type: object
-                  properties:
-                    links:
-                      type: object
-                      properties:
-                        self:
-                          type: string
-                          description: URL
-                        related:
-                          type: string
-                          description: URL
-                    data:
-                      type: object
-                      properties:
-                        type:
-                          type: string
-                          description: The resource's type
-                          enum:
-                          - payment_gateway
-                        id:
-                          type: string
-                          description: The resource ID
-                event_stores:
-                  type: object
-                  properties:
-                    links:
-                      type: object
-                      properties:
-                        self:
-                          type: string
-                          description: URL
-                        related:
-                          type: string
-                          description: URL
-                    data:
-                      type: object
-                      properties:
-                        type:
-                          type: string
-                          description: The resource's type
-                          enum:
-                          - event_stores
-                        id:
-                          type: string
-                          description: The resource ID
-    stripePaymentResponseList:
-      type: object
-      properties:
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/stripePaymentResponse/properties/data'
     stripePaymentCreate:
       required:
       - data
@@ -534,6 +445,95 @@ components:
                           example: XAyRWNUzyN
               required:
               - order
+    stripePaymentUpdate:
+      required:
+      - data
+      type: object
+      properties:
+        data:
+          type: object
+          required:
+          - type
+          - id
+          - attributes
+          properties:
+            type:
+              type: string
+              description: The resource's type
+              enum:
+              - stripe_payments
+            id:
+              type: string
+              description: Unique identifier for the resource (hash).
+              example: XAyRWNUzyN
+            attributes:
+              type: object
+              properties:
+                options:
+                  type: object
+                  description: 'Stripe payment options: ''customer'', ''payment_method'', ''return_url'', etc. Check Stripe payment intent API for more details.'
+                  example:
+                    customer: cus_xxx
+                    payment_method: pm_xxx
+                  nullable: true
+                return_url:
+                  type: string
+                  description: The URL to return to when a redirect payment is completed.
+                  example: https://yourdomain.com/thankyou
+                  nullable: true
+                _update:
+                  type: boolean
+                  description: Send this attribute if you want to update the created payment intent with fresh order data.
+                  example: true
+                  nullable: false
+                _refresh:
+                  type: boolean
+                  description: Send this attribute if you want to refresh the payment status, can be used as webhooks fallback logic.
+                  example: true
+                  nullable: false
+                reference:
+                  type: string
+                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
+                  example: ANY-EXTERNAL-REFEFERNCE
+                  nullable: true
+                reference_origin:
+                  type: string
+                  description: Any identifier of the third party system that defines the reference code.
+                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
+                  nullable: true
+                metadata:
+                  type: object
+                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
+                  example:
+                    foo: bar
+                  nullable: true
+            relationships:
+              type: object
+              properties:
+                order:
+                  required:
+                  - data
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - orders
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+    stripePaymentResponseList:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/stripePaymentResponse/properties/data'
   securitySchemes:
     bearerAuth:
       type: http

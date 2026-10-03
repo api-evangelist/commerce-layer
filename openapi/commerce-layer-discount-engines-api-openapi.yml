@@ -55,6 +55,13 @@ paths:
                 $ref: '#/components/schemas/discountEngineResponse'
 components:
   schemas:
+    discountEngineResponseList:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/discountEngineResponse/properties/data'
     discountEngineResponse:
       type: object
       properties:
@@ -296,13 +303,6 @@ components:
                           type: string
                           description: Unique identifier for the resource (hash).
                           example: XAyRWNUzyN
-    discountEngineResponseList:
-      type: object
-      properties:
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/discountEngineResponse/properties/data'
   securitySchemes:
     bearerAuth:
       type: http

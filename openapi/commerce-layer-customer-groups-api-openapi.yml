@@ -113,6 +113,51 @@ paths:
           description: No content
 components:
   schemas:
+    customerGroupCreate:
+      required:
+      - data
+      type: object
+      properties:
+        data:
+          type: object
+          required:
+          - type
+          - attributes
+          properties:
+            type:
+              type: string
+              description: The resource's type
+              enum:
+              - customer_groups
+            attributes:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: The customer group's internal name.
+                  example: VIP
+                code:
+                  type: string
+                  description: A string that you can use to identify the customer group (must be unique within the environment).
+                  example: vip1
+                reference:
+                  type: string
+                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
+                  example: ANY-EXTERNAL-REFEFERNCE
+                reference_origin:
+                  type: string
+                  description: Any identifier of the third party system that defines the reference code.
+                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
+                metadata:
+                  type: object
+                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
+                  example:
+                    foo: bar
+              required:
+              - name
+            relationships:
+              type: object
+              properties: {}
     customerGroupUpdate:
       required:
       - data
@@ -291,51 +336,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/customerGroupResponse/properties/data'
-    customerGroupCreate:
-      required:
-      - data
-      type: object
-      properties:
-        data:
-          type: object
-          required:
-          - type
-          - attributes
-          properties:
-            type:
-              type: string
-              description: The resource's type
-              enum:
-              - customer_groups
-            attributes:
-              type: object
-              properties:
-                name:
-                  type: string
-                  description: The customer group's internal name.
-                  example: VIP
-                code:
-                  type: string
-                  description: A string that you can use to identify the customer group (must be unique within the environment).
-                  example: vip1
-                reference:
-                  type: string
-                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
-                  example: ANY-EXTERNAL-REFEFERNCE
-                reference_origin:
-                  type: string
-                  description: Any identifier of the third party system that defines the reference code.
-                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
-                metadata:
-                  type: object
-                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
-                  example:
-                    foo: bar
-              required:
-              - name
-            relationships:
-              type: object
-              properties: {}
     customerGroup:
       type: object
       properties:

@@ -113,78 +113,6 @@ paths:
           description: No content
 components:
   schemas:
-    shippingZoneResponse:
-      type: object
-      properties:
-        data:
-          type: object
-          properties:
-            id:
-              type: string
-              description: Unique identifier for the resource (hash).
-              example: XAyRWNUzyN
-            type:
-              type: string
-              description: The resource's type
-              enum:
-              - shipping_zones
-            links:
-              type: object
-              properties:
-                self:
-                  type: string
-                  description: URL
-            attributes:
-              $ref: '#/components/schemas/shippingZone/properties/data/properties/attributes'
-            relationships:
-              type: object
-              properties:
-                attachments:
-                  type: object
-                  properties:
-                    links:
-                      type: object
-                      properties:
-                        self:
-                          type: string
-                          description: URL
-                        related:
-                          type: string
-                          description: URL
-                    data:
-                      type: object
-                      properties:
-                        type:
-                          type: string
-                          description: The resource's type
-                          enum:
-                          - attachments
-                        id:
-                          type: string
-                          description: The resource ID
-                event_stores:
-                  type: object
-                  properties:
-                    links:
-                      type: object
-                      properties:
-                        self:
-                          type: string
-                          description: URL
-                        related:
-                          type: string
-                          description: URL
-                    data:
-                      type: object
-                      properties:
-                        type:
-                          type: string
-                          description: The resource's type
-                          enum:
-                          - event_stores
-                        id:
-                          type: string
-                          description: The resource ID
     shippingZoneUpdate:
       required:
       - data
@@ -263,13 +191,71 @@ components:
             relationships:
               type: object
               properties: {}
-    shippingZoneResponseList:
+    shippingZoneCreate:
+      required:
+      - data
       type: object
       properties:
         data:
-          type: array
-          items:
-            $ref: '#/components/schemas/shippingZoneResponse/properties/data'
+          type: object
+          required:
+          - type
+          - attributes
+          properties:
+            type:
+              type: string
+              description: The resource's type
+              enum:
+              - shipping_zones
+            attributes:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: The shipping zone's internal name.
+                  example: Europe (main countries)
+                country_code_regex:
+                  type: string
+                  description: The regex that will be evaluated to match the shipping address country code, max size is 5000.
+                  example: AT|BE|BG|CZ|DK|EE|DE|HU|LV|LT
+                not_country_code_regex:
+                  type: string
+                  description: The regex that will be evaluated as negative match for the shipping address country code, max size is 5000.
+                  example: AT|BE|BG|CZ|DK|EE|DE
+                state_code_regex:
+                  type: string
+                  description: The regex that will be evaluated to match the shipping address state code, max size is 5000.
+                  example: A[KLRZ]|C[AOT]|D[CE]|FL
+                not_state_code_regex:
+                  type: string
+                  description: The regex that will be evaluated as negative match for the shipping address state code, max size is 5000.
+                  example: A[KLRZ]|C[AOT]
+                zip_code_regex:
+                  type: string
+                  description: The regex that will be evaluated to match the shipping address zip code, max size is 5000.
+                  example: (?i)(JE1|JE2|JE3|JE4|JE5)
+                not_zip_code_regex:
+                  type: string
+                  description: The regex that will be evaluated as negative match for the shipping zip country code, max size is 5000.
+                  example: (?i)(JE1|JE2|JE3)
+                reference:
+                  type: string
+                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
+                  example: ANY-EXTERNAL-REFEFERNCE
+                reference_origin:
+                  type: string
+                  description: Any identifier of the third party system that defines the reference code.
+                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
+                metadata:
+                  type: object
+                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
+                  example:
+                    foo: bar
+              required:
+              - name
+            relationships:
+              type: object
+              properties: {}
     shippingZone:
       type: object
       properties:
@@ -381,71 +367,85 @@ components:
                           type: string
                           description: Unique identifier for the resource (hash).
                           example: XAyRWNUzyN
-    shippingZoneCreate:
-      required:
-      - data
+    shippingZoneResponseList:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/shippingZoneResponse/properties/data'
+    shippingZoneResponse:
       type: object
       properties:
         data:
           type: object
-          required:
-          - type
-          - attributes
           properties:
+            id:
+              type: string
+              description: Unique identifier for the resource (hash).
+              example: XAyRWNUzyN
             type:
               type: string
               description: The resource's type
               enum:
               - shipping_zones
-            attributes:
+            links:
               type: object
               properties:
-                name:
+                self:
                   type: string
-                  description: The shipping zone's internal name.
-                  example: Europe (main countries)
-                country_code_regex:
-                  type: string
-                  description: The regex that will be evaluated to match the shipping address country code, max size is 5000.
-                  example: AT|BE|BG|CZ|DK|EE|DE|HU|LV|LT
-                not_country_code_regex:
-                  type: string
-                  description: The regex that will be evaluated as negative match for the shipping address country code, max size is 5000.
-                  example: AT|BE|BG|CZ|DK|EE|DE
-                state_code_regex:
-                  type: string
-                  description: The regex that will be evaluated to match the shipping address state code, max size is 5000.
-                  example: A[KLRZ]|C[AOT]|D[CE]|FL
-                not_state_code_regex:
-                  type: string
-                  description: The regex that will be evaluated as negative match for the shipping address state code, max size is 5000.
-                  example: A[KLRZ]|C[AOT]
-                zip_code_regex:
-                  type: string
-                  description: The regex that will be evaluated to match the shipping address zip code, max size is 5000.
-                  example: (?i)(JE1|JE2|JE3|JE4|JE5)
-                not_zip_code_regex:
-                  type: string
-                  description: The regex that will be evaluated as negative match for the shipping zip country code, max size is 5000.
-                  example: (?i)(JE1|JE2|JE3)
-                reference:
-                  type: string
-                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
-                  example: ANY-EXTERNAL-REFEFERNCE
-                reference_origin:
-                  type: string
-                  description: Any identifier of the third party system that defines the reference code.
-                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
-                metadata:
-                  type: object
-                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
-                  example:
-                    foo: bar
-              required:
-              - name
+                  description: URL
+            attributes:
+              $ref: '#/components/schemas/shippingZone/properties/data/properties/attributes'
             relationships:
               type: object
-              properties: {}
+              properties:
+                attachments:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - attachments
+                        id:
+                          type: string
+                          description: The resource ID
+                event_stores:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - event_stores
+                        id:
+                          type: string
+                          description: The resource ID
   securitySchemes:
     bearerAuth:
       type: http

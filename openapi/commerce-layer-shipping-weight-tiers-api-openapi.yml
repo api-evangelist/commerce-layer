@@ -113,69 +113,44 @@ paths:
           description: No content
 components:
   schemas:
-    shippingWeightTierUpdate:
-      required:
-      - data
+    shippingWeightTierResponse:
       type: object
       properties:
         data:
           type: object
-          required:
-          - type
-          - id
-          - attributes
           properties:
+            id:
+              type: string
+              description: Unique identifier for the resource (hash).
+              example: XAyRWNUzyN
             type:
               type: string
               description: The resource's type
               enum:
               - shipping_weight_tiers
-            id:
-              type: string
-              description: Unique identifier for the resource (hash).
-              example: XAyRWNUzyN
-            attributes:
+            links:
               type: object
               properties:
-                name:
+                self:
                   type: string
-                  description: The shipping method tier's name.
-                  example: Light shipping under 3kg
-                  nullable: false
-                up_to:
-                  type: number
-                  description: The tier upper limit. When 'null' it means infinity (useful to have an always matching tier).
-                  example: 20.5
-                  nullable: true
-                price_amount_cents:
-                  type: integer
-                  description: The price of this shipping method tier, in cents.
-                  example: 1000
-                  nullable: false
-                reference:
-                  type: string
-                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
-                  example: ANY-EXTERNAL-REFEFERNCE
-                  nullable: true
-                reference_origin:
-                  type: string
-                  description: Any identifier of the third party system that defines the reference code.
-                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
-                  nullable: true
-                metadata:
-                  type: object
-                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
-                  example:
-                    foo: bar
-                  nullable: true
+                  description: URL
+            attributes:
+              $ref: '#/components/schemas/shippingWeightTier/properties/data/properties/attributes'
             relationships:
               type: object
               properties:
                 shipping_method:
-                  required:
-                  - data
                   type: object
                   properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
                     data:
                       type: object
                       properties:
@@ -183,18 +158,79 @@ components:
                           type: string
                           description: The resource's type
                           enum:
-                          - shipping_methods
+                          - shipping_method
                         id:
                           type: string
-                          description: Unique identifier for the resource (hash).
-                          example: XAyRWNUzyN
-    shippingWeightTierResponseList:
-      type: object
-      properties:
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/shippingWeightTierResponse/properties/data'
+                          description: The resource ID
+                attachments:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - attachments
+                        id:
+                          type: string
+                          description: The resource ID
+                event_stores:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - event_stores
+                        id:
+                          type: string
+                          description: The resource ID
+                events:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - events
+                        id:
+                          type: string
+                          description: The resource ID
     shippingWeightTier:
       type: object
       properties:
@@ -333,44 +369,69 @@ components:
                           type: string
                           description: Unique identifier for the resource (hash).
                           example: XAyRWNUzyN
-    shippingWeightTierResponse:
+    shippingWeightTierUpdate:
+      required:
+      - data
       type: object
       properties:
         data:
           type: object
+          required:
+          - type
+          - id
+          - attributes
           properties:
-            id:
-              type: string
-              description: Unique identifier for the resource (hash).
-              example: XAyRWNUzyN
             type:
               type: string
               description: The resource's type
               enum:
               - shipping_weight_tiers
-            links:
+            id:
+              type: string
+              description: Unique identifier for the resource (hash).
+              example: XAyRWNUzyN
+            attributes:
               type: object
               properties:
-                self:
+                name:
                   type: string
-                  description: URL
-            attributes:
-              $ref: '#/components/schemas/shippingWeightTier/properties/data/properties/attributes'
+                  description: The shipping method tier's name.
+                  example: Light shipping under 3kg
+                  nullable: false
+                up_to:
+                  type: number
+                  description: The tier upper limit. When 'null' it means infinity (useful to have an always matching tier).
+                  example: 20.5
+                  nullable: true
+                price_amount_cents:
+                  type: integer
+                  description: The price of this shipping method tier, in cents.
+                  example: 1000
+                  nullable: false
+                reference:
+                  type: string
+                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
+                  example: ANY-EXTERNAL-REFEFERNCE
+                  nullable: true
+                reference_origin:
+                  type: string
+                  description: Any identifier of the third party system that defines the reference code.
+                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
+                  nullable: true
+                metadata:
+                  type: object
+                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
+                  example:
+                    foo: bar
+                  nullable: true
             relationships:
               type: object
               properties:
                 shipping_method:
+                  required:
+                  - data
                   type: object
                   properties:
-                    links:
-                      type: object
-                      properties:
-                        self:
-                          type: string
-                          description: URL
-                        related:
-                          type: string
-                          description: URL
                     data:
                       type: object
                       properties:
@@ -378,79 +439,18 @@ components:
                           type: string
                           description: The resource's type
                           enum:
-                          - shipping_method
+                          - shipping_methods
                         id:
                           type: string
-                          description: The resource ID
-                attachments:
-                  type: object
-                  properties:
-                    links:
-                      type: object
-                      properties:
-                        self:
-                          type: string
-                          description: URL
-                        related:
-                          type: string
-                          description: URL
-                    data:
-                      type: object
-                      properties:
-                        type:
-                          type: string
-                          description: The resource's type
-                          enum:
-                          - attachments
-                        id:
-                          type: string
-                          description: The resource ID
-                event_stores:
-                  type: object
-                  properties:
-                    links:
-                      type: object
-                      properties:
-                        self:
-                          type: string
-                          description: URL
-                        related:
-                          type: string
-                          description: URL
-                    data:
-                      type: object
-                      properties:
-                        type:
-                          type: string
-                          description: The resource's type
-                          enum:
-                          - event_stores
-                        id:
-                          type: string
-                          description: The resource ID
-                events:
-                  type: object
-                  properties:
-                    links:
-                      type: object
-                      properties:
-                        self:
-                          type: string
-                          description: URL
-                        related:
-                          type: string
-                          description: URL
-                    data:
-                      type: object
-                      properties:
-                        type:
-                          type: string
-                          description: The resource's type
-                          enum:
-                          - events
-                        id:
-                          type: string
-                          description: The resource ID
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+    shippingWeightTierResponseList:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/shippingWeightTierResponse/properties/data'
     shippingWeightTierCreate:
       required:
       - data

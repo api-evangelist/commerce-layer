@@ -175,67 +175,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/talonOneAccountResponse/properties/data'
-    talonOneAccountUpdate:
-      required:
-      - data
-      type: object
-      properties:
-        data:
-          type: object
-          required:
-          - type
-          - id
-          - attributes
-          properties:
-            type:
-              type: string
-              description: The resource's type
-              enum:
-              - talon_one_accounts
-            id:
-              type: string
-              description: Unique identifier for the resource (hash).
-              example: XAyRWNUzyN
-            attributes:
-              type: object
-              properties:
-                name:
-                  type: string
-                  description: The discount engine's internal name.
-                  example: Personal discount engine
-                  nullable: false
-                manage_gift_cards:
-                  type: boolean
-                  description: Indicates if the discount engine manages both promotions and gift cards application at once.
-                  example: false
-                  nullable: false
-                reference:
-                  type: string
-                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
-                  example: ANY-EXTERNAL-REFEFERNCE
-                  nullable: true
-                reference_origin:
-                  type: string
-                  description: Any identifier of the third party system that defines the reference code.
-                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
-                  nullable: true
-                metadata:
-                  type: object
-                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
-                  example:
-                    foo: bar
-                  nullable: true
-                api_key:
-                  type: string
-                  description: The Talon.One account API key.
-                  example: TALON_ONE_API_KEY
-                baseurl:
-                  type: string
-                  description: The Talon.One API baseurl (excluding the talon.one suffix).
-                  example: yourbaseurl
-            relationships:
-              type: object
-              properties: {}
     talonOneAccountResponse:
       type: object
       properties:
@@ -482,6 +421,67 @@ components:
                           type: string
                           description: Unique identifier for the resource (hash).
                           example: XAyRWNUzyN
+    talonOneAccountUpdate:
+      required:
+      - data
+      type: object
+      properties:
+        data:
+          type: object
+          required:
+          - type
+          - id
+          - attributes
+          properties:
+            type:
+              type: string
+              description: The resource's type
+              enum:
+              - talon_one_accounts
+            id:
+              type: string
+              description: Unique identifier for the resource (hash).
+              example: XAyRWNUzyN
+            attributes:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: The discount engine's internal name.
+                  example: Personal discount engine
+                  nullable: false
+                manage_gift_cards:
+                  type: boolean
+                  description: Indicates if the discount engine manages both promotions and gift cards application at once.
+                  example: false
+                  nullable: false
+                reference:
+                  type: string
+                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
+                  example: ANY-EXTERNAL-REFEFERNCE
+                  nullable: true
+                reference_origin:
+                  type: string
+                  description: Any identifier of the third party system that defines the reference code.
+                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
+                  nullable: true
+                metadata:
+                  type: object
+                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
+                  example:
+                    foo: bar
+                  nullable: true
+                api_key:
+                  type: string
+                  description: The Talon.One account API key.
+                  example: TALON_ONE_API_KEY
+                baseurl:
+                  type: string
+                  description: The Talon.One API baseurl (excluding the talon.one suffix).
+                  example: yourbaseurl
+            relationships:
+              type: object
+              properties: {}
   securitySchemes:
     bearerAuth:
       type: http

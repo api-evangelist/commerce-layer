@@ -113,177 +113,6 @@ paths:
           description: No content
 components:
   schemas:
-    giftCardResponseList:
-      type: object
-      properties:
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/giftCardResponse/properties/data'
-    giftCardUpdate:
-      required:
-      - data
-      type: object
-      properties:
-        data:
-          type: object
-          required:
-          - type
-          - id
-          - attributes
-          properties:
-            type:
-              type: string
-              description: The resource's type
-              enum:
-              - gift_cards
-            id:
-              type: string
-              description: Unique identifier for the resource (hash).
-              example: XAyRWNUzyN
-            attributes:
-              type: object
-              properties:
-                currency_code:
-                  type: string
-                  description: The international 3-letter currency code as defined by the ISO 4217 standard.
-                  example: EUR
-                  nullable: true
-                balance_cents:
-                  type: integer
-                  description: The gift card balance, in cents.
-                  example: 15000
-                  nullable: false
-                balance_max_cents:
-                  type: integer
-                  description: The gift card balance max, in cents.
-                  example: 100000
-                  nullable: true
-                single_use:
-                  type: boolean
-                  description: Indicates if the gift card can be used only one.
-                  example: false
-                  nullable: false
-                rechargeable:
-                  type: boolean
-                  description: Indicates if the gift card can be recharged.
-                  example: true
-                  nullable: false
-                distribute_discount:
-                  type: boolean
-                  description: Indicates if redeemed gift card amount is distributed for tax calculation.
-                  example: true
-                  nullable: false
-                image_url:
-                  type: string
-                  description: The URL of an image that represents the gift card.
-                  example: https://img.yourdomain.com/gift_cards/32db311a.png
-                  nullable: true
-                expires_at:
-                  type: string
-                  description: Time at which the gift card will expire.
-                  example: '2018-01-01T12:00:00.000Z'
-                  nullable: true
-                recipient_email:
-                  type: string
-                  description: The email address of the associated recipient. When creating or updating a gift card, this is a shortcut to find or create the associated recipient by email.
-                  example: john@example.com
-                  nullable: true
-                _purchase:
-                  type: boolean
-                  description: Send this attribute if you want to confirm a draft gift card. The gift card becomes 'inactive', waiting to be activated.
-                  example: true
-                  nullable: false
-                _activate:
-                  type: boolean
-                  description: Send this attribute if you want to activate a gift card.
-                  example: true
-                  nullable: false
-                _deactivate:
-                  type: boolean
-                  description: Send this attribute if you want to deactivate a gift card.
-                  example: true
-                  nullable: false
-                _balance_change_cents:
-                  type: integer
-                  description: The balance change, in cents. Send a negative value to reduces the card balance by the specified amount. Send a positive value to recharge the gift card (if rechargeable).
-                  example: -5000
-                _add_tags:
-                  type: string
-                  description: Comma separated list of tags to be added. Duplicates, invalid and non existing ones are discarded. Cannot be passed by sales channels.
-                _remove_tags:
-                  type: string
-                  description: Comma separated list of tags to be removed. Duplicates, invalid and non existing ones are discarded. Cannot be passed by sales channels.
-                reference:
-                  type: string
-                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
-                  example: ANY-EXTERNAL-REFEFERNCE
-                  nullable: true
-                reference_origin:
-                  type: string
-                  description: Any identifier of the third party system that defines the reference code.
-                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
-                  nullable: true
-                metadata:
-                  type: object
-                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
-                  example:
-                    foo: bar
-                  nullable: true
-            relationships:
-              type: object
-              properties:
-                market:
-                  required:
-                  - data
-                  type: object
-                  properties:
-                    data:
-                      type: object
-                      properties:
-                        type:
-                          type: string
-                          description: The resource's type
-                          enum:
-                          - markets
-                        id:
-                          type: string
-                          description: Unique identifier for the resource (hash).
-                          example: XAyRWNUzyN
-                gift_card_recipient:
-                  required:
-                  - data
-                  type: object
-                  properties:
-                    data:
-                      type: object
-                      properties:
-                        type:
-                          type: string
-                          description: The resource's type
-                          enum:
-                          - gift_card_recipients
-                        id:
-                          type: string
-                          description: Unique identifier for the resource (hash).
-                          example: XAyRWNUzyN
-                tags:
-                  required:
-                  - data
-                  type: object
-                  properties:
-                    data:
-                      type: object
-                      properties:
-                        type:
-                          type: string
-                          description: The resource's type
-                          enum:
-                          - tags
-                        id:
-                          type: string
-                          description: Unique identifier for the resource (hash).
-                          example: XAyRWNUzyN
     giftCardResponse:
       type: object
       properties:
@@ -448,6 +277,170 @@ components:
                         id:
                           type: string
                           description: The resource ID
+    giftCardUpdate:
+      required:
+      - data
+      type: object
+      properties:
+        data:
+          type: object
+          required:
+          - type
+          - id
+          - attributes
+          properties:
+            type:
+              type: string
+              description: The resource's type
+              enum:
+              - gift_cards
+            id:
+              type: string
+              description: Unique identifier for the resource (hash).
+              example: XAyRWNUzyN
+            attributes:
+              type: object
+              properties:
+                currency_code:
+                  type: string
+                  description: The international 3-letter currency code as defined by the ISO 4217 standard.
+                  example: EUR
+                  nullable: true
+                balance_cents:
+                  type: integer
+                  description: The gift card balance, in cents.
+                  example: 15000
+                  nullable: false
+                balance_max_cents:
+                  type: integer
+                  description: The gift card balance max, in cents.
+                  example: 100000
+                  nullable: true
+                single_use:
+                  type: boolean
+                  description: Indicates if the gift card can be used only one.
+                  example: false
+                  nullable: false
+                rechargeable:
+                  type: boolean
+                  description: Indicates if the gift card can be recharged.
+                  example: true
+                  nullable: false
+                distribute_discount:
+                  type: boolean
+                  description: Indicates if redeemed gift card amount is distributed for tax calculation.
+                  example: true
+                  nullable: false
+                image_url:
+                  type: string
+                  description: The URL of an image that represents the gift card.
+                  example: https://img.yourdomain.com/gift_cards/32db311a.png
+                  nullable: true
+                expires_at:
+                  type: string
+                  description: Time at which the gift card will expire.
+                  example: '2018-01-01T12:00:00.000Z'
+                  nullable: true
+                recipient_email:
+                  type: string
+                  description: The email address of the associated recipient. When creating or updating a gift card, this is a shortcut to find or create the associated recipient by email.
+                  example: john@example.com
+                  nullable: true
+                _purchase:
+                  type: boolean
+                  description: Send this attribute if you want to confirm a draft gift card. The gift card becomes 'inactive', waiting to be activated.
+                  example: true
+                  nullable: false
+                _activate:
+                  type: boolean
+                  description: Send this attribute if you want to activate a gift card.
+                  example: true
+                  nullable: false
+                _deactivate:
+                  type: boolean
+                  description: Send this attribute if you want to deactivate a gift card.
+                  example: true
+                  nullable: false
+                _balance_change_cents:
+                  type: integer
+                  description: The balance change, in cents. Send a negative value to reduces the card balance by the specified amount. Send a positive value to recharge the gift card (if rechargeable).
+                  example: -5000
+                _add_tags:
+                  type: string
+                  description: Comma separated list of tags to be added. Duplicates, invalid and non existing ones are discarded. Cannot be passed by sales channels.
+                _remove_tags:
+                  type: string
+                  description: Comma separated list of tags to be removed. Duplicates, invalid and non existing ones are discarded. Cannot be passed by sales channels.
+                reference:
+                  type: string
+                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
+                  example: ANY-EXTERNAL-REFEFERNCE
+                  nullable: true
+                reference_origin:
+                  type: string
+                  description: Any identifier of the third party system that defines the reference code.
+                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
+                  nullable: true
+                metadata:
+                  type: object
+                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
+                  example:
+                    foo: bar
+                  nullable: true
+            relationships:
+              type: object
+              properties:
+                market:
+                  required:
+                  - data
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - markets
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+                gift_card_recipient:
+                  required:
+                  - data
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - gift_card_recipients
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+                tags:
+                  required:
+                  - data
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - tags
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
     giftCard:
       type: object
       properties:
@@ -701,6 +694,13 @@ components:
                           type: string
                           description: Unique identifier for the resource (hash).
                           example: XAyRWNUzyN
+    giftCardResponseList:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/giftCardResponse/properties/data'
     giftCardCreate:
       required:
       - data

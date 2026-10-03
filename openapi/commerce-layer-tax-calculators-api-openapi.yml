@@ -55,6 +55,13 @@ paths:
                 $ref: '#/components/schemas/taxCalculatorResponse'
 components:
   schemas:
+    taxCalculatorResponseList:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/taxCalculatorResponse/properties/data'
     taxCalculatorResponse:
       type: object
       properties:
@@ -173,13 +180,6 @@ components:
                         id:
                           type: string
                           description: The resource ID
-    taxCalculatorResponseList:
-      type: object
-      properties:
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/taxCalculatorResponse/properties/data'
     taxCalculator:
       type: object
       properties:
