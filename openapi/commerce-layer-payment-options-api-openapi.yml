@@ -113,6 +113,160 @@ paths:
           description: No content
 components:
   schemas:
+    paymentOptionCreate:
+      required:
+      - data
+      type: object
+      properties:
+        data:
+          type: object
+          required:
+          - type
+          - attributes
+          properties:
+            type:
+              type: string
+              description: The resource's type
+              enum:
+              - payment_options
+            attributes:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: The payment option's name. Wehn blank is inherited by payment source type.
+                  example: Stripe Payment Option
+                payment_source_type:
+                  type: string
+                  description: The payment source type. One of 'adyen_payments', 'axerve_payments', 'braintree_payments', 'checkout_com_payments', 'external_payments', 'klarna_payments', 'paypal_payments', 'satispay_payments', 'stripe_payments', or 'wire_transfers'.
+                  example: stripe_payments
+                  enum:
+                  - adyen_payments
+                  - axerve_payments
+                  - braintree_payments
+                  - checkout_com_payments
+                  - external_payments
+                  - klarna_payments
+                  - paypal_payments
+                  - satispay_payments
+                  - stripe_payments
+                  - wire_transfers
+                data:
+                  type: object
+                  description: The payment options data to be added to the payment source payload. Check payment specific API for more details.
+                  example:
+                    application_fee_amount: 1000
+                    on_behalf_of: pm_xxx
+                reference:
+                  type: string
+                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
+                  example: ANY-EXTERNAL-REFEFERNCE
+                reference_origin:
+                  type: string
+                  description: Any identifier of the third party system that defines the reference code.
+                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
+                metadata:
+                  type: object
+                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
+                  example:
+                    foo: bar
+              required:
+              - payment_source_type
+              - data
+            relationships:
+              type: object
+              properties:
+                order:
+                  required:
+                  - data
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - orders
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+              required:
+              - order
+    paymentOptionUpdate:
+      required:
+      - data
+      type: object
+      properties:
+        data:
+          type: object
+          required:
+          - type
+          - id
+          - attributes
+          properties:
+            type:
+              type: string
+              description: The resource's type
+              enum:
+              - payment_options
+            id:
+              type: string
+              description: Unique identifier for the resource (hash).
+              example: XAyRWNUzyN
+            attributes:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: The payment option's name. Wehn blank is inherited by payment source type.
+                  example: Stripe Payment Option
+                  nullable: true
+                data:
+                  type: object
+                  description: The payment options data to be added to the payment source payload. Check payment specific API for more details.
+                  example:
+                    application_fee_amount: 1000
+                    on_behalf_of: pm_xxx
+                  nullable: false
+                reference:
+                  type: string
+                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
+                  example: ANY-EXTERNAL-REFEFERNCE
+                  nullable: true
+                reference_origin:
+                  type: string
+                  description: Any identifier of the third party system that defines the reference code.
+                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
+                  nullable: true
+                metadata:
+                  type: object
+                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
+                  example:
+                    foo: bar
+                  nullable: true
+            relationships:
+              type: object
+              properties:
+                order:
+                  required:
+                  - data
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - orders
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
     paymentOptionResponse:
       type: object
       properties:
@@ -208,88 +362,13 @@ components:
                         id:
                           type: string
                           description: The resource ID
-    paymentOptionCreate:
-      required:
-      - data
+    paymentOptionResponseList:
       type: object
       properties:
         data:
-          type: object
-          required:
-          - type
-          - attributes
-          properties:
-            type:
-              type: string
-              description: The resource's type
-              enum:
-              - payment_options
-            attributes:
-              type: object
-              properties:
-                name:
-                  type: string
-                  description: The payment option's name. Wehn blank is inherited by payment source type.
-                  example: Stripe Payment Option
-                payment_source_type:
-                  type: string
-                  description: The payment source type. One of 'adyen_payments', 'axerve_payments', 'braintree_payments', 'checkout_com_payments', 'external_payments', 'klarna_payments', 'paypal_payments', 'satispay_payments', 'stripe_payments', or 'wire_transfers'.
-                  example: stripe_payments
-                  enum:
-                  - adyen_payments
-                  - axerve_payments
-                  - braintree_payments
-                  - checkout_com_payments
-                  - external_payments
-                  - klarna_payments
-                  - paypal_payments
-                  - satispay_payments
-                  - stripe_payments
-                  - wire_transfers
-                data:
-                  type: object
-                  description: The payment options data to be added to the payment source payload. Check payment specific API for more details.
-                  example:
-                    application_fee_amount: 1000
-                    on_behalf_of: pm_xxx
-                reference:
-                  type: string
-                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
-                  example: ANY-EXTERNAL-REFEFERNCE
-                reference_origin:
-                  type: string
-                  description: Any identifier of the third party system that defines the reference code.
-                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
-                metadata:
-                  type: object
-                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
-                  example:
-                    foo: bar
-              required:
-              - payment_source_type
-              - data
-            relationships:
-              type: object
-              properties:
-                order:
-                  required:
-                  - data
-                  type: object
-                  properties:
-                    data:
-                      type: object
-                      properties:
-                        type:
-                          type: string
-                          description: The resource's type
-                          enum:
-                          - orders
-                        id:
-                          type: string
-                          description: Unique identifier for the resource (hash).
-                          example: XAyRWNUzyN
-              required:
-              - order
+          type: array
+          items:
+            $ref: '#/components/schemas/paymentOptionResponse/properties/data'
     paymentOption:
       type: object
       properties:
@@ -409,85 +488,6 @@ components:
                           type: string
                           description: Unique identifier for the resource (hash).
                           example: XAyRWNUzyN
-    paymentOptionUpdate:
-      required:
-      - data
-      type: object
-      properties:
-        data:
-          type: object
-          required:
-          - type
-          - id
-          - attributes
-          properties:
-            type:
-              type: string
-              description: The resource's type
-              enum:
-              - payment_options
-            id:
-              type: string
-              description: Unique identifier for the resource (hash).
-              example: XAyRWNUzyN
-            attributes:
-              type: object
-              properties:
-                name:
-                  type: string
-                  description: The payment option's name. Wehn blank is inherited by payment source type.
-                  example: Stripe Payment Option
-                  nullable: true
-                data:
-                  type: object
-                  description: The payment options data to be added to the payment source payload. Check payment specific API for more details.
-                  example:
-                    application_fee_amount: 1000
-                    on_behalf_of: pm_xxx
-                  nullable: false
-                reference:
-                  type: string
-                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
-                  example: ANY-EXTERNAL-REFEFERNCE
-                  nullable: true
-                reference_origin:
-                  type: string
-                  description: Any identifier of the third party system that defines the reference code.
-                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
-                  nullable: true
-                metadata:
-                  type: object
-                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
-                  example:
-                    foo: bar
-                  nullable: true
-            relationships:
-              type: object
-              properties:
-                order:
-                  required:
-                  - data
-                  type: object
-                  properties:
-                    data:
-                      type: object
-                      properties:
-                        type:
-                          type: string
-                          description: The resource's type
-                          enum:
-                          - orders
-                        id:
-                          type: string
-                          description: Unique identifier for the resource (hash).
-                          example: XAyRWNUzyN
-    paymentOptionResponseList:
-      type: object
-      properties:
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/paymentOptionResponse/properties/data'
   securitySchemes:
     bearerAuth:
       type: http

@@ -80,22 +80,6 @@ paths:
                             $ref: '#/components/schemas/analysis_fbt_request/properties/fbt'
 components:
   schemas:
-    analysis_fbt_request:
-      type: object
-      properties:
-        filter:
-          $ref: '#/components/schemas/analysis_fbt_filter'
-        fbt:
-          type: object
-          properties: {}
-        meta:
-          type: object
-          properties:
-            payload:
-              type: boolean
-              description: Set to true if you want to receive how the payload has been made
-      required:
-      - filter
     analysis_fbt_filter:
       type: object
       properties:
@@ -112,6 +96,22 @@ components:
                   items:
                     type: string
                   description: To include, array of item_ids
+    analysis_fbt_request:
+      type: object
+      properties:
+        filter:
+          $ref: '#/components/schemas/analysis_fbt_filter'
+        fbt:
+          type: object
+          properties: {}
+        meta:
+          type: object
+          properties:
+            payload:
+              type: boolean
+              description: Set to true if you want to receive how the payload has been made
+      required:
+      - filter
   securitySchemes:
     bearerAuth:
       type: http

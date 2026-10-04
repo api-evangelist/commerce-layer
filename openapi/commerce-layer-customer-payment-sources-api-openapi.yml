@@ -113,781 +113,6 @@ paths:
           description: No content
 components:
   schemas:
-    checkoutComPayment:
-      type: object
-      properties:
-        data:
-          type: object
-          required:
-          - type
-          - attributes
-          properties:
-            type:
-              type: string
-              description: The resource's type
-              enum:
-              - checkout_com_payments
-            attributes:
-              type: object
-              properties:
-                public_key:
-                  type: string
-                  description: The Checkout.com publishable API key.
-                  example: pk_test_xxxx-yyyy-zzzz
-                  nullable: true
-                token:
-                  type: string
-                  description: The Checkout.com payment or digital wallet token.
-                  example: tok_4gzeau5o2uqubbk6fufs3m7p54
-                  nullable: false
-                payment_session:
-                  type: object
-                  description: The session object which initializes payment.
-                  example:
-                    id: ps_xxxx_yyyy_zzzz
-                    payment_session_secret: pss_xxxx_yyy_zzzz
-                    payment_session_token: xxxxx_yyyyy_zzzzz
-                    _links:
-                      self:
-                        href: https://api.sandbox.checkout.com/payment-sessions/ps_xxxx_yyyy_zzzz
-                  nullable: false
-                success_url:
-                  type: string
-                  description: The URL to redirect your customer upon 3DS succeeded authentication.
-                  example: http://commercelayer.dev/checkout_com/success
-                  nullable: false
-                failure_url:
-                  type: string
-                  description: The URL to redirect your customer upon 3DS failed authentication.
-                  example: http://commercelayer.dev/checkout_com/failure
-                  nullable: false
-                source_id:
-                  type: string
-                  description: The payment source identifier that can be used for subsequent payments.
-                  example: src_nwd3m4in3hkuddfpjsaevunhdy
-                  nullable: true
-                customer_token:
-                  type: string
-                  description: The customer's unique identifier. This can be passed as a source when making a payment.
-                  example: cus_udst2tfldj6upmye2reztkmm4i
-                  nullable: true
-                redirect_uri:
-                  type: string
-                  description: The URI that the customer should be redirected to in order to complete the payment.
-                  example: https://api.checkout.com/3ds/pay_mbabizu24mvu3mela5njyhpit4
-                  nullable: true
-                payment_response:
-                  type: object
-                  description: The Checkout.com payment response, used to fetch internal data.
-                  example:
-                    foo: bar
-                  nullable: true
-                mismatched_amounts:
-                  type: boolean
-                  description: Indicates if the order current amount differs form the one of the associated authorization.
-                  example: false
-                  nullable: true
-                payment_instrument:
-                  type: object
-                  description: Information about the payment instrument used in the transaction.
-                  example:
-                    issuer: cl bank
-                    card_type: visa
-                  nullable: true
-                created_at:
-                  type: string
-                  description: Time at which the resource was created.
-                  example: '2018-01-01T12:00:00.000Z'
-                  nullable: false
-                updated_at:
-                  type: string
-                  description: Time at which the resource was last updated.
-                  example: '2018-01-01T12:00:00.000Z'
-                  nullable: false
-                reference:
-                  type: string
-                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
-                  example: ANY-EXTERNAL-REFEFERNCE
-                  nullable: true
-                reference_origin:
-                  type: string
-                  description: Any identifier of the third party system that defines the reference code.
-                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
-                  nullable: true
-                metadata:
-                  type: object
-                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
-                  example:
-                    foo: bar
-                  nullable: true
-            relationships:
-              type: object
-              properties:
-                order:
-                  type: object
-                  properties:
-                    data:
-                      type: object
-                      properties:
-                        type:
-                          type: string
-                          description: The resource's type
-                          enum:
-                          - orders
-                        id:
-                          type: string
-                          description: Unique identifier for the resource (hash).
-                          example: XAyRWNUzyN
-                payment_gateway:
-                  type: object
-                  properties:
-                    data:
-                      type: object
-                      properties:
-                        type:
-                          type: string
-                          description: The resource's type
-                          enum:
-                          - payment_gateways
-                        id:
-                          type: string
-                          description: Unique identifier for the resource (hash).
-                          example: XAyRWNUzyN
-                event_stores:
-                  type: object
-                  properties:
-                    data:
-                      type: object
-                      properties:
-                        type:
-                          type: string
-                          description: The resource's type
-                          enum:
-                          - event_stores
-                        id:
-                          type: string
-                          description: Unique identifier for the resource (hash).
-                          example: XAyRWNUzyN
-    customerPaymentSourceResponse:
-      type: object
-      properties:
-        data:
-          type: object
-          properties:
-            id:
-              type: string
-              description: Unique identifier for the resource (hash).
-              example: XAyRWNUzyN
-            type:
-              type: string
-              description: The resource's type
-              enum:
-              - customer_payment_sources
-            links:
-              type: object
-              properties:
-                self:
-                  type: string
-                  description: URL
-            attributes:
-              $ref: '#/components/schemas/customerPaymentSource/properties/data/properties/attributes'
-            relationships:
-              type: object
-              properties:
-                customer:
-                  type: object
-                  properties:
-                    links:
-                      type: object
-                      properties:
-                        self:
-                          type: string
-                          description: URL
-                        related:
-                          type: string
-                          description: URL
-                    data:
-                      type: object
-                      properties:
-                        type:
-                          type: string
-                          description: The resource's type
-                          enum:
-                          - customer
-                        id:
-                          type: string
-                          description: The resource ID
-                payment_method:
-                  type: object
-                  properties:
-                    links:
-                      type: object
-                      properties:
-                        self:
-                          type: string
-                          description: URL
-                        related:
-                          type: string
-                          description: URL
-                    data:
-                      type: object
-                      properties:
-                        type:
-                          type: string
-                          description: The resource's type
-                          enum:
-                          - payment_method
-                        id:
-                          type: string
-                          description: The resource ID
-                payment_source:
-                  type: object
-                  properties:
-                    links:
-                      type: object
-                      properties:
-                        self:
-                          type: string
-                          description: URL
-                        related:
-                          type: string
-                          description: URL
-                    data:
-                      type: object
-                      properties:
-                        type:
-                          type: string
-                          description: The resource's type
-                          enum:
-                          - payment_source
-                        id:
-                          type: string
-                          description: The resource ID
-                event_stores:
-                  type: object
-                  properties:
-                    links:
-                      type: object
-                      properties:
-                        self:
-                          type: string
-                          description: URL
-                        related:
-                          type: string
-                          description: URL
-                    data:
-                      type: object
-                      properties:
-                        type:
-                          type: string
-                          description: The resource's type
-                          enum:
-                          - event_stores
-                        id:
-                          type: string
-                          description: The resource ID
-    customerPaymentSourceCreate:
-      required:
-      - data
-      type: object
-      properties:
-        data:
-          type: object
-          required:
-          - type
-          - attributes
-          properties:
-            type:
-              type: string
-              description: The resource's type
-              enum:
-              - customer_payment_sources
-            attributes:
-              type: object
-              properties:
-                customer_token:
-                  type: string
-                  description: Returns the customer gateway token stored in the gateway.
-                  example: cus_xxxyyyzzz
-                payment_source_token:
-                  type: string
-                  description: Returns the payment source token stored in the gateway.
-                  example: pm_xxxyyyzzz
-                reference:
-                  type: string
-                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
-                  example: ANY-EXTERNAL-REFEFERNCE
-                reference_origin:
-                  type: string
-                  description: Any identifier of the third party system that defines the reference code.
-                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
-                metadata:
-                  type: object
-                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
-                  example:
-                    foo: bar
-            relationships:
-              type: object
-              properties:
-                customer:
-                  required:
-                  - data
-                  type: object
-                  properties:
-                    data:
-                      type: object
-                      properties:
-                        type:
-                          type: string
-                          description: The resource's type
-                          enum:
-                          - customers
-                        id:
-                          type: string
-                          description: Unique identifier for the resource (hash).
-                          example: XAyRWNUzyN
-                payment_method:
-                  required:
-                  - data
-                  type: object
-                  properties:
-                    data:
-                      type: object
-                      properties:
-                        type:
-                          type: string
-                          description: The resource's type
-                          enum:
-                          - payment_methods
-                        id:
-                          type: string
-                          description: Unique identifier for the resource (hash).
-                          example: XAyRWNUzyN
-                payment_source:
-                  required:
-                  - data
-                  type: object
-                  properties:
-                    data:
-                      type: object
-                      properties:
-                        type:
-                          type: string
-                          description: The resource's type
-                          enum:
-                          - adyen_payments
-                          - axerve_payments
-                          - braintree_payments
-                          - checkout_com_payments
-                          - external_payments
-                          - klarna_payments
-                          - paypal_payments
-                          - satispay_payments
-                          - stripe_payments
-                          - wire_transfers
-                        id:
-                          type: string
-                          description: Unique identifier for the resource (hash).
-                          example: XAyRWNUzyN
-                  oneOf:
-                  - $ref: '#/components/schemas/adyenPayment'
-                  - $ref: '#/components/schemas/axervePayment'
-                  - $ref: '#/components/schemas/braintreePayment'
-                  - $ref: '#/components/schemas/checkoutComPayment'
-                  - $ref: '#/components/schemas/externalPayment'
-                  - $ref: '#/components/schemas/klarnaPayment'
-                  - $ref: '#/components/schemas/paypalPayment'
-                  - $ref: '#/components/schemas/satispayPayment'
-                  - $ref: '#/components/schemas/stripePayment'
-                  - $ref: '#/components/schemas/wireTransfer'
-              required:
-              - customer
-    adyenPayment:
-      type: object
-      properties:
-        data:
-          type: object
-          required:
-          - type
-          - attributes
-          properties:
-            type:
-              type: string
-              description: The resource's type
-              enum:
-              - adyen_payments
-            attributes:
-              type: object
-              properties:
-                public_key:
-                  type: string
-                  description: The public key linked to your API credential.
-                  example: xxxx-yyyy-zzzz
-                  nullable: true
-                payment_methods:
-                  type: object
-                  description: The merchant available payment methods for the assoiated order (i.e. country and amount). Required by the Adyen JS SDK.
-                  example:
-                    foo: bar
-                  nullable: false
-                payment_request_data:
-                  type: object
-                  description: The Adyen payment request data, collected by client.
-                  example:
-                    foo: bar
-                  nullable: true
-                payment_request_details:
-                  type: object
-                  description: The Adyen additional details request data, collected by client.
-                  example:
-                    foo: bar
-                  nullable: true
-                payment_response:
-                  type: object
-                  description: The Adyen payment response, used by client (includes 'resultCode' and 'action').
-                  example:
-                    foo: bar
-                  nullable: true
-                mismatched_amounts:
-                  type: boolean
-                  description: Indicates if the order current amount differs form the one of the associated authorization.
-                  example: false
-                  nullable: true
-                balance:
-                  type: integer
-                  description: The balance remaining on a shopper's gift card, must be computed by using its related trigger attribute.
-                  example: 1000
-                  nullable: true
-                expires_at:
-                  type: string
-                  description: The expiration date/time of this Adyen payment (valid for partial payments only).
-                  example: '2018-01-02T12:00:00.000Z'
-                  nullable: true
-                payment_instrument:
-                  type: object
-                  description: Information about the payment instrument used in the transaction.
-                  example:
-                    issuer: cl bank
-                    card_type: visa
-                  nullable: true
-                created_at:
-                  type: string
-                  description: Time at which the resource was created.
-                  example: '2018-01-01T12:00:00.000Z'
-                  nullable: false
-                updated_at:
-                  type: string
-                  description: Time at which the resource was last updated.
-                  example: '2018-01-01T12:00:00.000Z'
-                  nullable: false
-                reference:
-                  type: string
-                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
-                  example: ANY-EXTERNAL-REFEFERNCE
-                  nullable: true
-                reference_origin:
-                  type: string
-                  description: Any identifier of the third party system that defines the reference code.
-                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
-                  nullable: true
-                metadata:
-                  type: object
-                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
-                  example:
-                    foo: bar
-                  nullable: true
-            relationships:
-              type: object
-              properties:
-                order:
-                  type: object
-                  properties:
-                    data:
-                      type: object
-                      properties:
-                        type:
-                          type: string
-                          description: The resource's type
-                          enum:
-                          - orders
-                        id:
-                          type: string
-                          description: Unique identifier for the resource (hash).
-                          example: XAyRWNUzyN
-                payment_gateway:
-                  type: object
-                  properties:
-                    data:
-                      type: object
-                      properties:
-                        type:
-                          type: string
-                          description: The resource's type
-                          enum:
-                          - payment_gateways
-                        id:
-                          type: string
-                          description: Unique identifier for the resource (hash).
-                          example: XAyRWNUzyN
-                event_stores:
-                  type: object
-                  properties:
-                    data:
-                      type: object
-                      properties:
-                        type:
-                          type: string
-                          description: The resource's type
-                          enum:
-                          - event_stores
-                        id:
-                          type: string
-                          description: Unique identifier for the resource (hash).
-                          example: XAyRWNUzyN
-    stripePayment:
-      type: object
-      properties:
-        data:
-          type: object
-          required:
-          - type
-          - attributes
-          properties:
-            type:
-              type: string
-              description: The resource's type
-              enum:
-              - stripe_payments
-            attributes:
-              type: object
-              properties:
-                stripe_id:
-                  type: string
-                  description: The Stripe payment intent ID. Required to identify a payment session on stripe.
-                  example: pi_1234XXX
-                  nullable: true
-                client_secret:
-                  type: string
-                  description: The Stripe payment intent client secret. Required to create a charge through Stripe.js.
-                  example: pi_1234XXX_secret_5678YYY
-                  nullable: true
-                connected_account:
-                  type: string
-                  description: The account (if any) for which the funds of the PaymentIntent are intended.
-                  example: acct_xxxx-yyyy-zzzz
-                  nullable: true
-                charge_id:
-                  type: string
-                  description: The Stripe charge ID. Identifies money movement upon the payment intent confirmation.
-                  example: ch_1234XXX
-                  nullable: true
-                publishable_key:
-                  type: string
-                  description: The Stripe publishable API key.
-                  example: pk_live_xxxx-yyyy-zzzz
-                  nullable: true
-                on_behalf_of:
-                  type: string
-                  description: The Stripe account ID that these funds are intended for.
-                  example: xxxx-yyyy-zzzz
-                  nullable: true
-                transfer_group:
-                  type: string
-                  description: A string that identifies the resulting payment as part of a group.
-                  example: xxxx-yyyy-zzzz
-                  nullable: true
-                options:
-                  type: object
-                  description: 'Stripe payment options: ''customer'', ''payment_method'', ''return_url'', etc. Check Stripe payment intent API for more details.'
-                  example:
-                    customer: cus_xxx
-                    payment_method: pm_xxx
-                  nullable: true
-                payment_method:
-                  type: object
-                  description: Stripe 'payment_method', set by webhook.
-                  example:
-                    id: pm_xxx
-                  nullable: true
-                mismatched_amounts:
-                  type: boolean
-                  description: Indicates if the order current amount differs form the one of the created payment intent.
-                  example: false
-                  nullable: true
-                return_url:
-                  type: string
-                  description: The URL to return to when a redirect payment is completed.
-                  example: https://yourdomain.com/thankyou
-                  nullable: true
-                receipt_email:
-                  type: string
-                  description: The email address to send the receipt to.
-                  example: john@example.com
-                  nullable: true
-                payment_instrument:
-                  type: object
-                  description: Information about the payment instrument used in the transaction.
-                  example:
-                    issuer: cl bank
-                    card_type: visa
-                  nullable: true
-                created_at:
-                  type: string
-                  description: Time at which the resource was created.
-                  example: '2018-01-01T12:00:00.000Z'
-                  nullable: false
-                updated_at:
-                  type: string
-                  description: Time at which the resource was last updated.
-                  example: '2018-01-01T12:00:00.000Z'
-                  nullable: false
-                reference:
-                  type: string
-                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
-                  example: ANY-EXTERNAL-REFEFERNCE
-                  nullable: true
-                reference_origin:
-                  type: string
-                  description: Any identifier of the third party system that defines the reference code.
-                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
-                  nullable: true
-                metadata:
-                  type: object
-                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
-                  example:
-                    foo: bar
-                  nullable: true
-            relationships:
-              type: object
-              properties:
-                order:
-                  type: object
-                  properties:
-                    data:
-                      type: object
-                      properties:
-                        type:
-                          type: string
-                          description: The resource's type
-                          enum:
-                          - orders
-                        id:
-                          type: string
-                          description: Unique identifier for the resource (hash).
-                          example: XAyRWNUzyN
-                payment_gateway:
-                  type: object
-                  properties:
-                    data:
-                      type: object
-                      properties:
-                        type:
-                          type: string
-                          description: The resource's type
-                          enum:
-                          - payment_gateways
-                        id:
-                          type: string
-                          description: Unique identifier for the resource (hash).
-                          example: XAyRWNUzyN
-                event_stores:
-                  type: object
-                  properties:
-                    data:
-                      type: object
-                      properties:
-                        type:
-                          type: string
-                          description: The resource's type
-                          enum:
-                          - event_stores
-                        id:
-                          type: string
-                          description: Unique identifier for the resource (hash).
-                          example: XAyRWNUzyN
-    wireTransfer:
-      type: object
-      properties:
-        data:
-          type: object
-          required:
-          - type
-          - attributes
-          properties:
-            type:
-              type: string
-              description: The resource's type
-              enum:
-              - wire_transfers
-            attributes:
-              type: object
-              properties:
-                payment_instrument:
-                  type: object
-                  description: Information about the payment instrument used in the transaction.
-                  example:
-                    issuer: cl bank
-                    card_type: visa
-                  nullable: true
-                created_at:
-                  type: string
-                  description: Time at which the resource was created.
-                  example: '2018-01-01T12:00:00.000Z'
-                  nullable: false
-                updated_at:
-                  type: string
-                  description: Time at which the resource was last updated.
-                  example: '2018-01-01T12:00:00.000Z'
-                  nullable: false
-                reference:
-                  type: string
-                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
-                  example: ANY-EXTERNAL-REFEFERNCE
-                  nullable: true
-                reference_origin:
-                  type: string
-                  description: Any identifier of the third party system that defines the reference code.
-                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
-                  nullable: true
-                metadata:
-                  type: object
-                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
-                  example:
-                    foo: bar
-                  nullable: true
-            relationships:
-              type: object
-              properties:
-                order:
-                  type: object
-                  properties:
-                    data:
-                      type: object
-                      properties:
-                        type:
-                          type: string
-                          description: The resource's type
-                          enum:
-                          - orders
-                        id:
-                          type: string
-                          description: Unique identifier for the resource (hash).
-                          example: XAyRWNUzyN
-                event_stores:
-                  type: object
-                  properties:
-                    data:
-                      type: object
-                      properties:
-                        type:
-                          type: string
-                          description: The resource's type
-                          enum:
-                          - event_stores
-                        id:
-                          type: string
-                          description: Unique identifier for the resource (hash).
-                          example: XAyRWNUzyN
     axervePayment:
       type: object
       properties:
@@ -1172,40 +397,84 @@ components:
                           type: string
                           description: Unique identifier for the resource (hash).
                           example: XAyRWNUzyN
-    customerPaymentSourceUpdate:
-      required:
-      - data
+    adyenPayment:
       type: object
       properties:
         data:
           type: object
           required:
           - type
-          - id
           - attributes
           properties:
             type:
               type: string
               description: The resource's type
               enum:
-              - customer_payment_sources
-            id:
-              type: string
-              description: Unique identifier for the resource (hash).
-              example: XAyRWNUzyN
+              - adyen_payments
             attributes:
               type: object
               properties:
-                customer_token:
+                public_key:
                   type: string
-                  description: Returns the customer gateway token stored in the gateway.
-                  example: cus_xxxyyyzzz
+                  description: The public key linked to your API credential.
+                  example: xxxx-yyyy-zzzz
                   nullable: true
-                payment_source_token:
+                payment_methods:
+                  type: object
+                  description: The merchant available payment methods for the assoiated order (i.e. country and amount). Required by the Adyen JS SDK.
+                  example:
+                    foo: bar
+                  nullable: false
+                payment_request_data:
+                  type: object
+                  description: The Adyen payment request data, collected by client.
+                  example:
+                    foo: bar
+                  nullable: true
+                payment_request_details:
+                  type: object
+                  description: The Adyen additional details request data, collected by client.
+                  example:
+                    foo: bar
+                  nullable: true
+                payment_response:
+                  type: object
+                  description: The Adyen payment response, used by client (includes 'resultCode' and 'action').
+                  example:
+                    foo: bar
+                  nullable: true
+                mismatched_amounts:
+                  type: boolean
+                  description: Indicates if the order current amount differs form the one of the associated authorization.
+                  example: false
+                  nullable: true
+                balance:
+                  type: integer
+                  description: The balance remaining on a shopper's gift card, must be computed by using its related trigger attribute.
+                  example: 1000
+                  nullable: true
+                expires_at:
                   type: string
-                  description: Returns the payment source token stored in the gateway.
-                  example: pm_xxxyyyzzz
+                  description: The expiration date/time of this Adyen payment (valid for partial payments only).
+                  example: '2018-01-02T12:00:00.000Z'
                   nullable: true
+                payment_instrument:
+                  type: object
+                  description: Information about the payment instrument used in the transaction.
+                  example:
+                    issuer: cl bank
+                    card_type: visa
+                  nullable: true
+                created_at:
+                  type: string
+                  description: Time at which the resource was created.
+                  example: '2018-01-01T12:00:00.000Z'
+                  nullable: false
+                updated_at:
+                  type: string
+                  description: Time at which the resource was last updated.
+                  example: '2018-01-01T12:00:00.000Z'
+                  nullable: false
                 reference:
                   type: string
                   description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
@@ -1225,9 +494,7 @@ components:
             relationships:
               type: object
               properties:
-                customer:
-                  required:
-                  - data
+                order:
                   type: object
                   properties:
                     data:
@@ -1237,14 +504,12 @@ components:
                           type: string
                           description: The resource's type
                           enum:
-                          - customers
+                          - orders
                         id:
                           type: string
                           description: Unique identifier for the resource (hash).
                           example: XAyRWNUzyN
-                payment_method:
-                  required:
-                  - data
+                payment_gateway:
                   type: object
                   properties:
                     data:
@@ -1254,14 +519,12 @@ components:
                           type: string
                           description: The resource's type
                           enum:
-                          - payment_methods
+                          - payment_gateways
                         id:
                           type: string
                           description: Unique identifier for the resource (hash).
                           example: XAyRWNUzyN
-                payment_source:
-                  required:
-                  - data
+                event_stores:
                   type: object
                   properties:
                     data:
@@ -1271,31 +534,11 @@ components:
                           type: string
                           description: The resource's type
                           enum:
-                          - adyen_payments
-                          - axerve_payments
-                          - braintree_payments
-                          - checkout_com_payments
-                          - external_payments
-                          - klarna_payments
-                          - paypal_payments
-                          - satispay_payments
-                          - stripe_payments
-                          - wire_transfers
+                          - event_stores
                         id:
                           type: string
                           description: Unique identifier for the resource (hash).
                           example: XAyRWNUzyN
-                  oneOf:
-                  - $ref: '#/components/schemas/adyenPayment'
-                  - $ref: '#/components/schemas/axervePayment'
-                  - $ref: '#/components/schemas/braintreePayment'
-                  - $ref: '#/components/schemas/checkoutComPayment'
-                  - $ref: '#/components/schemas/externalPayment'
-                  - $ref: '#/components/schemas/klarnaPayment'
-                  - $ref: '#/components/schemas/paypalPayment'
-                  - $ref: '#/components/schemas/satispayPayment'
-                  - $ref: '#/components/schemas/stripePayment'
-                  - $ref: '#/components/schemas/wireTransfer'
     klarnaPayment:
       type: object
       properties:
@@ -1422,7 +665,14 @@ components:
                           type: string
                           description: Unique identifier for the resource (hash).
                           example: XAyRWNUzyN
-    externalPayment:
+    customerPaymentSourceResponseList:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/customerPaymentSourceResponse/properties/data'
+    stripePayment:
       type: object
       properties:
         data:
@@ -1435,20 +685,72 @@ components:
               type: string
               description: The resource's type
               enum:
-              - external_payments
+              - stripe_payments
             attributes:
               type: object
               properties:
-                payment_source_token:
+                stripe_id:
                   type: string
-                  description: The payment source token, as generated by the external gateway SDK. Credit Card numbers are rejected.
-                  example: xxxx.yyyy.zzzz
-                  nullable: false
+                  description: The Stripe payment intent ID. Required to identify a payment session on stripe.
+                  example: pi_1234XXX
+                  nullable: true
+                client_secret:
+                  type: string
+                  description: The Stripe payment intent client secret. Required to create a charge through Stripe.js.
+                  example: pi_1234XXX_secret_5678YYY
+                  nullable: true
+                connected_account:
+                  type: string
+                  description: The account (if any) for which the funds of the PaymentIntent are intended.
+                  example: acct_xxxx-yyyy-zzzz
+                  nullable: true
+                charge_id:
+                  type: string
+                  description: The Stripe charge ID. Identifies money movement upon the payment intent confirmation.
+                  example: ch_1234XXX
+                  nullable: true
+                publishable_key:
+                  type: string
+                  description: The Stripe publishable API key.
+                  example: pk_live_xxxx-yyyy-zzzz
+                  nullable: true
+                on_behalf_of:
+                  type: string
+                  description: The Stripe account ID that these funds are intended for.
+                  example: xxxx-yyyy-zzzz
+                  nullable: true
+                transfer_group:
+                  type: string
+                  description: A string that identifies the resulting payment as part of a group.
+                  example: xxxx-yyyy-zzzz
+                  nullable: true
                 options:
                   type: object
-                  description: External payment options.
+                  description: 'Stripe payment options: ''customer'', ''payment_method'', ''return_url'', etc. Check Stripe payment intent API for more details.'
                   example:
-                    foo: bar
+                    customer: cus_xxx
+                    payment_method: pm_xxx
+                  nullable: true
+                payment_method:
+                  type: object
+                  description: Stripe 'payment_method', set by webhook.
+                  example:
+                    id: pm_xxx
+                  nullable: true
+                mismatched_amounts:
+                  type: boolean
+                  description: Indicates if the order current amount differs form the one of the created payment intent.
+                  example: false
+                  nullable: true
+                return_url:
+                  type: string
+                  description: The URL to return to when a redirect payment is completed.
+                  example: https://yourdomain.com/thankyou
+                  nullable: true
+                receipt_email:
+                  type: string
+                  description: The email address to send the receipt to.
+                  example: john@example.com
                   nullable: true
                 payment_instrument:
                   type: object
@@ -1516,7 +818,7 @@ components:
                           type: string
                           description: Unique identifier for the resource (hash).
                           example: XAyRWNUzyN
-                wallet:
+                event_stores:
                   type: object
                   properties:
                     data:
@@ -1526,7 +828,234 @@ components:
                           type: string
                           description: The resource's type
                           enum:
-                          - customer_payment_sources
+                          - event_stores
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+    customerPaymentSourceResponse:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            id:
+              type: string
+              description: Unique identifier for the resource (hash).
+              example: XAyRWNUzyN
+            type:
+              type: string
+              description: The resource's type
+              enum:
+              - customer_payment_sources
+            links:
+              type: object
+              properties:
+                self:
+                  type: string
+                  description: URL
+            attributes:
+              $ref: '#/components/schemas/customerPaymentSource/properties/data/properties/attributes'
+            relationships:
+              type: object
+              properties:
+                customer:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - customer
+                        id:
+                          type: string
+                          description: The resource ID
+                payment_method:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - payment_method
+                        id:
+                          type: string
+                          description: The resource ID
+                payment_source:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - payment_source
+                        id:
+                          type: string
+                          description: The resource ID
+                event_stores:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - event_stores
+                        id:
+                          type: string
+                          description: The resource ID
+    braintreePayment:
+      type: object
+      properties:
+        data:
+          type: object
+          required:
+          - type
+          - attributes
+          properties:
+            type:
+              type: string
+              description: The resource's type
+              enum:
+              - braintree_payments
+            attributes:
+              type: object
+              properties:
+                client_token:
+                  type: string
+                  description: The Braintree payment client token. Required by the Braintree JS SDK.
+                  example: xxxx.yyyy.zzzz
+                  nullable: false
+                payment_method_nonce:
+                  type: string
+                  description: The Braintree payment method nonce. Sent by the Braintree JS SDK.
+                  example: xxxx.yyyy.zzzz
+                  nullable: true
+                payment_id:
+                  type: string
+                  description: The Braintree payment ID used by local payment and sent by the Braintree JS SDK.
+                  example: xxxx.yyyy.zzzz
+                  nullable: true
+                local:
+                  type: boolean
+                  description: Indicates if the payment is local, in such case Braintree will trigger a webhook call passing the "payment_id" and "payment_method_nonce" in order to complete the transaction.
+                  example: true
+                  nullable: true
+                options:
+                  type: object
+                  description: Braintree payment options, 'customer_id' and 'payment_method_token'.
+                  example:
+                    customer_id: '1234567890'
+                  nullable: true
+                payment_instrument:
+                  type: object
+                  description: Information about the payment instrument used in the transaction.
+                  example:
+                    issuer: cl bank
+                    card_type: visa
+                  nullable: true
+                created_at:
+                  type: string
+                  description: Time at which the resource was created.
+                  example: '2018-01-01T12:00:00.000Z'
+                  nullable: false
+                updated_at:
+                  type: string
+                  description: Time at which the resource was last updated.
+                  example: '2018-01-01T12:00:00.000Z'
+                  nullable: false
+                reference:
+                  type: string
+                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
+                  example: ANY-EXTERNAL-REFEFERNCE
+                  nullable: true
+                reference_origin:
+                  type: string
+                  description: Any identifier of the third party system that defines the reference code.
+                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
+                  nullable: true
+                metadata:
+                  type: object
+                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
+                  example:
+                    foo: bar
+                  nullable: true
+            relationships:
+              type: object
+              properties:
+                order:
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - orders
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+                payment_gateway:
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - payment_gateways
                         id:
                           type: string
                           description: Unique identifier for the resource (hash).
@@ -1546,13 +1075,89 @@ components:
                           type: string
                           description: Unique identifier for the resource (hash).
                           example: XAyRWNUzyN
-    customerPaymentSourceResponseList:
+    wireTransfer:
       type: object
       properties:
         data:
-          type: array
-          items:
-            $ref: '#/components/schemas/customerPaymentSourceResponse/properties/data'
+          type: object
+          required:
+          - type
+          - attributes
+          properties:
+            type:
+              type: string
+              description: The resource's type
+              enum:
+              - wire_transfers
+            attributes:
+              type: object
+              properties:
+                payment_instrument:
+                  type: object
+                  description: Information about the payment instrument used in the transaction.
+                  example:
+                    issuer: cl bank
+                    card_type: visa
+                  nullable: true
+                created_at:
+                  type: string
+                  description: Time at which the resource was created.
+                  example: '2018-01-01T12:00:00.000Z'
+                  nullable: false
+                updated_at:
+                  type: string
+                  description: Time at which the resource was last updated.
+                  example: '2018-01-01T12:00:00.000Z'
+                  nullable: false
+                reference:
+                  type: string
+                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
+                  example: ANY-EXTERNAL-REFEFERNCE
+                  nullable: true
+                reference_origin:
+                  type: string
+                  description: Any identifier of the third party system that defines the reference code.
+                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
+                  nullable: true
+                metadata:
+                  type: object
+                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
+                  example:
+                    foo: bar
+                  nullable: true
+            relationships:
+              type: object
+              properties:
+                order:
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - orders
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+                event_stores:
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - event_stores
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
     satispayPayment:
       type: object
       properties:
@@ -1600,130 +1205,6 @@ components:
                   description: The Satispay payment response, used to fetch internal data.
                   example:
                     foo: bar
-                  nullable: true
-                payment_instrument:
-                  type: object
-                  description: Information about the payment instrument used in the transaction.
-                  example:
-                    issuer: cl bank
-                    card_type: visa
-                  nullable: true
-                created_at:
-                  type: string
-                  description: Time at which the resource was created.
-                  example: '2018-01-01T12:00:00.000Z'
-                  nullable: false
-                updated_at:
-                  type: string
-                  description: Time at which the resource was last updated.
-                  example: '2018-01-01T12:00:00.000Z'
-                  nullable: false
-                reference:
-                  type: string
-                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
-                  example: ANY-EXTERNAL-REFEFERNCE
-                  nullable: true
-                reference_origin:
-                  type: string
-                  description: Any identifier of the third party system that defines the reference code.
-                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
-                  nullable: true
-                metadata:
-                  type: object
-                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
-                  example:
-                    foo: bar
-                  nullable: true
-            relationships:
-              type: object
-              properties:
-                order:
-                  type: object
-                  properties:
-                    data:
-                      type: object
-                      properties:
-                        type:
-                          type: string
-                          description: The resource's type
-                          enum:
-                          - orders
-                        id:
-                          type: string
-                          description: Unique identifier for the resource (hash).
-                          example: XAyRWNUzyN
-                payment_gateway:
-                  type: object
-                  properties:
-                    data:
-                      type: object
-                      properties:
-                        type:
-                          type: string
-                          description: The resource's type
-                          enum:
-                          - payment_gateways
-                        id:
-                          type: string
-                          description: Unique identifier for the resource (hash).
-                          example: XAyRWNUzyN
-                event_stores:
-                  type: object
-                  properties:
-                    data:
-                      type: object
-                      properties:
-                        type:
-                          type: string
-                          description: The resource's type
-                          enum:
-                          - event_stores
-                        id:
-                          type: string
-                          description: Unique identifier for the resource (hash).
-                          example: XAyRWNUzyN
-    braintreePayment:
-      type: object
-      properties:
-        data:
-          type: object
-          required:
-          - type
-          - attributes
-          properties:
-            type:
-              type: string
-              description: The resource's type
-              enum:
-              - braintree_payments
-            attributes:
-              type: object
-              properties:
-                client_token:
-                  type: string
-                  description: The Braintree payment client token. Required by the Braintree JS SDK.
-                  example: xxxx.yyyy.zzzz
-                  nullable: false
-                payment_method_nonce:
-                  type: string
-                  description: The Braintree payment method nonce. Sent by the Braintree JS SDK.
-                  example: xxxx.yyyy.zzzz
-                  nullable: true
-                payment_id:
-                  type: string
-                  description: The Braintree payment ID used by local payment and sent by the Braintree JS SDK.
-                  example: xxxx.yyyy.zzzz
-                  nullable: true
-                local:
-                  type: boolean
-                  description: Indicates if the payment is local, in such case Braintree will trigger a webhook call passing the "payment_id" and "payment_method_nonce" in order to complete the transaction.
-                  example: true
-                  nullable: true
-                options:
-                  type: object
-                  description: Braintree payment options, 'customer_id' and 'payment_method_token'.
-                  example:
-                    customer_id: '1234567890'
                   nullable: true
                 payment_instrument:
                   type: object
@@ -1947,6 +1428,525 @@ components:
                           type: string
                           description: Unique identifier for the resource (hash).
                           example: XAyRWNUzyN
+    customerPaymentSourceCreate:
+      required:
+      - data
+      type: object
+      properties:
+        data:
+          type: object
+          required:
+          - type
+          - attributes
+          properties:
+            type:
+              type: string
+              description: The resource's type
+              enum:
+              - customer_payment_sources
+            attributes:
+              type: object
+              properties:
+                customer_token:
+                  type: string
+                  description: Returns the customer gateway token stored in the gateway.
+                  example: cus_xxxyyyzzz
+                payment_source_token:
+                  type: string
+                  description: Returns the payment source token stored in the gateway.
+                  example: pm_xxxyyyzzz
+                reference:
+                  type: string
+                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
+                  example: ANY-EXTERNAL-REFEFERNCE
+                reference_origin:
+                  type: string
+                  description: Any identifier of the third party system that defines the reference code.
+                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
+                metadata:
+                  type: object
+                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
+                  example:
+                    foo: bar
+            relationships:
+              type: object
+              properties:
+                customer:
+                  required:
+                  - data
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - customers
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+                payment_method:
+                  required:
+                  - data
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - payment_methods
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+                payment_source:
+                  required:
+                  - data
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - adyen_payments
+                          - axerve_payments
+                          - braintree_payments
+                          - checkout_com_payments
+                          - external_payments
+                          - klarna_payments
+                          - paypal_payments
+                          - satispay_payments
+                          - stripe_payments
+                          - wire_transfers
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+                  oneOf:
+                  - $ref: '#/components/schemas/adyenPayment'
+                  - $ref: '#/components/schemas/axervePayment'
+                  - $ref: '#/components/schemas/braintreePayment'
+                  - $ref: '#/components/schemas/checkoutComPayment'
+                  - $ref: '#/components/schemas/externalPayment'
+                  - $ref: '#/components/schemas/klarnaPayment'
+                  - $ref: '#/components/schemas/paypalPayment'
+                  - $ref: '#/components/schemas/satispayPayment'
+                  - $ref: '#/components/schemas/stripePayment'
+                  - $ref: '#/components/schemas/wireTransfer'
+              required:
+              - customer
+    externalPayment:
+      type: object
+      properties:
+        data:
+          type: object
+          required:
+          - type
+          - attributes
+          properties:
+            type:
+              type: string
+              description: The resource's type
+              enum:
+              - external_payments
+            attributes:
+              type: object
+              properties:
+                payment_source_token:
+                  type: string
+                  description: The payment source token, as generated by the external gateway SDK. Credit Card numbers are rejected.
+                  example: xxxx.yyyy.zzzz
+                  nullable: false
+                options:
+                  type: object
+                  description: External payment options.
+                  example:
+                    foo: bar
+                  nullable: true
+                payment_instrument:
+                  type: object
+                  description: Information about the payment instrument used in the transaction.
+                  example:
+                    issuer: cl bank
+                    card_type: visa
+                  nullable: true
+                created_at:
+                  type: string
+                  description: Time at which the resource was created.
+                  example: '2018-01-01T12:00:00.000Z'
+                  nullable: false
+                updated_at:
+                  type: string
+                  description: Time at which the resource was last updated.
+                  example: '2018-01-01T12:00:00.000Z'
+                  nullable: false
+                reference:
+                  type: string
+                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
+                  example: ANY-EXTERNAL-REFEFERNCE
+                  nullable: true
+                reference_origin:
+                  type: string
+                  description: Any identifier of the third party system that defines the reference code.
+                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
+                  nullable: true
+                metadata:
+                  type: object
+                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
+                  example:
+                    foo: bar
+                  nullable: true
+            relationships:
+              type: object
+              properties:
+                order:
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - orders
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+                payment_gateway:
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - payment_gateways
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+                wallet:
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - customer_payment_sources
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+                event_stores:
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - event_stores
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+    checkoutComPayment:
+      type: object
+      properties:
+        data:
+          type: object
+          required:
+          - type
+          - attributes
+          properties:
+            type:
+              type: string
+              description: The resource's type
+              enum:
+              - checkout_com_payments
+            attributes:
+              type: object
+              properties:
+                public_key:
+                  type: string
+                  description: The Checkout.com publishable API key.
+                  example: pk_test_xxxx-yyyy-zzzz
+                  nullable: true
+                token:
+                  type: string
+                  description: The Checkout.com payment or digital wallet token.
+                  example: tok_4gzeau5o2uqubbk6fufs3m7p54
+                  nullable: false
+                payment_session:
+                  type: object
+                  description: The session object which initializes payment.
+                  example:
+                    id: ps_xxxx_yyyy_zzzz
+                    payment_session_secret: pss_xxxx_yyy_zzzz
+                    payment_session_token: xxxxx_yyyyy_zzzzz
+                    _links:
+                      self:
+                        href: https://api.sandbox.checkout.com/payment-sessions/ps_xxxx_yyyy_zzzz
+                  nullable: false
+                success_url:
+                  type: string
+                  description: The URL to redirect your customer upon 3DS succeeded authentication.
+                  example: http://commercelayer.dev/checkout_com/success
+                  nullable: false
+                failure_url:
+                  type: string
+                  description: The URL to redirect your customer upon 3DS failed authentication.
+                  example: http://commercelayer.dev/checkout_com/failure
+                  nullable: false
+                source_id:
+                  type: string
+                  description: The payment source identifier that can be used for subsequent payments.
+                  example: src_nwd3m4in3hkuddfpjsaevunhdy
+                  nullable: true
+                customer_token:
+                  type: string
+                  description: The customer's unique identifier. This can be passed as a source when making a payment.
+                  example: cus_udst2tfldj6upmye2reztkmm4i
+                  nullable: true
+                redirect_uri:
+                  type: string
+                  description: The URI that the customer should be redirected to in order to complete the payment.
+                  example: https://api.checkout.com/3ds/pay_mbabizu24mvu3mela5njyhpit4
+                  nullable: true
+                payment_response:
+                  type: object
+                  description: The Checkout.com payment response, used to fetch internal data.
+                  example:
+                    foo: bar
+                  nullable: true
+                mismatched_amounts:
+                  type: boolean
+                  description: Indicates if the order current amount differs form the one of the associated authorization.
+                  example: false
+                  nullable: true
+                payment_instrument:
+                  type: object
+                  description: Information about the payment instrument used in the transaction.
+                  example:
+                    issuer: cl bank
+                    card_type: visa
+                  nullable: true
+                created_at:
+                  type: string
+                  description: Time at which the resource was created.
+                  example: '2018-01-01T12:00:00.000Z'
+                  nullable: false
+                updated_at:
+                  type: string
+                  description: Time at which the resource was last updated.
+                  example: '2018-01-01T12:00:00.000Z'
+                  nullable: false
+                reference:
+                  type: string
+                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
+                  example: ANY-EXTERNAL-REFEFERNCE
+                  nullable: true
+                reference_origin:
+                  type: string
+                  description: Any identifier of the third party system that defines the reference code.
+                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
+                  nullable: true
+                metadata:
+                  type: object
+                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
+                  example:
+                    foo: bar
+                  nullable: true
+            relationships:
+              type: object
+              properties:
+                order:
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - orders
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+                payment_gateway:
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - payment_gateways
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+                event_stores:
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - event_stores
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+    customerPaymentSourceUpdate:
+      required:
+      - data
+      type: object
+      properties:
+        data:
+          type: object
+          required:
+          - type
+          - id
+          - attributes
+          properties:
+            type:
+              type: string
+              description: The resource's type
+              enum:
+              - customer_payment_sources
+            id:
+              type: string
+              description: Unique identifier for the resource (hash).
+              example: XAyRWNUzyN
+            attributes:
+              type: object
+              properties:
+                customer_token:
+                  type: string
+                  description: Returns the customer gateway token stored in the gateway.
+                  example: cus_xxxyyyzzz
+                  nullable: true
+                payment_source_token:
+                  type: string
+                  description: Returns the payment source token stored in the gateway.
+                  example: pm_xxxyyyzzz
+                  nullable: true
+                reference:
+                  type: string
+                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
+                  example: ANY-EXTERNAL-REFEFERNCE
+                  nullable: true
+                reference_origin:
+                  type: string
+                  description: Any identifier of the third party system that defines the reference code.
+                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
+                  nullable: true
+                metadata:
+                  type: object
+                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
+                  example:
+                    foo: bar
+                  nullable: true
+            relationships:
+              type: object
+              properties:
+                customer:
+                  required:
+                  - data
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - customers
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+                payment_method:
+                  required:
+                  - data
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - payment_methods
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+                payment_source:
+                  required:
+                  - data
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - adyen_payments
+                          - axerve_payments
+                          - braintree_payments
+                          - checkout_com_payments
+                          - external_payments
+                          - klarna_payments
+                          - paypal_payments
+                          - satispay_payments
+                          - stripe_payments
+                          - wire_transfers
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+                  oneOf:
+                  - $ref: '#/components/schemas/adyenPayment'
+                  - $ref: '#/components/schemas/axervePayment'
+                  - $ref: '#/components/schemas/braintreePayment'
+                  - $ref: '#/components/schemas/checkoutComPayment'
+                  - $ref: '#/components/schemas/externalPayment'
+                  - $ref: '#/components/schemas/klarnaPayment'
+                  - $ref: '#/components/schemas/paypalPayment'
+                  - $ref: '#/components/schemas/satispayPayment'
+                  - $ref: '#/components/schemas/stripePayment'
+                  - $ref: '#/components/schemas/wireTransfer'
   securitySchemes:
     bearerAuth:
       type: http

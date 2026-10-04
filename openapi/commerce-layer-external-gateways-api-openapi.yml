@@ -368,6 +368,86 @@ components:
                         id:
                           type: string
                           description: The resource ID
+    externalGatewayCreate:
+      required:
+      - data
+      type: object
+      properties:
+        data:
+          type: object
+          required:
+          - type
+          - attributes
+          properties:
+            type:
+              type: string
+              description: The resource's type
+              enum:
+              - external_gateways
+            attributes:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: The payment gateway's internal name.
+                  example: US payment gateway
+                force_payments:
+                  type: boolean
+                  description: Indicates if the payment source is forced on the editable order upon receiving a successful event from the gateway.
+                  example: true
+                _disable:
+                  type: boolean
+                  description: Send this attribute if you want to mark this resource as disabled.
+                  example: true
+                _enable:
+                  type: boolean
+                  description: Send this attribute if you want to mark this resource as enabled.
+                  example: true
+                reference:
+                  type: string
+                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
+                  example: ANY-EXTERNAL-REFEFERNCE
+                reference_origin:
+                  type: string
+                  description: Any identifier of the third party system that defines the reference code.
+                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
+                metadata:
+                  type: object
+                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
+                  example:
+                    foo: bar
+                external_includes:
+                  type: array
+                  description: List of related resources that will be included in the request to the external callback. Please do consult the documentation to check on which resource the includes are related (i.e. the order) and the defaults in case no list is provided.
+                  example:
+                  - order.line_item_options
+                  items:
+                    type: string
+                authorize_url:
+                  type: string
+                  description: The endpoint used by the external gateway to authorize payments.
+                  example: https://external_gateway.com/authorize
+                capture_url:
+                  type: string
+                  description: The endpoint used by the external gateway to capture payments.
+                  example: https://external_gateway.com/capture
+                void_url:
+                  type: string
+                  description: The endpoint used by the external gateway to void payments.
+                  example: https://external_gateway.com/void
+                refund_url:
+                  type: string
+                  description: The endpoint used by the external gateway to refund payments.
+                  example: https://external_gateway.com/refund
+                token_url:
+                  type: string
+                  description: The endpoint used by the external gateway to create a customer payment token.
+                  example: https://external_gateway.com/token
+              required:
+              - name
+            relationships:
+              type: object
+              properties: {}
     externalGatewayUpdate:
       required:
       - data
@@ -466,86 +546,6 @@ components:
                   description: The endpoint used by the external gateway to create a customer payment token.
                   example: https://external_gateway.com/token
                   nullable: true
-            relationships:
-              type: object
-              properties: {}
-    externalGatewayCreate:
-      required:
-      - data
-      type: object
-      properties:
-        data:
-          type: object
-          required:
-          - type
-          - attributes
-          properties:
-            type:
-              type: string
-              description: The resource's type
-              enum:
-              - external_gateways
-            attributes:
-              type: object
-              properties:
-                name:
-                  type: string
-                  description: The payment gateway's internal name.
-                  example: US payment gateway
-                force_payments:
-                  type: boolean
-                  description: Indicates if the payment source is forced on the editable order upon receiving a successful event from the gateway.
-                  example: true
-                _disable:
-                  type: boolean
-                  description: Send this attribute if you want to mark this resource as disabled.
-                  example: true
-                _enable:
-                  type: boolean
-                  description: Send this attribute if you want to mark this resource as enabled.
-                  example: true
-                reference:
-                  type: string
-                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
-                  example: ANY-EXTERNAL-REFEFERNCE
-                reference_origin:
-                  type: string
-                  description: Any identifier of the third party system that defines the reference code.
-                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
-                metadata:
-                  type: object
-                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
-                  example:
-                    foo: bar
-                external_includes:
-                  type: array
-                  description: List of related resources that will be included in the request to the external callback. Please do consult the documentation to check on which resource the includes are related (i.e. the order) and the defaults in case no list is provided.
-                  example:
-                  - order.line_item_options
-                  items:
-                    type: string
-                authorize_url:
-                  type: string
-                  description: The endpoint used by the external gateway to authorize payments.
-                  example: https://external_gateway.com/authorize
-                capture_url:
-                  type: string
-                  description: The endpoint used by the external gateway to capture payments.
-                  example: https://external_gateway.com/capture
-                void_url:
-                  type: string
-                  description: The endpoint used by the external gateway to void payments.
-                  example: https://external_gateway.com/void
-                refund_url:
-                  type: string
-                  description: The endpoint used by the external gateway to refund payments.
-                  example: https://external_gateway.com/refund
-                token_url:
-                  type: string
-                  description: The endpoint used by the external gateway to create a customer payment token.
-                  example: https://external_gateway.com/token
-              required:
-              - name
             relationships:
               type: object
               properties: {}

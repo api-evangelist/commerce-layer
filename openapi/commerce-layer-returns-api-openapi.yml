@@ -3904,333 +3904,6 @@ paths:
       description: API reference
 components:
   schemas:
-    return:
-      type: object
-      properties:
-        data:
-          type: object
-          required:
-          - type
-          - attributes
-          properties:
-            type:
-              type: string
-              description: The resource's type
-              enum:
-              - returns
-            attributes:
-              type: object
-              properties:
-                number:
-                  type: string
-                  description: Unique identifier for the return.
-                  example: '#1234/R/001'
-                  nullable: true
-                status:
-                  type: string
-                  description: The return status. One of 'draft' (default), 'requested', 'approved', 'cancelled', 'shipped', 'rejected', 'received', or 'refunded'.
-                  example: draft
-                  nullable: false
-                  enum:
-                  - draft
-                  - requested
-                  - approved
-                  - cancelled
-                  - shipped
-                  - rejected
-                  - received
-                  - refunded
-                customer_email:
-                  type: string
-                  description: The email address of the associated customer.
-                  example: john@example.com
-                  nullable: true
-                skus_count:
-                  type: integer
-                  description: The total number of SKUs in the return's line items. This can be useful to display a preview of the return content.
-                  example: 2
-                  nullable: true
-                approved_at:
-                  type: string
-                  description: Time at which the return was approved.
-                  example: '2018-01-01T12:00:00.000Z'
-                  nullable: true
-                cancelled_at:
-                  type: string
-                  description: Time at which the return was cancelled.
-                  example: '2018-01-01T12:00:00.000Z'
-                  nullable: true
-                shipped_at:
-                  type: string
-                  description: Time at which the return was shipped.
-                  example: '2018-01-01T12:00:00.000Z'
-                  nullable: true
-                rejected_at:
-                  type: string
-                  description: Time at which the return was rejected.
-                  example: '2018-01-01T12:00:00.000Z'
-                  nullable: true
-                received_at:
-                  type: string
-                  description: Time at which the return was received.
-                  example: '2018-01-01T12:00:00.000Z'
-                  nullable: true
-                refunded_at:
-                  type: string
-                  description: Time at which the return was refunded.
-                  example: '2018-01-01T12:00:00.000Z'
-                  nullable: true
-                archived_at:
-                  type: string
-                  description: Time at which the resource has been archived.
-                  example: '2018-01-01T12:00:00.000Z'
-                  nullable: true
-                estimated_refund_amount_cents:
-                  type: integer
-                  description: The amount to be refunded, estimated by associated return line items, in cents.
-                  example: 500
-                  nullable: true
-                estimated_refund_amount_float:
-                  type: number
-                  description: The amount to be refunded, estimated by associated return line items, float.
-                  example: 5.0
-                  nullable: true
-                formatted_estimated_refund_amount:
-                  type: string
-                  description: The amount to be refunded, estimated by associated return line items, formatted.
-                  example: €5,00
-                  nullable: true
-                created_at:
-                  type: string
-                  description: Time at which the resource was created.
-                  example: '2018-01-01T12:00:00.000Z'
-                  nullable: false
-                updated_at:
-                  type: string
-                  description: Time at which the resource was last updated.
-                  example: '2018-01-01T12:00:00.000Z'
-                  nullable: false
-                reference:
-                  type: string
-                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
-                  example: ANY-EXTERNAL-REFEFERNCE
-                  nullable: true
-                reference_origin:
-                  type: string
-                  description: Any identifier of the third party system that defines the reference code.
-                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
-                  nullable: true
-                metadata:
-                  type: object
-                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
-                  example:
-                    foo: bar
-                  nullable: true
-            relationships:
-              type: object
-              properties:
-                order:
-                  type: object
-                  properties:
-                    data:
-                      type: object
-                      properties:
-                        type:
-                          type: string
-                          description: The resource's type
-                          enum:
-                          - orders
-                        id:
-                          type: string
-                          description: Unique identifier for the resource (hash).
-                          example: XAyRWNUzyN
-                customer:
-                  type: object
-                  properties:
-                    data:
-                      type: object
-                      properties:
-                        type:
-                          type: string
-                          description: The resource's type
-                          enum:
-                          - customers
-                        id:
-                          type: string
-                          description: Unique identifier for the resource (hash).
-                          example: XAyRWNUzyN
-                stock_location:
-                  type: object
-                  properties:
-                    data:
-                      type: object
-                      properties:
-                        type:
-                          type: string
-                          description: The resource's type
-                          enum:
-                          - stock_locations
-                        id:
-                          type: string
-                          description: Unique identifier for the resource (hash).
-                          example: XAyRWNUzyN
-                origin_address:
-                  type: object
-                  properties:
-                    data:
-                      type: object
-                      properties:
-                        type:
-                          type: string
-                          description: The resource's type
-                          enum:
-                          - addresses
-                        id:
-                          type: string
-                          description: Unique identifier for the resource (hash).
-                          example: XAyRWNUzyN
-                destination_address:
-                  type: object
-                  properties:
-                    data:
-                      type: object
-                      properties:
-                        type:
-                          type: string
-                          description: The resource's type
-                          enum:
-                          - addresses
-                        id:
-                          type: string
-                          description: Unique identifier for the resource (hash).
-                          example: XAyRWNUzyN
-                reference_capture:
-                  type: object
-                  properties:
-                    data:
-                      type: object
-                      properties:
-                        type:
-                          type: string
-                          description: The resource's type
-                          enum:
-                          - captures
-                        id:
-                          type: string
-                          description: Unique identifier for the resource (hash).
-                          example: XAyRWNUzyN
-                reference_refund:
-                  type: object
-                  properties:
-                    data:
-                      type: object
-                      properties:
-                        type:
-                          type: string
-                          description: The resource's type
-                          enum:
-                          - refunds
-                        id:
-                          type: string
-                          description: Unique identifier for the resource (hash).
-                          example: XAyRWNUzyN
-                return_line_items:
-                  type: object
-                  properties:
-                    data:
-                      type: object
-                      properties:
-                        type:
-                          type: string
-                          description: The resource's type
-                          enum:
-                          - return_line_items
-                        id:
-                          type: string
-                          description: Unique identifier for the resource (hash).
-                          example: XAyRWNUzyN
-                attachments:
-                  type: object
-                  properties:
-                    data:
-                      type: object
-                      properties:
-                        type:
-                          type: string
-                          description: The resource's type
-                          enum:
-                          - attachments
-                        id:
-                          type: string
-                          description: Unique identifier for the resource (hash).
-                          example: XAyRWNUzyN
-                resource_errors:
-                  type: object
-                  properties:
-                    data:
-                      type: object
-                      properties:
-                        type:
-                          type: string
-                          description: The resource's type
-                          enum:
-                          - resource_errors
-                        id:
-                          type: string
-                          description: Unique identifier for the resource (hash).
-                          example: XAyRWNUzyN
-                events:
-                  type: object
-                  properties:
-                    data:
-                      type: object
-                      properties:
-                        type:
-                          type: string
-                          description: The resource's type
-                          enum:
-                          - events
-                        id:
-                          type: string
-                          description: Unique identifier for the resource (hash).
-                          example: XAyRWNUzyN
-                tags:
-                  type: object
-                  properties:
-                    data:
-                      type: object
-                      properties:
-                        type:
-                          type: string
-                          description: The resource's type
-                          enum:
-                          - tags
-                        id:
-                          type: string
-                          description: Unique identifier for the resource (hash).
-                          example: XAyRWNUzyN
-                event_stores:
-                  type: object
-                  properties:
-                    data:
-                      type: object
-                      properties:
-                        type:
-                          type: string
-                          description: The resource's type
-                          enum:
-                          - event_stores
-                        id:
-                          type: string
-                          description: Unique identifier for the resource (hash).
-                          example: XAyRWNUzyN
-    returnResponseList:
-      type: object
-      properties:
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/returnResponse/properties/data'
     returnResponse:
       type: object
       properties:
@@ -4556,6 +4229,438 @@ components:
                         id:
                           type: string
                           description: The resource ID
+    returnResponseList:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/returnResponse/properties/data'
+    return:
+      type: object
+      properties:
+        data:
+          type: object
+          required:
+          - type
+          - attributes
+          properties:
+            type:
+              type: string
+              description: The resource's type
+              enum:
+              - returns
+            attributes:
+              type: object
+              properties:
+                number:
+                  type: string
+                  description: Unique identifier for the return.
+                  example: '#1234/R/001'
+                  nullable: true
+                status:
+                  type: string
+                  description: The return status. One of 'draft' (default), 'requested', 'approved', 'cancelled', 'shipped', 'rejected', 'received', or 'refunded'.
+                  example: draft
+                  nullable: false
+                  enum:
+                  - draft
+                  - requested
+                  - approved
+                  - cancelled
+                  - shipped
+                  - rejected
+                  - received
+                  - refunded
+                customer_email:
+                  type: string
+                  description: The email address of the associated customer.
+                  example: john@example.com
+                  nullable: true
+                skus_count:
+                  type: integer
+                  description: The total number of SKUs in the return's line items. This can be useful to display a preview of the return content.
+                  example: 2
+                  nullable: true
+                approved_at:
+                  type: string
+                  description: Time at which the return was approved.
+                  example: '2018-01-01T12:00:00.000Z'
+                  nullable: true
+                cancelled_at:
+                  type: string
+                  description: Time at which the return was cancelled.
+                  example: '2018-01-01T12:00:00.000Z'
+                  nullable: true
+                shipped_at:
+                  type: string
+                  description: Time at which the return was shipped.
+                  example: '2018-01-01T12:00:00.000Z'
+                  nullable: true
+                rejected_at:
+                  type: string
+                  description: Time at which the return was rejected.
+                  example: '2018-01-01T12:00:00.000Z'
+                  nullable: true
+                received_at:
+                  type: string
+                  description: Time at which the return was received.
+                  example: '2018-01-01T12:00:00.000Z'
+                  nullable: true
+                refunded_at:
+                  type: string
+                  description: Time at which the return was refunded.
+                  example: '2018-01-01T12:00:00.000Z'
+                  nullable: true
+                archived_at:
+                  type: string
+                  description: Time at which the resource has been archived.
+                  example: '2018-01-01T12:00:00.000Z'
+                  nullable: true
+                estimated_refund_amount_cents:
+                  type: integer
+                  description: The amount to be refunded, estimated by associated return line items, in cents.
+                  example: 500
+                  nullable: true
+                estimated_refund_amount_float:
+                  type: number
+                  description: The amount to be refunded, estimated by associated return line items, float.
+                  example: 5.0
+                  nullable: true
+                formatted_estimated_refund_amount:
+                  type: string
+                  description: The amount to be refunded, estimated by associated return line items, formatted.
+                  example: €5,00
+                  nullable: true
+                created_at:
+                  type: string
+                  description: Time at which the resource was created.
+                  example: '2018-01-01T12:00:00.000Z'
+                  nullable: false
+                updated_at:
+                  type: string
+                  description: Time at which the resource was last updated.
+                  example: '2018-01-01T12:00:00.000Z'
+                  nullable: false
+                reference:
+                  type: string
+                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
+                  example: ANY-EXTERNAL-REFEFERNCE
+                  nullable: true
+                reference_origin:
+                  type: string
+                  description: Any identifier of the third party system that defines the reference code.
+                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
+                  nullable: true
+                metadata:
+                  type: object
+                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
+                  example:
+                    foo: bar
+                  nullable: true
+            relationships:
+              type: object
+              properties:
+                order:
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - orders
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+                customer:
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - customers
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+                stock_location:
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - stock_locations
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+                origin_address:
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - addresses
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+                destination_address:
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - addresses
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+                reference_capture:
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - captures
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+                reference_refund:
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - refunds
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+                return_line_items:
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - return_line_items
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+                attachments:
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - attachments
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+                resource_errors:
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - resource_errors
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+                events:
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - events
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+                tags:
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - tags
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+                event_stores:
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - event_stores
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+    returnCreate:
+      required:
+      - data
+      type: object
+      properties:
+        data:
+          type: object
+          required:
+          - type
+          - attributes
+          properties:
+            type:
+              type: string
+              description: The resource's type
+              enum:
+              - returns
+            attributes:
+              type: object
+              properties:
+                reference:
+                  type: string
+                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
+                  example: ANY-EXTERNAL-REFEFERNCE
+                reference_origin:
+                  type: string
+                  description: Any identifier of the third party system that defines the reference code.
+                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
+                metadata:
+                  type: object
+                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
+                  example:
+                    foo: bar
+            relationships:
+              type: object
+              properties:
+                order:
+                  required:
+                  - data
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - orders
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+                stock_location:
+                  required:
+                  - data
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - stock_locations
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+                reference_capture:
+                  required:
+                  - data
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - captures
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+                tags:
+                  required:
+                  - data
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - tags
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+              required:
+              - order
     returnUpdate:
       required:
       - data
@@ -4710,163 +4815,6 @@ components:
                           type: string
                           description: Unique identifier for the resource (hash).
                           example: XAyRWNUzyN
-    returnCreate:
-      required:
-      - data
-      type: object
-      properties:
-        data:
-          type: object
-          required:
-          - type
-          - attributes
-          properties:
-            type:
-              type: string
-              description: The resource's type
-              enum:
-              - returns
-            attributes:
-              type: object
-              properties:
-                reference:
-                  type: string
-                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
-                  example: ANY-EXTERNAL-REFEFERNCE
-                reference_origin:
-                  type: string
-                  description: Any identifier of the third party system that defines the reference code.
-                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
-                metadata:
-                  type: object
-                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
-                  example:
-                    foo: bar
-            relationships:
-              type: object
-              properties:
-                order:
-                  required:
-                  - data
-                  type: object
-                  properties:
-                    data:
-                      type: object
-                      properties:
-                        type:
-                          type: string
-                          description: The resource's type
-                          enum:
-                          - orders
-                        id:
-                          type: string
-                          description: Unique identifier for the resource (hash).
-                          example: XAyRWNUzyN
-                stock_location:
-                  required:
-                  - data
-                  type: object
-                  properties:
-                    data:
-                      type: object
-                      properties:
-                        type:
-                          type: string
-                          description: The resource's type
-                          enum:
-                          - stock_locations
-                        id:
-                          type: string
-                          description: Unique identifier for the resource (hash).
-                          example: XAyRWNUzyN
-                reference_capture:
-                  required:
-                  - data
-                  type: object
-                  properties:
-                    data:
-                      type: object
-                      properties:
-                        type:
-                          type: string
-                          description: The resource's type
-                          enum:
-                          - captures
-                        id:
-                          type: string
-                          description: Unique identifier for the resource (hash).
-                          example: XAyRWNUzyN
-                tags:
-                  required:
-                  - data
-                  type: object
-                  properties:
-                    data:
-                      type: object
-                      properties:
-                        type:
-                          type: string
-                          description: The resource's type
-                          enum:
-                          - tags
-                        id:
-                          type: string
-                          description: Unique identifier for the resource (hash).
-                          example: XAyRWNUzyN
-              required:
-              - order
-    returns_export_fields:
-      type: string
-      enum:
-      - customer.id
-      - customer.email
-      - customer.group_name
-      - destination_address.business
-      - destination_address.city
-      - destination_address.country_code
-      - destination_address.geocoded
-      - destination_address.localized
-      - destination_address.state_code
-      - destination_address.zip_code
-      - origin_address.business
-      - origin_address.city
-      - origin_address.country_code
-      - origin_address.geocoded
-      - origin_address.localized
-      - origin_address.state_code
-      - origin_address.zip_code
-      - market.id
-      - market.name
-      - market.number
-      - organization.id
-      - organization.name
-      - organization.slug
-      - return.aggregated_details
-      - return.approved_at
-      - return.archived_at
-      - return.archived
-      - return.cancelled_at
-      - return.created_at
-      - return.number
-      - return.received_at
-      - return.reference
-      - return.reference_origin
-      - return.rejected_at
-      - return.shipped_at
-      - return.status
-      - return.mode
-      - return.updated_at
-      - return.current_date
-      - return.id
-      - return.order_id
-      - return.skus_count
-      - return.currency_code
-      - stock_location.id
-      - stock_location.name
-      - stock_location.reference
-      - stock_location.reference_origin
-      - tags.id
-      - tags.name
     returns_date_breakdown_request:
       type: object
       properties:
@@ -5289,7 +5237,40 @@ components:
             payload:
               type: boolean
               description: Set to true if you want to receive how the payload has been made
-    returns_search_fields:
+    returns_search_request:
+      type: object
+      properties:
+        filter:
+          $ref: '#/components/schemas/returns_filter'
+        search:
+          type: object
+          required:
+          - fields
+          properties:
+            sort:
+              type: string
+              description: Result sorting
+              enum:
+              - asc
+              - desc
+            limit:
+              type: integer
+              description: Results limit
+              default: 50
+              maximum: 100
+            sort_by:
+              $ref: '#/components/schemas/returns_search_fields'
+            fields:
+              type: array
+              items:
+                $ref: '#/components/schemas/returns_search_fields'
+        meta:
+          type: object
+          properties:
+            payload:
+              type: boolean
+              description: Set to true if you want to receive how the payload has been made
+    returns_export_fields:
       type: string
       enum:
       - customer.id
@@ -5335,158 +5316,12 @@ components:
       - return.order_id
       - return.skus_count
       - return.currency_code
-      - return_line_items.created_at
-      - return_line_items.quantity
-      - return_line_items.restocked_at
-      - return_line_items.updated_at
-      - return_line_items.line_item_id
-      - return_line_items.line_item_name
-      - return_line_items.line_item_code
-      - return_line_items.line_item_item_type
-      - return_line_items.line_item_total_amount
-      - return_line_items.line_item_tax_amount
-      - return_line_items.line_item_tax_rate
-      - return_line_items.line_item_updated_at
       - stock_location.id
       - stock_location.name
       - stock_location.reference
       - stock_location.reference_origin
       - tags.id
       - tags.name
-    returns_export_request:
-      type: object
-      properties:
-        filter:
-          $ref: '#/components/schemas/returns_filter'
-        search:
-          type: object
-          required:
-          - fields
-          properties:
-            sort:
-              type: string
-              description: Result sorting
-              enum:
-              - asc
-              - desc
-              default: desc
-            sort_by:
-              $ref: '#/components/schemas/returns_export_fields'
-            fields:
-              type: array
-              items:
-                $ref: '#/components/schemas/returns_export_fields'
-              description: Fields to export (order/return and single-level references only, no line_items). tags.name and tags.id return joined values.
-        meta:
-          type: object
-          properties:
-            payload:
-              type: boolean
-              description: Set to true if you want to receive how the payload has been made
-    returns_stats_request:
-      type: object
-      properties:
-        filter:
-          $ref: '#/components/schemas/returns_filter'
-        stats:
-          type: object
-          description: Check available [fields](#/components/schemas/returns_stats_request/properties/stats/properties/field/description)
-          required:
-          - field
-          properties:
-            field:
-              type: string
-              description: "These are the valid values you can specify for the field key of the stats query and the related valid operators, based on that key:\n\n\n        \n| Value | Operators |\n| --- | --------- |\n|**`customer.id`** | <p>`value_count`</p>|\n|**`customer.email`** | <p>`value_count`</p>|\n|**`customer.group_name`** | <p>`value_count`</p>|\n|**`destination_address.business`** | <p>`value_count`</p>|\n|**`destination_address.city`** | <p>`value_count`</p>|\n|**`destination_address.country_code`** | <p>`value_count`</p>|\n|**`destination_address.geocoded`** | <p>`value_count`</p>|\n|**`destination_address.localized`** | <p>`value_count`</p>|\n|**`destination_address.state_code`** | <p>`value_count`</p>|\n|**`destination_address.zip_code`** | <p>`value_count`</p>|\n|**`origin_address.business`** | <p>`value_count`</p>|\n|**`origin_address.city`** | <p>`value_count`</p>|\n|**`origin_address.country_code`** | <p>`value_count`</p>|\n|**`origin_address.geocoded`** | <p>`value_count`</p>|\n|**`origin_address.localized`** | <p>`value_count`</p>|\n|**`origin_address.state_code`** | <p>`value_count`</p>|\n|**`origin_address.zip_code`** | <p>`value_count`</p>|\n|**`market.id`** | <p>`cardinality`</p><p>`value_count`</p>|\n|**`market.number`** | <p>`cardinality`</p><p>`value_count`</p>|\n|**`return.number`** | <p>`value_count`</p>|\n|**`return.reference`** | <p>`value_count`</p>|\n|**`return.reference_origin`** | <p>`value_count`</p>|\n|**`return.status`** | <p>`value_count`</p>|\n|**`return.id`** | <p>`cardinality`</p><p>`value_count`</p>|\n|**`return.order_id`** | <p>`value_count`</p>|\n|**`return.skus_count`** | <p>`avg`</p><p>`max`</p><p>`min`</p><p>`sum`</p><p>`stats`</p>|\n|**`return_line_items.quantity`** | <p>`avg`</p><p>`max`</p><p>`min`</p><p>`sum`</p><p>`stats`</p>|\n|**`return_line_items.line_item_id`** | <p>`value_count`</p>|\n|**`return_line_items.line_item_name`** | <p>`value_count`</p>|\n|**`return_line_items.line_item_code`** | <p>`value_count`</p>|\n|**`return_line_items.line_item_item_type`** | <p>`value_count`</p>|\n|**`return_line_items.line_item_total_amount`** | <p>`avg`</p><p>`max`</p><p>`min`</p><p>`sum`</p><p>`stats`</p>|\n|**`return_line_items.line_item_tax_amount`** | <p>`avg`</p><p>`max`</p><p>`min`</p><p>`sum`</p><p>`stats`</p>|\n|**`return_line_items.line_item_tax_rate`** | <p>`avg`</p><p>`max`</p><p>`min`</p><p>`sum`</p><p>`stats`</p>|\n|**`stock_location.id`** | <p>`value_count`</p>|\n|**`stock_location.name`** | <p>`value_count`</p>|\n|**`stock_location.reference`** | <p>`value_count`</p>|\n|**`stock_location.reference_origin`** | <p>`value_count`</p>|\n"
-              enum:
-              - customer.id
-              - customer.email
-              - customer.group_name
-              - destination_address.business
-              - destination_address.city
-              - destination_address.country_code
-              - destination_address.geocoded
-              - destination_address.localized
-              - destination_address.state_code
-              - destination_address.zip_code
-              - origin_address.business
-              - origin_address.city
-              - origin_address.country_code
-              - origin_address.geocoded
-              - origin_address.localized
-              - origin_address.state_code
-              - origin_address.zip_code
-              - market.id
-              - market.number
-              - return.number
-              - return.reference
-              - return.reference_origin
-              - return.status
-              - return.mode
-              - return.id
-              - return.order_id
-              - return.skus_count
-              - return_line_items.quantity
-              - return_line_items.line_item_id
-              - return_line_items.line_item_name
-              - return_line_items.line_item_code
-              - return_line_items.line_item_item_type
-              - return_line_items.line_item_total_amount
-              - return_line_items.line_item_tax_amount
-              - return_line_items.line_item_tax_rate
-              - stock_location.id
-              - stock_location.name
-              - stock_location.reference
-              - stock_location.reference_origin
-            operator:
-              type: string
-              description: Operator to apply
-              enum:
-              - value_count
-              - cardinality
-              - avg
-              - max
-              - min
-              - sum
-              - stats
-        meta:
-          type: object
-          properties:
-            payload:
-              type: boolean
-              description: Set to true if you want to receive how the payload has been made
-    returns_search_request:
-      type: object
-      properties:
-        filter:
-          $ref: '#/components/schemas/returns_filter'
-        search:
-          type: object
-          required:
-          - fields
-          properties:
-            sort:
-              type: string
-              description: Result sorting
-              enum:
-              - asc
-              - desc
-            limit:
-              type: integer
-              description: Results limit
-              default: 50
-              maximum: 100
-            sort_by:
-              $ref: '#/components/schemas/returns_search_fields'
-            fields:
-              type: array
-              items:
-                $ref: '#/components/schemas/returns_search_fields'
-        meta:
-          type: object
-          properties:
-            payload:
-              type: boolean
-              description: Set to true if you want to receive how the payload has been made
     returns_breakdown_request:
       type: object
       properties:
@@ -5819,6 +5654,171 @@ components:
               - by
               - field
               - operator
+        meta:
+          type: object
+          properties:
+            payload:
+              type: boolean
+              description: Set to true if you want to receive how the payload has been made
+    returns_stats_request:
+      type: object
+      properties:
+        filter:
+          $ref: '#/components/schemas/returns_filter'
+        stats:
+          type: object
+          description: Check available [fields](#/components/schemas/returns_stats_request/properties/stats/properties/field/description)
+          required:
+          - field
+          properties:
+            field:
+              type: string
+              description: "These are the valid values you can specify for the field key of the stats query and the related valid operators, based on that key:\n\n\n        \n| Value | Operators |\n| --- | --------- |\n|**`customer.id`** | <p>`value_count`</p>|\n|**`customer.email`** | <p>`value_count`</p>|\n|**`customer.group_name`** | <p>`value_count`</p>|\n|**`destination_address.business`** | <p>`value_count`</p>|\n|**`destination_address.city`** | <p>`value_count`</p>|\n|**`destination_address.country_code`** | <p>`value_count`</p>|\n|**`destination_address.geocoded`** | <p>`value_count`</p>|\n|**`destination_address.localized`** | <p>`value_count`</p>|\n|**`destination_address.state_code`** | <p>`value_count`</p>|\n|**`destination_address.zip_code`** | <p>`value_count`</p>|\n|**`origin_address.business`** | <p>`value_count`</p>|\n|**`origin_address.city`** | <p>`value_count`</p>|\n|**`origin_address.country_code`** | <p>`value_count`</p>|\n|**`origin_address.geocoded`** | <p>`value_count`</p>|\n|**`origin_address.localized`** | <p>`value_count`</p>|\n|**`origin_address.state_code`** | <p>`value_count`</p>|\n|**`origin_address.zip_code`** | <p>`value_count`</p>|\n|**`market.id`** | <p>`cardinality`</p><p>`value_count`</p>|\n|**`market.number`** | <p>`cardinality`</p><p>`value_count`</p>|\n|**`return.number`** | <p>`value_count`</p>|\n|**`return.reference`** | <p>`value_count`</p>|\n|**`return.reference_origin`** | <p>`value_count`</p>|\n|**`return.status`** | <p>`value_count`</p>|\n|**`return.id`** | <p>`cardinality`</p><p>`value_count`</p>|\n|**`return.order_id`** | <p>`value_count`</p>|\n|**`return.skus_count`** | <p>`avg`</p><p>`max`</p><p>`min`</p><p>`sum`</p><p>`stats`</p>|\n|**`return_line_items.quantity`** | <p>`avg`</p><p>`max`</p><p>`min`</p><p>`sum`</p><p>`stats`</p>|\n|**`return_line_items.line_item_id`** | <p>`value_count`</p>|\n|**`return_line_items.line_item_name`** | <p>`value_count`</p>|\n|**`return_line_items.line_item_code`** | <p>`value_count`</p>|\n|**`return_line_items.line_item_item_type`** | <p>`value_count`</p>|\n|**`return_line_items.line_item_total_amount`** | <p>`avg`</p><p>`max`</p><p>`min`</p><p>`sum`</p><p>`stats`</p>|\n|**`return_line_items.line_item_tax_amount`** | <p>`avg`</p><p>`max`</p><p>`min`</p><p>`sum`</p><p>`stats`</p>|\n|**`return_line_items.line_item_tax_rate`** | <p>`avg`</p><p>`max`</p><p>`min`</p><p>`sum`</p><p>`stats`</p>|\n|**`stock_location.id`** | <p>`value_count`</p>|\n|**`stock_location.name`** | <p>`value_count`</p>|\n|**`stock_location.reference`** | <p>`value_count`</p>|\n|**`stock_location.reference_origin`** | <p>`value_count`</p>|\n"
+              enum:
+              - customer.id
+              - customer.email
+              - customer.group_name
+              - destination_address.business
+              - destination_address.city
+              - destination_address.country_code
+              - destination_address.geocoded
+              - destination_address.localized
+              - destination_address.state_code
+              - destination_address.zip_code
+              - origin_address.business
+              - origin_address.city
+              - origin_address.country_code
+              - origin_address.geocoded
+              - origin_address.localized
+              - origin_address.state_code
+              - origin_address.zip_code
+              - market.id
+              - market.number
+              - return.number
+              - return.reference
+              - return.reference_origin
+              - return.status
+              - return.mode
+              - return.id
+              - return.order_id
+              - return.skus_count
+              - return_line_items.quantity
+              - return_line_items.line_item_id
+              - return_line_items.line_item_name
+              - return_line_items.line_item_code
+              - return_line_items.line_item_item_type
+              - return_line_items.line_item_total_amount
+              - return_line_items.line_item_tax_amount
+              - return_line_items.line_item_tax_rate
+              - stock_location.id
+              - stock_location.name
+              - stock_location.reference
+              - stock_location.reference_origin
+            operator:
+              type: string
+              description: Operator to apply
+              enum:
+              - value_count
+              - cardinality
+              - avg
+              - max
+              - min
+              - sum
+              - stats
+        meta:
+          type: object
+          properties:
+            payload:
+              type: boolean
+              description: Set to true if you want to receive how the payload has been made
+    returns_search_fields:
+      type: string
+      enum:
+      - customer.id
+      - customer.email
+      - customer.group_name
+      - destination_address.business
+      - destination_address.city
+      - destination_address.country_code
+      - destination_address.geocoded
+      - destination_address.localized
+      - destination_address.state_code
+      - destination_address.zip_code
+      - origin_address.business
+      - origin_address.city
+      - origin_address.country_code
+      - origin_address.geocoded
+      - origin_address.localized
+      - origin_address.state_code
+      - origin_address.zip_code
+      - market.id
+      - market.name
+      - market.number
+      - organization.id
+      - organization.name
+      - organization.slug
+      - return.aggregated_details
+      - return.approved_at
+      - return.archived_at
+      - return.archived
+      - return.cancelled_at
+      - return.created_at
+      - return.number
+      - return.received_at
+      - return.reference
+      - return.reference_origin
+      - return.rejected_at
+      - return.shipped_at
+      - return.status
+      - return.mode
+      - return.updated_at
+      - return.current_date
+      - return.id
+      - return.order_id
+      - return.skus_count
+      - return.currency_code
+      - return_line_items.created_at
+      - return_line_items.quantity
+      - return_line_items.restocked_at
+      - return_line_items.updated_at
+      - return_line_items.line_item_id
+      - return_line_items.line_item_name
+      - return_line_items.line_item_code
+      - return_line_items.line_item_item_type
+      - return_line_items.line_item_total_amount
+      - return_line_items.line_item_tax_amount
+      - return_line_items.line_item_tax_rate
+      - return_line_items.line_item_updated_at
+      - stock_location.id
+      - stock_location.name
+      - stock_location.reference
+      - stock_location.reference_origin
+      - tags.id
+      - tags.name
+    returns_export_request:
+      type: object
+      properties:
+        filter:
+          $ref: '#/components/schemas/returns_filter'
+        search:
+          type: object
+          required:
+          - fields
+          properties:
+            sort:
+              type: string
+              description: Result sorting
+              enum:
+              - asc
+              - desc
+              default: desc
+            sort_by:
+              $ref: '#/components/schemas/returns_export_fields'
+            fields:
+              type: array
+              items:
+                $ref: '#/components/schemas/returns_export_fields'
+              description: Fields to export (order/return and single-level references only, no line_items). tags.name and tags.id return joined values.
         meta:
           type: object
           properties:

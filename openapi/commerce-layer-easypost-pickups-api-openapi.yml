@@ -113,7 +113,7 @@ paths:
           description: No content
 components:
   schemas:
-    easypostPickupCreate:
+    easypostPickupUpdate:
       required:
       - data
       type: object
@@ -122,6 +122,7 @@ components:
           type: object
           required:
           - type
+          - id
           - attributes
           properties:
             type:
@@ -129,6 +130,10 @@ components:
               description: The resource's type
               enum:
               - easypost_pickups
+            id:
+              type: string
+              description: Unique identifier for the resource (hash).
+              example: XAyRWNUzyN
             attributes:
               type: object
               properties:
@@ -136,30 +141,28 @@ components:
                   type: string
                   description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
                   example: ANY-EXTERNAL-REFEFERNCE
+                  nullable: true
                 reference_origin:
                   type: string
                   description: Any identifier of the third party system that defines the reference code.
                   example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
+                  nullable: true
                 metadata:
                   type: object
                   description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
                   example:
                     foo: bar
-                instructions:
+                  nullable: true
+                selected_rate_id:
                   type: string
-                  description: Additional text to help the driver successfully obtain the package, automatically enriched with parcels and package informations.
-                  example: Knock loudly
-                min_datetime:
-                  type: string
-                  description: The earliest time at which the package is available to pick up, must be larger than 2 hours from creation time.
-                  example: '2018-01-01T12:00:00.000Z'
-                max_datetime:
-                  type: string
-                  description: The latest time at which the package is available to pick up, must be smaller than 24 hours from creation time.
-                  example: '2018-01-01T12:00:00.000Z'
-              required:
-              - min_datetime
-              - max_datetime
+                  description: The selected purchase rate from the available pick up rates.
+                  example: pickuprate_a6cd2647a898410aa5d33febde44e1b2
+                  nullable: true
+                _purchase:
+                  type: boolean
+                  description: Send this attribute if you want to purchase this pick up with the selected rate.
+                  example: true
+                  nullable: false
             relationships:
               type: object
               properties:
@@ -180,133 +183,6 @@ components:
                           type: string
                           description: Unique identifier for the resource (hash).
                           example: XAyRWNUzyN
-              required:
-              - shipment
-    easypostPickupResponseList:
-      type: object
-      properties:
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/easypostPickupResponse/properties/data'
-    easypostPickupResponse:
-      type: object
-      properties:
-        data:
-          type: object
-          properties:
-            id:
-              type: string
-              description: Unique identifier for the resource (hash).
-              example: XAyRWNUzyN
-            type:
-              type: string
-              description: The resource's type
-              enum:
-              - easypost_pickups
-            links:
-              type: object
-              properties:
-                self:
-                  type: string
-                  description: URL
-            attributes:
-              $ref: '#/components/schemas/easypostPickup/properties/data/properties/attributes'
-            relationships:
-              type: object
-              properties:
-                shipment:
-                  type: object
-                  properties:
-                    links:
-                      type: object
-                      properties:
-                        self:
-                          type: string
-                          description: URL
-                        related:
-                          type: string
-                          description: URL
-                    data:
-                      type: object
-                      properties:
-                        type:
-                          type: string
-                          description: The resource's type
-                          enum:
-                          - shipment
-                        id:
-                          type: string
-                          description: The resource ID
-                parcels:
-                  type: object
-                  properties:
-                    links:
-                      type: object
-                      properties:
-                        self:
-                          type: string
-                          description: URL
-                        related:
-                          type: string
-                          description: URL
-                    data:
-                      type: object
-                      properties:
-                        type:
-                          type: string
-                          description: The resource's type
-                          enum:
-                          - parcels
-                        id:
-                          type: string
-                          description: The resource ID
-                events:
-                  type: object
-                  properties:
-                    links:
-                      type: object
-                      properties:
-                        self:
-                          type: string
-                          description: URL
-                        related:
-                          type: string
-                          description: URL
-                    data:
-                      type: object
-                      properties:
-                        type:
-                          type: string
-                          description: The resource's type
-                          enum:
-                          - events
-                        id:
-                          type: string
-                          description: The resource ID
-                event_stores:
-                  type: object
-                  properties:
-                    links:
-                      type: object
-                      properties:
-                        self:
-                          type: string
-                          description: URL
-                        related:
-                          type: string
-                          description: URL
-                    data:
-                      type: object
-                      properties:
-                        type:
-                          type: string
-                          description: The resource's type
-                          enum:
-                          - event_stores
-                        id:
-                          type: string
-                          description: The resource ID
     easypostPickup:
       type: object
       properties:
@@ -471,7 +347,125 @@ components:
                           type: string
                           description: Unique identifier for the resource (hash).
                           example: XAyRWNUzyN
-    easypostPickupUpdate:
+    easypostPickupResponse:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            id:
+              type: string
+              description: Unique identifier for the resource (hash).
+              example: XAyRWNUzyN
+            type:
+              type: string
+              description: The resource's type
+              enum:
+              - easypost_pickups
+            links:
+              type: object
+              properties:
+                self:
+                  type: string
+                  description: URL
+            attributes:
+              $ref: '#/components/schemas/easypostPickup/properties/data/properties/attributes'
+            relationships:
+              type: object
+              properties:
+                shipment:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - shipment
+                        id:
+                          type: string
+                          description: The resource ID
+                parcels:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - parcels
+                        id:
+                          type: string
+                          description: The resource ID
+                events:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - events
+                        id:
+                          type: string
+                          description: The resource ID
+                event_stores:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - event_stores
+                        id:
+                          type: string
+                          description: The resource ID
+    easypostPickupCreate:
       required:
       - data
       type: object
@@ -480,7 +474,6 @@ components:
           type: object
           required:
           - type
-          - id
           - attributes
           properties:
             type:
@@ -488,10 +481,6 @@ components:
               description: The resource's type
               enum:
               - easypost_pickups
-            id:
-              type: string
-              description: Unique identifier for the resource (hash).
-              example: XAyRWNUzyN
             attributes:
               type: object
               properties:
@@ -499,28 +488,30 @@ components:
                   type: string
                   description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
                   example: ANY-EXTERNAL-REFEFERNCE
-                  nullable: true
                 reference_origin:
                   type: string
                   description: Any identifier of the third party system that defines the reference code.
                   example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
-                  nullable: true
                 metadata:
                   type: object
                   description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
                   example:
                     foo: bar
-                  nullable: true
-                selected_rate_id:
+                instructions:
                   type: string
-                  description: The selected purchase rate from the available pick up rates.
-                  example: pickuprate_a6cd2647a898410aa5d33febde44e1b2
-                  nullable: true
-                _purchase:
-                  type: boolean
-                  description: Send this attribute if you want to purchase this pick up with the selected rate.
-                  example: true
-                  nullable: false
+                  description: Additional text to help the driver successfully obtain the package, automatically enriched with parcels and package informations.
+                  example: Knock loudly
+                min_datetime:
+                  type: string
+                  description: The earliest time at which the package is available to pick up, must be larger than 2 hours from creation time.
+                  example: '2018-01-01T12:00:00.000Z'
+                max_datetime:
+                  type: string
+                  description: The latest time at which the package is available to pick up, must be smaller than 24 hours from creation time.
+                  example: '2018-01-01T12:00:00.000Z'
+              required:
+              - min_datetime
+              - max_datetime
             relationships:
               type: object
               properties:
@@ -541,6 +532,15 @@ components:
                           type: string
                           description: Unique identifier for the resource (hash).
                           example: XAyRWNUzyN
+              required:
+              - shipment
+    easypostPickupResponseList:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/easypostPickupResponse/properties/data'
   securitySchemes:
     bearerAuth:
       type: http

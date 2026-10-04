@@ -101,6 +101,13 @@ paths:
                 $ref: '#/components/schemas/versionResponse'
 components:
   schemas:
+    versionResponseList:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/versionResponse/properties/data'
     version:
       type: object
       properties:
@@ -208,13 +215,6 @@ components:
             relationships:
               type: object
               properties: {}
-    versionResponseList:
-      type: object
-      properties:
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/versionResponse/properties/data'
   securitySchemes:
     bearerAuth:
       type: http

@@ -113,7 +113,7 @@ paths:
           description: No content
 components:
   schemas:
-    percentageDiscountPromotionCreate:
+    percentageDiscountPromotionUpdate:
       required:
       - data
       type: object
@@ -122,6 +122,7 @@ components:
           type: object
           required:
           - type
+          - id
           - attributes
           properties:
             type:
@@ -129,6 +130,10 @@ components:
               description: The resource's type
               enum:
               - percentage_discount_promotions
+            id:
+              type: string
+              description: Unique identifier for the resource (hash).
+              example: XAyRWNUzyN
             attributes:
               type: object
               properties:
@@ -136,60 +141,74 @@ components:
                   type: string
                   description: The promotion's internal name.
                   example: Personal promotion
+                  nullable: false
                 currency_code:
                   type: string
                   description: The international 3-letter currency code as defined by the ISO 4217 standard.
                   example: EUR
+                  nullable: true
                 exclusive:
                   type: boolean
                   description: Indicates if the promotion will be applied exclusively, based on its priority score.
                   example: true
+                  nullable: false
                 priority:
                   type: integer
                   description: The priority assigned to the promotion (lower means higher priority).
                   example: 2
+                  nullable: true
                 starts_at:
                   type: string
                   description: The activation date/time of this promotion.
                   example: '2018-01-01T12:00:00.000Z'
+                  nullable: false
                 expires_at:
                   type: string
                   description: The expiration date/time of this promotion (must be after starts_at).
                   example: '2018-01-02T12:00:00.000Z'
+                  nullable: false
                 total_usage_limit:
                   type: integer
                   description: The total number of times this promotion can be applied. When 'null' it means promotion can be applied infinite times.
                   example: 5
+                  nullable: true
                 _disable:
                   type: boolean
                   description: Send this attribute if you want to mark this resource as disabled.
                   example: true
+                  nullable: false
                 _enable:
                   type: boolean
                   description: Send this attribute if you want to mark this resource as enabled.
                   example: true
+                  nullable: false
+                _add_tags:
+                  type: string
+                  description: Comma separated list of tags to be added. Duplicates, invalid and non existing ones are discarded. Cannot be passed by sales channels.
+                _remove_tags:
+                  type: string
+                  description: Comma separated list of tags to be removed. Duplicates, invalid and non existing ones are discarded. Cannot be passed by sales channels.
                 reference:
                   type: string
                   description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
                   example: ANY-EXTERNAL-REFEFERNCE
+                  nullable: true
                 reference_origin:
                   type: string
                   description: Any identifier of the third party system that defines the reference code.
                   example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
+                  nullable: true
                 metadata:
                   type: object
                   description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
                   example:
                     foo: bar
+                  nullable: true
                 percentage:
                   type: integer
                   description: The discount percentage to be applied.
                   example: 10
-              required:
-              - name
-              - starts_at
-              - expires_at
-              - percentage
+                  nullable: false
             relationships:
               type: object
               properties:
@@ -648,13 +667,6 @@ components:
                           type: string
                           description: Unique identifier for the resource (hash).
                           example: XAyRWNUzyN
-    percentageDiscountPromotionResponseList:
-      type: object
-      properties:
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/percentageDiscountPromotionResponse/properties/data'
     percentageDiscountPromotionResponse:
       type: object
       properties:
@@ -980,7 +992,14 @@ components:
                         id:
                           type: string
                           description: The resource ID
-    percentageDiscountPromotionUpdate:
+    percentageDiscountPromotionResponseList:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/percentageDiscountPromotionResponse/properties/data'
+    percentageDiscountPromotionCreate:
       required:
       - data
       type: object
@@ -989,7 +1008,6 @@ components:
           type: object
           required:
           - type
-          - id
           - attributes
           properties:
             type:
@@ -997,10 +1015,6 @@ components:
               description: The resource's type
               enum:
               - percentage_discount_promotions
-            id:
-              type: string
-              description: Unique identifier for the resource (hash).
-              example: XAyRWNUzyN
             attributes:
               type: object
               properties:
@@ -1008,74 +1022,60 @@ components:
                   type: string
                   description: The promotion's internal name.
                   example: Personal promotion
-                  nullable: false
                 currency_code:
                   type: string
                   description: The international 3-letter currency code as defined by the ISO 4217 standard.
                   example: EUR
-                  nullable: true
                 exclusive:
                   type: boolean
                   description: Indicates if the promotion will be applied exclusively, based on its priority score.
                   example: true
-                  nullable: false
                 priority:
                   type: integer
                   description: The priority assigned to the promotion (lower means higher priority).
                   example: 2
-                  nullable: true
                 starts_at:
                   type: string
                   description: The activation date/time of this promotion.
                   example: '2018-01-01T12:00:00.000Z'
-                  nullable: false
                 expires_at:
                   type: string
                   description: The expiration date/time of this promotion (must be after starts_at).
                   example: '2018-01-02T12:00:00.000Z'
-                  nullable: false
                 total_usage_limit:
                   type: integer
                   description: The total number of times this promotion can be applied. When 'null' it means promotion can be applied infinite times.
                   example: 5
-                  nullable: true
                 _disable:
                   type: boolean
                   description: Send this attribute if you want to mark this resource as disabled.
                   example: true
-                  nullable: false
                 _enable:
                   type: boolean
                   description: Send this attribute if you want to mark this resource as enabled.
                   example: true
-                  nullable: false
-                _add_tags:
-                  type: string
-                  description: Comma separated list of tags to be added. Duplicates, invalid and non existing ones are discarded. Cannot be passed by sales channels.
-                _remove_tags:
-                  type: string
-                  description: Comma separated list of tags to be removed. Duplicates, invalid and non existing ones are discarded. Cannot be passed by sales channels.
                 reference:
                   type: string
                   description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
                   example: ANY-EXTERNAL-REFEFERNCE
-                  nullable: true
                 reference_origin:
                   type: string
                   description: Any identifier of the third party system that defines the reference code.
                   example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
-                  nullable: true
                 metadata:
                   type: object
                   description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
                   example:
                     foo: bar
-                  nullable: true
                 percentage:
                   type: integer
                   description: The discount percentage to be applied.
                   example: 10
-                  nullable: false
+              required:
+              - name
+              - starts_at
+              - expires_at
+              - percentage
             relationships:
               type: object
               properties:

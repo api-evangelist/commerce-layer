@@ -120,16 +120,13 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/packageResponse/properties/data'
-    packageUpdate:
-      required:
-      - data
+    package:
       type: object
       properties:
         data:
           type: object
           required:
           - type
-          - id
           - attributes
           properties:
             type:
@@ -137,10 +134,6 @@ components:
               description: The resource's type
               enum:
               - packages
-            id:
-              type: string
-              description: Unique identifier for the resource (hash).
-              example: XAyRWNUzyN
             attributes:
               type: object
               properties:
@@ -174,6 +167,16 @@ components:
                   description: The unit of length. Can be one of 'cm', or 'in'.
                   example: gr
                   nullable: false
+                created_at:
+                  type: string
+                  description: Time at which the resource was created.
+                  example: '2018-01-01T12:00:00.000Z'
+                  nullable: false
+                updated_at:
+                  type: string
+                  description: Time at which the resource was last updated.
+                  example: '2018-01-01T12:00:00.000Z'
+                  nullable: false
                 reference:
                   type: string
                   description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
@@ -194,8 +197,6 @@ components:
               type: object
               properties:
                 stock_location:
-                  required:
-                  - data
                   type: object
                   properties:
                     data:
@@ -206,6 +207,51 @@ components:
                           description: The resource's type
                           enum:
                           - stock_locations
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+                parcels:
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - parcels
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+                attachments:
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - attachments
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+                event_stores:
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - event_stores
                         id:
                           type: string
                           description: Unique identifier for the resource (hash).
@@ -412,13 +458,16 @@ components:
                           example: XAyRWNUzyN
               required:
               - stock_location
-    package:
+    packageUpdate:
+      required:
+      - data
       type: object
       properties:
         data:
           type: object
           required:
           - type
+          - id
           - attributes
           properties:
             type:
@@ -426,6 +475,10 @@ components:
               description: The resource's type
               enum:
               - packages
+            id:
+              type: string
+              description: Unique identifier for the resource (hash).
+              example: XAyRWNUzyN
             attributes:
               type: object
               properties:
@@ -459,16 +512,6 @@ components:
                   description: The unit of length. Can be one of 'cm', or 'in'.
                   example: gr
                   nullable: false
-                created_at:
-                  type: string
-                  description: Time at which the resource was created.
-                  example: '2018-01-01T12:00:00.000Z'
-                  nullable: false
-                updated_at:
-                  type: string
-                  description: Time at which the resource was last updated.
-                  example: '2018-01-01T12:00:00.000Z'
-                  nullable: false
                 reference:
                   type: string
                   description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
@@ -489,6 +532,8 @@ components:
               type: object
               properties:
                 stock_location:
+                  required:
+                  - data
                   type: object
                   properties:
                     data:
@@ -499,51 +544,6 @@ components:
                           description: The resource's type
                           enum:
                           - stock_locations
-                        id:
-                          type: string
-                          description: Unique identifier for the resource (hash).
-                          example: XAyRWNUzyN
-                parcels:
-                  type: object
-                  properties:
-                    data:
-                      type: object
-                      properties:
-                        type:
-                          type: string
-                          description: The resource's type
-                          enum:
-                          - parcels
-                        id:
-                          type: string
-                          description: Unique identifier for the resource (hash).
-                          example: XAyRWNUzyN
-                attachments:
-                  type: object
-                  properties:
-                    data:
-                      type: object
-                      properties:
-                        type:
-                          type: string
-                          description: The resource's type
-                          enum:
-                          - attachments
-                        id:
-                          type: string
-                          description: Unique identifier for the resource (hash).
-                          example: XAyRWNUzyN
-                event_stores:
-                  type: object
-                  properties:
-                    data:
-                      type: object
-                      properties:
-                        type:
-                          type: string
-                          description: The resource's type
-                          enum:
-                          - event_stores
                         id:
                           type: string
                           description: Unique identifier for the resource (hash).

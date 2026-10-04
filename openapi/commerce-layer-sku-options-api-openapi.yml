@@ -113,6 +113,101 @@ paths:
           description: No content
 components:
   schemas:
+    skuOptionCreate:
+      required:
+      - data
+      type: object
+      properties:
+        data:
+          type: object
+          required:
+          - type
+          - attributes
+          properties:
+            type:
+              type: string
+              description: The resource's type
+              enum:
+              - sku_options
+            attributes:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: The SKU option's internal name.
+                  example: Embossing
+                currency_code:
+                  type: string
+                  description: The international 3-letter currency code as defined by the ISO 4217 standard.
+                  example: EUR
+                description:
+                  type: string
+                  description: An internal description of the SKU option.
+                  example: Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                price_amount_cents:
+                  type: integer
+                  description: The price of this shipping method, in cents.
+                  example: 1000
+                delay_hours:
+                  type: integer
+                  description: The delay time (in hours) that should be added to the delivery lead time when this option is purchased.
+                  example: 48
+                sku_code_regex:
+                  type: string
+                  description: The regex that will be evaluated to match the SKU codes, max size is 5000.
+                  example: ^(A|B).*$
+                reference:
+                  type: string
+                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
+                  example: ANY-EXTERNAL-REFEFERNCE
+                reference_origin:
+                  type: string
+                  description: Any identifier of the third party system that defines the reference code.
+                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
+                metadata:
+                  type: object
+                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
+                  example:
+                    foo: bar
+              required:
+              - name
+            relationships:
+              type: object
+              properties:
+                market:
+                  required:
+                  - data
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - markets
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+                tags:
+                  required:
+                  - data
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - tags
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
     skuOptionResponse:
       type: object
       properties:
@@ -427,101 +522,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/skuOptionResponse/properties/data'
-    skuOptionCreate:
-      required:
-      - data
-      type: object
-      properties:
-        data:
-          type: object
-          required:
-          - type
-          - attributes
-          properties:
-            type:
-              type: string
-              description: The resource's type
-              enum:
-              - sku_options
-            attributes:
-              type: object
-              properties:
-                name:
-                  type: string
-                  description: The SKU option's internal name.
-                  example: Embossing
-                currency_code:
-                  type: string
-                  description: The international 3-letter currency code as defined by the ISO 4217 standard.
-                  example: EUR
-                description:
-                  type: string
-                  description: An internal description of the SKU option.
-                  example: Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                price_amount_cents:
-                  type: integer
-                  description: The price of this shipping method, in cents.
-                  example: 1000
-                delay_hours:
-                  type: integer
-                  description: The delay time (in hours) that should be added to the delivery lead time when this option is purchased.
-                  example: 48
-                sku_code_regex:
-                  type: string
-                  description: The regex that will be evaluated to match the SKU codes, max size is 5000.
-                  example: ^(A|B).*$
-                reference:
-                  type: string
-                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
-                  example: ANY-EXTERNAL-REFEFERNCE
-                reference_origin:
-                  type: string
-                  description: Any identifier of the third party system that defines the reference code.
-                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
-                metadata:
-                  type: object
-                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
-                  example:
-                    foo: bar
-              required:
-              - name
-            relationships:
-              type: object
-              properties:
-                market:
-                  required:
-                  - data
-                  type: object
-                  properties:
-                    data:
-                      type: object
-                      properties:
-                        type:
-                          type: string
-                          description: The resource's type
-                          enum:
-                          - markets
-                        id:
-                          type: string
-                          description: Unique identifier for the resource (hash).
-                          example: XAyRWNUzyN
-                tags:
-                  required:
-                  - data
-                  type: object
-                  properties:
-                    data:
-                      type: object
-                      properties:
-                        type:
-                          type: string
-                          description: The resource's type
-                          enum:
-                          - tags
-                        id:
-                          type: string
-                          description: Unique identifier for the resource (hash).
-                          example: XAyRWNUzyN
     skuOptionUpdate:
       required:
       - data

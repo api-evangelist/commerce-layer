@@ -127,6 +127,13 @@ components:
                         id:
                           type: string
                           description: The resource ID
+    paymentGatewayResponseList:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/paymentGatewayResponse/properties/data'
     paymentGateway:
       type: object
       properties:
@@ -224,13 +231,6 @@ components:
                           type: string
                           description: Unique identifier for the resource (hash).
                           example: XAyRWNUzyN
-    paymentGatewayResponseList:
-      type: object
-      properties:
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/paymentGatewayResponse/properties/data'
   securitySchemes:
     bearerAuth:
       type: http

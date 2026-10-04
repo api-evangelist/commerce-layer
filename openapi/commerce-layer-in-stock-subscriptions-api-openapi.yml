@@ -113,44 +113,74 @@ paths:
           description: No content
 components:
   schemas:
-    inStockSubscriptionResponse:
+    inStockSubscriptionUpdate:
+      required:
+      - data
       type: object
       properties:
         data:
           type: object
+          required:
+          - type
+          - id
+          - attributes
           properties:
-            id:
-              type: string
-              description: Unique identifier for the resource (hash).
-              example: XAyRWNUzyN
             type:
               type: string
               description: The resource's type
               enum:
               - in_stock_subscriptions
-            links:
+            id:
+              type: string
+              description: Unique identifier for the resource (hash).
+              example: XAyRWNUzyN
+            attributes:
               type: object
               properties:
-                self:
+                sku_code:
                   type: string
-                  description: URL
-            attributes:
-              $ref: '#/components/schemas/inStockSubscription/properties/data/properties/attributes'
+                  description: The code of the associated SKU, replace the relationship.
+                  example: TSHIRTMM000000FFFFFFXLXX
+                  nullable: true
+                stock_threshold:
+                  type: integer
+                  description: The threshold at which to trigger the back in stock notification.
+                  example: 3
+                  nullable: true
+                _activate:
+                  type: boolean
+                  description: Send this attribute if you want to activate an inactive subscription.
+                  example: true
+                  nullable: false
+                _deactivate:
+                  type: boolean
+                  description: Send this attribute if you want to dactivate an active subscription.
+                  example: true
+                  nullable: false
+                reference:
+                  type: string
+                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
+                  example: ANY-EXTERNAL-REFEFERNCE
+                  nullable: true
+                reference_origin:
+                  type: string
+                  description: Any identifier of the third party system that defines the reference code.
+                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
+                  nullable: true
+                metadata:
+                  type: object
+                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
+                  example:
+                    foo: bar
+                  nullable: true
             relationships:
               type: object
               properties:
                 market:
+                  required:
+                  - data
                   type: object
                   properties:
-                    links:
-                      type: object
-                      properties:
-                        self:
-                          type: string
-                          description: URL
-                        related:
-                          type: string
-                          description: URL
                     data:
                       type: object
                       properties:
@@ -158,22 +188,16 @@ components:
                           type: string
                           description: The resource's type
                           enum:
-                          - market
+                          - markets
                         id:
                           type: string
-                          description: The resource ID
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
                 customer:
+                  required:
+                  - data
                   type: object
                   properties:
-                    links:
-                      type: object
-                      properties:
-                        self:
-                          type: string
-                          description: URL
-                        related:
-                          type: string
-                          description: URL
                     data:
                       type: object
                       properties:
@@ -181,22 +205,16 @@ components:
                           type: string
                           description: The resource's type
                           enum:
-                          - customer
+                          - customers
                         id:
                           type: string
-                          description: The resource ID
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
                 sku:
+                  required:
+                  - data
                   type: object
                   properties:
-                    links:
-                      type: object
-                      properties:
-                        self:
-                          type: string
-                          description: URL
-                        related:
-                          type: string
-                          description: URL
                     data:
                       type: object
                       properties:
@@ -204,22 +222,63 @@ components:
                           type: string
                           description: The resource's type
                           enum:
-                          - sku
+                          - skus
                         id:
                           type: string
-                          description: The resource ID
-                events:
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+    inStockSubscriptionCreate:
+      required:
+      - data
+      type: object
+      properties:
+        data:
+          type: object
+          required:
+          - type
+          - attributes
+          properties:
+            type:
+              type: string
+              description: The resource's type
+              enum:
+              - in_stock_subscriptions
+            attributes:
+              type: object
+              properties:
+                customer_email:
+                  type: string
+                  description: The email of the associated customer, replace the relationship.
+                  example: john@example.com
+                sku_code:
+                  type: string
+                  description: The code of the associated SKU, replace the relationship.
+                  example: TSHIRTMM000000FFFFFFXLXX
+                stock_threshold:
+                  type: integer
+                  description: The threshold at which to trigger the back in stock notification.
+                  example: 3
+                reference:
+                  type: string
+                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
+                  example: ANY-EXTERNAL-REFEFERNCE
+                reference_origin:
+                  type: string
+                  description: Any identifier of the third party system that defines the reference code.
+                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
+                metadata:
+                  type: object
+                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
+                  example:
+                    foo: bar
+            relationships:
+              type: object
+              properties:
+                market:
+                  required:
+                  - data
                   type: object
                   properties:
-                    links:
-                      type: object
-                      properties:
-                        self:
-                          type: string
-                          description: URL
-                        related:
-                          type: string
-                          description: URL
                     data:
                       type: object
                       properties:
@@ -227,22 +286,16 @@ components:
                           type: string
                           description: The resource's type
                           enum:
-                          - events
+                          - markets
                         id:
                           type: string
-                          description: The resource ID
-                event_stores:
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+                customer:
+                  required:
+                  - data
                   type: object
                   properties:
-                    links:
-                      type: object
-                      properties:
-                        self:
-                          type: string
-                          description: URL
-                        related:
-                          type: string
-                          description: URL
                     data:
                       type: object
                       properties:
@@ -250,10 +303,32 @@ components:
                           type: string
                           description: The resource's type
                           enum:
-                          - event_stores
+                          - customers
                         id:
                           type: string
-                          description: The resource ID
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+                sku:
+                  required:
+                  - data
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - skus
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+              required:
+              - market
+              - customer
+              - sku
     inStockSubscription:
       type: object
       properties:
@@ -399,74 +474,44 @@ components:
                           type: string
                           description: Unique identifier for the resource (hash).
                           example: XAyRWNUzyN
-    inStockSubscriptionUpdate:
-      required:
-      - data
+    inStockSubscriptionResponse:
       type: object
       properties:
         data:
           type: object
-          required:
-          - type
-          - id
-          - attributes
           properties:
+            id:
+              type: string
+              description: Unique identifier for the resource (hash).
+              example: XAyRWNUzyN
             type:
               type: string
               description: The resource's type
               enum:
               - in_stock_subscriptions
-            id:
-              type: string
-              description: Unique identifier for the resource (hash).
-              example: XAyRWNUzyN
-            attributes:
+            links:
               type: object
               properties:
-                sku_code:
+                self:
                   type: string
-                  description: The code of the associated SKU, replace the relationship.
-                  example: TSHIRTMM000000FFFFFFXLXX
-                  nullable: true
-                stock_threshold:
-                  type: integer
-                  description: The threshold at which to trigger the back in stock notification.
-                  example: 3
-                  nullable: true
-                _activate:
-                  type: boolean
-                  description: Send this attribute if you want to activate an inactive subscription.
-                  example: true
-                  nullable: false
-                _deactivate:
-                  type: boolean
-                  description: Send this attribute if you want to dactivate an active subscription.
-                  example: true
-                  nullable: false
-                reference:
-                  type: string
-                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
-                  example: ANY-EXTERNAL-REFEFERNCE
-                  nullable: true
-                reference_origin:
-                  type: string
-                  description: Any identifier of the third party system that defines the reference code.
-                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
-                  nullable: true
-                metadata:
-                  type: object
-                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
-                  example:
-                    foo: bar
-                  nullable: true
+                  description: URL
+            attributes:
+              $ref: '#/components/schemas/inStockSubscription/properties/data/properties/attributes'
             relationships:
               type: object
               properties:
                 market:
-                  required:
-                  - data
                   type: object
                   properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
                     data:
                       type: object
                       properties:
@@ -474,16 +519,22 @@ components:
                           type: string
                           description: The resource's type
                           enum:
-                          - markets
+                          - market
                         id:
                           type: string
-                          description: Unique identifier for the resource (hash).
-                          example: XAyRWNUzyN
+                          description: The resource ID
                 customer:
-                  required:
-                  - data
                   type: object
                   properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
                     data:
                       type: object
                       properties:
@@ -491,16 +542,22 @@ components:
                           type: string
                           description: The resource's type
                           enum:
-                          - customers
+                          - customer
                         id:
                           type: string
-                          description: Unique identifier for the resource (hash).
-                          example: XAyRWNUzyN
+                          description: The resource ID
                 sku:
-                  required:
-                  - data
                   type: object
                   properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
                     data:
                       type: object
                       properties:
@@ -508,11 +565,56 @@ components:
                           type: string
                           description: The resource's type
                           enum:
-                          - skus
+                          - sku
                         id:
                           type: string
-                          description: Unique identifier for the resource (hash).
-                          example: XAyRWNUzyN
+                          description: The resource ID
+                events:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - events
+                        id:
+                          type: string
+                          description: The resource ID
+                event_stores:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - event_stores
+                        id:
+                          type: string
+                          description: The resource ID
     inStockSubscriptionResponseList:
       type: object
       properties:
@@ -520,108 +622,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/inStockSubscriptionResponse/properties/data'
-    inStockSubscriptionCreate:
-      required:
-      - data
-      type: object
-      properties:
-        data:
-          type: object
-          required:
-          - type
-          - attributes
-          properties:
-            type:
-              type: string
-              description: The resource's type
-              enum:
-              - in_stock_subscriptions
-            attributes:
-              type: object
-              properties:
-                customer_email:
-                  type: string
-                  description: The email of the associated customer, replace the relationship.
-                  example: john@example.com
-                sku_code:
-                  type: string
-                  description: The code of the associated SKU, replace the relationship.
-                  example: TSHIRTMM000000FFFFFFXLXX
-                stock_threshold:
-                  type: integer
-                  description: The threshold at which to trigger the back in stock notification.
-                  example: 3
-                reference:
-                  type: string
-                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
-                  example: ANY-EXTERNAL-REFEFERNCE
-                reference_origin:
-                  type: string
-                  description: Any identifier of the third party system that defines the reference code.
-                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
-                metadata:
-                  type: object
-                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
-                  example:
-                    foo: bar
-            relationships:
-              type: object
-              properties:
-                market:
-                  required:
-                  - data
-                  type: object
-                  properties:
-                    data:
-                      type: object
-                      properties:
-                        type:
-                          type: string
-                          description: The resource's type
-                          enum:
-                          - markets
-                        id:
-                          type: string
-                          description: Unique identifier for the resource (hash).
-                          example: XAyRWNUzyN
-                customer:
-                  required:
-                  - data
-                  type: object
-                  properties:
-                    data:
-                      type: object
-                      properties:
-                        type:
-                          type: string
-                          description: The resource's type
-                          enum:
-                          - customers
-                        id:
-                          type: string
-                          description: Unique identifier for the resource (hash).
-                          example: XAyRWNUzyN
-                sku:
-                  required:
-                  - data
-                  type: object
-                  properties:
-                    data:
-                      type: object
-                      properties:
-                        type:
-                          type: string
-                          description: The resource's type
-                          enum:
-                          - skus
-                        id:
-                          type: string
-                          description: Unique identifier for the resource (hash).
-                          example: XAyRWNUzyN
-              required:
-              - market
-              - customer
-              - sku
   securitySchemes:
     bearerAuth:
       type: http

@@ -242,169 +242,6 @@ paths:
           description: The organization associated to the role
 components:
   schemas:
-    organizationUpdate:
-      required:
-      - data
-      type: object
-      properties:
-        data:
-          type: object
-          required:
-          - type
-          - id
-          - attributes
-          properties:
-            type:
-              type: string
-              description: The resource's type.
-              enum:
-              - organizations
-            id:
-              type: string
-              description: The ID of the resource.
-              example: XGZwpOSrWL
-            attributes:
-              type: object
-              properties:
-                name:
-                  type: string
-                  description: The organization's internal name.
-                  example: The Blue Brand
-                support_phone:
-                  type:
-                  - string
-                  - 'null'
-                  description: The organization's support phone.
-                  example: +01 30800857
-                support_email:
-                  type:
-                  - string
-                  - 'null'
-                  description: The organization's support email.
-                  example: support@bluebrand.com
-                logo_url:
-                  type:
-                  - string
-                  - 'null'
-                  description: The URL to the organization's logo.
-                  example: https://bluebrand.com/img/logo.svg
-                favicon_url:
-                  type:
-                  - string
-                  - 'null'
-                  description: The URL to the organization's favicon.
-                  example: https://bluebrand.com/img/favicon.ico
-                primary_color:
-                  type:
-                  - string
-                  - 'null'
-                  description: The organization's primary color.
-                  example: '#C8984E'
-                contrast_color:
-                  type:
-                  - string
-                  - 'null'
-                  description: The organization's contrast color. Format is HEX (starts with `#` and is followed by six letters and/or numbers).
-                  example: '#FFFFCC'
-                gtm_id:
-                  type:
-                  - string
-                  - 'null'
-                  description: The organization's Google Tag Manager ID.
-                  example: GTM-5FJXX6
-                gtm_id_test:
-                  type:
-                  - string
-                  - 'null'
-                  description: The organization's Google Tag Manager ID for test.
-                  example: GTM-5FJXX7
-                config:
-                  type:
-                  - object
-                  - 'null'
-                  description: The organization's configuration.
-                  example:
-                    mfe:
-                      language: it-IT
-                      default:
-                        links:
-                          cart: https://cart.example.com/:order_id?accessToken=:access_token
-                          checkout: https://checkout.example.com/:order_id?accessToken=:access_token
-                          identity: https://example.com/login
-                          microstore: https://example.com/microstore/?accessToken=:access_token
-                          my_account: https://example.com/my-custom-account?accessToken=:access_token
-                        checkout:
-                          optional_billing_info: false
-                          thankyou_page: https://example.com/thanks/:lang/:order_id
-                          billing_countries:
-                          - value: ES
-                            label: Espana
-                          - value: IT
-                            label: Italia
-                          - value: US
-                            label: Unites States of America
-                          shipping_countries:
-                          - value: ES
-                            label: Espana
-                          - value: IT
-                            label: Italia
-                          - value: US
-                            label: Unites States of America
-                          billing_states:
-                            FR:
-                            - value: PA
-                              label: Paris
-                            - value: LY
-                              label: Lyon
-                            - value: NI
-                              label: Nice
-                            - value: MA
-                              label: Marseille
-                            - value: BO
-                              label: Bordeaux
-                          shipping_states:
-                            FR:
-                            - value: PA
-                              label: Paris
-                            - value: LY
-                              label: Lyon
-                            - value: NI
-                              label: Nice
-                            - value: MA
-                              label: Marseille
-                            - value: BO
-                              label: Bordeaux
-                          default_country: US
-                        urls:
-                          privacy: https://example.com/privacy/:lang
-                          terms: https://example.com/terms/:lang
-                      market:id:ZKcv13rT:
-                        links:
-                          cart: https://example.com/custom-cart/:order_id?accessToken=:access_token
-                        checkout:
-                          thankyou_page: https://example.com/thanks/:order_id
-                reference:
-                  type:
-                  - string
-                  - 'null'
-                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
-                  example: ANY-EXTERNAL-REFEFERNCE
-                reference_origin:
-                  type:
-                  - string
-                  - 'null'
-                  description: Any identifier of the third party system that defines the reference code.
-                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
-                metadata:
-                  type:
-                  - object
-                  - 'null'
-                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
-                  example:
-                    foo: bar
-            relationships:
-              type: object
-              properties: {}
     organizationCreate:
       required:
       - data
@@ -545,131 +382,6 @@ components:
             relationships:
               type: object
               properties: {}
-    organizationResponse:
-      type: object
-      properties:
-        data:
-          type: object
-          properties:
-            id:
-              type: string
-              description: The ID of the resource.
-              example: XGZwpOSrWL
-            type:
-              type: string
-              description: The resource's type.
-              enum:
-              - organizations
-            links:
-              type: object
-              properties:
-                self:
-                  type: string
-                  description: URL
-            attributes:
-              $ref: '#/components/schemas/organization/properties/data/properties/attributes'
-            relationships:
-              type: object
-              properties:
-                memberships:
-                  type: object
-                  properties:
-                    links:
-                      type: object
-                      properties:
-                        self:
-                          type: string
-                          description: URL
-                        related:
-                          type: string
-                          description: URL
-                    data:
-                      type: object
-                      properties:
-                        type:
-                          type: string
-                          description: The resource's type.
-                          enum:
-                          - memberships
-                        id:
-                          type: string
-                          description: The ID of the resource.
-                roles:
-                  type: object
-                  properties:
-                    links:
-                      type: object
-                      properties:
-                        self:
-                          type: string
-                          description: URL
-                        related:
-                          type: string
-                          description: URL
-                    data:
-                      type: object
-                      properties:
-                        type:
-                          type: string
-                          description: The resource's type.
-                          enum:
-                          - roles
-                        id:
-                          type: string
-                          description: The ID of the resource.
-                permissions:
-                  type: object
-                  properties:
-                    links:
-                      type: object
-                      properties:
-                        self:
-                          type: string
-                          description: URL
-                        related:
-                          type: string
-                          description: URL
-                    data:
-                      type: object
-                      properties:
-                        type:
-                          type: string
-                          description: The resource's type.
-                          enum:
-                          - permissions
-                        id:
-                          type: string
-                          description: The ID of the resource.
-                api_credentials:
-                  type: object
-                  properties:
-                    links:
-                      type: object
-                      properties:
-                        self:
-                          type: string
-                          description: URL
-                        related:
-                          type: string
-                          description: URL
-                    data:
-                      type: object
-                      properties:
-                        type:
-                          type: string
-                          description: The resource's type.
-                          enum:
-                          - api_credentials
-                        id:
-                          type: string
-                          description: The ID of the resource.
-    organizationResponseList:
-      type: object
-      properties:
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/organizationResponse/properties/data'
     organization:
       type: object
       properties:
@@ -1158,6 +870,294 @@ components:
                           type: string
                           description: The ID of the resource.
                           example: XGZwpOSrWL
+    organizationUpdate:
+      required:
+      - data
+      type: object
+      properties:
+        data:
+          type: object
+          required:
+          - type
+          - id
+          - attributes
+          properties:
+            type:
+              type: string
+              description: The resource's type.
+              enum:
+              - organizations
+            id:
+              type: string
+              description: The ID of the resource.
+              example: XGZwpOSrWL
+            attributes:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: The organization's internal name.
+                  example: The Blue Brand
+                support_phone:
+                  type:
+                  - string
+                  - 'null'
+                  description: The organization's support phone.
+                  example: +01 30800857
+                support_email:
+                  type:
+                  - string
+                  - 'null'
+                  description: The organization's support email.
+                  example: support@bluebrand.com
+                logo_url:
+                  type:
+                  - string
+                  - 'null'
+                  description: The URL to the organization's logo.
+                  example: https://bluebrand.com/img/logo.svg
+                favicon_url:
+                  type:
+                  - string
+                  - 'null'
+                  description: The URL to the organization's favicon.
+                  example: https://bluebrand.com/img/favicon.ico
+                primary_color:
+                  type:
+                  - string
+                  - 'null'
+                  description: The organization's primary color.
+                  example: '#C8984E'
+                contrast_color:
+                  type:
+                  - string
+                  - 'null'
+                  description: The organization's contrast color. Format is HEX (starts with `#` and is followed by six letters and/or numbers).
+                  example: '#FFFFCC'
+                gtm_id:
+                  type:
+                  - string
+                  - 'null'
+                  description: The organization's Google Tag Manager ID.
+                  example: GTM-5FJXX6
+                gtm_id_test:
+                  type:
+                  - string
+                  - 'null'
+                  description: The organization's Google Tag Manager ID for test.
+                  example: GTM-5FJXX7
+                config:
+                  type:
+                  - object
+                  - 'null'
+                  description: The organization's configuration.
+                  example:
+                    mfe:
+                      language: it-IT
+                      default:
+                        links:
+                          cart: https://cart.example.com/:order_id?accessToken=:access_token
+                          checkout: https://checkout.example.com/:order_id?accessToken=:access_token
+                          identity: https://example.com/login
+                          microstore: https://example.com/microstore/?accessToken=:access_token
+                          my_account: https://example.com/my-custom-account?accessToken=:access_token
+                        checkout:
+                          optional_billing_info: false
+                          thankyou_page: https://example.com/thanks/:lang/:order_id
+                          billing_countries:
+                          - value: ES
+                            label: Espana
+                          - value: IT
+                            label: Italia
+                          - value: US
+                            label: Unites States of America
+                          shipping_countries:
+                          - value: ES
+                            label: Espana
+                          - value: IT
+                            label: Italia
+                          - value: US
+                            label: Unites States of America
+                          billing_states:
+                            FR:
+                            - value: PA
+                              label: Paris
+                            - value: LY
+                              label: Lyon
+                            - value: NI
+                              label: Nice
+                            - value: MA
+                              label: Marseille
+                            - value: BO
+                              label: Bordeaux
+                          shipping_states:
+                            FR:
+                            - value: PA
+                              label: Paris
+                            - value: LY
+                              label: Lyon
+                            - value: NI
+                              label: Nice
+                            - value: MA
+                              label: Marseille
+                            - value: BO
+                              label: Bordeaux
+                          default_country: US
+                        urls:
+                          privacy: https://example.com/privacy/:lang
+                          terms: https://example.com/terms/:lang
+                      market:id:ZKcv13rT:
+                        links:
+                          cart: https://example.com/custom-cart/:order_id?accessToken=:access_token
+                        checkout:
+                          thankyou_page: https://example.com/thanks/:order_id
+                reference:
+                  type:
+                  - string
+                  - 'null'
+                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
+                  example: ANY-EXTERNAL-REFEFERNCE
+                reference_origin:
+                  type:
+                  - string
+                  - 'null'
+                  description: Any identifier of the third party system that defines the reference code.
+                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
+                metadata:
+                  type:
+                  - object
+                  - 'null'
+                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
+                  example:
+                    foo: bar
+            relationships:
+              type: object
+              properties: {}
+    organizationResponseList:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/organizationResponse/properties/data'
+    organizationResponse:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            id:
+              type: string
+              description: The ID of the resource.
+              example: XGZwpOSrWL
+            type:
+              type: string
+              description: The resource's type.
+              enum:
+              - organizations
+            links:
+              type: object
+              properties:
+                self:
+                  type: string
+                  description: URL
+            attributes:
+              $ref: '#/components/schemas/organization/properties/data/properties/attributes'
+            relationships:
+              type: object
+              properties:
+                memberships:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type.
+                          enum:
+                          - memberships
+                        id:
+                          type: string
+                          description: The ID of the resource.
+                roles:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type.
+                          enum:
+                          - roles
+                        id:
+                          type: string
+                          description: The ID of the resource.
+                permissions:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type.
+                          enum:
+                          - permissions
+                        id:
+                          type: string
+                          description: The ID of the resource.
+                api_credentials:
+                  type: object
+                  properties:
+                    links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                          description: URL
+                        related:
+                          type: string
+                          description: URL
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type.
+                          enum:
+                          - api_credentials
+                        id:
+                          type: string
+                          description: The ID of the resource.
   securitySchemes:
     bearerAuth:
       type: http
