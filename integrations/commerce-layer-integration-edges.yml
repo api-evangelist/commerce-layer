@@ -8,6 +8,7 @@ checked:
 - https://composio.dev/toolkits/commerce-layer
 - https://monid.ai/tools/commerce-layer
 - https://n8n.io/integrations/commerce-layer/
+- https://zapier.com/api/v4/apps/
 - https://zapier.com/apps/commerce-layer/integrations
 - sanity/integrations/sanity-integration-edges.yml
 - stripe/integrations/stripe-integration-edges.yml
@@ -246,6 +247,31 @@ edges:
   detected: '2026-10-15'
   detected_by: mirror-platform-listings.py
   category: commerce
+- partner_name: Zapier
+  partner: zapier
+  partner_match: aggregator
+  type: marketplace
+  marketplace: zapier-directory
+  channel: ipaas-listing
+  relationship: ipaas-bridge
+  direction: third-party
+  evidence: https://zapier.com/apps/commerce-layer/integrations
+  category: null
+  contract_reference:
+    register: Zapier app directory (zapier.com/api/v4/apps)
+    spec_file: null
+    role: ipaas-connector:zapier
+    registered_name: Commerce Layer
+    matched_domain: commercelayer.io
+    matched_by: domain
+    detected_by: sweep-workflow-automation.py
+    detected: '2026-10-15'
+    signal_note: one edge per (provider, platform); actions, triggers and usage counts are context, never read
+    app_slug: commerce-layer
+    beta: false
+    builder: unknown (not in the directory record)
+  detected_by: sweep-workflow-automation.py
+  first_seen: '2026-10-15'
 - partner_name: Contentful (own)
   partner: contentful
   partner_match: mirror
