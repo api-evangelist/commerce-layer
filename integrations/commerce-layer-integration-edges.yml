@@ -3,11 +3,13 @@ method: searched
 source:
 - https://zapier.com/apps/commerce-layer/integrations
 checked:
+- contentful/integrations/contentful-integration-edges.yml
 - https://aws.amazon.com/marketplace/
 - https://composio.dev/toolkits/commerce-layer
 - https://monid.ai/tools/commerce-layer
 - https://n8n.io/integrations/commerce-layer/
 - https://zapier.com/apps/commerce-layer/integrations
+- sanity/integrations/sanity-integration-edges.yml
 - stripe/integrations/stripe-integration-edges.yml
 summary: null
 marketplace_apps:
@@ -244,6 +246,39 @@ edges:
   detected: '2026-10-15'
   detected_by: mirror-platform-listings.py
   category: commerce
+- partner_name: Contentful (own)
+  partner: contentful
+  partner_match: mirror
+  mirror_match: domain
+  type: marketplace
+  relationship: platform-app
+  direction: third-party
+  channel: partner-built
+  marketplace: own
+  evidence: https://www.contentful.com/marketplace/commercelayer/
+  mirror_of: contentful/integrations/contentful-integration-edges.yml
+  apps:
+  - Commerce Layer App
+  listing_count: 1
+  detected: '2026-10-15'
+  detected_by: mirror-platform-listings.py
+- partner_name: Sanity (own)
+  partner: sanity
+  partner_match: mirror
+  mirror_match: domain
+  type: marketplace
+  relationship: platform-app
+  direction: third-party
+  channel: partner-built
+  marketplace: own
+  evidence: https://www.sanity.io/plugins/sanity-commerce
+  mirror_of: sanity/integrations/sanity-integration-edges.yml
+  apps:
+  - sanity-commerce
+  listing_count: 1
+  detected: '2026-10-15'
+  detected_by: mirror-platform-listings.py
+  category: Sanity plugin
 templates:
 - title: Notify Slack channels when new orders are placed in Commerce Layer
   url: https://zapier.com/apps/commerce-layer/integrations/slack/1179645/notify-slack-channels-when-new-orders-are-placed-in-commerce-layer
