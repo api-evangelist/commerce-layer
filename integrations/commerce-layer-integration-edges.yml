@@ -8,6 +8,7 @@ checked:
 - https://monid.ai/tools/commerce-layer
 - https://n8n.io/integrations/commerce-layer/
 - https://zapier.com/apps/commerce-layer/integrations
+- stripe/integrations/stripe-integration-edges.yml
 summary: null
 marketplace_apps:
 - marketplace: zapier
@@ -226,6 +227,23 @@ edges:
   seller_name: Commerce Layer
   detected_by: sweep-cloud-marketplaces.py
   detected: '2026-10-13'
+- partner_name: Stripe (own)
+  partner: stripe
+  partner_match: mirror
+  mirror_match: domain
+  type: marketplace
+  relationship: platform-app
+  direction: third-party
+  channel: partner-built
+  marketplace: own
+  evidence: https://marketplace.stripe.com/apps/commerce-layer
+  mirror_of: stripe/integrations/stripe-integration-edges.yml
+  apps:
+  - Commerce Layer
+  listing_count: 1
+  detected: '2026-10-15'
+  detected_by: mirror-platform-listings.py
+  category: commerce
 templates:
 - title: Notify Slack channels when new orders are placed in Commerce Layer
   url: https://zapier.com/apps/commerce-layer/integrations/slack/1179645/notify-slack-channels-when-new-orders-are-placed-in-commerce-layer
