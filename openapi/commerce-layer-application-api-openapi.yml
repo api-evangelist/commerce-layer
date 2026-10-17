@@ -35,32 +35,6 @@ paths:
                 $ref: '#/components/schemas/applicationResponse'
 components:
   schemas:
-    applicationResponse:
-      type: object
-      properties:
-        data:
-          type: object
-          properties:
-            id:
-              type: string
-              description: Unique identifier for the resource (hash).
-              example: XAyRWNUzyN
-            type:
-              type: string
-              description: The resource's type
-              enum:
-              - application
-            links:
-              type: object
-              properties:
-                self:
-                  type: string
-                  description: URL
-            attributes:
-              $ref: '#/components/schemas/application/properties/data/properties/attributes'
-            relationships:
-              type: object
-              properties: {}
     application:
       type: object
       properties:
@@ -160,6 +134,32 @@ components:
                   example:
                     foo: bar
                   nullable: true
+            relationships:
+              type: object
+              properties: {}
+    applicationResponse:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            id:
+              type: string
+              description: Unique identifier for the resource (hash).
+              example: XAyRWNUzyN
+            type:
+              type: string
+              description: The resource's type
+              enum:
+              - application
+            links:
+              type: object
+              properties:
+                self:
+                  type: string
+                  description: URL
+            attributes:
+              $ref: '#/components/schemas/application/properties/data/properties/attributes'
             relationships:
               type: object
               properties: {}

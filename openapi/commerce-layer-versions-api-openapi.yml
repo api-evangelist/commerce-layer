@@ -101,13 +101,32 @@ paths:
                 $ref: '#/components/schemas/versionResponse'
 components:
   schemas:
-    versionResponseList:
+    versionResponse:
       type: object
       properties:
         data:
-          type: array
-          items:
-            $ref: '#/components/schemas/versionResponse/properties/data'
+          type: object
+          properties:
+            id:
+              type: string
+              description: The ID of the resource.
+              example: XGZwpOSrWL
+            type:
+              type: string
+              description: The resource's type.
+              enum:
+              - versions
+            links:
+              type: object
+              properties:
+                self:
+                  type: string
+                  description: URL
+            attributes:
+              $ref: '#/components/schemas/version/properties/data/properties/attributes'
+            relationships:
+              type: object
+              properties: {}
     version:
       type: object
       properties:
@@ -189,32 +208,13 @@ components:
             relationships:
               type: object
               properties: {}
-    versionResponse:
+    versionResponseList:
       type: object
       properties:
         data:
-          type: object
-          properties:
-            id:
-              type: string
-              description: The ID of the resource.
-              example: XGZwpOSrWL
-            type:
-              type: string
-              description: The resource's type.
-              enum:
-              - versions
-            links:
-              type: object
-              properties:
-                self:
-                  type: string
-                  description: URL
-            attributes:
-              $ref: '#/components/schemas/version/properties/data/properties/attributes'
-            relationships:
-              type: object
-              properties: {}
+          type: array
+          items:
+            $ref: '#/components/schemas/versionResponse/properties/data'
   securitySchemes:
     bearerAuth:
       type: http

@@ -111,13 +111,6 @@ paths:
           description: No content
 components:
   schemas:
-    identityProviderResponseList:
-      type: object
-      properties:
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/identityProviderResponse/properties/data'
     identityProviderResponse:
       type: object
       properties:
@@ -167,6 +160,134 @@ components:
                         id:
                           type: string
                           description: The ID of the resource.
+    identityProvider:
+      type: object
+      properties:
+        data:
+          type: object
+          required:
+          - type
+          - attributes
+          properties:
+            type:
+              type: string
+              description: The resource's type.
+              enum:
+              - identity_providers
+            attributes:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: The name of the Identity provider.
+                  example: Org auth0
+                client_id:
+                  type: string
+                  description: The client ID used for the auth workflow.
+                  example: a6CDk5v1ZV99GrtOcfYVEZRnDDt
+                client_secret:
+                  type: string
+                  description: The client secret used for the auth workflow.
+                  example: s6CD55v1ZV99ArtOcfYVEZRnDDf
+                issuer:
+                  type: string
+                  description: The issuer used for the auth workflow.
+                  example: https://dev.auth987.com/
+                status:
+                  type: string
+                  description: The identity provider status. One of `pending` (default), `verified` or `error`.
+                  example: pending
+                  readOnly: true
+                  enum:
+                  - pending
+                  - verified
+                  - error
+                domains:
+                  type: string
+                  description: The list of domains in scope (comma-separated).
+                  example: dev.auth987.com,stg.auth987.com
+                token_url:
+                  type: string
+                  description: The token URL used for the auth workflow.
+                  example: https://dev.auth987.com/oauth/token
+                authorize_url:
+                  type: string
+                  description: The authorize URL used for the auth workflow.
+                  example: https://dev.auth987.com/authorize
+                jwks_url:
+                  type: string
+                  description: The JWKS key store URL used for the auth workflow.
+                  example: https://dev.auth987.com/.well-known/jwks.json
+                txt_record:
+                  type: string
+                  description: The TXT record value used to check the domain.
+                  example: cl-verification=a6CDk5v
+                  readOnly: true
+                organization:
+                  type:
+                  - string
+                  - 'null'
+                  description: The organization identifier for authorize params.
+                  example: org_76gsfs5gd
+                created_at:
+                  type: string
+                  description: Time at which the resource was created.
+                  example: '2018-01-01T12:00:00.000Z'
+                  readOnly: true
+                updated_at:
+                  type: string
+                  description: Time at which the resource was last updated.
+                  example: '2018-01-01T12:00:00.000Z'
+                  readOnly: true
+                reference:
+                  type:
+                  - string
+                  - 'null'
+                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
+                  example: ANY-EXTERNAL-REFEFERNCE
+                reference_origin:
+                  type:
+                  - string
+                  - 'null'
+                  description: Any identifier of the third party system that defines the reference code.
+                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
+                metadata:
+                  type:
+                  - object
+                  - 'null'
+                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
+                  example:
+                    foo: bar
+                disabled_at:
+                  type: string
+                  description: Time at which this resource was disabled.
+                  example: '2018-01-01T12:00:00.000Z'
+                  readOnly: true
+            relationships:
+              type: object
+              properties:
+                user:
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type.
+                          enum:
+                          - users
+                        id:
+                          type: string
+                          description: The ID of the resource.
+                          example: XGZwpOSrWL
+    identityProviderResponseList:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/identityProviderResponse/properties/data'
     identityProviderUpdate:
       required:
       - data
@@ -347,127 +468,6 @@ components:
             relationships:
               type: object
               properties: {}
-    identityProvider:
-      type: object
-      properties:
-        data:
-          type: object
-          required:
-          - type
-          - attributes
-          properties:
-            type:
-              type: string
-              description: The resource's type.
-              enum:
-              - identity_providers
-            attributes:
-              type: object
-              properties:
-                name:
-                  type: string
-                  description: The name of the Identity provider.
-                  example: Org auth0
-                client_id:
-                  type: string
-                  description: The client ID used for the auth workflow.
-                  example: a6CDk5v1ZV99GrtOcfYVEZRnDDt
-                client_secret:
-                  type: string
-                  description: The client secret used for the auth workflow.
-                  example: s6CD55v1ZV99ArtOcfYVEZRnDDf
-                issuer:
-                  type: string
-                  description: The issuer used for the auth workflow.
-                  example: https://dev.auth987.com/
-                status:
-                  type: string
-                  description: The identity provider status. One of `pending` (default), `verified` or `error`.
-                  example: pending
-                  readOnly: true
-                  enum:
-                  - pending
-                  - verified
-                  - error
-                domains:
-                  type: string
-                  description: The list of domains in scope (comma-separated).
-                  example: dev.auth987.com,stg.auth987.com
-                token_url:
-                  type: string
-                  description: The token URL used for the auth workflow.
-                  example: https://dev.auth987.com/oauth/token
-                authorize_url:
-                  type: string
-                  description: The authorize URL used for the auth workflow.
-                  example: https://dev.auth987.com/authorize
-                jwks_url:
-                  type: string
-                  description: The JWKS key store URL used for the auth workflow.
-                  example: https://dev.auth987.com/.well-known/jwks.json
-                txt_record:
-                  type: string
-                  description: The TXT record value used to check the domain.
-                  example: cl-verification=a6CDk5v
-                  readOnly: true
-                organization:
-                  type:
-                  - string
-                  - 'null'
-                  description: The organization identifier for authorize params.
-                  example: org_76gsfs5gd
-                created_at:
-                  type: string
-                  description: Time at which the resource was created.
-                  example: '2018-01-01T12:00:00.000Z'
-                  readOnly: true
-                updated_at:
-                  type: string
-                  description: Time at which the resource was last updated.
-                  example: '2018-01-01T12:00:00.000Z'
-                  readOnly: true
-                reference:
-                  type:
-                  - string
-                  - 'null'
-                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
-                  example: ANY-EXTERNAL-REFEFERNCE
-                reference_origin:
-                  type:
-                  - string
-                  - 'null'
-                  description: Any identifier of the third party system that defines the reference code.
-                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
-                metadata:
-                  type:
-                  - object
-                  - 'null'
-                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
-                  example:
-                    foo: bar
-                disabled_at:
-                  type: string
-                  description: Time at which this resource was disabled.
-                  example: '2018-01-01T12:00:00.000Z'
-                  readOnly: true
-            relationships:
-              type: object
-              properties:
-                user:
-                  type: object
-                  properties:
-                    data:
-                      type: object
-                      properties:
-                        type:
-                          type: string
-                          description: The resource's type.
-                          enum:
-                          - users
-                        id:
-                          type: string
-                          description: The ID of the resource.
-                          example: XGZwpOSrWL
   securitySchemes:
     bearerAuth:
       type: http

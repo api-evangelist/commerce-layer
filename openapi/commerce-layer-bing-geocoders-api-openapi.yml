@@ -113,7 +113,14 @@ paths:
           description: No content
 components:
   schemas:
-    bingGeocoderUpdate:
+    bingGeocoderResponseList:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/bingGeocoderResponse/properties/data'
+    bingGeocoderCreate:
       required:
       - data
       type: object
@@ -122,7 +129,6 @@ components:
           type: object
           required:
           - type
-          - id
           - attributes
           properties:
             type:
@@ -130,10 +136,6 @@ components:
               description: The resource's type
               enum:
               - bing_geocoders
-            id:
-              type: string
-              description: Unique identifier for the resource (hash).
-              example: XAyRWNUzyN
             attributes:
               type: object
               properties:
@@ -141,27 +143,26 @@ components:
                   type: string
                   description: The geocoder's internal name.
                   example: Default geocoder
-                  nullable: false
                 reference:
                   type: string
                   description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
                   example: ANY-EXTERNAL-REFEFERNCE
-                  nullable: true
                 reference_origin:
                   type: string
                   description: Any identifier of the third party system that defines the reference code.
                   example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
-                  nullable: true
                 metadata:
                   type: object
                   description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
                   example:
                     foo: bar
-                  nullable: true
                 key:
                   type: string
                   description: The Bing Virtualearth key.
                   example: xxxx-yyyy-zzzz
+              required:
+              - name
+              - key
             relationships:
               type: object
               properties: {}
@@ -283,7 +284,7 @@ components:
                         id:
                           type: string
                           description: The resource ID
-    bingGeocoderCreate:
+    bingGeocoderUpdate:
       required:
       - data
       type: object
@@ -292,6 +293,7 @@ components:
           type: object
           required:
           - type
+          - id
           - attributes
           properties:
             type:
@@ -299,6 +301,10 @@ components:
               description: The resource's type
               enum:
               - bing_geocoders
+            id:
+              type: string
+              description: Unique identifier for the resource (hash).
+              example: XAyRWNUzyN
             attributes:
               type: object
               properties:
@@ -306,36 +312,30 @@ components:
                   type: string
                   description: The geocoder's internal name.
                   example: Default geocoder
+                  nullable: false
                 reference:
                   type: string
                   description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
                   example: ANY-EXTERNAL-REFEFERNCE
+                  nullable: true
                 reference_origin:
                   type: string
                   description: Any identifier of the third party system that defines the reference code.
                   example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
+                  nullable: true
                 metadata:
                   type: object
                   description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
                   example:
                     foo: bar
+                  nullable: true
                 key:
                   type: string
                   description: The Bing Virtualearth key.
                   example: xxxx-yyyy-zzzz
-              required:
-              - name
-              - key
             relationships:
               type: object
               properties: {}
-    bingGeocoderResponseList:
-      type: object
-      properties:
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/bingGeocoderResponse/properties/data'
     bingGeocoder:
       type: object
       properties:

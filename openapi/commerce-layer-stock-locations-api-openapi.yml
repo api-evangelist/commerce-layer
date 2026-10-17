@@ -113,86 +113,6 @@ paths:
           description: No content
 components:
   schemas:
-    stockLocationUpdate:
-      required:
-      - data
-      type: object
-      properties:
-        data:
-          type: object
-          required:
-          - type
-          - id
-          - attributes
-          properties:
-            type:
-              type: string
-              description: The resource's type
-              enum:
-              - stock_locations
-            id:
-              type: string
-              description: Unique identifier for the resource (hash).
-              example: XAyRWNUzyN
-            attributes:
-              type: object
-              properties:
-                name:
-                  type: string
-                  description: The stock location's internal name.
-                  example: Primary warehouse
-                  nullable: false
-                code:
-                  type: string
-                  description: A string that you can use to identify the stock location (must be unique within the environment).
-                  example: europe1
-                  nullable: true
-                label_format:
-                  type: string
-                  description: The shipping label format for this stock location. Can be one of 'PDF', 'ZPL', 'EPL2', or 'PNG'.
-                  example: PDF
-                  nullable: true
-                suppress_etd:
-                  type: boolean
-                  description: Flag it if you want to skip the electronic invoice creation when generating the customs info for this stock location shipments.
-                  example: false
-                  nullable: false
-                reference:
-                  type: string
-                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
-                  example: ANY-EXTERNAL-REFEFERNCE
-                  nullable: true
-                reference_origin:
-                  type: string
-                  description: Any identifier of the third party system that defines the reference code.
-                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
-                  nullable: true
-                metadata:
-                  type: object
-                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
-                  example:
-                    foo: bar
-                  nullable: true
-            relationships:
-              type: object
-              properties:
-                address:
-                  required:
-                  - data
-                  type: object
-                  properties:
-                    data:
-                      type: object
-                      properties:
-                        type:
-                          type: string
-                          description: The resource's type
-                          enum:
-                          - addresses
-                        id:
-                          type: string
-                          description: Unique identifier for the resource (hash).
-                          example: XAyRWNUzyN
     stockLocationResponse:
       type: object
       properties:
@@ -403,6 +323,93 @@ components:
                         id:
                           type: string
                           description: The resource ID
+    stockLocationUpdate:
+      required:
+      - data
+      type: object
+      properties:
+        data:
+          type: object
+          required:
+          - type
+          - id
+          - attributes
+          properties:
+            type:
+              type: string
+              description: The resource's type
+              enum:
+              - stock_locations
+            id:
+              type: string
+              description: Unique identifier for the resource (hash).
+              example: XAyRWNUzyN
+            attributes:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: The stock location's internal name.
+                  example: Primary warehouse
+                  nullable: false
+                code:
+                  type: string
+                  description: A string that you can use to identify the stock location (must be unique within the environment).
+                  example: europe1
+                  nullable: true
+                label_format:
+                  type: string
+                  description: The shipping label format for this stock location. Can be one of 'PDF', 'ZPL', 'EPL2', or 'PNG'.
+                  example: PDF
+                  nullable: true
+                suppress_etd:
+                  type: boolean
+                  description: Flag it if you want to skip the electronic invoice creation when generating the customs info for this stock location shipments.
+                  example: false
+                  nullable: false
+                reference:
+                  type: string
+                  description: A string that you can use to add any external identifier to the resource. This can be useful for integrating the resource to an external system, like an ERP, a marketing tool, a CRM, or whatever.
+                  example: ANY-EXTERNAL-REFEFERNCE
+                  nullable: true
+                reference_origin:
+                  type: string
+                  description: Any identifier of the third party system that defines the reference code.
+                  example: ANY-EXTERNAL-REFEFERNCE-ORIGIN
+                  nullable: true
+                metadata:
+                  type: object
+                  description: Set of key-value pairs that you can attach to the resource. This can be useful for storing additional information about the resource in a structured format.
+                  example:
+                    foo: bar
+                  nullable: true
+            relationships:
+              type: object
+              properties:
+                address:
+                  required:
+                  - data
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          description: The resource's type
+                          enum:
+                          - addresses
+                        id:
+                          type: string
+                          description: Unique identifier for the resource (hash).
+                          example: XAyRWNUzyN
+    stockLocationResponseList:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/stockLocationResponse/properties/data'
     stockLocation:
       type: object
       properties:
@@ -594,13 +601,6 @@ components:
                           type: string
                           description: Unique identifier for the resource (hash).
                           example: XAyRWNUzyN
-    stockLocationResponseList:
-      type: object
-      properties:
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/stockLocationResponse/properties/data'
     stockLocationCreate:
       required:
       - data

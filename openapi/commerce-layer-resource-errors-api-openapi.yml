@@ -55,6 +55,13 @@ paths:
                 $ref: '#/components/schemas/resourceErrorResponse'
 components:
   schemas:
+    resourceErrorResponseList:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/resourceErrorResponse/properties/data'
     resourceErrorResponse:
       type: object
       properties:
@@ -222,13 +229,6 @@ components:
                           type: string
                           description: Unique identifier for the resource (hash).
                           example: XAyRWNUzyN
-    resourceErrorResponseList:
-      type: object
-      properties:
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/resourceErrorResponse/properties/data'
   securitySchemes:
     bearerAuth:
       type: http
