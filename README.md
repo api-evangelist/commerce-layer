@@ -1,4 +1,4 @@
-# Commerce Layer (commerce-layer)
+# Commerce Layer
 
 <!-- API-EVANGELIST-PROVENANCE:BEGIN -->
 > ### About this repository
@@ -66,202 +66,349 @@
 
 Commerce Layer is the headless, multi-market commerce API used by global brands to sell everywhere — web, mobile, in-store, chatbot, AI agent, and IoT. The company exposes a JSON:API-compliant Core API with 130+ top-level resources covering orders, line items, SKUs, bundles, prices, markets, stores, inventory, customers, payments (Adyen, Stripe, Braintree, PayPal, Klarna, Checkout.com), tax calculation (Avalara, TaxJar, Vertex, Stripe Tax), shipping, promotions, subscriptions, returns, and webhooks. The platform also ships a Provisioning API for organizations/SSO/credentials and a Metrics API for analytics (with a local MCP server for AI agents), plus hosted micro-frontends, dashboard apps, a CLI, CMS integrations, and SDKs for JavaScript/TypeScript, Ruby, React, and drop-in.js.
 
-**APIs.json:** [https://raw.githubusercontent.com/api-evangelist/commerce-layer/refs/heads/main/apis.yml](https://raw.githubusercontent.com/api-evangelist/commerce-layer/refs/heads/main/apis.yml)
+**Areas:** Headless Commerce · Composable Commerce · API-First · E-Commerce · JSON:API · Authentication · Multi-Market · Multi-Currency · Consumer · B2B · Subscription · Promotions
 
-## Scope
+## Commerce Layer on APIs.io
 
-- **Position:** Consuming
-- **Access:** 3rd-Party
+Everything profiled for Commerce Layer is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/commerce-layer/](https://apis.io/providers/commerce-layer/)** — or go straight to one of the APIs or properties below.
 
-## Tags
+### APIs (148)
 
-- Headless Commerce
-- Composable Commerce
-- API-First
-- Ecommerce
-- JSON:API
-- OAuth 2.0
-- Multi-Market
-- Multi-Currency
-- B2C
-- B2B
-- Subscriptions
-- Promotions
-- Inventory
-- Order Management
-- Checkout
+- [Commerce Layer Addresses API](https://apis.io/apis/commerce-layer/commerce-layer-addresses-api/) — resource type
+- [Commerce Layer Adjustments API](https://apis.io/apis/commerce-layer/commerce-layer-adjustments-api/) — resource type
+- [Commerce Layer Adyen Gateways API](https://apis.io/apis/commerce-layer/commerce-layer-adyen-gateways-api/) — resource type
+- [Commerce Layer Adyen Payments API](https://apis.io/apis/commerce-layer/commerce-layer-adyen-payments-api/) — resource type
+- [Commerce Layer Analysis API](https://apis.io/apis/commerce-layer/commerce-layer-analysis-api/) — Operations with analysis resource
+- [Commerce Layer API Credentials API](https://apis.io/apis/commerce-layer/commerce-layer-api-credentials-api/) — resource type
+- [Commerce Layer Application API](https://apis.io/apis/commerce-layer/commerce-layer-application-api/) — resource type
+- [Commerce Layer Application Memberships API](https://apis.io/apis/commerce-layer/commerce-layer-application-memberships-api/) — resource type
+- [Commerce Layer Attachments API](https://apis.io/apis/commerce-layer/commerce-layer-attachments-api/) — resource type
+- [Commerce Layer Authorizations API](https://apis.io/apis/commerce-layer/commerce-layer-authorizations-api/) — resource type
+- [Commerce Layer Avalara Accounts API](https://apis.io/apis/commerce-layer/commerce-layer-avalara-accounts-api/) — resource type
+- [Commerce Layer Axerve Gateways API](https://apis.io/apis/commerce-layer/commerce-layer-axerve-gateways-api/) — resource type
+- [Commerce Layer Axerve Payments API](https://apis.io/apis/commerce-layer/commerce-layer-axerve-payments-api/) — resource type
+- [Commerce Layer Bing Geocoders API](https://apis.io/apis/commerce-layer/commerce-layer-bing-geocoders-api/) — resource type
+- [Commerce Layer Braintree Gateways API](https://apis.io/apis/commerce-layer/commerce-layer-braintree-gateways-api/) — resource type
+- [Commerce Layer Braintree Payments API](https://apis.io/apis/commerce-layer/commerce-layer-braintree-payments-api/) — resource type
+- [Commerce Layer Bundles API](https://apis.io/apis/commerce-layer/commerce-layer-bundles-api/) — resource type
+- [Commerce Layer Buy X Pay Y Promotions API](https://apis.io/apis/commerce-layer/commerce-layer-buy-x-pay-y-promotions-api/) — resource type
+- [Commerce Layer Captures API](https://apis.io/apis/commerce-layer/commerce-layer-captures-api/) — resource type
+- [Commerce Layer Carrier Accounts API](https://apis.io/apis/commerce-layer/commerce-layer-carrier-accounts-api/) — resource type
+- [Commerce Layer Carts API](https://apis.io/apis/commerce-layer/commerce-layer-carts-api/) — Operations with carts resource
+- [Commerce Layer Checkout Com Gateways API](https://apis.io/apis/commerce-layer/commerce-layer-checkout-com-gateways-api/) — resource type
+- [Commerce Layer Checkout Com Payments API](https://apis.io/apis/commerce-layer/commerce-layer-checkout-com-payments-api/) — resource type
+- [Commerce Layer Cleanups API](https://apis.io/apis/commerce-layer/commerce-layer-cleanups-api/) — resource type
+- [Commerce Layer Coupon Codes Promotion Rules API](https://apis.io/apis/commerce-layer/commerce-layer-coupon-codes-promotion-rules-api/) — resource type
+- [Commerce Layer Coupon Recipients API](https://apis.io/apis/commerce-layer/commerce-layer-coupon-recipients-api/) — resource type
+- [Commerce Layer Coupons API](https://apis.io/apis/commerce-layer/commerce-layer-coupons-api/) — resource type
+- [Commerce Layer Custom Promotion Rules API](https://apis.io/apis/commerce-layer/commerce-layer-custom-promotion-rules-api/) — resource type
+- [Commerce Layer Customer Addresses API](https://apis.io/apis/commerce-layer/commerce-layer-customer-addresses-api/) — resource type
+- [Commerce Layer Customer Groups API](https://apis.io/apis/commerce-layer/commerce-layer-customer-groups-api/) — resource type
+- [Commerce Layer Customer Password Resets API](https://apis.io/apis/commerce-layer/commerce-layer-customer-password-resets-api/) — resource type
+- [Commerce Layer Customer Payment Sources API](https://apis.io/apis/commerce-layer/commerce-layer-customer-payment-sources-api/) — resource type
+- [Commerce Layer Customer Subscriptions API](https://apis.io/apis/commerce-layer/commerce-layer-customer-subscriptions-api/) — resource type
+- [Commerce Layer Customers API](https://apis.io/apis/commerce-layer/commerce-layer-customers-api/) — resource type
+- [Commerce Layer Delivery Lead Times API](https://apis.io/apis/commerce-layer/commerce-layer-delivery-lead-times-api/) — resource type
+- [Commerce Layer Discount Engine Items API](https://apis.io/apis/commerce-layer/commerce-layer-discount-engine-items-api/) — resource type
+- [Commerce Layer Discount Engines API](https://apis.io/apis/commerce-layer/commerce-layer-discount-engines-api/) — resource type
+- [Commerce Layer Easypost Pickups API](https://apis.io/apis/commerce-layer/commerce-layer-easypost-pickups-api/) — resource type
+- [Commerce Layer Event Callbacks API](https://apis.io/apis/commerce-layer/commerce-layer-event-callbacks-api/) — resource type
+- [Commerce Layer Event Stores API](https://apis.io/apis/commerce-layer/commerce-layer-event-stores-api/) — resource type
+- [Commerce Layer Events API](https://apis.io/apis/commerce-layer/commerce-layer-events-api/) — resource type
+- [Commerce Layer Exports API](https://apis.io/apis/commerce-layer/commerce-layer-exports-api/) — resource type
+- [Commerce Layer External Gateways API](https://apis.io/apis/commerce-layer/commerce-layer-external-gateways-api/) — resource type
+- [Commerce Layer External Payments API](https://apis.io/apis/commerce-layer/commerce-layer-external-payments-api/) — resource type
+- [Commerce Layer External Promotions API](https://apis.io/apis/commerce-layer/commerce-layer-external-promotions-api/) — resource type
+- [Commerce Layer External Tax Calculators API](https://apis.io/apis/commerce-layer/commerce-layer-external-tax-calculators-api/) — resource type
+- [Commerce Layer Fixed Amount Promotions API](https://apis.io/apis/commerce-layer/commerce-layer-fixed-amount-promotions-api/) — resource type
+- [Commerce Layer Fixed Price Promotions API](https://apis.io/apis/commerce-layer/commerce-layer-fixed-price-promotions-api/) — resource type
+- [Commerce Layer Flex Promotions API](https://apis.io/apis/commerce-layer/commerce-layer-flex-promotions-api/) — resource type
+- [Commerce Layer Free Gift Promotions API](https://apis.io/apis/commerce-layer/commerce-layer-free-gift-promotions-api/) — resource type
+- [Commerce Layer Free Shipping Promotions API](https://apis.io/apis/commerce-layer/commerce-layer-free-shipping-promotions-api/) — resource type
+- [Commerce Layer Geocoders API](https://apis.io/apis/commerce-layer/commerce-layer-geocoders-api/) — resource type
+- [Commerce Layer Gift Card Recipients API](https://apis.io/apis/commerce-layer/commerce-layer-gift-card-recipients-api/) — resource type
+- [Commerce Layer Gift Cards API](https://apis.io/apis/commerce-layer/commerce-layer-gift-cards-api/) — resource type
+- [Commerce Layer Google Geocoders API](https://apis.io/apis/commerce-layer/commerce-layer-google-geocoders-api/) — resource type
+- [Commerce Layer Has Many API](https://apis.io/apis/commerce-layer/commerce-layer-has-many-api/) — relationship kind
+- [Commerce Layer Has One API](https://apis.io/apis/commerce-layer/commerce-layer-has-one-api/) — relationship kind
+- [Commerce Layer Identity Providers API](https://apis.io/apis/commerce-layer/commerce-layer-identity-providers-api/) — resource type
+- [Commerce Layer Imports API](https://apis.io/apis/commerce-layer/commerce-layer-imports-api/) — resource type
+- [Commerce Layer In Stock Subscriptions API](https://apis.io/apis/commerce-layer/commerce-layer-in-stock-subscriptions-api/) — resource type
+- [Commerce Layer Inventory Models API](https://apis.io/apis/commerce-layer/commerce-layer-inventory-models-api/) — resource type
+- [Commerce Layer Inventory Return Locations API](https://apis.io/apis/commerce-layer/commerce-layer-inventory-return-locations-api/) — resource type
+- [Commerce Layer Inventory Stock Locations API](https://apis.io/apis/commerce-layer/commerce-layer-inventory-stock-locations-api/) — resource type
+- [Commerce Layer Klarna Gateways API](https://apis.io/apis/commerce-layer/commerce-layer-klarna-gateways-api/) — resource type
+- [Commerce Layer Klarna Payments API](https://apis.io/apis/commerce-layer/commerce-layer-klarna-payments-api/) — resource type
+- [Commerce Layer Line Item Options API](https://apis.io/apis/commerce-layer/commerce-layer-line-item-options-api/) — resource type
+- [Commerce Layer Line Items API](https://apis.io/apis/commerce-layer/commerce-layer-line-items-api/) — resource type
+- [Commerce Layer Links API](https://apis.io/apis/commerce-layer/commerce-layer-links-api/) — resource type
+- [Commerce Layer Manual Gateways API](https://apis.io/apis/commerce-layer/commerce-layer-manual-gateways-api/) — resource type
+- [Commerce Layer Manual Tax Calculators API](https://apis.io/apis/commerce-layer/commerce-layer-manual-tax-calculators-api/) — resource type
+- [Commerce Layer Markets API](https://apis.io/apis/commerce-layer/commerce-layer-markets-api/) — resource type
+- [Commerce Layer Membership Profiles API](https://apis.io/apis/commerce-layer/commerce-layer-membership-profiles-api/) — resource type
+- [Commerce Layer Memberships API](https://apis.io/apis/commerce-layer/commerce-layer-memberships-api/) — resource type
+- [Commerce Layer Merchants API](https://apis.io/apis/commerce-layer/commerce-layer-merchants-api/) — resource type
+- [Commerce Layer Notifications API](https://apis.io/apis/commerce-layer/commerce-layer-notifications-api/) — resource type
+- [Commerce Layer Order Amount Promotion Rules API](https://apis.io/apis/commerce-layer/commerce-layer-order-amount-promotion-rules-api/) — resource type
+- [Commerce Layer Order Copies API](https://apis.io/apis/commerce-layer/commerce-layer-order-copies-api/) — resource type
+- [Commerce Layer Order Factories API](https://apis.io/apis/commerce-layer/commerce-layer-order-factories-api/) — resource type
+- [Commerce Layer Order Subscription Items API](https://apis.io/apis/commerce-layer/commerce-layer-order-subscription-items-api/) — resource type
+- [Commerce Layer Order Subscriptions API](https://apis.io/apis/commerce-layer/commerce-layer-order-subscriptions-api/) — resource type
+- [Commerce Layer Orders API](https://apis.io/apis/commerce-layer/commerce-layer-orders-api/) — resource type
+- [Commerce Layer Organization API](https://apis.io/apis/commerce-layer/commerce-layer-organization-api/) — resource type
+- [Commerce Layer Organizations API](https://apis.io/apis/commerce-layer/commerce-layer-organizations-api/) — resource type
+- [Commerce Layer Packages API](https://apis.io/apis/commerce-layer/commerce-layer-packages-api/) — resource type
+- [Commerce Layer Parcel Line Items API](https://apis.io/apis/commerce-layer/commerce-layer-parcel-line-items-api/) — resource type
+- [Commerce Layer Parcels API](https://apis.io/apis/commerce-layer/commerce-layer-parcels-api/) — resource type
+- [Commerce Layer Payment Gateways API](https://apis.io/apis/commerce-layer/commerce-layer-payment-gateways-api/) — resource type
+- [Commerce Layer Payment Methods API](https://apis.io/apis/commerce-layer/commerce-layer-payment-methods-api/) — resource type
+- [Commerce Layer Payment Options API](https://apis.io/apis/commerce-layer/commerce-layer-payment-options-api/) — resource type
+- [Commerce Layer Paypal Gateways API](https://apis.io/apis/commerce-layer/commerce-layer-paypal-gateways-api/) — resource type
+- [Commerce Layer Paypal Payments API](https://apis.io/apis/commerce-layer/commerce-layer-paypal-payments-api/) — resource type
+- [Commerce Layer Percentage Discount Promotions API](https://apis.io/apis/commerce-layer/commerce-layer-percentage-discount-promotions-api/) — resource type
+- [Commerce Layer Permissions API](https://apis.io/apis/commerce-layer/commerce-layer-permissions-api/) — resource type
+- [Commerce Layer Pickups API](https://apis.io/apis/commerce-layer/commerce-layer-pickups-api/) — resource type
+- [Commerce Layer Price Frequency Tiers API](https://apis.io/apis/commerce-layer/commerce-layer-price-frequency-tiers-api/) — resource type
+- [Commerce Layer Price List Schedulers API](https://apis.io/apis/commerce-layer/commerce-layer-price-list-schedulers-api/) — resource type
+- [Commerce Layer Price Lists API](https://apis.io/apis/commerce-layer/commerce-layer-price-lists-api/) — resource type
+- [Commerce Layer Price Tiers API](https://apis.io/apis/commerce-layer/commerce-layer-price-tiers-api/) — resource type
+- [Commerce Layer Price Volume Tiers API](https://apis.io/apis/commerce-layer/commerce-layer-price-volume-tiers-api/) — resource type
+- [Commerce Layer Prices API](https://apis.io/apis/commerce-layer/commerce-layer-prices-api/) — resource type
+- [Commerce Layer Promotion Rules API](https://apis.io/apis/commerce-layer/commerce-layer-promotion-rules-api/) — resource type
+- [Commerce Layer Promotions API](https://apis.io/apis/commerce-layer/commerce-layer-promotions-api/) — resource type
+- [Commerce Layer Recurring Order Copies API](https://apis.io/apis/commerce-layer/commerce-layer-recurring-order-copies-api/) — resource type
+- [Commerce Layer Refunds API](https://apis.io/apis/commerce-layer/commerce-layer-refunds-api/) — resource type
+- [Commerce Layer Reserved Stocks API](https://apis.io/apis/commerce-layer/commerce-layer-reserved-stocks-api/) — resource type
+- [Commerce Layer Resource Errors API](https://apis.io/apis/commerce-layer/commerce-layer-resource-errors-api/) — resource type
+- [Commerce Layer Return Line Items API](https://apis.io/apis/commerce-layer/commerce-layer-return-line-items-api/) — resource type
+- [Commerce Layer Returns API](https://apis.io/apis/commerce-layer/commerce-layer-returns-api/) — resource type
+- [Commerce Layer Roles API](https://apis.io/apis/commerce-layer/commerce-layer-roles-api/) — resource type
+- [Commerce Layer Satispay Gateways API](https://apis.io/apis/commerce-layer/commerce-layer-satispay-gateways-api/) — resource type
+- [Commerce Layer Satispay Payments API](https://apis.io/apis/commerce-layer/commerce-layer-satispay-payments-api/) — resource type
+- [Commerce Layer Shipments API](https://apis.io/apis/commerce-layer/commerce-layer-shipments-api/) — resource type
+- [Commerce Layer Shipping Categories API](https://apis.io/apis/commerce-layer/commerce-layer-shipping-categories-api/) — resource type
+- [Commerce Layer Shipping Method Tiers API](https://apis.io/apis/commerce-layer/commerce-layer-shipping-method-tiers-api/) — resource type
+- [Commerce Layer Shipping Methods API](https://apis.io/apis/commerce-layer/commerce-layer-shipping-methods-api/) — resource type
+- [Commerce Layer Shipping Weight Tiers API](https://apis.io/apis/commerce-layer/commerce-layer-shipping-weight-tiers-api/) — resource type
+- [Commerce Layer Shipping Zones API](https://apis.io/apis/commerce-layer/commerce-layer-shipping-zones-api/) — resource type
+- [Commerce Layer Singleton API](https://apis.io/apis/commerce-layer/commerce-layer-singleton-api/) — singleton resource
+- [Commerce Layer Sku List Items API](https://apis.io/apis/commerce-layer/commerce-layer-sku-list-items-api/) — resource type
+- [Commerce Layer Sku List Promotion Rules API](https://apis.io/apis/commerce-layer/commerce-layer-sku-list-promotion-rules-api/) — resource type
+- [Commerce Layer Sku Lists API](https://apis.io/apis/commerce-layer/commerce-layer-sku-lists-api/) — resource type
+- [Commerce Layer Sku Options API](https://apis.io/apis/commerce-layer/commerce-layer-sku-options-api/) — resource type
+- [Commerce Layer Skus API](https://apis.io/apis/commerce-layer/commerce-layer-skus-api/) — resource type
+- [Commerce Layer Stock Items API](https://apis.io/apis/commerce-layer/commerce-layer-stock-items-api/) — resource type
+- [Commerce Layer Stock Line Items API](https://apis.io/apis/commerce-layer/commerce-layer-stock-line-items-api/) — resource type
+- [Commerce Layer Stock Locations API](https://apis.io/apis/commerce-layer/commerce-layer-stock-locations-api/) — resource type
+- [Commerce Layer Stock Reservations API](https://apis.io/apis/commerce-layer/commerce-layer-stock-reservations-api/) — resource type
+- [Commerce Layer Stock Transfers API](https://apis.io/apis/commerce-layer/commerce-layer-stock-transfers-api/) — resource type
+- [Commerce Layer Stores API](https://apis.io/apis/commerce-layer/commerce-layer-stores-api/) — resource type
+- [Commerce Layer Stripe Gateways API](https://apis.io/apis/commerce-layer/commerce-layer-stripe-gateways-api/) — resource type
+- [Commerce Layer Stripe Payments API](https://apis.io/apis/commerce-layer/commerce-layer-stripe-payments-api/) — resource type
+- [Commerce Layer Stripe Tax Accounts API](https://apis.io/apis/commerce-layer/commerce-layer-stripe-tax-accounts-api/) — resource type
+- [Commerce Layer Subscription Models API](https://apis.io/apis/commerce-layer/commerce-layer-subscription-models-api/) — resource type
+- [Commerce Layer Tags API](https://apis.io/apis/commerce-layer/commerce-layer-tags-api/) — resource type
+- [Commerce Layer Talon One Accounts API](https://apis.io/apis/commerce-layer/commerce-layer-talon-one-accounts-api/) — resource type
+- [Commerce Layer Tax Calculators API](https://apis.io/apis/commerce-layer/commerce-layer-tax-calculators-api/) — resource type
+- [Commerce Layer Tax Categories API](https://apis.io/apis/commerce-layer/commerce-layer-tax-categories-api/) — resource type
+- [Commerce Layer Tax Rules API](https://apis.io/apis/commerce-layer/commerce-layer-tax-rules-api/) — resource type
+- [Commerce Layer Taxjar Accounts API](https://apis.io/apis/commerce-layer/commerce-layer-taxjar-accounts-api/) — resource type
+- [Commerce Layer Transactions API](https://apis.io/apis/commerce-layer/commerce-layer-transactions-api/) — resource type
+- [Commerce Layer Usage API](https://apis.io/apis/commerce-layer/commerce-layer-usage-api/) — Operations with usage resource
+- [Commerce Layer User API](https://apis.io/apis/commerce-layer/commerce-layer-user-api/) — The user API from Commerce Layer — 1 operation(s) for user.
+- [Commerce Layer Users API](https://apis.io/apis/commerce-layer/commerce-layer-users-api/) — resource type
+- [Commerce Layer Versions API](https://apis.io/apis/commerce-layer/commerce-layer-versions-api/) — resource type
+- [Commerce Layer Vertex Accounts API](https://apis.io/apis/commerce-layer/commerce-layer-vertex-accounts-api/) — resource type
+- [Commerce Layer Voids API](https://apis.io/apis/commerce-layer/commerce-layer-voids-api/) — resource type
+- [Commerce Layer Webhooks API](https://apis.io/apis/commerce-layer/commerce-layer-webhooks-api/) — resource type
+- [Commerce Layer Wire Transfers API](https://apis.io/apis/commerce-layer/commerce-layer-wire-transfers-api/) — resource type
 
-## Timestamps
+### Published properties
 
-- **Created:** 2026-05-25
-- **Modified:** 2026-05-25
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
 
-## APIs
+#### Arazzo workflows (17)
 
-### Commerce Layer Core API
+Multi-step workflows that chain operations into a business task.
 
-The Commerce Layer Core API is the JSON:API-compliant REST API that powers headless commerce. It exposes 130+ top-level resources covering orders, line items, SKUs, bundles, prices, price lists, markets, stores, inventory (stock items, locations, transfers), customers, customer groups, customer subscriptions, payment gateways (Adyen, Stripe, Braintree, PayPal, Klarna, Checkout.com, Axerve, Satispay), payment methods, tax calculators (Avalara, TaxJar, Vertex, Stripe Tax), shipping methods, shipping zones, carrier accounts, geocoders (Google, Bing), promotions (fixed amount, percentage, free gift, free shipping, BXGY, flex), gift cards, coupons, returns, parcels, packages, webhooks, imports, exports, and tags. 917 path operations across the live OpenAPI 3.1 specification.
+- [Commerce Layer Add Line Item and Read It Back](https://apis.io/arazzos/commerce-layer/commerce-layer-add-line-item-get-line-item-workflow/)
+- [Commerce Layer Build Cart and Branch on Order Status](https://apis.io/arazzos/commerce-layer/commerce-layer-build-cart-branch-on-status-workflow/)
+- [Commerce Layer Create and Ship a Shipment](https://apis.io/arazzos/commerce-layer/commerce-layer-create-and-ship-shipment-workflow/)
+- [Commerce Layer Create Customer, Address, and Order](https://apis.io/arazzos/commerce-layer/commerce-layer-create-customer-address-order-workflow/)
+- [Commerce Layer Create Customer with Address Book Entry](https://apis.io/arazzos/commerce-layer/commerce-layer-create-customer-with-address-book-workflow/)
+- [Commerce Layer Create Market with Payment Method](https://apis.io/arazzos/commerce-layer/commerce-layer-create-market-with-payment-method-workflow/)
+- [Commerce Layer Create Order and Add Line Item](https://apis.io/arazzos/commerce-layer/commerce-layer-create-order-add-line-item-workflow/)
+- [Commerce Layer Create Return with Line Item](https://apis.io/arazzos/commerce-layer/commerce-layer-create-return-with-line-item-workflow/)
+- [Commerce Layer Create Shipment for Order](https://apis.io/arazzos/commerce-layer/commerce-layer-create-shipment-for-order-workflow/)
+- [Commerce Layer Create SKU and Price](https://apis.io/arazzos/commerce-layer/commerce-layer-create-sku-and-price-workflow/)
+- [Commerce Layer Create SKU, Price It, and Read SKU Back](https://apis.io/arazzos/commerce-layer/commerce-layer-create-sku-price-and-get-workflow/)
+- [Commerce Layer Guest Order Add Line Item and Place](https://apis.io/arazzos/commerce-layer/commerce-layer-guest-order-add-line-item-place-workflow/)
+- [Commerce Layer Add Payment Method and Place Order](https://apis.io/arazzos/commerce-layer/commerce-layer-order-add-payment-method-place-workflow/)
+- [Commerce Layer Add Two Line Items to an Order](https://apis.io/arazzos/commerce-layer/commerce-layer-order-add-two-line-items-workflow/)
+- [Commerce Layer Refresh and Place an Order](https://apis.io/arazzos/commerce-layer/commerce-layer-order-refresh-and-place-workflow/)
+- [Commerce Layer Set Order Shipping and Billing Addresses](https://apis.io/arazzos/commerce-layer/commerce-layer-order-set-addresses-workflow/)
+- [Commerce Layer Place and Capture an Order](https://apis.io/arazzos/commerce-layer/commerce-layer-place-and-capture-order-workflow/)
 
-- **Human URL:** [https://docs.commercelayer.io/core/](https://docs.commercelayer.io/core/)
-- **Base URL:** `https://{your-organization-slug}.commercelayer.io/api`
+#### GraphQL (1)
 
-#### Tags
+GraphQL schemas.
 
-- Commerce
-- Headless Commerce
-- Multi-Market
-- JSON:API
-- Checkout
-- Orders
-- Catalog
-- Inventory
-- Promotions
+- [Moved to /providers/commerce-layer/](https://apis.io/graphqls/commerce-layer/commerce-layer-graphql/)
 
-#### Properties
+#### MCP servers (1)
 
-- [Documentation](https://docs.commercelayer.io/core/)
-- [Documentation](https://docs.commercelayer.io/core-api-reference/)
-- [Documentation](https://docs.commercelayer.io/core/api-specification)
-- [Authentication](https://docs.commercelayer.io/core/authentication)
-- [Rate Limits](https://docs.commercelayer.io/core/rate-limits)
-- [Webhooks](https://docs.commercelayer.io/core/real-time-webhooks)
-- [Documentation](https://docs.commercelayer.io/core/event-stream-hub)
-- [OpenAPI](https://data.commercelayer.app/schemas/openapi.json) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [OpenAPI](openapi/commerce-layer-core-api-openapi.json) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/commerce-layer-core-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/commerce-layer-core-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [JSON Schema](json-schema/commerce-layer-order-schema.json) — [JSON Schema](https://json-schema.org/specification)
-- [JSON Schema](json-schema/commerce-layer-sku-schema.json) — [JSON Schema](https://json-schema.org/specification)
-- [JSON-LD](json-ld/commerce-layer-context.jsonld) — [JSON-LD](https://www.w3.org/TR/json-ld11/)
+Model Context Protocol servers that expose the API to agents.
 
-### Commerce Layer Provisioning API
+- [MCP Server for Metrics API](https://apis.io/servers/commerce-layer/mcp-server-for-metrics-api/)
 
-Programmatic provisioning surface for Commerce Layer organizations, memberships, roles, API credentials, application memberships, identity providers (SSO), permissions, and user invitations. 48 path operations. Required for headless onboarding flows, infrastructure-as-code organization management, and enterprise identity federation. Available on Developer and Enterprise plans (Provisioning API access is an enterprise feature).
+#### Agentic access (1)
 
-- **Human URL:** [https://docs.commercelayer.io/provisioning](https://docs.commercelayer.io/provisioning)
-- **Base URL:** `https://provisioning.commercelayer.io`
+Which operations an agent can call, which act, and which need a human in the loop.
 
-#### Tags
+- [Commerce Layer Agentic Access](https://apis.io/agentic-access/commerce-layer/commerce-layer-agentic-access/)
 
-- Administration
-- Provisioning
-- Organizations
-- SSO
-- JSON:API
+#### JSON Schema (2)
 
-#### Properties
+The data models the API reads and writes.
 
-- [Documentation](https://docs.commercelayer.io/provisioning)
-- [Documentation](https://docs.commercelayer.io/provisioning-api-reference/)
-- [OpenAPI](https://data.commercelayer.app/schemas/provisioning/openapi.json) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [OpenAPI](openapi/commerce-layer-provisioning-api-openapi.json) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/commerce-layer-provisioning-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/commerce-layer-provisioning-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+- [Commerce Layer Order](https://apis.io/schemas/commerce-layer/commerce-layer-order/)
+- [Commerce Layer SKU](https://apis.io/schemas/commerce-layer/commerce-layer-sku/)
 
-### Commerce Layer Metrics API
+#### JSON-LD (1)
 
-Analytics surface over Commerce Layer's ecommerce history. Five query types (breakdown, date_breakdown, stats, search, export) across four domains (orders, carts, returns, usage) plus frequently-bought-together (FBT) analysis helpers. Useful for KPI dashboards, cohort and funnel reporting, catalog merchandising signals, and feeding downstream warehouses. Commerce Layer also publishes a local MCP server that exposes the Metrics API to AI agents.
+Linked-data contexts for the provider's vocabulary.
 
-- **Human URL:** [https://docs.commercelayer.io/metrics/welcome](https://docs.commercelayer.io/metrics/welcome)
-- **Base URL:** `https://{your-domain}.commercelayer.io/metrics`
+- [Commerce Layer Context](https://apis.io/jsonld/commerce-layer/commerce-layer-context/)
 
-#### Tags
+#### Collections (154)
 
-- Analytics
-- Metrics
-- Reporting
-- Commerce Analytics
-- Data
+Postman and Open Collection request collections.
 
-#### Properties
+- [Commerce Layer addresses API](https://apis.io/collections/commerce-layer/open-commerce-layer-addresses-api/)
+- [Commerce Layer addresses adjustments API](https://apis.io/collections/commerce-layer/open-commerce-layer-adjustments-api/)
+- [Commerce Layer addresses adyen_gateways API](https://apis.io/collections/commerce-layer/open-commerce-layer-adyen-gateways-api/)
+- [Commerce Layer addresses adyen_payments API](https://apis.io/collections/commerce-layer/open-commerce-layer-adyen-payments-api/)
+- [Commerce Layer addresses analysis API](https://apis.io/collections/commerce-layer/open-commerce-layer-analysis-api/)
+- [Commerce Layer addresses api_credentials API](https://apis.io/collections/commerce-layer/open-commerce-layer-api-credentials-api/)
+- [Commerce Layer addresses application API](https://apis.io/collections/commerce-layer/open-commerce-layer-application-api/)
+- [Commerce Layer addresses application_memberships API](https://apis.io/collections/commerce-layer/open-commerce-layer-application-memberships-api/)
+- [Commerce Layer addresses attachments API](https://apis.io/collections/commerce-layer/open-commerce-layer-attachments-api/)
+- [Commerce Layer addresses authorizations API](https://apis.io/collections/commerce-layer/open-commerce-layer-authorizations-api/)
+- [Commerce Layer addresses avalara_accounts API](https://apis.io/collections/commerce-layer/open-commerce-layer-avalara-accounts-api/)
+- [Commerce Layer addresses axerve_gateways API](https://apis.io/collections/commerce-layer/open-commerce-layer-axerve-gateways-api/)
+- [Commerce Layer addresses axerve_payments API](https://apis.io/collections/commerce-layer/open-commerce-layer-axerve-payments-api/)
+- [Commerce Layer addresses bing_geocoders API](https://apis.io/collections/commerce-layer/open-commerce-layer-bing-geocoders-api/)
+- [Commerce Layer addresses braintree_gateways API](https://apis.io/collections/commerce-layer/open-commerce-layer-braintree-gateways-api/)
+- [Commerce Layer addresses braintree_payments API](https://apis.io/collections/commerce-layer/open-commerce-layer-braintree-payments-api/)
+- [Commerce Layer addresses bundles API](https://apis.io/collections/commerce-layer/open-commerce-layer-bundles-api/)
+- [Commerce Layer addresses buy_x_pay_y_promotions API](https://apis.io/collections/commerce-layer/open-commerce-layer-buy-x-pay-y-promotions-api/)
+- [Commerce Layer addresses captures API](https://apis.io/collections/commerce-layer/open-commerce-layer-captures-api/)
+- [Commerce Layer addresses carrier_accounts API](https://apis.io/collections/commerce-layer/open-commerce-layer-carrier-accounts-api/)
+- [Commerce Layer addresses carts API](https://apis.io/collections/commerce-layer/open-commerce-layer-carts-api/)
+- [Commerce Layer addresses checkout_com_gateways API](https://apis.io/collections/commerce-layer/open-commerce-layer-checkout-com-gateways-api/)
+- [Commerce Layer addresses checkout_com_payments API](https://apis.io/collections/commerce-layer/open-commerce-layer-checkout-com-payments-api/)
+- [Commerce Layer addresses cleanups API](https://apis.io/collections/commerce-layer/open-commerce-layer-cleanups-api/)
+- [Commerce Layer API](https://apis.io/collections/commerce-layer/open-commerce-layer-core-api/)
+- …and 129 more published on APIs.io
 
-- [Documentation](https://docs.commercelayer.io/metrics/welcome)
-- [Documentation](https://docs.commercelayer.io/metrics/getting-started/api-specification)
-- [OpenAPI](https://data.commercelayer.app/schemas/metrics/openapi.json) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [OpenAPI](openapi/commerce-layer-metrics-api-openapi.json) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/commerce-layer-metrics-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/commerce-layer-metrics-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [M C P Server](https://github.com/commercelayer/mcp-server-metrics)
+#### Governance rules (1)
 
-## Common Properties
+Spectral rulesets for the provider's contracts.
 
-- [Arazzo Workflows](arazzo/) — [Arazzo Specification](https://spec.openapis.org/arazzo/latest.html)
-- [Portal](https://commercelayer.io)
-- [Portal](https://commercelayer.io/product)
+- [Commerce Layer — jsonschema rules](https://apis.io/rules/commerce-layer/commerce-layer-jsonschema-spectral-rules/)
+
+#### Security (3)
+
+Authentication, trust centre, and vulnerability disclosure.
+
+- [Commerce Layer Authentication](https://apis.io/security/commerce-layer/commerce-layer-authentication/)
+- [Commerce Layer Domain Security](https://apis.io/security/commerce-layer/commerce-layer-domain-security/)
+- [Commerce Layer Trust Center](https://apis.io/security/commerce-layer/commerce-layer-trust-center/)
+
+#### Plans and pricing (1)
+
+Published plans, tiers and prices.
+
+- [Commerce Layer Plans Pricing](https://apis.io/plans/commerce-layer/commerce-layer-plans-pricing/)
+
+#### Rate limits (1)
+
+Published request limits.
+
+- [Commerce Layer Rate Limits](https://apis.io/rate-limits/commerce-layer/commerce-layer-rate-limits/)
+
+#### FinOps (1)
+
+What the API costs to run, by operation.
+
+- [Commerce Layer Finops](https://apis.io/finops/commerce-layer/commerce-layer-finops/)
+
+## Where to find this API
+
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
+
+- [Website](https://commercelayer.io)
 - [Documentation](https://docs.commercelayer.io)
-- [Documentation](https://docs.commercelayer.io/core-api-reference/)
-- [Documentation](https://docs.commercelayer.io/provisioning-api-reference/)
-- [Documentation](https://docs.commercelayer.io/metrics/welcome)
-- [Documentation](https://docs.commercelayer.io/data-model/readme)
-- [Getting Started](https://docs.commercelayer.io/core/onboarding)
-- [Authentication](https://docs.commercelayer.io/core/authentication)
-- [Documentation](https://docs.commercelayer.io/core/api-credentials)
-- [Documentation](https://docs.commercelayer.io/core/roles-and-permissions)
-- [Rate Limits](https://docs.commercelayer.io/core/rate-limits)
-- [Errors](https://docs.commercelayer.io/core/handling-errors)
-- [Webhooks](https://docs.commercelayer.io/core/real-time-webhooks)
-- [Documentation](https://docs.commercelayer.io/core/event-stream-hub)
-- [Security](https://docs.commercelayer.io/core/callbacks-security)
-- [Documentation](https://docs.commercelayer.io/public-endpoints)
+- [Getting started](https://docs.commercelayer.io/core/onboarding)
+- [Pricing](https://commercelayer.io/pricing)
 - [Changelog](https://docs.commercelayer.io/changelog)
 - [Blog](https://commercelayer.io/blog)
-- [Pricing](https://commercelayer.io/pricing)
-- [About](https://commercelayer.io/about)
-- [Contact](https://commercelayer.io/contact)
-- [Privacy Policy](https://commercelayer.io/legal-embed/privacy-policy)
-- [Terms of Service](https://commercelayer.io/legal-embed/terms-and-conditions)
-- [Sign Up](https://dashboard.commercelayer.io/sign_up)
-- [Login](https://dashboard.commercelayer.io/sign_in)
-- [Forum](https://discord.com/commercelayer)
-- [GitHub Organization](https://github.com/commercelayer)
-- [SDK](https://github.com/commercelayer/commercelayer-sdk)
-- [SDK](https://github.com/commercelayer/commercelayer-js-auth)
-- [SDK](https://github.com/commercelayer/commercelayer_ruby)
-- [SDK](https://github.com/commercelayer/commercelayer-sdk-utils)
-- [SDK](https://github.com/commercelayer/provisioning-sdk)
-- [C L I](https://github.com/commercelayer/commercelayer-cli)
-- [SDK](https://github.com/commercelayer/commercelayer-react-components)
-- [Tool](https://github.com/commercelayer/drop-in.js)
-- [Tool](https://github.com/commercelayer/mfe-checkout)
-- [Tool](https://github.com/commercelayer/mfe-cart)
-- [Tool](https://github.com/commercelayer/mfe-my-account)
-- [Tool](https://github.com/commercelayer/mfe-identity)
-- [Tool](https://github.com/commercelayer/mfe-microstore)
-- [Tool](https://github.com/commercelayer/dashboard-apps)
-- [M C P Server](https://github.com/commercelayer/mcp-server-metrics)
-- [Code Examples](https://github.com/commercelayer/demo-store)
-- [Code Examples](https://github.com/commercelayer/demo-store-core)
-- [Code Examples](https://github.com/commercelayer/demo-store-minimal)
-- [Code Examples](https://github.com/commercelayer/examples)
-- [Code Examples](https://github.com/commercelayer/commercelayer-sanity-template)
-- [Plugins](https://github.com/commercelayer/sanity-commerce)
-- [Plugins](https://github.com/commercelayer/contentful-commerce)
-- [Plugins](https://github.com/commercelayer/contentstack-commerce)
-- [Plugins](https://github.com/commercelayer/dato-plugin)
-- [Plugins](https://github.com/commercelayer/gatsby-plugin-commercelayer)
-- [Plugins](https://github.com/commercelayer/commercelayer-cli-plugin-resources)
-- [Plugins](https://github.com/commercelayer/commercelayer-cli-plugin-webhooks)
-- [Plugins](https://github.com/commercelayer/commercelayer-cli-plugin-imports)
-- [Plugins](https://github.com/commercelayer/commercelayer-cli-plugin-exports)
-- [Plugins](https://github.com/commercelayer/commercelayer-cli-plugin-metrics)
-- [Plugins](https://github.com/commercelayer/commercelayer-cli-plugin-checkout)
-- [Plugins](https://github.com/commercelayer/commercelayer-cli-plugin-orders)
-- [Plugins](https://github.com/commercelayer/commercelayer-cli-plugin-provisioning)
-- [Plugins](https://github.com/commercelayer/commercelayer-cli-plugin-microstore)
-- [Plugins](https://github.com/commercelayer/commercelayer-cli-plugin-seeder)
-- [Plugins](https://github.com/commercelayer/commercelayer-cli-plugin-cleanups)
-- [Plugins](https://github.com/commercelayer/commercelayer-cli-plugin-triggers)
-- [Plugins](https://github.com/commercelayer/commercelayer-cli-plugin-tags)
-- [Plugins](https://github.com/commercelayer/commercelayer-cli-plugin-links)
-- [Plugins](https://github.com/commercelayer/commercelayer-cli-plugin-token)
-- [Documentation](https://jsonapi.org/format/)
-- [Plans](plans/commerce-layer-plans-pricing.yml)
-- [Rate Limits](rate-limits/commerce-layer-rate-limits.yml)
-- [Fin Ops](finops/commerce-layer-finops.yml)
-- [Features](undefined)
+- [Security](https://docs.commercelayer.io/core/callbacks-security)
+- [Terms of service](https://commercelayer.io/legal-embed/terms-and-conditions)
+- [Privacy policy](https://commercelayer.io/legal-embed/privacy-policy)
+- [GitHub](https://github.com/commercelayer)
 
-## Maintainers
+## API Evangelist rating
 
-**FN:** Kin Lane
-**Email:** info@apievangelist.com
-**URL:** https://apievangelist.com
+**Kin Score 58.8** — strong · rubric 0.25.0 · scored 2026-10-23
+
+| Facet | Score |
+|---|---|
+| Discoverability | 70.0 |
+| Contract quality | 61.7 |
+| Contract governance | 9.8 |
+| Operational transparency | 47.4 |
+| Developer ergonomics | 75.0 |
+| Access clarity | 68.4 |
+
+**Agent readiness 34.1** — agent-ready
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | yes |
+| Agentic Access | derived (partial credit) |
+| Reversibility Documented | documented (partial credit) |
+| MCP Server | documented (partial credit) |
+| Auth Clarity | bearer (partial credit) |
+| Idempotency | — |
+| Error Semantics | documented (partial credit) |
+| OpenAPI Examples | partial |
+| Rate Limit Signal | documented (partial credit) |
+| Event Surface Described | unknown |
+| Agent Skills | — |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | — |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
+| Pagination Ratio | — |
+| Operation Distinctiveness | distinct |
+
+**Regulatory alignment 26.8** — Payments
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/commerce-layer/](https://apis.io/providers/commerce-layer/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for Commerce Layer: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/commerce-layer/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
